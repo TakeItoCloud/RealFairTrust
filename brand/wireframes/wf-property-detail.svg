@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960" font-family="Arial, sans-serif" role="img" aria-label="Property detail wireframe">
+  <style>
+    .band{fill:#F3F4F6;stroke:#C7CBD1}.box{fill:#E4E7EB;stroke:#B6BBC2}.img{fill:#DDE0E5;stroke:#B6BBC2}
+    .btn{fill:#fff;stroke:#8C9099}.lbl{fill:#5B616B;font-size:13px}.tag{fill:#9AA0A8;font-size:11px}
+    .line{fill:#CBD0D6}.hd{fill:#6B7280;font-size:12px;letter-spacing:1px}.badge{fill:#D6DAE0;stroke:#B6BBC2}
+  </style>
+  <rect width="960" height="960" fill="#fff"/>
+  <rect class="band" x="0" y="0" width="960" height="56"/><rect class="box" x="24" y="18" width="90" height="20"/><text class="lbl" x="30" y="33">logo</text>
+  <rect class="btn" x="812" y="14" width="124" height="28" rx="14"/><text class="lbl" x="828" y="32">Falar c/ consultor</text>
+  <!-- gallery -->
+  <text class="hd" x="24" y="86">GALLERY</text>
+  <rect class="img" x="24" y="96" width="620" height="300"/><text class="tag" x="320" y="250">main image</text>
+  <rect class="img" x="656" y="96" width="280" height="92"/><rect class="img" x="656" y="200" width="280" height="92"/><rect class="img" x="656" y="304" width="280" height="92"/><text class="tag" x="770" y="150">thumbs</text>
+  <!-- summary + specs -->
+  <text class="hd" x="24" y="430">SUMMARY ‖ PRICE</text><rect class="band" x="24" y="440" width="912" height="70"/>
+  <rect class="line" x="48" y="464" width="360" height="16"/><text class="tag" x="48" y="498">location · type badge</text>
+  <rect class="box" x="740" y="456" width="170" height="40"/><text class="tag" x="800" y="481">PRICE</text>
+  <text class="hd" x="24" y="538">SPECS</text><rect class="band" x="24" y="548" width="912" height="56"/>
+  <text class="tag" x="60" y="582">beds  ·  baths  ·  area m²  ·  energy cert</text>
+  <!-- description -->
+  <text class="hd" x="24" y="632">DESCRIPTION</text><rect class="band" x="24" y="642" width="912" height="80"/>
+  <rect class="line" x="48" y="668" width="800" height="8"/><rect class="line" x="48" y="688" width="720" height="8"/>
+  <!-- agent card -->
+  <text class="hd" x="24" y="752">LISTING AGENT CARD  (performance signals + Verified)</text>
+  <rect class="band" x="24" y="762" width="912" height="120"/>
+  <circle class="img" cx="84" cy="822" r="34"/><text class="tag" x="66" y="826">photo</text>
+  <rect class="line" x="140" y="792" width="180" height="14"/>
+  <rect class="badge" x="140" y="816" width="80" height="18" rx="9"/><text class="tag" x="150" y="829">Verified</text>
+  <rect class="badge" x="230" y="816" width="110" height="18" rx="9"/><text class="tag" x="240" y="829">Top this month</text>
+  <text class="tag" x="140" y="860">close rate · response time · specialization</text>
+  <rect class="btn" x="740" y="802" width="170" height="42" rx="6"/><text class="lbl" x="760" y="828">Contact consultant</text>
+  <!-- similar -->
+  <rect class="band" x="0" y="906" width="960" height="54"/><text class="tag" x="40" y="938">SIMILAR HOMES · row of PropertyCards   |   (mobile: agent card = sticky bottom bar)</text>
+</svg>

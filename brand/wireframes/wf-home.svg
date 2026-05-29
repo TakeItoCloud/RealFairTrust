@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1180" font-family="Arial, sans-serif" role="img" aria-label="Home wireframe">
+  <style>
+    .band{fill:#F3F4F6;stroke:#C7CBD1}
+    .box{fill:#E4E7EB;stroke:#B6BBC2}
+    .img{fill:#DDE0E5;stroke:#B6BBC2}
+    .btn{fill:#fff;stroke:#8C9099}
+    .lbl{fill:#5B616B;font-size:13px}
+    .tag{fill:#9AA0A8;font-size:11px}
+    .line{fill:#CBD0D6}
+    .hd{fill:#6B7280;font-size:12px;letter-spacing:1px}
+  </style>
+  <rect width="960" height="1180" fill="#fff"/>
+  <!-- header -->
+  <rect class="band" x="0" y="0" width="960" height="56"/>
+  <rect class="box" x="24" y="18" width="90" height="20"/><text class="lbl" x="30" y="33">logo</text>
+  <rect class="line" x="360" y="24" width="60" height="8"/><rect class="line" x="430" y="24" width="60" height="8"/><rect class="line" x="500" y="24" width="70" height="8"/><rect class="line" x="580" y="24" width="80" height="8"/>
+  <rect class="box" x="760" y="16" width="40" height="24"/><text class="tag" x="768" y="32">PT/EN</text>
+  <rect class="btn" x="812" y="14" width="124" height="28" rx="14"/><text class="lbl" x="828" y="32">Falar c/ consultor</text>
+  <!-- hero -->
+  <text class="hd" x="24" y="86">HERO</text>
+  <rect class="band" x="24" y="96" width="912" height="240"/>
+  <rect class="line" x="56" y="140" width="380" height="20"/><rect class="line" x="56" y="172" width="300" height="20"/>
+  <rect class="line" x="56" y="208" width="440" height="10"/>
+  <rect class="btn" x="56" y="240" width="170" height="40" rx="6"/><text class="lbl" x="78" y="265">Find a consultant</text>
+  <rect class="btn" x="236" y="240" width="150" height="40" rx="6"/><text class="lbl" x="262" y="265">Browse homes</text>
+  <rect class="box" x="56" y="294" width="500" height="30"/><text class="tag" x="66" y="313">search:  city ▾   type ▾   [ Search ]</text>
+  <rect class="img" x="600" y="120" width="304" height="192"/><text class="tag" x="730" y="220">image</text>
+  <!-- how it works -->
+  <text class="hd" x="24" y="372">HOW IT WORKS</text>
+  <rect class="band" x="24" y="382" width="912" height="110"/>
+  <rect class="box" x="56" y="404" width="260" height="66"/><text class="tag" x="150" y="442">1 · step</text>
+  <rect class="box" x="350" y="404" width="260" height="66"/><text class="tag" x="444" y="442">2 · step</text>
+  <rect class="box" x="644" y="404" width="260" height="66"/><text class="tag" x="738" y="442">3 · step</text>
+  <!-- top consultants -->
+  <text class="hd" x="24" y="528">TOP CONSULTANTS THIS MONTH — Lisboa ▾</text>
+  <rect class="band" x="24" y="538" width="912" height="170"/>
+  <g>
+    <rect class="box" x="56" y="558" width="200" height="130"/><circle class="img" cx="86" cy="588" r="18"/><rect class="line" x="116" y="578" width="100" height="10"/><rect class="line" x="116" y="596" width="70" height="8"/><rect class="line" x="72" y="630" width="160" height="8"/><rect class="line" x="72" y="650" width="120" height="8"/>
+    <rect class="box" x="276" y="558" width="200" height="130"/><circle class="img" cx="306" cy="588" r="18"/><rect class="line" x="336" y="578" width="100" height="10"/><rect class="line" x="336" y="596" width="70" height="8"/><rect class="line" x="292" y="630" width="160" height="8"/><rect class="line" x="292" y="650" width="120" height="8"/>
+    <rect class="box" x="496" y="558" width="200" height="130"/><circle class="img" cx="526" cy="588" r="18"/><rect class="line" x="556" y="578" width="100" height="10"/><rect class="line" x="556" y="596" width="70" height="8"/><rect class="line" x="512" y="630" width="160" height="8"/><rect class="line" x="512" y="650" width="120" height="8"/>
+    <rect class="box" x="716" y="558" width="188" height="130"/><circle class="img" cx="746" cy="588" r="18"/><rect class="line" x="776" y="578" width="90" height="10"/><rect class="line" x="776" y="596" width="60" height="8"/><rect class="line" x="732" y="630" width="150" height="8"/><rect class="line" x="732" y="650" width="110" height="8"/>
+  </g>
+  <text class="tag" x="828" y="700">see all →</text>
+  <!-- featured homes -->
+  <text class="hd" x="24" y="744">FEATURED HOMES</text>
+  <rect class="band" x="24" y="754" width="912" height="180"/>
+  <g>
+    <rect class="box" x="56" y="774" width="270" height="140"/><rect class="img" x="56" y="774" width="270" height="86"/><text class="tag" x="170" y="822">img</text><rect class="line" x="68" y="872" width="120" height="10"/><rect class="line" x="68" y="892" width="180" height="8"/>
+    <rect class="box" x="346" y="774" width="270" height="140"/><rect class="img" x="346" y="774" width="270" height="86"/><text class="tag" x="460" y="822">img</text><rect class="line" x="358" y="872" width="120" height="10"/><rect class="line" x="358" y="892" width="180" height="8"/>
+    <rect class="box" x="636" y="774" width="268" height="140"/><rect class="img" x="636" y="774" width="268" height="86"/><text class="tag" x="750" y="822">img</text><rect class="line" x="648" y="872" width="120" height="10"/><rect class="line" x="648" y="892" width="180" height="8"/>
+  </g>
+  <!-- split -->
+  <text class="hd" x="24" y="970">FOR CLIENTS  ‖  FOR CONSULTANTS</text>
+  <rect class="band" x="24" y="980" width="444" height="96"/><text class="tag" x="200" y="1032">clients + CTA</text>
+  <rect class="band" x="492" y="980" width="444" height="96"/><text class="tag" x="660" y="1032">consultants + CTA</text>
+  <!-- trust + join -->
+  <rect class="band" x="24" y="1092" width="912" height="40"/><text class="tag" x="40" y="1116">TRUST · how rating works → /como-funciona</text>
+  <rect class="band" x="0" y="1148" width="960" height="32"/><text class="tag" x="40" y="1168">FOOTER · Explorar · Para consultores · Empresa · Legal</text>
+</svg>
