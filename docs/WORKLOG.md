@@ -6,6 +6,34 @@
 
 ---
 
+## 2026-05-29 · Setup — Project scaffolded, git + GitHub initialized
+
+**Done**
+- Installed Node 22 (via nvm) + pnpm 11 (via corepack). Pinned Node to `22` in `.nvmrc`.
+- Scaffolded Next.js 16 app (TypeScript, Tailwind 4, ESLint, App Router, no `src/` dir,
+  import alias `@/*`, package manager pnpm) into `/projects/RealFairTrust/`.
+- Copied kit files to repo root: `CLAUDE.md`, `START-HERE.md`, `docs/`, `brand/`.
+- `git init` → initial commit `chore: project kickoff (phase 0 docs, brand, scaffolding)`.
+- Created **private** GitHub repo: https://github.com/TakeItoCloud/RealFairTrust
+- Pushed `main`; created and pushed `develop`.
+- Branch protection on `main` could not be applied via API — requires GitHub Pro for
+  private repos. Apply manually: Settings → Branches → Add rule → require PR, no direct push.
+
+**Open / awaiting user**
+- Enable branch protection on `main` in GitHub (free plan: do it in the UI under Settings →
+  Branches, or upgrade to GitHub Pro).
+- Wire Vercel: import https://github.com/TakeItoCloud/RealFairTrust, add env vars, confirm
+  preview deployments appear per branch.
+- Confirm domain TLD owned (realfairtrust.com / .pt) before Vercel domain step.
+- User go-ahead to begin **Phase 1 (IA & Content)** in the planning chat.
+
+**Next**
+- On "Proceed to Phase 1": author `docs/phases/PHASE-1-information-architecture.md` (+ .docx)
+  — sitemap, page purposes, content model, user flows. Then hand to Claude Code to scaffold
+  empty routes behind feature flags.
+
+---
+
 ## 2026-05-29 · Phase 0 — APPROVED + handoff prepared
 
 **Done**
