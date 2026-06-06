@@ -6,31 +6,34 @@
 
 ---
 
-## 2026-05-30 · Phase 3 → Phase 4 — Design system wired (feat/design-system)
+## 2026-05-29 · Phase 4 — GREENLIT (build starting)
 
 **Done**
-- Created `app/design-tokens.css` (copy of `brand/design/design-tokens.css`) alongside `globals.css`.
-- Replaced `app/globals.css` with the Tailwind v4 `@theme` mapping from `brand/design/tailwind-theme.css`:
-  imports `tailwindcss`, imports `./design-tokens.css`, maps all `--rft-*` tokens into Tailwind
-  utilities (`bg-ink`, `text-gold`, `font-display`, `rounded-lg`, `max-w-content`, etc.).
-- Updated `app/layout.tsx`: loads **Fraunces** (display, `--rft-font-display`) and **Inter**
-  (UI/body, `--rft-font-sans`) via `next/font/google`; injects CSS variables into `<html className>`.
-- Updated `CLAUDE.md`, `DECISIONS.md`, `WORKLOG.md` to kit versions.
-- `pnpm build` and `pnpm tsc --noEmit` pass clean; `pnpm dev` starts with no errors (200 on `/` and `/comprar`).
-- PR opened: feat/design-system → develop.
+- Locked §8 decisions #36–41 (Radix primitives, Framer Motion, poster-only hero, build
+  dashboard/admin shells, generate ~12 consultants/~24 listings seed; build greenlit).
+- Updated `CLAUDE.md` status to "Phase 4 building, milestone 4.0 next".
 
-**What's wired**
-- All Tailwind utilities resolve to brand values — e.g. `bg-ink` = `#0E0F16`, `text-gold` = `#C8A86B`.
-- Fraunces loads as `font-display` (headings); Inter loads as `font-sans` (body/UI).
-- Base `body {}` defaults: dark background, cream text, Inter, 1.6 line-height.
-- No pages rebuilt yet — only the theme layer. Placeholder pages remain.
+**Next (Claude Code)**
+- Verify prereqs on `develop` (theme/tokens wired, fonts loaded, routes scaffolded), then
+  build **milestone 4.0 Foundations** on `feat/foundations` → PR → preview → review.
+
+---
+
+## 2026-05-29 · Phase 4 — Frontend Build (plan drafted)
+
+**Done**
+- Authored `docs/phases/PHASE-4-frontend-build.md` (+ branded `.docx`): architecture rules
+  (data-access abstraction for non-breaking Phase 5 swap), milestone build order
+  (4.0→4.5), component acceptance criteria, mock/seed-data spec, quality gates.
+- Updated `CLAUDE.md` status to Phase 4 (plan drafted, awaiting sign-off).
 
 **Open / awaiting user**
-- Merge PR and approve **Phase 4 — Frontend Build** to begin building styled components + pages.
+- Answer §8 (Radix primitives, Framer Motion, hero media, dashboard shells, seed data).
+- Go-ahead to hand the plan to Claude Code and start building (milestone 4.0).
 
-**Next (Phase 4, Claude Code)**
-- Build shared layout shell (Header + Footer), then page-by-page per Phase 2 wireframes and
-  Phase 3 design system, starting with Home and Consultores.
+**Next (Claude Code, on approval)**
+- Build per milestone on `feat/*` branches → PR → Vercel preview → review → merge → next.
+  Start with 4.0 Foundations (types, data layer, mock seed, i18n, base layout).
 
 ---
 

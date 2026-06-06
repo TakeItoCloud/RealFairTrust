@@ -106,10 +106,11 @@ per-agent, filtered per city). Full detail: `docs/notes/city-expansion.md`.
 
 ## Current status
 
-**Phase 3 — Visual Design & Design System: APPROVED.** Direction = **D1 Midnight Gold**
-(hybrid: dark marketing + warm light content + verified-green); type = **Fraunces + Inter**;
-dark-first theme with warm light content. Tokens are FINAL in `brand/design/design-tokens.css`
-and mapped for Tailwind v4 in `brand/design/tailwind-theme.css`. Decisions #31–35 locked.
-**Next:** Phase 4 — Frontend Build (awaiting user go-ahead). Claude Code builds the styled
-component kit + pages from the design system on mock/seed data; integrate `tailwind-theme.css`
-into `app/globals.css` and load fonts in `app/layout.tsx` first. Phases 0–2 also APPROVED.
+**Phase 4 — Frontend Build: GREENLIT, building.** §8 answered (Radix primitives, Framer
+Motion, poster-only hero, build dashboard/admin shells, ~12 consultants/~24 listings seed) —
+decisions #36–41. Build proceeds per the milestone order in
+`docs/phases/PHASE-4-frontend-build.md`: **next = milestone 4.0 Foundations** (types, data
+layer, mock seed, i18n, base layout) on `feat/foundations` → PR → preview → review → merge,
+then 4.1 → 4.5. Phases 0–3 APPROVED; design system finalized.
+**Prereqs to verify on `develop` first:** Tailwind theme + tokens wired into
+`app/globals.css`; Fraunces + Inter loaded in `app/layout.tsx`; empty routes scaffolded.

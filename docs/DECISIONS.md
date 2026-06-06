@@ -40,3 +40,9 @@
 | 33 | 2026-05-29 | **Theme: dark-first marketing + warm light content sections** | |
 | 34 | 2026-05-29 | **Keep the verified-green accent** for verified/success only | |
 | 35 | 2026-05-29 | **Phase 3 APPROVED**; tokens final (`design-tokens.css` + `tailwind-theme.css`) | Proceed to Phase 4 (Frontend Build) on user go-ahead |
+| 36 | 2026-05-29 | **Phase 4: Radix primitives** for Dialog/Dropdown/Tabs/Select; bespoke Tailwind elsewhere | a11y without a heavy UI kit |
+| 37 | 2026-05-29 | **Phase 4: Framer Motion** for subtle, reduced-motion-safe motion | |
+| 38 | 2026-05-29 | **Phase 4: hero media = optimized poster only** for now; add video loop with real footage | |
+| 39 | 2026-05-29 | **Phase 4: build dashboard + admin + auth as UI shells now** (mock data; real auth Phase 5) | |
+| 40 | 2026-05-29 | **Phase 4: generate ~12 consultants / ~24 listings seed set** (Lisboa+Porto, incl. Rising Talent) | |
+| 41 | 2026-05-29 | **Phase 4 build GREENLIT** — start milestone 4.0 (Foundations) | feat/* → PR → preview → review → merge per milestone |
