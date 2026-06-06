@@ -3,7 +3,8 @@
    PHASE 4 INTEGRATION:
    This replaces the default `app/globals.css`. It (1) loads Tailwind, (2) imports the
    brand tokens, and (3) maps them into Tailwind's @theme so utilities like `bg-ink`,
-   `text-gold`, `font-display`, `rounded-lg` resolve to brand values. */
+   `text-gold`, `font-display`, `rounded-lg` resolve to brand values.
+   Copy `design-tokens.css` next to `app/globals.css` (or adjust the import path). */
 
 @import "tailwindcss";
 @import "./design-tokens.css";
@@ -45,3 +46,9 @@ body {
   font-family: var(--rft-font-sans);
   line-height: var(--rft-lh-body);
 }
+
+/* FONT LOADING (Phase 4, in app/layout.tsx) — use next/font/google:
+   import { Fraunces, Inter } from "next/font/google";
+   const display = Fraunces({ subsets:["latin"], variable:"--rft-font-display", display:"swap" });
+   const sans    = Inter({    subsets:["latin"], variable:"--rft-font-sans",    display:"swap" });
+   …then add `${display.variable} ${sans.variable}` to <html className>. */

@@ -6,6 +6,51 @@
 
 ---
 
+## 2026-05-30 · Phase 3 → Phase 4 — Design system wired (feat/design-system)
+
+**Done**
+- Created `app/design-tokens.css` (copy of `brand/design/design-tokens.css`) alongside `globals.css`.
+- Replaced `app/globals.css` with the Tailwind v4 `@theme` mapping from `brand/design/tailwind-theme.css`:
+  imports `tailwindcss`, imports `./design-tokens.css`, maps all `--rft-*` tokens into Tailwind
+  utilities (`bg-ink`, `text-gold`, `font-display`, `rounded-lg`, `max-w-content`, etc.).
+- Updated `app/layout.tsx`: loads **Fraunces** (display, `--rft-font-display`) and **Inter**
+  (UI/body, `--rft-font-sans`) via `next/font/google`; injects CSS variables into `<html className>`.
+- Updated `CLAUDE.md`, `DECISIONS.md`, `WORKLOG.md` to kit versions.
+- `pnpm build` and `pnpm tsc --noEmit` pass clean; `pnpm dev` starts with no errors (200 on `/` and `/comprar`).
+- PR opened: feat/design-system → develop.
+
+**What's wired**
+- All Tailwind utilities resolve to brand values — e.g. `bg-ink` = `#0E0F16`, `text-gold` = `#C8A86B`.
+- Fraunces loads as `font-display` (headings); Inter loads as `font-sans` (body/UI).
+- Base `body {}` defaults: dark background, cream text, Inter, 1.6 line-height.
+- No pages rebuilt yet — only the theme layer. Placeholder pages remain.
+
+**Open / awaiting user**
+- Merge PR and approve **Phase 4 — Frontend Build** to begin building styled components + pages.
+
+**Next (Phase 4, Claude Code)**
+- Build shared layout shell (Header + Footer), then page-by-page per Phase 2 wireframes and
+  Phase 3 design system, starting with Home and Consultores.
+
+---
+
+## 2026-05-29 · Phase 3 — APPROVED + tokens finalized
+
+**Done**
+- User chose **D1 Midnight Gold** + all recommendations. Locked decisions #31–35.
+- Finalized `brand/design/design-tokens.css` (FINAL header) and added
+  `brand/design/tailwind-theme.css` (Tailwind v4 @theme mapping + font-loading note).
+- Updated `CLAUDE.md` status to "Phase 3 APPROVED".
+
+**Open / awaiting user**
+- Go-ahead to start **Phase 4 — Frontend Build** (I author the build plan; Claude Code builds).
+
+**Next (Phase 4, Claude Code)**
+- Replace `app/globals.css` with the Tailwind theme mapping; load Fraunces + Inter in
+  `app/layout.tsx`; then build the component kit + pages from the design system on mock/seed data.
+
+---
+
 ## 2026-05-29 · Phase 3 — Visual Design & Design System (drafted)
 
 **Done**
@@ -92,71 +137,6 @@
 **Next (Claude Code, optional now)**
 - Scaffold empty routes/folders per route contracts (§3–§4) behind feature flags — no
   feature logic yet. Then update this worklog.
-
----
-
-## 2026-05-29 · Phase 1 — Route scaffold (feat/route-scaffold → PR to develop)
-
-**Done**
-- Installed `next-intl 4.12` and configured localized pathnames + hidden PT default locale
-  (`localePrefix: 'as-needed'`). All stable route contracts from Phase 1 §4 are locked.
-- Created `i18n/routing.ts` (all PT ↔ EN pathname mappings), `i18n/request.ts`,
-  `i18n/navigation.ts` (type-safe Link/redirect/useRouter), and `middleware.ts`.
-- Created `messages/pt.json` + `messages/en.json` (scaffold strings; real copy in Phase 4).
-- Created `lib/flags.ts` with all Phase 1 §9 feature flags (all false until explicitly flipped).
-- Restructured app: removed default `app/page.tsx`; created `app/[locale]/layout.tsx` (NextIntl
-  provider + locale validation + `generateStaticParams`) and one placeholder page per route.
-- **24 routes scaffolded** (all in `app/[locale]/`):
-  - Public live: `/` · `/comprar` · `/arrendar` · `/vender` · `/imovel/[id]` · `/consultores` ·
-    `/consultores/aderir` · `/consultores/[slug]` · `/como-funciona` · `/sobre` · `/contacto` ·
-    `/privacidade` · `/termos` · `/cookies`
-  - Public flagged OFF: `/recursos` (calls `notFound()` while `flags.recursos = false`)
-  - Auth (agent/admin): `/entrar` · `/registar` · `/painel` · `/painel/perfil` ·
-    `/painel/imoveis` · `/painel/contactos` · `/painel/desempenho`
-  - Admin: `/admin` · `/admin/consultores` · `/admin/moderacao` · `/admin/avaliacoes`
-- EN equivalents are fully wired via `i18n/routing.ts` pathnames (e.g. `/comprar` ↔ `/en/buying`).
-- `pnpm build` and `pnpm tsc --noEmit` both pass clean.
-- PR opened: feat/route-scaffold → develop.
-
-**Known gap**
-- `<html lang>` attribute is not locale-aware yet (root layout owns `<html>` but can't read
-  params; fix in Phase 4 via middleware-set header read in root layout).
-
-**Open / awaiting user**
-- Review and merge PR.
-- Answer Phase 1 §10 open questions if not already answered, then approve Phase 2 (wireframes).
-
-**Next**
-- On "Proceed to Phase 2": author wireframes for every route above in the planning chat, then
-  hand to Claude Code to build the actual UI components in Phase 4.
-
----
-
-## 2026-05-29 · Setup — Project scaffolded, git + GitHub initialized
-
-**Done**
-- Installed Node 22 (via nvm) + pnpm 11 (via corepack). Pinned Node to `22` in `.nvmrc`.
-- Scaffolded Next.js 16 app (TypeScript, Tailwind 4, ESLint, App Router, no `src/` dir,
-  import alias `@/*`, package manager pnpm) into `/projects/RealFairTrust/`.
-- Copied kit files to repo root: `CLAUDE.md`, `START-HERE.md`, `docs/`, `brand/`.
-- `git init` → initial commit `chore: project kickoff (phase 0 docs, brand, scaffolding)`.
-- Created **private** GitHub repo: https://github.com/TakeItoCloud/RealFairTrust
-- Pushed `main`; created and pushed `develop`.
-- Branch protection on `main` could not be applied via API — requires GitHub Pro for
-  private repos. Apply manually: Settings → Branches → Add rule → require PR, no direct push.
-
-**Open / awaiting user**
-- Enable branch protection on `main` in GitHub (free plan: do it in the UI under Settings →
-  Branches, or upgrade to GitHub Pro).
-- Wire Vercel: import https://github.com/TakeItoCloud/RealFairTrust, add env vars, confirm
-  preview deployments appear per branch.
-- Confirm domain TLD owned (realfairtrust.com / .pt) before Vercel domain step.
-- User go-ahead to begin **Phase 1 (IA & Content)** in the planning chat.
-
-**Next**
-- On "Proceed to Phase 1": author `docs/phases/PHASE-1-information-architecture.md` (+ .docx)
-  — sitemap, page purposes, content model, user flows. Then hand to Claude Code to scaffold
-  empty routes behind feature flags.
 
 ---
 

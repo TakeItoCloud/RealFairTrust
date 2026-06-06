@@ -106,11 +106,10 @@ per-agent, filtered per city). Full detail: `docs/notes/city-expansion.md`.
 
 ## Current status
 
-**Phase 3 — Visual Design & Design System: DRAFTED, awaiting sign-off.** Three visual
-directions in `brand/design/` (midnight-gold, warm-trust, modern-confident), the design
-tokens in `brand/design/design-tokens.css`, and the full spec in
-`docs/phases/PHASE-3-visual-design-system.md` (+ branded `.docx`). Four §9 questions need
-answers — chiefly **pick a direction** (rec: D1 Midnight Gold, hybridised with warm light
-sections + verified-green).
-**Next on approval:** finalize tokens + Tailwind theme, then Phase 4 — Frontend Build (Claude
-Code builds the styled kit + pages from this system on mock/seed data). Phases 0–2 APPROVED.
+**Phase 3 — Visual Design & Design System: APPROVED.** Direction = **D1 Midnight Gold**
+(hybrid: dark marketing + warm light content + verified-green); type = **Fraunces + Inter**;
+dark-first theme with warm light content. Tokens are FINAL in `brand/design/design-tokens.css`
+and mapped for Tailwind v4 in `brand/design/tailwind-theme.css`. Decisions #31–35 locked.
+**Next:** Phase 4 — Frontend Build (awaiting user go-ahead). Claude Code builds the styled
+component kit + pages from the design system on mock/seed data; integrate `tailwind-theme.css`
+into `app/globals.css` and load fonts in `app/layout.tsx` first. Phases 0–2 also APPROVED.
