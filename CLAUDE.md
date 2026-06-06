@@ -106,7 +106,11 @@ per-agent, filtered per city). Full detail: `docs/notes/city-expansion.md`.
 
 ## Current status
 
-**Phase 0 — Discovery & Strategy: APPROVED.** All decisions locked (see `DECISIONS.md`).
-**Next:** run `docs/SETUP.md` to stand up the project, then begin **Phase 1 — IA & Content**
-(sitemap, page purposes, content model, user flows). See `START-HERE.md` for the exact
-sequence and the prompts to give Claude Code.
+**Phase 3 — Visual Design & Design System: DRAFTED, awaiting sign-off.** Three visual
+directions in `brand/design/` (midnight-gold, warm-trust, modern-confident), the design
+tokens in `brand/design/design-tokens.css`, and the full spec in
+`docs/phases/PHASE-3-visual-design-system.md` (+ branded `.docx`). Four §9 questions need
+answers — chiefly **pick a direction** (rec: D1 Midnight Gold, hybridised with warm light
+sections + verified-green).
+**Next on approval:** finalize tokens + Tailwind theme, then Phase 4 — Frontend Build (Claude
+Code builds the styled kit + pages from this system on mock/seed data). Phases 0–2 APPROVED.

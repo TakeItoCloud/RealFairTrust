@@ -22,3 +22,16 @@
 | 15 | 2026-05-29 | **Language: PT primary, EN secondary**; PT default on first visit | next-intl |
 | 16 | 2026-05-29 | **Rating weights** 35/25/15/15/10 (satisfaction/close/responsiveness/conversion/activity) | Confirmed |
 | 17 | 2026-05-29 | **Phase 0 APPROVED** | Proceed to Phase 1 on user go-ahead |
+| 18 | 2026-05-29 | **Score display:** badges + "building track record" first; reveal numeric score once sample is statistically fair | |
+| 19 | 2026-05-29 | **Seller lead routing:** client picks from top matching local consultants + "suggest for me" option | |
+| 20 | 2026-05-29 | **Listings at launch:** seed a curated, clearly-flagged set per launch city until real inventory builds | |
+| 21 | 2026-05-29 | **Locale URLs:** localized pathnames + hidden default locale (PT) | next-intl |
+| 22 | 2026-05-29 | **Consultant slug:** name-based, numeric suffix on collision | Applied as recommended default |
+| 23 | 2026-05-29 | **Reviews at launch:** collect now with manual moderation; verification gating in Phase 2 | |
+| 24 | 2026-05-29 | **Phase 1 APPROVED** | Proceed to Phase 2 (Wireframes) on user go-ahead |
+| 25 | 2026-05-29 | **Hero:** conversion-first split (value + inline search left); contained media panel right — poster-first, optional muted looping video on idle (off under reduced-motion), with a "Top this month" proof card | Keeps video safely; see `brand/wireframes/wf-home-hero-recommended.svg` |
+| 26 | 2026-05-29 | **Leaderboard:** card grid + "Top this month" badges + subtle rank in Ranked view | |
+| 27 | 2026-05-29 | **ConsultantCard:** badges + close rate + specialization (full sub-signal breakdown on profile) | |
+| 28 | 2026-05-29 | **Contact form:** inline on desktop; sticky button → full form on mobile | |
+| 29 | 2026-05-29 | **Dashboard nav:** left side-nav | |
+| 30 | 2026-05-29 | **Phase 2 APPROVED** | Proceed to Phase 3 (Visual Design) on user go-ahead |

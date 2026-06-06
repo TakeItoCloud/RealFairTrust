@@ -1,0 +1,70 @@
+/* RealFairTrust — Design Tokens
+   Recommended direction: MIDNIGHT GOLD (dark, premium) with warm light content
+   sections and a verified-green accent. Finalize once a direction is chosen in Phase 3.
+   Consumed by Tailwind theme + global CSS in Phase 4. */
+
+:root {
+  /* ---- Brand / accent ---- */
+  --rft-gold:        #C8A86B;   /* primary accent */
+  --rft-gold-bright: #D6B87A;   /* hover / highlight */
+  --rft-gold-deep:   #8A6D2F;   /* on light backgrounds, links */
+  --rft-verified:    #3FB984;   /* verified / success only */
+  --rft-verified-ink:#1E8F62;   /* verified text on light */
+
+  /* ---- Dark surfaces (hero, marketing, dashboard chrome) ---- */
+  --rft-bg:        #0E0F16;
+  --rft-bg-elev:   #12141D;
+  --rft-surface:   #181B26;     /* cards on dark */
+  --rft-line:      rgba(200,168,107,0.20);
+  --rft-text:      #F5F1EA;     /* body on dark */
+  --rft-text-mut:  rgba(245,241,234,0.66);
+
+  /* ---- Warm light surfaces (content, legal, how-it-works) ---- */
+  --rft-bg-warm:    #FBF8F2;
+  --rft-surface-lt: #FFFFFF;
+  --rft-line-lt:    #E6DECF;
+  --rft-text-lt:    #211C17;    /* body on light */
+  --rft-text-lt-mut:rgba(33,28,23,0.62);
+
+  /* ---- Typography ---- */
+  --rft-font-display: "Fraunces", Georgia, "Times New Roman", serif; /* headlines */
+  --rft-font-sans:    "Inter", system-ui, Arial, sans-serif;          /* UI / body */
+  --rft-fs-eyebrow: 0.75rem;   /* 12px, uppercase, +0.18em tracking */
+  --rft-fs-body:    1rem;      /* 16px */
+  --rft-fs-lead:    1.125rem;  /* 18px */
+  --rft-fs-h3:      1.375rem;  /* 22px */
+  --rft-fs-h2:      1.875rem;  /* 30px */
+  --rft-fs-h1:      2.5rem;    /* 40px */
+  --rft-fs-display: 3.5rem;    /* 56px */
+  --rft-lh-tight: 1.1;
+  --rft-lh-body:  1.6;
+
+  /* ---- Spacing scale (4px base) ---- */
+  --rft-s1: 4px;  --rft-s2: 8px;  --rft-s3: 12px; --rft-s4: 16px;
+  --rft-s5: 24px; --rft-s6: 32px; --rft-s7: 48px; --rft-s8: 64px; --rft-s9: 96px;
+
+  /* ---- Radius ---- */
+  --rft-r-sm: 6px; --rft-r-md: 10px; --rft-r-lg: 16px; --rft-r-pill: 999px;
+
+  /* ---- Elevation ---- */
+  --rft-shadow-card: 0 1px 0 rgba(255,255,255,0.02), 0 8px 24px rgba(0,0,0,0.35);
+  --rft-shadow-lt:   0 1px 2px rgba(33,28,23,0.06), 0 10px 30px rgba(33,28,23,0.08);
+  --rft-glow-gold:   0 0 0 1px var(--rft-line), 0 8px 30px rgba(200,168,107,0.10);
+
+  /* ---- Layout ---- */
+  --rft-content-max: 1200px;
+  --rft-gutter: var(--rft-s5);
+
+  /* ---- Motion ---- */
+  --rft-dur-fast: 150ms; --rft-dur: 220ms; --rft-ease: cubic-bezier(.2,.6,.2,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --rft-dur-fast: 0ms; --rft-dur: 0ms; }
+}
+
+/* Contrast notes (target WCAG AA):
+   - Body text on dark = cream (--rft-text) on --rft-bg  → high contrast, OK.
+   - Gold is for accents, large headings, icons, borders — NOT for body copy on dark.
+   - On light, links/accents use --rft-gold-deep (#8A6D2F) for sufficient contrast.
+   - Verified green used only for the verified/success state, never as body text. */

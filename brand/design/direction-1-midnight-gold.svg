@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Direction 1 Midnight Gold">
+  <defs>
+    <linearGradient id="d1bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E0F16"/><stop offset="1" stop-color="#15131A"/>
+    </linearGradient>
+    <linearGradient id="d1img" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241F19"/><stop offset="1" stop-color="#3A3026"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#d1bg)"/>
+  <!-- header -->
+  <text x="40" y="46" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#F5F1EA">Real<tspan fill="#C8A86B">Fair</tspan>Trust</text>
+  <g font-family="Arial, sans-serif" font-size="12.5" fill="rgba(245,241,234,0.72)">
+    <text x="430" y="44">Comprar</text><text x="510" y="44">Arrendar</text><text x="595" y="44">Vender</text><text x="675" y="44">Consultores</text>
+  </g>
+  <rect x="790" y="26" width="130" height="32" rx="16" fill="#C8A86B"/><text x="812" y="47" font-family="Arial, sans-serif" font-size="12.5" font-weight="700" fill="#15130E">Falar com consultor</text>
+  <line x1="40" y1="72" x2="920" y2="72" stroke="rgba(200,168,107,0.18)"/>
+  <!-- left -->
+  <text x="40" y="132" font-family="Arial, sans-serif" font-size="11" letter-spacing="3" fill="#C8A86B">MERIT-BASED REAL ESTATE · PORTUGAL</text>
+  <text x="38" y="186" font-family="Georgia, serif" font-size="42" fill="#F5F1EA">Find an agent who</text>
+  <text x="38" y="232" font-family="Georgia, serif" font-size="42" fill="#F5F1EA"><tspan fill="#C8A86B">earns</tspan> your trust.</text>
+  <text x="40" y="270" font-family="Arial, sans-serif" font-size="14.5" fill="rgba(245,241,234,0.7)">Consultants ranked fairly on performance — refreshed every month.</text>
+  <rect x="40" y="292" width="186" height="46" rx="8" fill="#C8A86B"/><text x="66" y="320" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#15130E">Find a consultant</text>
+  <rect x="238" y="292" width="150" height="46" rx="8" fill="none" stroke="#C8A86B"/><text x="262" y="320" font-family="Arial, sans-serif" font-size="14" fill="#E7D9BD">Browse homes</text>
+  <rect x="40" y="356" width="448" height="48" rx="8" fill="#181B26" stroke="rgba(200,168,107,0.35)"/>
+  <text x="58" y="385" font-family="Arial, sans-serif" font-size="13" fill="rgba(245,241,234,0.6)">Cidade ▾        Comprar / Arrendar ▾</text>
+  <rect x="392" y="364" width="84" height="32" rx="6" fill="#C8A86B"/><text x="410" y="385" font-family="Arial, sans-serif" font-size="12.5" font-weight="700" fill="#15130E">Procurar</text>
+  <text x="40" y="438" font-family="Arial, sans-serif" font-size="12" fill="rgba(245,241,234,0.5)">120+ verified consultants · scored monthly · choose with confidence</text>
+  <!-- right media -->
+  <rect x="528" y="100" width="392" height="392" rx="14" fill="url(#d1img)" stroke="rgba(200,168,107,0.25)"/>
+  <text x="724" y="250" font-family="Arial, sans-serif" font-size="12" fill="rgba(245,241,234,0.35)" text-anchor="middle">image / contained video</text>
+  <!-- proof card -->
+  <rect x="556" y="372" width="336" height="96" rx="12" fill="rgba(14,15,22,0.82)" stroke="rgba(200,168,107,0.5)"/>
+  <text x="574" y="398" font-family="Arial, sans-serif" font-size="10" letter-spacing="2" fill="#C8A86B">TOP THIS MONTH · LISBOA</text>
+  <circle cx="592" cy="432" r="18" fill="#3A3026" stroke="rgba(200,168,107,0.4)"/>
+  <text x="622" y="428" font-family="Georgia, serif" font-size="15" fill="#F5F1EA">Ana Silva</text>
+  <rect x="622" y="438" width="64" height="16" rx="8" fill="rgba(63,185,132,0.16)" stroke="#3FB984"/><text x="630" y="450" font-family="Arial, sans-serif" font-size="9.5" fill="#7FE3BC">✓ Verified</text>
+  <text x="830" y="450" font-family="Arial, sans-serif" font-size="11" fill="#C8A86B">→ ver perfil</text>
+  <!-- label -->
+  <text x="40" y="516" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#C8A86B">DIRECTION 1 — MIDNIGHT GOLD</text>
+  <text x="320" y="516" font-family="Arial, sans-serif" font-size="11" fill="rgba(245,241,234,0.55)">editorial luxury · serif display · high contrast · closest to current equity</text>
+</svg>

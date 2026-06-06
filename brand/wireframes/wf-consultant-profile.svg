@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1120" font-family="Arial, sans-serif" role="img" aria-label="Consultant profile wireframe">
+  <style>
+    .band{fill:#F3F4F6;stroke:#C7CBD1}.box{fill:#E4E7EB;stroke:#B6BBC2}.img{fill:#DDE0E5;stroke:#B6BBC2}
+    .btn{fill:#fff;stroke:#8C9099}.lbl{fill:#5B616B;font-size:13px}.tag{fill:#9AA0A8;font-size:11px}
+    .line{fill:#CBD0D6}.hd{fill:#6B7280;font-size:12px;letter-spacing:1px}.badge{fill:#D6DAE0;stroke:#B6BBC2}
+  </style>
+  <rect width="960" height="1120" fill="#fff"/>
+  <rect class="band" x="0" y="0" width="960" height="56"/><rect class="box" x="24" y="18" width="90" height="20"/><text class="lbl" x="30" y="33">logo</text>
+  <rect class="btn" x="812" y="14" width="124" height="28" rx="14"/><text class="lbl" x="828" y="32">Falar c/ consultor</text>
+  <!-- profile header -->
+  <text class="hd" x="24" y="86">PROFILE HEADER</text><rect class="band" x="24" y="96" width="912" height="120"/>
+  <circle class="img" cx="96" cy="156" r="40"/><text class="tag" x="78" y="160">photo</text>
+  <rect class="line" x="160" y="124" width="200" height="16"/>
+  <rect class="badge" x="160" y="150" width="80" height="18" rx="9"/><text class="tag" x="170" y="163">Verified</text>
+  <text class="tag" x="160" y="192">city · specialization · languages</text>
+  <!-- performance panel -->
+  <text class="hd" x="24" y="244">PERFORMANCE (the key panel)</text><rect class="band" x="24" y="254" width="912" height="220"/>
+  <rect class="box" x="48" y="276" width="380" height="176"/>
+  <text class="tag" x="64" y="300">Current month · rank in city/specialization</text>
+  <rect class="badge" x="64" y="312" width="100" height="22" rx="11"/><text class="tag" x="78" y="327">Top this month</text>
+  <text class="lbl" x="64" y="364">Sub-signals:</text>
+  <rect class="line" x="64" y="378" width="300" height="8"/><text class="tag" x="64" y="398">satisfaction</text>
+  <rect class="line" x="64" y="404" width="240" height="8"/><text class="tag" x="64" y="424">close rate</text>
+  <rect class="line" x="64" y="430" width="200" height="8"/><text class="tag" x="320" y="424">responsiveness · conversion</text>
+  <rect class="box" x="452" y="276" width="460" height="176"/>
+  <text class="tag" x="470" y="300">STATE NOTES (alternates):</text>
+  <text class="tag" x="470" y="330">A) "Building track record" — if sample too small</text>
+  <text class="tag" x="470" y="356">B) Rising Talent tag — if &lt; 6 months</text>
+  <text class="tag" x="470" y="382">Number hidden until statistically fair (badges only)</text>
+  <text class="tag" x="470" y="420">→ how scoring works</text>
+  <!-- about -->
+  <text class="hd" x="24" y="502">ABOUT / BIO</text><rect class="band" x="24" y="512" width="912" height="80"/>
+  <rect class="line" x="48" y="536" width="700" height="8"/><rect class="line" x="48" y="556" width="600" height="8"/>
+  <!-- listings -->
+  <text class="hd" x="24" y="620">ACTIVE LISTINGS</text><rect class="band" x="24" y="630" width="912" height="150"/>
+  <rect class="box" x="48" y="650" width="270" height="110"/><rect class="img" x="48" y="650" width="270" height="66"/><text class="tag" x="170" y="688">img</text>
+  <rect class="box" x="345" y="650" width="270" height="110"/><rect class="img" x="345" y="650" width="270" height="66"/><text class="tag" x="466" y="688">img</text>
+  <rect class="box" x="642" y="650" width="270" height="110"/><rect class="img" x="642" y="650" width="270" height="66"/><text class="tag" x="763" y="688">img</text>
+  <!-- reviews -->
+  <text class="hd" x="24" y="810">VERIFIED REVIEWS</text><rect class="band" x="24" y="820" width="912" height="120"/>
+  <rect class="box" x="48" y="840" width="864" height="40"/><text class="tag" x="64" y="864">★★★★★  review comment · date</text>
+  <rect class="box" x="48" y="888" width="864" height="40"/><text class="tag" x="64" y="912">★★★★☆  review comment · date   (empty: "No reviews yet")</text>
+  <!-- contact -->
+  <text class="hd" x="24" y="970">CONTACT (lead form)</text><rect class="band" x="24" y="980" width="912" height="110"/>
+  <rect class="box" x="48" y="1000" width="400" height="26"/><text class="tag" x="60" y="1018">name</text>
+  <rect class="box" x="48" y="1034" width="400" height="26"/><text class="tag" x="60" y="1052">contact</text>
+  <rect class="box" x="468" y="1000" width="300" height="60"/><text class="tag" x="480" y="1034">message</text>
+  <rect class="btn" x="788" y="1020" width="124" height="36" rx="6"/><text class="lbl" x="806" y="1043">Request a call</text>
+</svg>
