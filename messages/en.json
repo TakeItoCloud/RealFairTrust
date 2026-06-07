@@ -1,6 +1,85 @@
 {
-  "scaffold": {
-    "note": "Page scaffold — real content in Phase 4",
-    "comingSoon": "Coming soon"
+  "common": {
+    "brand": "RealFairTrust",
+    "tagline": "Real estate · Fair · Trust",
+    "demoBadge": "Demo data",
+    "comingSoon": "Coming soon",
+    "loading": "Loading…",
+    "nav": {
+      "buy": "Buy",
+      "rent": "Rent",
+      "sell": "Sell",
+      "consultants": "Consultants",
+      "howItWorks": "How it works"
+    },
+    "cta": {
+      "talkToConsultant": "Talk to a consultant",
+      "findConsultant": "Find a consultant",
+      "browseHomes": "Browse homes",
+      "joinAsConsultant": "Join as a consultant"
+    },
+    "actions": {
+      "viewProfile": "View profile",
+      "contact": "Contact",
+      "viewListing": "View listing",
+      "seeAll": "See all",
+      "search": "Search",
+      "filter": "Filter",
+      "clear": "Clear",
+      "loadMore": "Load more",
+      "submit": "Submit",
+      "back": "Back"
+    },
+    "language": {
+      "label": "Language",
+      "pt": "Português",
+      "en": "English"
+    }
+  },
+  "score": {
+    "buildingTrackRecord": "Building track record",
+    "risingTalent": "Rising Talent",
+    "verified": "Verified",
+    "topThisMonth": "Top this month",
+    "rank": "Rank",
+    "closeRate": "Close rate",
+    "responsiveness": "Response time",
+    "satisfaction": "Satisfaction",
+    "conversion": "Conversion",
+    "activity": "Activity",
+    "noReviews": "No reviews yet",
+    "reviews": "reviews"
+  },
+  "specializations": {
+    "apartments": "Apartments",
+    "luxury": "Luxury",
+    "investment": "Investment",
+    "rental": "Rental",
+    "commercial": "Commercial",
+    "first-time-buyers": "First-time buyers",
+    "relocation": "Relocation",
+    "new-developments": "New developments"
+  },
+  "listing": {
+    "forSale": "For sale",
+    "forRent": "For rent",
+    "perMonth": "/mo",
+    "beds": "Beds",
+    "baths": "Baths",
+    "area": "Area",
+    "energyCert": "Energy certificate"
+  },
+  "footer": {
+    "explore": "Explore",
+    "forConsultants": "For consultants",
+    "company": "Company",
+    "legal": "Legal",
+    "about": "About",
+    "contact": "Contact",
+    "resources": "Resources",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies",
+    "rights": "All rights reserved."
   }
 }
