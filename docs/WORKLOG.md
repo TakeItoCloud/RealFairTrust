@@ -6,6 +6,54 @@
 
 ---
 
+## 2026-05-29 · Phase 4 — GREENLIT (build starting)
+
+**Done**
+- Locked §8 decisions #36–41 (Radix primitives, Framer Motion, poster-only hero, build
+  dashboard/admin shells, generate ~12 consultants/~24 listings seed; build greenlit).
+- Updated `CLAUDE.md` status to "Phase 4 building, milestone 4.0 next".
+
+**Next (Claude Code)**
+- Verify prereqs on `develop` (theme/tokens wired, fonts loaded, routes scaffolded), then
+  build **milestone 4.0 Foundations** on `feat/foundations` → PR → preview → review.
+
+---
+
+## 2026-05-29 · Phase 4 — Frontend Build (plan drafted)
+
+**Done**
+- Authored `docs/phases/PHASE-4-frontend-build.md` (+ branded `.docx`): architecture rules
+  (data-access abstraction for non-breaking Phase 5 swap), milestone build order
+  (4.0→4.5), component acceptance criteria, mock/seed-data spec, quality gates.
+- Updated `CLAUDE.md` status to Phase 4 (plan drafted, awaiting sign-off).
+
+**Open / awaiting user**
+- Answer §8 (Radix primitives, Framer Motion, hero media, dashboard shells, seed data).
+- Go-ahead to hand the plan to Claude Code and start building (milestone 4.0).
+
+**Next (Claude Code, on approval)**
+- Build per milestone on `feat/*` branches → PR → Vercel preview → review → merge → next.
+  Start with 4.0 Foundations (types, data layer, mock seed, i18n, base layout).
+
+---
+
+## 2026-05-29 · Phase 3 — APPROVED + tokens finalized
+
+**Done**
+- User chose **D1 Midnight Gold** + all recommendations. Locked decisions #31–35.
+- Finalized `brand/design/design-tokens.css` (FINAL header) and added
+  `brand/design/tailwind-theme.css` (Tailwind v4 @theme mapping + font-loading note).
+- Updated `CLAUDE.md` status to "Phase 3 APPROVED".
+
+**Open / awaiting user**
+- Go-ahead to start **Phase 4 — Frontend Build** (I author the build plan; Claude Code builds).
+
+**Next (Phase 4, Claude Code)**
+- Replace `app/globals.css` with the Tailwind theme mapping; load Fraunces + Inter in
+  `app/layout.tsx`; then build the component kit + pages from the design system on mock/seed data.
+
+---
+
 ## 2026-05-29 · Phase 3 — Visual Design & Design System (drafted)
 
 **Done**
@@ -92,71 +140,6 @@
 **Next (Claude Code, optional now)**
 - Scaffold empty routes/folders per route contracts (§3–§4) behind feature flags — no
   feature logic yet. Then update this worklog.
-
----
-
-## 2026-05-29 · Phase 1 — Route scaffold (feat/route-scaffold → PR to develop)
-
-**Done**
-- Installed `next-intl 4.12` and configured localized pathnames + hidden PT default locale
-  (`localePrefix: 'as-needed'`). All stable route contracts from Phase 1 §4 are locked.
-- Created `i18n/routing.ts` (all PT ↔ EN pathname mappings), `i18n/request.ts`,
-  `i18n/navigation.ts` (type-safe Link/redirect/useRouter), and `middleware.ts`.
-- Created `messages/pt.json` + `messages/en.json` (scaffold strings; real copy in Phase 4).
-- Created `lib/flags.ts` with all Phase 1 §9 feature flags (all false until explicitly flipped).
-- Restructured app: removed default `app/page.tsx`; created `app/[locale]/layout.tsx` (NextIntl
-  provider + locale validation + `generateStaticParams`) and one placeholder page per route.
-- **24 routes scaffolded** (all in `app/[locale]/`):
-  - Public live: `/` · `/comprar` · `/arrendar` · `/vender` · `/imovel/[id]` · `/consultores` ·
-    `/consultores/aderir` · `/consultores/[slug]` · `/como-funciona` · `/sobre` · `/contacto` ·
-    `/privacidade` · `/termos` · `/cookies`
-  - Public flagged OFF: `/recursos` (calls `notFound()` while `flags.recursos = false`)
-  - Auth (agent/admin): `/entrar` · `/registar` · `/painel` · `/painel/perfil` ·
-    `/painel/imoveis` · `/painel/contactos` · `/painel/desempenho`
-  - Admin: `/admin` · `/admin/consultores` · `/admin/moderacao` · `/admin/avaliacoes`
-- EN equivalents are fully wired via `i18n/routing.ts` pathnames (e.g. `/comprar` ↔ `/en/buying`).
-- `pnpm build` and `pnpm tsc --noEmit` both pass clean.
-- PR opened: feat/route-scaffold → develop.
-
-**Known gap**
-- `<html lang>` attribute is not locale-aware yet (root layout owns `<html>` but can't read
-  params; fix in Phase 4 via middleware-set header read in root layout).
-
-**Open / awaiting user**
-- Review and merge PR.
-- Answer Phase 1 §10 open questions if not already answered, then approve Phase 2 (wireframes).
-
-**Next**
-- On "Proceed to Phase 2": author wireframes for every route above in the planning chat, then
-  hand to Claude Code to build the actual UI components in Phase 4.
-
----
-
-## 2026-05-29 · Setup — Project scaffolded, git + GitHub initialized
-
-**Done**
-- Installed Node 22 (via nvm) + pnpm 11 (via corepack). Pinned Node to `22` in `.nvmrc`.
-- Scaffolded Next.js 16 app (TypeScript, Tailwind 4, ESLint, App Router, no `src/` dir,
-  import alias `@/*`, package manager pnpm) into `/projects/RealFairTrust/`.
-- Copied kit files to repo root: `CLAUDE.md`, `START-HERE.md`, `docs/`, `brand/`.
-- `git init` → initial commit `chore: project kickoff (phase 0 docs, brand, scaffolding)`.
-- Created **private** GitHub repo: https://github.com/TakeItoCloud/RealFairTrust
-- Pushed `main`; created and pushed `develop`.
-- Branch protection on `main` could not be applied via API — requires GitHub Pro for
-  private repos. Apply manually: Settings → Branches → Add rule → require PR, no direct push.
-
-**Open / awaiting user**
-- Enable branch protection on `main` in GitHub (free plan: do it in the UI under Settings →
-  Branches, or upgrade to GitHub Pro).
-- Wire Vercel: import https://github.com/TakeItoCloud/RealFairTrust, add env vars, confirm
-  preview deployments appear per branch.
-- Confirm domain TLD owned (realfairtrust.com / .pt) before Vercel domain step.
-- User go-ahead to begin **Phase 1 (IA & Content)** in the planning chat.
-
-**Next**
-- On "Proceed to Phase 1": author `docs/phases/PHASE-1-information-architecture.md` (+ .docx)
-  — sitemap, page purposes, content model, user flows. Then hand to Claude Code to scaffold
-  empty routes behind feature flags.
 
 ---
 
