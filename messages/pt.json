@@ -5,6 +5,7 @@
     "demoBadge": "Dados de demonstração",
     "comingSoon": "Em breve",
     "loading": "A carregar…",
+    "close": "Fechar",
     "nav": {
       "buy": "Comprar",
       "rent": "Arrendar",
@@ -36,6 +37,11 @@
       "en": "English"
     }
   },
+  "header": {
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "login": "Entrar"
+  },
   "score": {
     "buildingTrackRecord": "A construir histórico",
     "risingTalent": "Talento em ascensão",
@@ -47,6 +53,8 @@
     "satisfaction": "Satisfação",
     "conversion": "Conversão",
     "activity": "Atividade",
+    "composite": "Pontuação global",
+    "target": "Meta",
     "noReviews": "Ainda sem avaliações",
     "reviews": "avaliações"
   },
@@ -67,7 +75,61 @@
     "beds": "Quartos",
     "baths": "Casas de banho",
     "area": "Área",
-    "energyCert": "Certificado energético"
+    "energyCert": "Certificado energético",
+    "by": "por"
+  },
+  "filter": {
+    "type": "Tipo",
+    "all": "Todos",
+    "sale": "Comprar",
+    "rent": "Arrendar",
+    "region": "Zona",
+    "allRegions": "Todas as zonas",
+    "beds": "Quartos (mín.)",
+    "anyBeds": "Qualquer",
+    "minPrice": "Preço mín.",
+    "maxPrice": "Preço máx.",
+    "search": "Pesquisar imóveis",
+    "clear": "Limpar filtros",
+    "results": "{count, plural, =0 {Sem resultados} one {# resultado} other {# resultados}}"
+  },
+  "leadForm": {
+    "title": "Contactar",
+    "name": "Nome",
+    "namePlaceholder": "O seu nome",
+    "contact": "Email ou telefone",
+    "contactPlaceholder": "email@exemplo.pt",
+    "message": "Mensagem",
+    "messagePlaceholder": "Como podemos ajudar?",
+    "intent": "Pretendo",
+    "intentBuy": "Comprar",
+    "intentRent": "Arrendar",
+    "intentSell": "Vender",
+    "submit": "Enviar pedido",
+    "sending": "A enviar…",
+    "successTitle": "Pedido enviado",
+    "successDesc": "Entraremos em contacto em breve.",
+    "sendAnother": "Enviar outro",
+    "errors": {
+      "nameRequired": "Indique o seu nome",
+      "contactRequired": "Indique um email ou telefone",
+      "contactInvalid": "Email ou telefone inválido",
+      "messageTooShort": "A mensagem é demasiado curta"
+    }
+  },
+  "review": {
+    "verifiedClient": "Cliente verificado"
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Seguinte",
+    "page": "Página {page} de {total}"
+  },
+  "cookie": {
+    "message": "Usamos cookies para melhorar a sua experiência. Ao continuar, aceita a nossa política de cookies.",
+    "accept": "Aceitar",
+    "decline": "Recusar",
+    "learnMore": "Saber mais"
   },
   "footer": {
     "explore": "Explorar",

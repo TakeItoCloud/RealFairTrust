@@ -6,6 +6,45 @@
 
 ---
 
+## 2026-06-07 · Phase 4 — Milestone 4.2 Composite components (feat/components → PR)
+
+**Done**
+- Merged PR #5 (4.1 Primitives) into `develop`.
+- Built the composite kit in `components/` from the 4.1 primitives (Midnight Gold, tokens only):
+  Header (+ LanguageSwitcher + mobile hamburger), Footer, ConsultantCard, PropertyCard,
+  ScoreBreakdown (5 sub-signals vs target band), FilterBar (state synced to URL query),
+  LeadForm (RHF + Zod, inline validation, success state, **no persistence**), ReviewItem,
+  Pagination, CookieBanner (localStorage consent), Modal (Radix Dialog), Toast (Radix, with
+  `ToastProvider`/`useToast`). Plus `MediaImage` (image fallback) and `lib/format.ts`.
+- Architecture rule honored: components take data via props typed from `lib/types.ts`; none
+  import mock data. The dev page fetches via `lib/data` and passes plain objects down.
+- ConsultantCard = badges + close rate + specialization; composite number never on the card;
+  Rising Talent + Verified where applicable (#27, #18). PropertyCard shows the `isDemo`
+  "Demo data" badge visibly (#20).
+- A11y: keyboard-operable, shared gold focus ring, aria-invalid on form fields, AA-minded
+  contrast, reduced-motion-safe (CookieBanner via `useReducedMotion`), image/avatar fallbacks.
+- PT/EN: all chrome via next-intl; extended `messages/{pt,en}.json` (header, filter, leadForm,
+  review, pagination, cookie) at key parity.
+- **Dev showcase** `/dev/components` renders every composite with real seed data (wrapped in a
+  NextIntl provider since it's outside the `[locale]` tree).
+- **Dev gate hardened**: `flags.devShowcase = process.env.NODE_ENV !== 'production'` — the
+  `/dev/*` routes 404 in `next build`/`next start` and on Vercel, so they can never ship live.
+  Review them locally with `pnpm dev`.
+- `pnpm build` ✅, `tsc --noEmit` ✅ (strict), `eslint` ✅. Added `react-hook-form`, `zod`,
+  `@hookform/resolvers`, `@radix-ui/react-dialog`, `@radix-ui/react-toast`.
+- Note: couldn't capture a live runtime render in this sandbox (the dev server is killed by
+  the environment); build/tsc/eslint are green and the build compiles the full composite graph.
+
+**Open / awaiting user**
+- Review `/dev/components` locally via `pnpm dev` (it's gated off on the Vercel preview now).
+- Merge the 4.2 PR.
+
+**Next (Claude Code, on merge)**
+- Milestone **4.3 Public pages** (`feat/pages-public`): Home → Consultores → Consultant
+  profile → Buy/Rent → Property detail → Vender → static pages, per Phase 2 + Phase 3.
+
+---
+
 ## 2026-06-07 · Phase 4 — Milestone 4.1 Primitives (feat/ui-primitives → PR)
 
 **Done**

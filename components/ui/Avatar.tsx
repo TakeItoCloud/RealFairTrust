@@ -1,9 +1,10 @@
 'use client'
 
-// Avatar — consultant/user image with a graceful initials fallback. The seed photo
-// paths don't exist yet, so a broken <img> must never render: on error (or with no src)
-// we show initials on a gold-tinted disc.
-import { useState } from 'react'
+// Avatar — consultant/user image with a graceful initials fallback. The seed photo paths
+// don't exist yet, so a broken <img> (with its alt text) must never show. The initials sit
+// underneath and the image only becomes visible once it has actually loaded; a mount check
+// resolves load/error events that fired before React hydration could attach the handlers.
+import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 
 interface AvatarProps {
@@ -30,11 +31,24 @@ function initials(name: string): string {
 }
 
 export function Avatar({ src, name, size = 'md', className }: AvatarProps) {
-  const [failed, setFailed] = useState(false)
-  const showImage = src && !failed
+  const imgRef = useRef<HTMLImageElement>(null)
+  const [loaded, setLoaded] = useState(false)
+  const [errored, setErrored] = useState(!src)
+
+  useEffect(() => {
+    const img = imgRef.current
+    if (!img || !img.complete) return
+    // The load/error fired before hydration — reconcile from the element's final state.
+    const setter = img.naturalWidth > 0 ? setLoaded : setErrored
+    setter(true)
+  }, [])
+
+  const showImage = src && !errored
 
   return (
     <span
+      role="img"
+      aria-label={name}
       className={cn(
         'relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full',
         'bg-gold/15 font-display font-semibold text-gold ring-1 ring-line select-none',
@@ -42,19 +56,23 @@ export function Avatar({ src, name, size = 'md', className }: AvatarProps) {
         className,
       )}
     >
+      <span aria-hidden className="absolute inset-0 flex items-center justify-center">
+        {initials(name)}
+      </span>
       {showImage ? (
         // eslint-disable-next-line @next/next/no-img-element -- needs onError fallback; next/image optimization comes in 4.5
         <img
+          ref={imgRef}
           src={src}
-          alt={name}
-          className="h-full w-full object-cover"
-          onError={() => setFailed(true)}
+          alt=""
+          className={cn(
+            'absolute inset-0 h-full w-full object-cover transition-opacity duration-200',
+            loaded ? 'opacity-100' : 'opacity-0',
+          )}
+          onLoad={() => setLoaded(true)}
+          onError={() => setErrored(true)}
         />
-      ) : (
-        <span aria-label={name} role="img">
-          {initials(name)}
-        </span>
-      )}
+      ) : null}
     </span>
   )
 }
