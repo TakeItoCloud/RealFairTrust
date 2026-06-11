@@ -21,6 +21,10 @@ interface FilterBarProps {
 const TYPES: (ListingType | 'all')[] = ['all', 'sale', 'rent']
 const BEDS = ['1', '2', '3', '4']
 
+// Non-empty sentinels for the "no filter" option of each Select (Radix forbids value="").
+const REGION_ALL = 'all'
+const BEDS_ANY = 'any'
+
 export function FilterBar({ regions, resultCount, className }: FilterBarProps) {
   const t = useTranslations('filter')
   const router = useRouter()
@@ -31,9 +35,12 @@ export function FilterBar({ regions, resultCount, className }: FilterBarProps) {
   const [minPrice, setMinPrice] = useState(searchParams.get('minPrice') ?? '')
   const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') ?? '')
 
+  // Radix Select forbids an empty-string item value (it's reserved for clearing), so the
+  // "all/any" options use non-empty sentinels. A sentinel means "no filter": it's never
+  // written to the URL, and an absent param maps back to the sentinel so that option shows.
   const currentType = searchParams.get('type') ?? 'all'
-  const currentRegion = searchParams.get('region') ?? ''
-  const currentBeds = searchParams.get('beds') ?? ''
+  const currentRegion = searchParams.get('region') ?? REGION_ALL
+  const currentBeds = searchParams.get('beds') ?? BEDS_ANY
 
   function commit(updates: Record<string, string | undefined>) {
     const params = new URLSearchParams(searchParams.toString())
@@ -53,10 +60,13 @@ export function FilterBar({ regions, resultCount, className }: FilterBarProps) {
   }
 
   const regionOptions = [
-    { value: '', label: t('allRegions') },
+    { value: REGION_ALL, label: t('allRegions') },
     ...regions.map((r) => ({ value: r.id, label: r.name })),
   ]
-  const bedsOptions = [{ value: '', label: t('anyBeds') }, ...BEDS.map((b) => ({ value: b, label: `${b}+` }))]
+  const bedsOptions = [
+    { value: BEDS_ANY, label: t('anyBeds') },
+    ...BEDS.map((b) => ({ value: b, label: `${b}+` })),
+  ]
 
   return (
     <div className={cn('rounded-lg border border-line bg-surface p-4', className)}>
@@ -88,7 +98,7 @@ export function FilterBar({ regions, resultCount, className }: FilterBarProps) {
           <Select
             options={regionOptions}
             value={currentRegion}
-            onValueChange={(v) => commit({ region: v || undefined })}
+            onValueChange={(v) => commit({ region: v === REGION_ALL ? undefined : v })}
             aria-label={t('region')}
             className="w-44"
           />
@@ -99,7 +109,7 @@ export function FilterBar({ regions, resultCount, className }: FilterBarProps) {
           <Select
             options={bedsOptions}
             value={currentBeds}
-            onValueChange={(v) => commit({ beds: v || undefined })}
+            onValueChange={(v) => commit({ beds: v === BEDS_ANY ? undefined : v })}
             aria-label={t('beds')}
             className="w-28"
           />
