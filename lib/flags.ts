@@ -7,6 +7,7 @@ export const flags = {
   matchMode: false,        // "Suggest a consultant" match mode — Phase 2
   mapView: false,          // Map view on listing pages — Phase 2+
   verifiedReviews: false,  // Verified-transaction review gating — Phase 2
+  devShowcase: true,       // Dev-only component showcase (/dev/*). Set false before production.
 } as const
 
 export type FeatureFlag = keyof typeof flags

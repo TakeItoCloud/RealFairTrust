@@ -11,6 +11,8 @@
   --rft-gold-deep:   #8A6D2F;   /* on light backgrounds, links */
   --rft-verified:    #3FB984;   /* verified / success only */
   --rft-verified-ink:#1E8F62;   /* verified text on light */
+  --rft-danger:      #E5484D;   /* error / invalid state only */
+  --rft-danger-ink:  #C2333A;   /* error text on light */
 
   /* ---- Dark surfaces (hero, marketing, dashboard chrome) ---- */
   --rft-bg:        #0E0F16;

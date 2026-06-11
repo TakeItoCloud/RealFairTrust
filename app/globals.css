@@ -19,6 +19,9 @@
   --color-gold-bright:  var(--rft-gold-bright);
   --color-gold-deep:    var(--rft-gold-deep);    /* accents on light */
   --color-verified:     var(--rft-verified);     /* verified / success only */
+  --color-verified-ink: var(--rft-verified-ink);
+  --color-danger:       var(--rft-danger);        /* error / invalid only */
+  --color-danger-ink:   var(--rft-danger-ink);
   --color-warm:         var(--rft-bg-warm);      /* warm light section bg */
   --color-surface-lt:   var(--rft-surface-lt);   /* cards on light */
   --color-ink-on-light: var(--rft-text-lt);      /* body text on light */
