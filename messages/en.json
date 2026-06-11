@@ -5,6 +5,7 @@
     "demoBadge": "Demo data",
     "comingSoon": "Coming soon",
     "loading": "Loading…",
+    "close": "Close",
     "nav": {
       "buy": "Buy",
       "rent": "Rent",
@@ -36,6 +37,11 @@
       "en": "English"
     }
   },
+  "header": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "login": "Log in"
+  },
   "score": {
     "buildingTrackRecord": "Building track record",
     "risingTalent": "Rising Talent",
@@ -47,6 +53,8 @@
     "satisfaction": "Satisfaction",
     "conversion": "Conversion",
     "activity": "Activity",
+    "composite": "Overall score",
+    "target": "Target",
     "noReviews": "No reviews yet",
     "reviews": "reviews"
   },
@@ -67,7 +75,61 @@
     "beds": "Beds",
     "baths": "Baths",
     "area": "Area",
-    "energyCert": "Energy certificate"
+    "energyCert": "Energy certificate",
+    "by": "by"
+  },
+  "filter": {
+    "type": "Type",
+    "all": "All",
+    "sale": "Buy",
+    "rent": "Rent",
+    "region": "Area",
+    "allRegions": "All areas",
+    "beds": "Beds (min)",
+    "anyBeds": "Any",
+    "minPrice": "Min price",
+    "maxPrice": "Max price",
+    "search": "Search listings",
+    "clear": "Clear filters",
+    "results": "{count, plural, =0 {No results} one {# result} other {# results}}"
+  },
+  "leadForm": {
+    "title": "Get in touch",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "contact": "Email or phone",
+    "contactPlaceholder": "email@example.com",
+    "message": "Message",
+    "messagePlaceholder": "How can we help?",
+    "intent": "I want to",
+    "intentBuy": "Buy",
+    "intentRent": "Rent",
+    "intentSell": "Sell",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "successTitle": "Request sent",
+    "successDesc": "We'll be in touch shortly.",
+    "sendAnother": "Send another",
+    "errors": {
+      "nameRequired": "Please enter your name",
+      "contactRequired": "Please enter an email or phone",
+      "contactInvalid": "Invalid email or phone",
+      "messageTooShort": "Your message is too short"
+    }
+  },
+  "review": {
+    "verifiedClient": "Verified client"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {page} of {total}"
+  },
+  "cookie": {
+    "message": "We use cookies to improve your experience. By continuing, you accept our cookie policy.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "learnMore": "Learn more"
   },
   "footer": {
     "explore": "Explore",

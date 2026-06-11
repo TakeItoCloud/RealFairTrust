@@ -7,7 +7,10 @@ export const flags = {
   matchMode: false,        // "Suggest a consultant" match mode — Phase 2
   mapView: false,          // Map view on listing pages — Phase 2+
   verifiedReviews: false,  // Verified-transaction review gating — Phase 2
-  devShowcase: true,       // Dev-only component showcase (/dev/*). Set false before production.
+  // Dev-only component showcase (/dev/*). Hard-gated to non-production: NODE_ENV is
+  // 'production' in `next build`/`next start` and on Vercel, so it can never ship live.
+  // Review it locally with `pnpm dev`.
+  devShowcase: process.env.NODE_ENV !== 'production',
 } as const
 
 export type FeatureFlag = keyof typeof flags
