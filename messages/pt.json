@@ -88,6 +88,19 @@
       "button": "Aderir como consultor"
     }
   },
+  "consultores": {
+    "eyebrow": "Consultores",
+    "title": "Encontre o consultor certo",
+    "subtitle": "Compare por desempenho real dos últimos 90 dias. Recalculado mensalmente.",
+    "specialization": "Especialização",
+    "allSpecializations": "Todas",
+    "viewRanked": "Ranking",
+    "viewAll": "Todos",
+    "risingTalentTitle": "Talentos em ascensão",
+    "risingTalentSubtitle": "Consultores com menos de 6 meses — avaliados em separado, para uma competição justa.",
+    "suggestForMe": "Sugerir um para mim",
+    "empty": "Nenhum consultor corresponde aos filtros."
+  },
   "score": {
     "buildingTrackRecord": "A construir histórico",
     "risingTalent": "Talento em ascensão",

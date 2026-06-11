@@ -6,6 +6,29 @@
 
 ---
 
+## 2026-06-07 · Phase 4 — Milestone 4.3 Consultores page (feat/pages-public, PR #7)
+
+**Done** (same branch/PR as Home; milestone merges once all public pages reviewed)
+- Built **Consultores discovery + leaderboard** `app/[locale]/consultores/page.tsx` (server;
+  data via `lib/data`, components by props): intro header; `ConsultantFilters` (region +
+  specialization selects + **Ranked/All toggle**, URL-synced, sentinel = no filter);
+  separate **Rising Talent board** for consultants < 6 months (Decision #6), shown in Ranked
+  view; main **ConsultantCard grid** with subtle rank (Decision #26); `UrlPagination`.
+- Rule: in **All** view rising consultants appear inline in the one paginated grid, so the
+  separate board only shows in **Ranked** view (no duplication).
+- "Suggest one for me" entry is structurally present but **gated off** (`flags.matchMode`).
+- New components: `components/consultores/ConsultantFilters.tsx`, `components/UrlPagination.tsx`
+  (reusable URL-synced pagination). Added `consultores` namespace to `messages/{pt,en}.json`
+  at parity. No hardcoded strings; responsive; AA; reduced-motion-safe.
+- `pnpm build` ✅, `tsc --noEmit` ✅, `eslint` ✅. Dev verified: `/consultores` + `/en/consultants`
+  200; Ranked shows the board, All hides it and paginates everyone (rising on p2); region +
+  specialization filters work; EN parity confirmed.
+
+**Next (follow-ups, same branch):** Consultant profile → Buy/Rent → Property detail → Vender
+→ static pages.
+
+---
+
 ## 2026-06-07 · Phase 4 — Milestone 4.3 Home page (feat/pages-public → PR)
 
 **Done**

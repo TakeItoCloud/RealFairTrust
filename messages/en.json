@@ -88,6 +88,19 @@
       "button": "Join as a consultant"
     }
   },
+  "consultores": {
+    "eyebrow": "Consultants",
+    "title": "Find the right consultant",
+    "subtitle": "Compare on real performance over the last 90 days. Recomputed monthly.",
+    "specialization": "Specialization",
+    "allSpecializations": "All",
+    "viewRanked": "Ranked",
+    "viewAll": "All",
+    "risingTalentTitle": "Rising Talent",
+    "risingTalentSubtitle": "Consultants active under 6 months — judged separately, for a fair race.",
+    "suggestForMe": "Suggest one for me",
+    "empty": "No consultants match your filters."
+  },
   "score": {
     "buildingTrackRecord": "Building track record",
     "risingTalent": "Rising Talent",
