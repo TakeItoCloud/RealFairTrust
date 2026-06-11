@@ -6,6 +6,40 @@
 
 ---
 
+## 2026-06-07 · Phase 4 — Milestone 4.1 Primitives (feat/ui-primitives → PR)
+
+**Done**
+- Merged PR #4 (4.0 Foundations) into `develop`.
+- Built the styled primitive kit in `components/ui/` (Midnight Gold, theme tokens only):
+  Button (primary/secondary/ghost × sm/md/lg; hover/focus/disabled/loading; tap target ≥44px),
+  Eyebrow, SectionWrapper (dark/warm/surface tones), Input, Textarea, Select (Radix —
+  the a11y-critical one, #36), StarRating (read-only fractional + interactive keyboard
+  radiogroup), PerformanceBadge (top/building/score per #18), VerifiedBadge (green only, #34),
+  RisingTalentTag, RankIndicator (top-3 gold), Skeleton, EmptyState, StatTile, Avatar
+  (initials fallback so missing photo paths never render broken images), plus an inline icon set.
+- A11y: shared gold focus ring (`components/ui/styles.ts`), keyboard-operable controls,
+  aria-invalid styling, dark + light variants, AA-minded contrast, no hardcoded strings
+  (labels are props).
+- Framer Motion used sparingly + reduced-motion-safe (EmptyState/StatTile fade-in via
+  `useReducedMotion`); Button press is motion-safe CSS.
+- Added a semantic `--rft-danger` token (additive) for invalid states; mapped `danger`/
+  `verified-ink` into the Tailwind theme; added `container-page` was already present.
+- Dev-only showcase at `/dev/primitives` (flag `devShowcase`, served outside the i18n tree
+  and excluded from middleware; not linked in nav) rendering every primitive in all states.
+- `pnpm build` ✅ (route prerenders), `tsc --noEmit` ✅ (strict), `eslint` ✅. Installed
+  `@radix-ui/react-select` + `framer-motion`.
+
+**Open / awaiting user**
+- Review the kit on the preview (`/dev/primitives`); merge the 4.1 PR.
+- Set `flags.devShowcase = false` before production (it gates the dev route).
+
+**Next (Claude Code, on merge)**
+- Milestone **4.2 Composite components** (`feat/components`): Header/Footer, ConsultantCard,
+  PropertyCard, ScoreBreakdown, FilterBar, LeadForm (RHF + Zod), ReviewItem, Pagination,
+  CookieBanner, Modal, Toast.
+
+---
+
 ## 2026-06-07 · Phase 4 — Milestone 4.0 Foundations (feat/foundations → PR)
 
 **Done**
