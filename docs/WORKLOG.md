@@ -6,6 +6,34 @@
 
 ---
 
+## 2026-06-07 · Phase 4 — Milestone 4.3 Home page (feat/pages-public → PR)
+
+**Done**
+- Merged PR #6 (4.2 Composites) into `develop`.
+- Wired the **real Header + Footer + CookieBanner** into `app/[locale]/layout.tsx` (replaces
+  the bare provider; all locale pages now get site chrome).
+- Built the **Home page** `app/[locale]/page.tsx` (server component; data via `lib/data`):
+  - **HomeHero** (client) — split hero: value + inline search (→ `/comprar?q=`) + dual CTAs
+    on the left; optimized **poster-only** gradient panel on the right (no video yet, #38)
+    with a **"Top deste mês" proof card** surfacing the current #1 consultant.
+  - **HowItWorks** (client) — 3-step explainer, reduced-motion-safe staggered fade-in.
+  - **Top consultants** — 3 `ConsultantCard`s from `getConsultants({view:'ranked'})` → `/consultores`.
+  - **Featured listings** — `PropertyCard`s from `getListings()` → `/comprar`.
+  - **Clients/consultants split** (warm light section), **Trust band**, **Join CTA** (→ `/consultores/aderir`).
+- Added `home` namespace to `messages/{pt,en}.json` at full key parity. No hardcoded strings.
+- Responsive (mobile/tablet/desktop), AA-minded, reduced-motion-safe.
+- `pnpm build` ✅, `tsc --noEmit` ✅, `eslint` ✅. Dev smoke: `/` and `/en` both 200, all
+  sections render with localized copy, Header/Footer localized, no runtime errors.
+
+**Open / awaiting user**
+- Review the Home page on `pnpm dev` (`/` and `/en`); merge the PR.
+
+**Next (Claude Code, follow-ups)**
+- Remaining 4.3 public pages: Consultores → Consultant profile → Buy/Rent → Property detail
+  → Vender → static pages (Como funciona, Aderir, Sobre, Contacto, Legal).
+
+---
+
 ## 2026-06-07 · Phase 4 — Milestone 4.2 Composite components (feat/components → PR)
 
 **Done**

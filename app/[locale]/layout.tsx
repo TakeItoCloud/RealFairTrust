@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import { CookieBanner, Footer, Header } from '@/components'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -19,7 +20,12 @@ export default async function LocaleLayout({
   const messages = await getMessages()
   return (
     <NextIntlClientProvider messages={messages}>
-      {children}
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </div>
+      <CookieBanner />
     </NextIntlClientProvider>
   )
 }
