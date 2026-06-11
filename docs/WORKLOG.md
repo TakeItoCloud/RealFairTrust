@@ -6,6 +6,38 @@
 
 ---
 
+## 2026-06-07 · Phase 4 — Milestone 4.0 Foundations (feat/foundations → PR)
+
+**Done**
+- Merged PR #3 (design system) into `develop`; verified prereqs (themed `globals.css` +
+  `design-tokens.css`; Fraunces + Inter in `app/layout.tsx`; routes scaffolded). `pnpm build` clean.
+- Committed Phase 4 plan + status docs separately (`docs: phase 4 plan + status through phase 3`).
+- Built milestone **4.0 Foundations** on `feat/foundations`:
+  - `lib/types.ts` — full Phase 1 §6 content model (Region, User, ConsultantProfile,
+    PerformanceScore, Property, Lead, Review, Transaction, Opportunity) + composite view types
+    (ConsultantSummary/Detail, ListingWithAgent/Detail) + filter inputs + `RATING_WEIGHTS` (#16).
+  - `lib/data/` repository (the only data surface for pages): `getConsultants`, `getConsultant`,
+    `getListings`, `getListing`, `createLead` (+ helpers `getRegions/getRegion/getLeads`). All
+    **async** so the Phase 5 Supabase swap is signature-compatible. Reads `lib/mock/` only.
+  - `lib/mock/` typed seed fixtures: Lisboa + Porto regions (district→city→zone); 12 consultants
+    (8 established + 4 Rising Talent); per-consultant `PerformanceScore` with composite computed
+    from the locked weights and ranks per region; some low-sample → "building track record"
+    (Diogo has 0 reviews for the empty state); 24 sale/rent listings (all `isDemo: true`, #20);
+    ~21 reviews; 5 leads.
+  - next-intl PT/EN message scaffolding (`messages/pt.json` + `en.json`) — common/nav/cta/actions,
+    score states, specializations, listing, footer. Keys at parity across both locales.
+  - Base typography rhythm + `container-page` utility in `app/globals.css`.
+- Quality: `pnpm build` ✅, `tsc --noEmit` ✅ (strict), `eslint` ✅ clean. No pages/components yet.
+
+**Open / awaiting user**
+- Review/merge the 4.0 PR. Then milestone **4.1 Primitives** (`feat/ui-primitives`).
+
+**Next (Claude Code, on merge)**
+- 4.1: Button, Eyebrow, SectionWrapper, Input/Select/Textarea, StarRating, PerformanceBadge,
+  VerifiedBadge, RisingTalentTag, RankIndicator, Skeleton, EmptyState, StatTile.
+
+---
+
 ## 2026-05-29 · Phase 4 — GREENLIT (build starting)
 
 **Done**

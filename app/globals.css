@@ -45,3 +45,35 @@ body {
   font-family: var(--rft-font-sans);
   line-height: var(--rft-lh-body);
 }
+
+/* Typography rhythm — headings use Fraunces at token sizes; body uses Inter. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--rft-font-display);
+    line-height: var(--rft-lh-tight);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  h1 { font-size: var(--rft-fs-h1); }
+  h2 { font-size: var(--rft-fs-h2); }
+  h3 { font-size: var(--rft-fs-h3); }
+  h4 { font-size: var(--rft-fs-lead); }
+  p { font-size: var(--rft-fs-body); }
+  a { color: inherit; text-decoration: none; }
+  ::selection {
+    background: var(--rft-gold);
+    color: var(--rft-bg);
+  }
+}
+
+/* Page container — centers content at the brand max width with consistent gutters.
+   Use as `class="container-page"` on section wrappers. */
+@utility container-page {
+  width: 100%;
+  max-width: var(--rft-content-max);
+  margin-inline: auto;
+  padding-inline: var(--rft-gutter);
+}

@@ -1,6 +1,85 @@
 {
-  "scaffold": {
-    "note": "Estrutura de página — conteúdo real na Fase 4",
-    "comingSoon": "Em breve"
+  "common": {
+    "brand": "RealFairTrust",
+    "tagline": "Imobiliário · Justo · Confiança",
+    "demoBadge": "Dados de demonstração",
+    "comingSoon": "Em breve",
+    "loading": "A carregar…",
+    "nav": {
+      "buy": "Comprar",
+      "rent": "Arrendar",
+      "sell": "Vender",
+      "consultants": "Consultores",
+      "howItWorks": "Como funciona"
+    },
+    "cta": {
+      "talkToConsultant": "Falar com um consultor",
+      "findConsultant": "Encontrar um consultor",
+      "browseHomes": "Ver imóveis",
+      "joinAsConsultant": "Aderir como consultor"
+    },
+    "actions": {
+      "viewProfile": "Ver perfil",
+      "contact": "Contactar",
+      "viewListing": "Ver imóvel",
+      "seeAll": "Ver todos",
+      "search": "Pesquisar",
+      "filter": "Filtrar",
+      "clear": "Limpar",
+      "loadMore": "Ver mais",
+      "submit": "Enviar",
+      "back": "Voltar"
+    },
+    "language": {
+      "label": "Idioma",
+      "pt": "Português",
+      "en": "English"
+    }
+  },
+  "score": {
+    "buildingTrackRecord": "A construir histórico",
+    "risingTalent": "Talento em ascensão",
+    "verified": "Verificado",
+    "topThisMonth": "Top deste mês",
+    "rank": "Posição",
+    "closeRate": "Taxa de fecho",
+    "responsiveness": "Tempo de resposta",
+    "satisfaction": "Satisfação",
+    "conversion": "Conversão",
+    "activity": "Atividade",
+    "noReviews": "Ainda sem avaliações",
+    "reviews": "avaliações"
+  },
+  "specializations": {
+    "apartments": "Apartamentos",
+    "luxury": "Luxo",
+    "investment": "Investimento",
+    "rental": "Arrendamento",
+    "commercial": "Comercial",
+    "first-time-buyers": "Primeira compra",
+    "relocation": "Relocalização",
+    "new-developments": "Novos empreendimentos"
+  },
+  "listing": {
+    "forSale": "Venda",
+    "forRent": "Arrendamento",
+    "perMonth": "/mês",
+    "beds": "Quartos",
+    "baths": "Casas de banho",
+    "area": "Área",
+    "energyCert": "Certificado energético"
+  },
+  "footer": {
+    "explore": "Explorar",
+    "forConsultants": "Para consultores",
+    "company": "Empresa",
+    "legal": "Legal",
+    "about": "Sobre",
+    "contact": "Contacto",
+    "resources": "Recursos",
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "cookies": "Cookies",
+    "rights": "Todos os direitos reservados."
   }
 }
