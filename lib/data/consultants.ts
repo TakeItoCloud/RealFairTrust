@@ -7,6 +7,7 @@ import type {
   ConsultantSummary,
   Review,
 } from '@/lib/types'
+import { toListingWithAgent } from './listings'
 
 /** Overall 0–5 rating for one review (mean of its four dimensions). */
 function reviewRating(r: Review): number {
@@ -66,6 +67,7 @@ export async function getConsultant(slug: string): Promise<ConsultantDetail | nu
   const agentListings = listings
     .filter((l) => l.agentId === consultant.id && l.status === 'active')
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    .map(toListingWithAgent)
 
   return { ...summary, reviews: reviewsFor(consultant.id), listings: agentListings }
 }

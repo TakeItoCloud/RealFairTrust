@@ -235,7 +235,7 @@ export interface ConsultantSummary extends ConsultantProfile {
 
 export interface ConsultantDetail extends ConsultantSummary {
   reviews: Review[]
-  listings: Property[]
+  listings: ListingWithAgent[]
 }
 
 /** Light agent reference embedded in listing cards (photo + name + rating chip). */

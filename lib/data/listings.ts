@@ -24,7 +24,8 @@ function regionName(id: string | null): string | null {
   return id ? (regions.find((r) => r.id === id)?.name ?? null) : null
 }
 
-function withAgent(p: Property): ListingWithAgent {
+/** Compose a Property into a ListingWithAgent (agent ref + resolved region/zone names). */
+export function toListingWithAgent(p: Property): ListingWithAgent {
   return {
     ...p,
     agent: agentRef(p.agentId),
@@ -32,6 +33,7 @@ function withAgent(p: Property): ListingWithAgent {
     zoneName: regionName(p.zoneId),
   }
 }
+const withAgent = toListingWithAgent
 
 export async function getListings(filter: ListingFilter = {}): Promise<ListingWithAgent[]> {
   let result = listings.filter((l) => l.status === 'active')

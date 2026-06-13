@@ -102,6 +102,16 @@
     "suggestForMe": "Sugerir um para mim",
     "empty": "Nenhum consultor corresponde aos filtros."
   },
+  "profile": {
+    "contact": "Contactar",
+    "contactName": "Contactar {name}",
+    "about": "Sobre",
+    "performance": "Desempenho",
+    "listings": "Imóveis deste consultor",
+    "reviews": "Avaliações",
+    "noListings": "Sem imóveis ativos de momento.",
+    "meritoScore": "Pontuação de mérito"
+  },
   "score": {
     "buildingTrackRecord": "A construir histórico",
     "risingTalent": "Talento em ascensão",

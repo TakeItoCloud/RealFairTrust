@@ -124,4 +124,5 @@
      #D19E1D was only ≈ 2.3:1 on ivory, so it was darkened to #8C5E12 for small label text.
    - Cards (--surface-card #10233C) sit one step above the base with a white-0.07 hairline so
      they separate on both the navy base and the glow centre.
-   - Verified green (#3FB984) used for verified/success and the energy-cert chip; never body text. */
+   - Verified green (#3FB984) used ONLY for verified/success (Decision #34); never body text or
+     other metadata (energy cert uses the neutral muted label, same as quartos/wc/m²). */
