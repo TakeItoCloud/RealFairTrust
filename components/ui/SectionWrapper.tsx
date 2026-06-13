@@ -16,7 +16,9 @@ interface SectionWrapperProps {
 }
 
 const toneClasses: Record<NonNullable<SectionWrapperProps['tone']>, string> = {
-  dark: 'bg-ink text-cream',
+  // 'dark' is transparent so the body's deep-navy radial glow shows through (Decision #42);
+  // 'surface' and 'warm' paint their own solid bands on top.
+  dark: 'text-cream',
   warm: 'bg-warm text-ink-on-light',
   surface: 'bg-surface text-cream',
 }

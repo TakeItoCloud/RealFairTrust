@@ -79,6 +79,47 @@ export function IconChevronDown(props: IconProps) {
   )
 }
 
+export function IconBed(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M3 7v10M3 12h18v5M21 17v-3a3 3 0 0 0-3-3h-7v4M7 11.5a1.5 1.5 0 1 0 0-.01" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+export function IconBath(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M4 12V6.5A2.5 2.5 0 0 1 6.5 4 2 2 0 0 1 8.5 6M3 12h18v2a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-2ZM6 18l-1 2M18 18l1 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+export function IconArea(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 0-1 1h-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+export function IconBolt(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+export function IconPin(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <circle cx="12" cy="10" r="2.4" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  )
+}
+
 /** Spinner ring — pair with `motion-safe:animate-spin`. */
 export function IconSpinner(props: IconProps) {
   return (

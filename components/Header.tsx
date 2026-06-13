@@ -9,6 +9,7 @@ import { cn } from '@/lib/cn'
 import { Button } from '@/components/ui'
 import { focusRing } from '@/components/ui/styles'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { Wordmark } from './Wordmark'
 
 const navItems = [
   { href: '/comprar', key: 'buy' },
@@ -26,8 +27,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-ink/95 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between gap-4">
-        <Link href="/" className={cn('font-display text-xl font-semibold text-cream rounded-sm', focusRing)}>
-          {t('brand')}
+        <Link href="/" aria-label={t('brand')} className={cn('rounded-sm', focusRing)}>
+          <Wordmark className="text-xl" />
         </Link>
 
         {/* Desktop nav */}

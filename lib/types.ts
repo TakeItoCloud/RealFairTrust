@@ -249,6 +249,9 @@ export interface ListingAgentRef {
 
 export interface ListingWithAgent extends Property {
   agent: ListingAgentRef
+  /** Resolved region/zone names for display (joined by the repository). */
+  regionName: string
+  zoneName: string | null
 }
 
 export interface ListingDetail extends ListingWithAgent {

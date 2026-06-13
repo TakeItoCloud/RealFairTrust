@@ -29,7 +29,9 @@ const sizeClasses: Record<Size, string> = {
 function variantClasses(variant: Variant, onLight: boolean): string {
   switch (variant) {
     case 'primary':
-      return 'bg-gold text-ink hover:bg-gold-bright'
+      // Gold gradient button (Decision #45) — .btn-gold owns fill/text/border/shadow + hover;
+      // focus ring + disabled opacity come from the base classes.
+      return 'btn-gold'
     case 'secondary':
       return onLight
         ? 'border border-gold-deep/50 text-gold-deep hover:bg-gold-deep/10'

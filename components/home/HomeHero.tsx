@@ -19,12 +19,14 @@ export function HomeHero({ topConsultant }: { topConsultant: ConsultantSummary |
   const [q, setQ] = useState('')
 
   return (
-    <section className="bg-ink">
+    // Transparent so the page-level navy glow (Decision #42) reads through the hero.
+    <section>
       <div className="container-page grid items-center gap-10 py-14 lg:grid-cols-2 lg:gap-16 lg:py-24">
         {/* Left — value + search + CTAs */}
         <div>
           <Eyebrow>{t('eyebrow')}</Eyebrow>
-          <h1 className="mt-4 max-w-xl text-balance font-display text-4xl leading-tight text-cream sm:text-5xl">
+          {/* Hero display heading — gold-title clip + hero type scale (Decision #45). */}
+          <h1 className="mt-4 max-w-2xl text-balance gold-title font-display text-4xl leading-[1.05] tracking-[-0.015em] sm:text-5xl lg:text-[length:var(--fs-hero)] lg:leading-[1.03]">
             {t('headline')}
           </h1>
           <p className="mt-4 max-w-xl text-lg text-cream-muted">{t('subtitle')}</p>
@@ -67,7 +69,7 @@ export function HomeHero({ topConsultant }: { topConsultant: ConsultantSummary |
             aria-label={t('posterAlt')}
           >
             {/* subtle brand motif on the optimized poster placeholder */}
-            <div className="absolute inset-0 opacity-30 [background:radial-gradient(circle_at_30%_20%,rgba(200,168,107,0.25),transparent_55%)]" aria-hidden />
+            <div className="absolute inset-0 opacity-30 [background:radial-gradient(circle_at_30%_20%,rgba(216,163,60,0.28),transparent_55%)]" aria-hidden />
           </div>
 
           {topConsultant ? (

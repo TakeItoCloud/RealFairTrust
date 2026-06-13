@@ -15,9 +15,11 @@
   --color-surface:      var(--rft-surface);     /* cards on dark */
   --color-cream:        var(--rft-text);         /* body text on dark */
   --color-cream-muted:  var(--rft-text-mut);
-  --color-gold:         var(--rft-gold);         /* primary accent */
+  --color-slate:        var(--rft-slate);         /* wordmark "Trust" */
+  --color-gold:         var(--rft-gold);         /* solid companion gold — small UI */
   --color-gold-bright:  var(--rft-gold-bright);
-  --color-gold-deep:    var(--rft-gold-deep);    /* accents on light */
+  --color-gold-deep:    var(--rft-gold-deep);    /* gold text on warm light sections */
+  --color-on-gold:      var(--rft-on-gold);      /* dark-navy text on gold buttons */
   --color-verified:     var(--rft-verified);     /* verified / success only */
   --color-verified-ink: var(--rft-verified-ink);
   --color-danger:       var(--rft-danger);        /* error / invalid only */
@@ -41,9 +43,13 @@
   --container-content: var(--rft-content-max);
 }
 
-/* Base defaults */
+/* Base defaults — the dark page canvas is the Sapphire-twilight radial glow (Decision #43).
+   Fixed so the glow stays viewport-anchored and reads as one cohesive light source across
+   the full-bleed dark sections (which are transparent and let this show through). Warm
+   light content sections paint their own bg-warm on top and are unaffected. */
 body {
-  background: var(--rft-bg);
+  background: var(--rft-bg-gradient) fixed;
+  background-color: var(--rft-bg);
   color: var(--rft-text);
   font-family: var(--rft-font-sans);
   line-height: var(--rft-lh-body);
@@ -79,4 +85,65 @@ body {
   max-width: var(--rft-content-max);
   margin-inline: auto;
   padding-inline: var(--rft-gutter);
+}
+
+/* .gold-title (Decision #45) — titles / logo wordmark / prices. Clips the gold gradient to
+   the text, with a solid-gold fallback (color:#e3a812) applied first so it degrades to solid
+   gold where background-clip:text is unsupported; the transparent fill is only set inside
+   @supports. Reserved for DARK sections — on warm light use text-gold-deep (#8C5E12). */
+.gold-title {
+  color: var(--rft-gold-title-solid); /* solid #e3a812 fallback */
+  background: var(--rft-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .gold-title {
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Primary gold button (Decision #45) — gradient fill + dark text + inset/drop shadow. */
+.btn-gold {
+  background: var(--rft-gold-button);
+  color: var(--rft-on-gold);
+  border: 1px solid rgba(140, 92, 18, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 12px 34px -12px rgba(227, 168, 18, 0.6);
+}
+.btn-gold:hover:not(:disabled) {
+  background: var(--rft-gold-button-hover);
+}
+
+/* Type-scale utilities (Decision #45) — Fraunces display sizes + Inter meta/eyebrow. */
+@utility text-hero {
+  font-family: var(--rft-font-display);
+  font-size: var(--fs-hero);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.015em;
+}
+@utility text-section {
+  font-family: var(--rft-font-display);
+  font-size: var(--fs-section);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.014em;
+}
+@utility text-subsection {
+  font-family: var(--rft-font-display);
+  font-size: var(--fs-subsection);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+@utility text-meta {
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  line-height: 1.5;
+}
+@utility text-eyebrow {
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }

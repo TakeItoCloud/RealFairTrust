@@ -31,15 +31,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <Eyebrow>{t('topConsultants.eyebrow')}</Eyebrow>
-            <h2 className="mt-2 font-display text-3xl text-cream">{t('topConsultants.title')}</h2>
+            <h2 className="mt-2 text-section text-cream">{t('topConsultants.title')}</h2>
           </div>
           <Link href="/consultores">
             <Button variant="ghost">{tc('actions.seeAll')}</Button>
           </Link>
         </div>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {topConsultants.map((c) => (
-            <ConsultantCard key={c.id} consultant={c} />
+        <div className="mt-8 grid gap-5 lg:grid-cols-2">
+          {topConsultants.map((c, i) => (
+            <ConsultantCard key={c.id} consultant={c} index={i} />
           ))}
         </div>
       </SectionWrapper>
@@ -49,15 +49,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <Eyebrow>{t('featured.eyebrow')}</Eyebrow>
-            <h2 className="mt-2 font-display text-3xl text-cream">{t('featured.title')}</h2>
+            <h2 className="mt-2 text-section text-cream">{t('featured.title')}</h2>
           </div>
           <Link href="/comprar">
             <Button variant="ghost">{tc('actions.seeAll')}</Button>
           </Link>
         </div>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((l) => (
-            <PropertyCard key={l.id} listing={l} />
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((l, i) => (
+            <PropertyCard key={l.id} listing={l} index={i} />
           ))}
         </div>
       </SectionWrapper>
@@ -66,14 +66,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <SectionWrapper tone="warm">
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-lg border border-line-lt bg-surface-lt p-8">
-            <h2 className="font-display text-2xl text-ink-on-light">{t('split.clientsTitle')}</h2>
+            <h2 className="text-subsection text-ink-on-light">{t('split.clientsTitle')}</h2>
             <p className="mt-2 text-ink-on-light/70">{t('split.clientsDesc')}</p>
             <Link href="/consultores" className="mt-5 inline-block">
               <Button onLight>{tc('cta.findConsultant')}</Button>
             </Link>
           </div>
           <div className="rounded-lg border border-line-lt bg-surface-lt p-8">
-            <h2 className="font-display text-2xl text-ink-on-light">{t('split.consultantsTitle')}</h2>
+            <h2 className="text-subsection text-ink-on-light">{t('split.consultantsTitle')}</h2>
             <p className="mt-2 text-ink-on-light/70">{t('split.consultantsDesc')}</p>
             <Link href="/consultores/aderir" className="mt-5 inline-block">
               <Button variant="secondary" onLight>
@@ -88,8 +88,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <SectionWrapper tone="dark">
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>{t('trust.eyebrow')}</Eyebrow>
-          <h2 className="mt-3 font-display text-3xl text-cream">{t('trust.title')}</h2>
-          <p className="mt-3 text-cream-muted">{t('trust.desc')}</p>
+          <h2 className="mt-3 text-section text-cream">{t('trust.title')}</h2>
+          <p className="mt-3 text-lg text-cream-muted">{t('trust.desc')}</p>
         </div>
         <ul className="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
           {[t('trust.point1'), t('trust.point2'), t('trust.point3')].map((point) => (
@@ -106,7 +106,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* Join CTA */}
       <SectionWrapper tone="surface">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-3xl text-cream">{t('join.title')}</h2>
+          <h2 className="text-section text-cream">{t('join.title')}</h2>
           <p className="mt-3 text-cream-muted">{t('join.desc')}</p>
           <Link href="/consultores/aderir" className="mt-6 inline-block">
             <Button size="lg">{t('join.button')}</Button>

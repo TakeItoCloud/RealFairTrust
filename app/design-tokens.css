@@ -5,22 +5,41 @@
    Consumed by the Tailwind v4 theme (tailwind-theme.css) and app/globals.css in Phase 4. */
 
 :root {
-  /* ---- Brand / accent ---- */
-  --rft-gold:        #C8A86B;   /* primary accent */
-  --rft-gold-bright: #D6B87A;   /* hover / highlight */
-  --rft-gold-deep:   #8A6D2F;   /* on light backgrounds, links */
-  --rft-verified:    #3FB984;   /* verified / success only */
+  /* ---- Gold — finalized visual system (Decision #45, supersedes #44) ---- */
+  --rft-gold:        #e3a812;   /* solid companion — small pills/badges/chips/borders/icons */
+  --rft-gold-bright: #f0c14a;   /* hover / highlight */
+  --rft-gold-deep:   #8C5E12;   /* gold text/links on warm light sections (AA on ivory) */
+  --rft-on-gold:     #2a1d04;   /* dark text on gold buttons */
+  /* .gold-title clip gradient — titles / logo wordmark / prices (fallback = --rft-gold-title-solid) */
+  --rft-gold-gradient:      linear-gradient(180deg,#ffe6a0 0%,#ffd86e 28%,#e3a812 100%);
+  --rft-gold-title-solid:   #e3a812;
+  /* Primary gold button fills */
+  --rft-gold-button:        linear-gradient(160deg,#ffe79e,#f4c95c 46%,#dca233);
+  --rft-gold-button-hover:  linear-gradient(160deg,#fff0b6,#fad36c 46%,#e9ae3b);
+
+  /* Labels / eyebrows — solid (the clip gradient is for titles, not small label text) */
+  --label-gold-on-navy:  #e3a812;
+  --label-gold-on-ivory: #8C5E12;  /* darkened from #d19e1d — AA-safe for small text on ivory */
+
+  --rft-verified:    #3FB984;   /* verified / success only (unchanged) */
   --rft-verified-ink:#1E8F62;   /* verified text on light */
   --rft-danger:      #E5484D;   /* error / invalid state only */
   --rft-danger-ink:  #C2333A;   /* error text on light */
 
-  /* ---- Dark surfaces (hero, marketing, dashboard chrome) ---- */
-  --rft-bg:        #0E0F16;
-  --rft-bg-elev:   #12141D;
-  --rft-surface:   #181B26;     /* cards on dark */
-  --rft-line:      rgba(200,168,107,0.20);
-  --rft-text:      #F5F1EA;     /* body on dark */
+  /* ---- Dark surfaces — "Sapphire twilight" darkened (Decision #43, supersedes #42) ---- */
+  --rft-bg-deep:   #020812;     /* deepest edge of the page glow */
+  --rft-bg:        #0A1A34;     /* base navy (solid fallback / chrome) */
+  --rft-bg-glow:   #122A4F;     /* brightest sapphire at the glow centre */
+  --rft-bg-elev:   #0D1F38;     /* slightly elevated dark surface */
+  --rft-surface:   #10233C;     /* cards on dark — one step above base */
+  --rft-line:      rgba(255,255,255,0.07);  /* subtle card separation on navy */
+  --rft-text:      #F5F1EA;     /* body on dark (cream, unchanged) */
   --rft-text-mut:  rgba(245,241,234,0.66);
+  --rft-slate:     #8A93A3;     /* cool slate — wordmark "Trust" */
+
+  /* Reusable dark page background: brighter sapphire in the centre, darker at the edges. */
+  --rft-bg-gradient: radial-gradient(ellipse 90% 70% at 50% 30%,
+    #122a4f 0%, #0a1a34 42%, #060f22 72%, #020812 100%);
 
   /* ---- Warm light surfaces (content, legal, how-it-works) ---- */
   --rft-bg-warm:    #FBF8F2;
@@ -32,13 +51,26 @@
   /* ---- Typography ---- */
   --rft-font-display: "Fraunces", Georgia, "Times New Roman", serif; /* headlines */
   --rft-font-sans:    "Inter", system-ui, Arial, sans-serif;          /* UI / body */
-  --rft-fs-eyebrow: 0.75rem;   /* 12px, uppercase, +0.18em tracking */
-  --rft-fs-body:    1rem;      /* 16px */
-  --rft-fs-lead:    1.125rem;  /* 18px */
-  --rft-fs-h3:      1.375rem;  /* 22px */
-  --rft-fs-h2:      1.875rem;  /* 30px */
-  --rft-fs-h1:      2.5rem;    /* 40px */
-  --rft-fs-display: 3.5rem;    /* 56px */
+
+  /* Finalized type scale (Decision #45) — Fraunces for hero/section/subsection, Inter rest */
+  --fs-hero:       4.5rem;     /* 72px · 600 / 1.03 / -0.015em (Fraunces) */
+  --fs-section:    2.5rem;     /* 40px · 600 / 1.08 / -0.014em (Fraunces) */
+  --fs-subsection: 1.625rem;   /* 26px · 500 / 1.20 / -0.01em  (Fraunces) */
+  --fs-lead:       1.25rem;    /* 20px · 400 / 1.55 (Inter) */
+  --fs-body:       1rem;       /* 16px · 400 / 1.65 (Inter) */
+  --fs-meta:       0.8125rem;  /* 13px · 500 / 1.50 (Inter) */
+  --fs-eyebrow:    0.75rem;    /* 12px · 600 / 0.2em / UPPERCASE (Inter) */
+  --fs-button:     0.9375rem;  /* 15px · 600 / 0.01em (Inter) */
+  --lh-tight: 1.1;
+  --lh-body:  1.6;
+  /* legacy aliases (kept so existing references resolve) */
+  --rft-fs-eyebrow: var(--fs-eyebrow);
+  --rft-fs-body:    var(--fs-body);
+  --rft-fs-lead:    1.125rem;
+  --rft-fs-h3:      var(--fs-subsection);
+  --rft-fs-h2:      var(--fs-section);
+  --rft-fs-h1:      var(--fs-section);
+  --rft-fs-display: var(--fs-hero);
   --rft-lh-tight: 1.1;
   --rft-lh-body:  1.6;
 
@@ -52,7 +84,24 @@
   /* ---- Elevation ---- */
   --rft-shadow-card: 0 1px 0 rgba(255,255,255,0.02), 0 8px 24px rgba(0,0,0,0.35);
   --rft-shadow-lt:   0 1px 2px rgba(33,28,23,0.06), 0 10px 30px rgba(33,28,23,0.08);
-  --rft-glow-gold:   0 0 0 1px var(--rft-line), 0 8px 30px rgba(200,168,107,0.10);
+  --rft-glow-gold:   0 0 0 1px var(--rft-line), 0 8px 30px rgba(227,168,18,0.14);
+
+  /* ---- Card effects (Decision #45) ---- */
+  --card-radius:        22px;
+  --card-radius-media:  14px;
+  --card-pad:           26px;
+  --lift-card:          -4px;
+  --lift-card-media:    -5px;
+  --img-zoom:           1.06;
+  --dur-img:            500ms;
+  --accent-bar:    linear-gradient(90deg,#ffe6a0,#e3a812);
+  --overlay-scrim: linear-gradient(180deg,rgba(2,8,18,0) 38%,rgba(2,8,18,.5) 70%,rgba(2,8,18,.88) 100%);
+  --plate-bg:      rgba(8,18,38,0.92);
+  --surface-card:        var(--rft-surface);     /* #10233C */
+  --surface-card-raised: #15294a;                /* raised card on dark */
+  --hairline:            var(--rft-line);         /* white 0.07 */
+  --shadow-card:   0 1px 0 rgba(255,255,255,0.03), 0 10px 28px -10px rgba(0,0,0,0.5);
+  --shadow-raised: 0 1px 0 rgba(255,255,255,0.05), 0 22px 48px -18px rgba(0,0,0,0.65);
 
   /* ---- Layout ---- */
   --rft-content-max: 1200px;
@@ -66,8 +115,13 @@
   :root { --rft-dur-fast: 0ms; --rft-dur: 0ms; }
 }
 
-/* Contrast notes (target WCAG AA):
-   - Body text on dark = cream (--rft-text) on --rft-bg  → high contrast, OK.
-   - Gold is for accents, large headings, icons, borders — NOT for body copy on dark.
-   - On light, links/accents use --rft-gold-deep (#8A6D2F) for sufficient contrast.
-   - Verified green used only for the verified/success state, never as body text. */
+/* Contrast notes (target WCAG AA) — re-verified on the finalized system (Decision #45):
+   - Cream (#F5F1EA) on navy base #0A1A34 ≈ 15.4:1; on glow centre #122A4F ≈ 12.7:1 — AA/AAA.
+   - Solid label gold (#E3A812) on navy base ≈ 8.2:1; on glow centre ≈ 6.7:1 — AA.
+   - Dark button text (#2A1D04) on the gold button gradient ≈ 10.5:1 (light mid) /
+     ≈ 7.3:1 (darkest stop) — AA.
+   - Ivory label gold (#8C5E12) on warm cream #FBF8F2 ≈ 5.3:1 — AA. NOTE: the spec's nominal
+     #D19E1D was only ≈ 2.3:1 on ivory, so it was darkened to #8C5E12 for small label text.
+   - Cards (--surface-card #10233C) sit one step above the base with a white-0.07 hairline so
+     they separate on both the navy base and the glow centre.
+   - Verified green (#3FB984) used for verified/success and the energy-cert chip; never body text. */

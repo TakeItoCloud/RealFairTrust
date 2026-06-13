@@ -52,8 +52,8 @@ export default async function ConsultoresPage({
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
             <Eyebrow>{t('eyebrow')}</Eyebrow>
-            <h1 className="mt-3 font-display text-4xl text-cream">{t('title')}</h1>
-            <p className="mt-3 text-cream-muted">{t('subtitle')}</p>
+            <h1 className="mt-3 text-section text-cream">{t('title')}</h1>
+            <p className="mt-3 text-lg text-cream-muted">{t('subtitle')}</p>
           </div>
           {/* "Suggest one for me" — structurally present, gated off until match mode ships. */}
           {flags.matchMode ? (
@@ -68,13 +68,13 @@ export default async function ConsultoresPage({
         {/* Rising Talent board (separate from the ranking) */}
         {showRisingBoard ? (
           <section aria-labelledby="rising-talent" className="mt-10">
-            <h2 id="rising-talent" className="font-display text-2xl text-cream">
+            <h2 id="rising-talent" className="text-subsection text-cream">
               {t('risingTalentTitle')}
             </h2>
-            <p className="mt-1 text-sm text-cream-muted">{t('risingTalentSubtitle')}</p>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {risingList.map((c) => (
-                <ConsultantCard key={c.id} consultant={c} />
+            <p className="mt-1 text-meta text-cream-muted">{t('risingTalentSubtitle')}</p>
+            <div className="mt-5 grid gap-5 lg:grid-cols-2">
+              {risingList.map((c, i) => (
+                <ConsultantCard key={c.id} consultant={c} index={i} />
               ))}
             </div>
           </section>
@@ -86,9 +86,9 @@ export default async function ConsultoresPage({
             <EmptyState title={t('empty')} />
           ) : (
             <>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {pageItems.map((c) => (
-                  <ConsultantCard key={c.id} consultant={c} />
+              <div className="grid gap-5 lg:grid-cols-2">
+                {pageItems.map((c, i) => (
+                  <ConsultantCard key={c.id} consultant={c} index={i} />
                 ))}
               </div>
               <UrlPagination totalPages={totalPages} className="mt-8 justify-center" />
