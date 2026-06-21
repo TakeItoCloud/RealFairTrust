@@ -6,6 +6,33 @@
 
 ---
 
+## 2026-06-21 · Phase 4.3 — Design hand-off adopted; decisions #46–#50 logged (docs only)
+
+**Done** (docs-only session; no app code touched)
+- Received the design bundle at `design/RealFairTrust_Design_System__1_.zip` and the refreshed
+  `docs/PROJECT-STATE.md` (new orientation snapshot; "Last updated 2026-06-21").
+- Logged **decisions #46–#50** in `docs/DECISIONS.md` exactly per PROJECT-STATE §4:
+  - #46 design hand-off (`design/handoff/`) adopted as the authoritative visual spec.
+  - #47 icons = `lucide-react` (2px stroke), replacing inline SVGs.
+  - #48 fonts = Fraunces + Inter via `next/font/google`.
+  - #49 PropertyCard energy cert stays NEUTRAL/muted — overrides the hand-off's verified-green;
+    green reserved for verification only (upholds #34).
+  - #50 token reconciliation done carefully (alias old→new or migrate) for least-churn green builds.
+- `CLAUDE.md`: added **§0 standing behavioral rule** (never guess; <90% → ask) + an orientation
+  pointer to `docs/PROJECT-STATE.md`; updated the status line to "Phase 4.3 — design-system
+  application, run order step 1 (reconciliation plan)".
+
+**Changed**
+- `docs/DECISIONS.md`, `CLAUDE.md`, `docs/PROJECT-STATE.md` (added), this worklog. No app/code changes.
+
+**Next**
+- Design-system application run order (PROJECT-STATE §6): step 1 = unzip the bundle into
+  `design/handoff/`, read it fully, and produce `docs/DESIGN-APPLY-PLAN.md` (reconciliation plan,
+  no app-code changes) on `chore/design-apply-plan`. Then steps 2→6 (tokens → primitives → cards →
+  home variety → profile), each green-gated.
+
+---
+
 ## 2026-06-07 · Phase 4 — Milestone 4.3 Consultores page (feat/pages-public, PR #7)
 
 **Done** (same branch/PR as Home; milestone merges once all public pages reviewed)

@@ -4,6 +4,18 @@
 > this project is, where we are, and the rules you must follow. When in doubt, follow
 > this file over any assumption.
 
+## §0 — Standing behavioral rule (read first)
+
+**Never guess.** Do not answer or act unless **≥90% sure it is accurate**. If information,
+full context, or a clear understanding is missing, **ask clarifying questions first**. Only
+proceed after researching as needed, reasoning carefully, and reaching ≥90% certainty. Verify
+product / tool / UI facts before asserting them.
+
+**Orientation file:** read **`docs/PROJECT-STATE.md`** first every session — it is the
+high-level snapshot (roles & workflow, locked decisions, the visual system, the full phase
+roadmap, what's done/next, open questions). `docs/DECISIONS.md` (full decision log) and
+`docs/WORKLOG.md` (per-session history) remain authoritative for their respective detail.
+
 ## What we are building
 
 **RealFairTrust** is a bilingual (Portuguese / English) **merit-based real estate
@@ -106,11 +118,9 @@ per-agent, filtered per city). Full detail: `docs/notes/city-expansion.md`.
 
 ## Current status
 
-**Phase 4 — Frontend Build: GREENLIT, building.** §8 answered (Radix primitives, Framer
-Motion, poster-only hero, build dashboard/admin shells, ~12 consultants/~24 listings seed) —
-decisions #36–41. Build proceeds per the milestone order in
-`docs/phases/PHASE-4-frontend-build.md`: **next = milestone 4.0 Foundations** (types, data
-layer, mock seed, i18n, base layout) on `feat/foundations` → PR → preview → review → merge,
-then 4.1 → 4.5. Phases 0–3 APPROVED; design system finalized.
-**Prereqs to verify on `develop` first:** Tailwind theme + tokens wired into
-`app/globals.css`; Fraunces + Inter loaded in `app/layout.tsx`; empty routes scaffolded.
+**Phase 4.3 — design-system application, run order step 1 (reconciliation plan).**
+The design hand-off (`design/handoff/`) is adopted as the authoritative visual spec
+(decisions #46–#50). The full roadmap, the 1→6 run order, and what's done/next live in
+**`docs/PROJECT-STATE.md`** (the orientation file — read it first each session). Authoritative
+detail: `docs/DECISIONS.md` (decision log) · `docs/WORKLOG.md` (per-session history). Active
+build branch: `feat/pages-public` (PR #7).
