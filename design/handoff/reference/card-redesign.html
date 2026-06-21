@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Card redesign — RealFairTrust</title>
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  html, body { margin: 0; }
+  body { background: var(--bg-navy-radial); background-attachment: fixed; min-height: 100vh; }
+  .page { max-width: 1280px; margin: 0 auto; padding: 56px 40px 96px; }
+
+  .sec-head { display: flex; flex-direction: column; gap: 12px; margin: 0 0 36px; }
+  .sec-head .eyebrow { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #e3a812; }
+  .sec-head h2 { font-family: var(--font-display); font-weight: 600; font-size: 40px; line-height: 1.08; letter-spacing: -0.014em; color: var(--text-strong); margin: 0; }
+  .sec-head p { font-family: var(--font-body); font-size: 16px; line-height: 1.65; color: var(--text-muted); margin: 0; max-width: 640px; }
+
+  .dir { margin: 0 0 52px; }
+  .dir-label { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; }
+  .dir-label b { font-family: var(--font-display); font-weight: 600; font-size: 22px; letter-spacing: -0.01em; color: var(--text-strong); }
+  .dir-label span { font-family: var(--font-body); font-size: 14px; color: var(--text-muted); }
+  .dir-label .motion { font-family: var(--font-body); font-size: 12.5px; color: var(--text-faint); margin-left: auto; max-width: 440px; text-align: right; line-height: 1.5; }
+
+  .frames { display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start; }
+  .frame { display: flex; flex-direction: column; gap: 12px; }
+  .frame > .cap { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
+  .divider { height: 1px; background: var(--gradient-gold-hairline); margin: 8px 0 56px; opacity: 0.5; }
+
+  /* shared bits */
+  .gold-num { background: linear-gradient(180deg,#ffe6a0 0%,#ffd86e 28%,#e3a812 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .vpill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px 3px 7px; border-radius: 999px; background: var(--green-tint); border: 1px solid var(--green-border); color: var(--green-verified); font-family: var(--font-body); font-size: 11.5px; font-weight: 600; }
+  .tag-gold { display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px; border-radius: 999px; background: var(--gold-tint); border: 1px solid var(--gold-border); color: var(--gold-300); font-family: var(--font-body); font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em; }
+  .tag-rising { display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px; border-radius: 999px; background: rgba(201,162,74,0.10); border: 1px solid var(--gold-border-soft); color: var(--gold-calm-soft); font-family: var(--font-body); font-size: 11.5px; font-weight: 600; }
+  .tag-neutral { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; background: rgba(245,241,234,0.06); border: 1px solid var(--hairline-strong); color: var(--text-muted); font-family: var(--font-body); font-size: 11.5px; font-weight: 500; }
+  .spec-link { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 13.5px; font-weight: 600; color: var(--gold-300); }
+
+  /* ===== ConsultantCard A — Spotlight Row ===== */
+  .ccA { position: relative; width: 420px; box-sizing: border-box; padding: 26px; border-radius: 22px; background: var(--surface-card); border: 1px solid var(--hairline); box-shadow: var(--shadow-card); backdrop-filter: blur(18px); overflow: hidden; transition: transform .26s cubic-bezier(.22,.61,.36,1), box-shadow .26s ease, border-color .26s ease; }
+  .ccA::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg,#ffe6a0,#e3a812); transform: scaleX(0); transform-origin: left; transition: transform .3s cubic-bezier(.22,.61,.36,1); }
+  .ccA .top { display: flex; align-items: center; gap: 16px; }
+  .coin { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 13px; flex: 0 0 auto; background: rgba(2,8,18,0.55); border: 1px solid var(--gold-border); box-shadow: var(--shadow-gold-glow); font-family: var(--font-display); font-weight: 600; font-size: 18px; line-height: 1; }
+  .avatar { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; flex: 0 0 auto; background: linear-gradient(160deg,#16335c,#0a1a34); font-family: var(--font-display); font-weight: 600; color: var(--gold-200); overflow: hidden; }
+  .avatar.ring { box-shadow: var(--shadow-gold-glow); border: 2px solid transparent; background-image: linear-gradient(160deg,#16335c,#0a1a34), linear-gradient(180deg,#ffe6a0,#e3a812); background-origin: border-box; background-clip: padding-box, border-box; }
+  .ccA .name { font-family: var(--font-display); font-weight: 600; font-size: 21px; line-height: 1.12; letter-spacing: -0.01em; color: var(--text-strong); }
+  .ccA .spec { font-family: var(--font-body); font-size: 13.5px; color: var(--text-muted); }
+  .ccA .stat { margin-left: auto; text-align: right; display: flex; flex-direction: column; gap: 2px; }
+  .ccA .stat .n { font-family: var(--font-display); font-weight: 600; font-size: 38px; line-height: 1; letter-spacing: -0.01em; transition: filter .26s ease; }
+  .ccA .stat .l { font-family: var(--font-body); font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
+  .ccA .row2 { display: flex; align-items: center; gap: 8px; margin-top: 18px; }
+  .ccA .foot { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--hairline); }
+  .ccA .foot .meta { font-family: var(--font-body); font-size: 12.5px; color: var(--text-faint); }
+
+  .ccA.is-hover { transform: translateY(-4px); box-shadow: var(--shadow-raised); border-color: var(--gold-border-soft); }
+  .ccA.is-hover::before { transform: scaleX(1); }
+  .ccA.is-hover .stat .n { filter: drop-shadow(0 0 14px rgba(255,216,110,0.45)); }
+
+  /* ===== ConsultantCard B — Crest ===== */
+  .ccB { position: relative; width: 320px; box-sizing: border-box; padding: 30px 26px 24px; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025)); border: 1px solid var(--hairline); box-shadow: var(--shadow-card); text-align: center; overflow: hidden; transition: transform .26s cubic-bezier(.22,.61,.36,1), box-shadow .26s ease, border-color .26s ease; }
+  .ccB .glow { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 220px; height: 160px; background: radial-gradient(circle, rgba(227,168,18,0.16), transparent 70%); pointer-events: none; opacity: .7; transition: opacity .3s ease; }
+  .ccB .av-wrap { position: relative; display: inline-block; margin-bottom: 16px; }
+  .ccB .coin { position: absolute; bottom: -4px; right: -6px; width: 34px; height: 34px; font-size: 15px; border-radius: 11px; }
+  .ccB .name { font-family: var(--font-display); font-weight: 600; font-size: 22px; line-height: 1.1; letter-spacing: -0.01em; color: var(--text-strong); }
+  .ccB .vrow { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+  .ccB .spec { font-family: var(--font-body); font-size: 13px; color: var(--text-muted); margin-top: 10px; }
+  .ccB .tagrow { display: flex; justify-content: center; margin-top: 14px; }
+  .ccB .figure { margin: 20px 0 18px; padding: 16px; border-radius: 16px; background: rgba(2,8,18,0.4); border: 1px solid var(--gold-border-soft); }
+  .ccB .figure .n { font-family: var(--font-display); font-weight: 600; font-size: 40px; line-height: 1; letter-spacing: -0.01em; transition: filter .26s ease; }
+  .ccB .figure .l { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-top: 6px; }
+  .ccB .btn { display: block; width: 100%; box-sizing: border-box; padding: 12px; border-radius: 999px; background: rgba(255,255,255,0.03); border: 1px solid var(--gold-border-soft); color: var(--text-strong); font-family: var(--font-body); font-size: 14px; font-weight: 600; transition: background .24s ease, border-color .24s ease; }
+  .ccB.is-hover { transform: translateY(-4px); box-shadow: var(--shadow-raised); border-color: var(--gold-border-soft); }
+  .ccB.is-hover .glow { opacity: 1; }
+  .ccB.is-hover .figure .n { filter: drop-shadow(0 0 14px rgba(255,216,110,0.45)); }
+  .ccB.is-hover .btn { background: var(--gold-tint); border-color: var(--gold-border); }
+
+  /* ===== PropertyCard A — Editorial Overlay ===== */
+  .pcA { position: relative; width: 360px; box-sizing: border-box; border-radius: 20px; overflow: hidden; background: var(--surface-card); border: 1px solid var(--hairline); box-shadow: var(--shadow-card); transition: transform .26s cubic-bezier(.22,.61,.36,1), box-shadow .26s ease, border-color .26s ease; }
+  .pcA .media { position: relative; height: 220px; overflow: hidden; }
+  .pcA .media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(.22,.61,.36,1); }
+  .pcA .media .ph { width: 100%; height: 100%; background: linear-gradient(150deg,#16335c,#0a1a34); display: flex; align-items: center; justify-content: center; color: var(--text-faint); font-family: var(--font-body); font-size: 12px; }
+  .pcA .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,8,18,0) 38%, rgba(2,8,18,0.5) 70%, rgba(2,8,18,0.88) 100%); }
+  .pcA .tags-top { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; justify-content: space-between; align-items: flex-start; }
+  .pcA .price { position: absolute; left: 18px; bottom: 16px; white-space: nowrap; font-family: var(--font-display); font-weight: 600; font-size: 30px; line-height: 1; letter-spacing: -0.01em; transition: transform .3s cubic-bezier(.22,.61,.36,1); }
+  .pcA .body { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .pcA .title { font-family: var(--font-body); font-size: 16px; font-weight: 600; color: var(--text-strong); line-height: 1.4; }
+  .pcA .loc { font-family: var(--font-body); font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+  .specs { display: flex; gap: 14px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--hairline); }
+  .specs .s { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 12.5px; color: var(--text-body); }
+  .specs .s b { color: var(--text-strong); font-weight: 600; }
+  .pcA .agent { display: flex; align-items: center; gap: 9px; padding-top: 14px; border-top: 1px solid var(--hairline); }
+  .pcA .agent .nm { font-family: var(--font-body); font-size: 12.5px; color: var(--text-muted); }
+  .pcA .agent .spec-link { margin-left: auto; }
+  .pcA.is-hover { transform: translateY(-5px); box-shadow: var(--shadow-raised); border-color: var(--gold-border-soft); }
+  .pcA.is-hover .media img { transform: scale(1.06); }
+  .pcA.is-hover .price { transform: translateY(-3px); }
+
+  /* ===== PropertyCard B — Gold Plate ===== */
+  .pcB { position: relative; width: 360px; box-sizing: border-box; padding: 14px 14px 18px; border-radius: 22px; background: var(--surface-card-raised); border: 1px solid var(--hairline); box-shadow: var(--shadow-card); transition: transform .26s cubic-bezier(.22,.61,.36,1), box-shadow .26s ease, border-color .26s ease; }
+  .pcB .media { position: relative; height: 196px; border-radius: 14px; overflow: hidden; }
+  .pcB .media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(.22,.61,.36,1); }
+  .pcB .media .ph { width: 100%; height: 100%; background: linear-gradient(150deg,#16335c,#0a1a34); display:flex; align-items:center; justify-content:center; color: var(--text-faint); font-family: var(--font-body); font-size: 12px; }
+  .pcB .media .ov { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,8,18,0.35) 0%, transparent 30%); }
+  .pcB .tags-top { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; }
+  .pcB .plate { position: relative; margin: -26px 14px 0; padding: 12px 16px; border-radius: 14px; background: rgba(8,18,38,0.92); border: 1px solid var(--gold-border); box-shadow: 0 14px 34px -16px rgba(2,8,18,0.9); backdrop-filter: blur(8px); display: flex; align-items: baseline; justify-content: space-between; transition: transform .3s cubic-bezier(.22,.61,.36,1), box-shadow .3s ease; }
+  .pcB .plate .price { white-space: nowrap; font-family: var(--font-display); font-weight: 600; font-size: 26px; line-height: 1; letter-spacing: -0.01em; }
+  .pcB .plate .deal { font-family: var(--font-body); font-size: 11.5px; font-weight: 600; color: var(--text-muted); }
+  .pcB .body { padding: 16px 8px 4px; display: flex; flex-direction: column; gap: 12px; }
+  .pcB .title { font-family: var(--font-body); font-size: 16px; font-weight: 600; color: var(--text-strong); line-height: 1.4; }
+  .pcB .loc { font-family: var(--font-body); font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+  .pcB .agent { display: flex; align-items: center; gap: 9px; padding-top: 13px; border-top: 1px solid var(--hairline); }
+  .pcB .agent .nm { font-family: var(--font-body); font-size: 12.5px; color: var(--text-muted); }
+  .pcB .agent .spec-link { margin-left: auto; }
+  .pcB.is-hover { transform: translateY(-5px); box-shadow: var(--shadow-raised); border-color: var(--gold-border-soft); }
+  .pcB.is-hover .media img { transform: scale(1.07); }
+  .pcB.is-hover .plate { transform: translateY(-4px); box-shadow: var(--shadow-gold-glow); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ ConsultantCard ============ -->
+  <div class="sec-head">
+    <span class="eyebrow">Redesign · ConsultantCard</span>
+    <h2>Consultor, elevado</h2>
+    <p>Mesmos dados — avatar, nome, especialização, verificado, rank/tag e taxa de fecho a ouro. Tratamento mais premium: profundidade real, hierarquia tipográfica mais forte e um hover refinado.</p>
+  </div>
+
+  <!-- Direction A -->
+  <div class="dir">
+    <div class="dir-label">
+      <b>Direção A</b><span>· Spotlight Row — a taxa de fecho como herói, à direita</span>
+      <span class="motion">Entrada: fade + sobe 16px, escalonado. Hover: sobe 4px, barra de ouro cresce da esquerda no topo, número ganha brilho.</span>
+    </div>
+    <div class="frames">
+      <div class="frame">
+        <span class="cap">Default</span>
+        <div class="ccA">
+          <div class="top">
+            <span class="coin"><span class="gold-num">2</span></span>
+            <span class="avatar ring" style="width:56px;height:56px;font-size:20px">SM</span>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px"><span class="name">Sofia Marques</span></div>
+              <div class="spec">Apartamentos · Compra</div>
+            </div>
+            <div class="stat"><span class="n gold-num">68%</span><span class="l">Taxa de fecho</span></div>
+          </div>
+          <div class="row2">
+            <span class="vpill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 13l4.5 4.5L19 7" stroke="#3fb984" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Verificado</span>
+            <span class="tag-gold">Top deste mês</span>
+            <span class="tag-neutral">#2 · Lisboa</span>
+          </div>
+          <div class="foot"><span class="meta">Resposta média 1.2h</span><a class="spec-link" href="#">Ver perfil →</a></div>
+        </div>
+      </div>
+      <div class="frame">
+        <span class="cap">Hover</span>
+        <div class="ccA is-hover">
+          <div class="top">
+            <span class="coin"><span class="gold-num">2</span></span>
+            <span class="avatar ring" style="width:56px;height:56px;font-size:20px">SM</span>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px"><span class="name">Sofia Marques</span></div>
+              <div class="spec">Apartamentos · Compra</div>
+            </div>
+            <div class="stat"><span class="n gold-num">68%</span><span class="l">Taxa de fecho</span></div>
+          </div>
+          <div class="row2">
+            <span class="vpill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 13l4.5 4.5L19 7" stroke="#3fb984" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Verificado</span>
+            <span class="tag-gold">Top deste mês</span>
+            <span class="tag-neutral">#2 · Lisboa</span>
+          </div>
+          <div class="foot"><span class="meta">Resposta média 1.2h</span><a class="spec-link" href="#">Ver perfil →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Direction B -->
+  <div class="dir">
+    <div class="dir-label">
+      <b>Direção B</b><span>· Crest — vertical, editorial, com moeda de rank sobre o avatar</span>
+      <span class="motion">Entrada: escala de 0.96→1 + fade. Hover: sobe 4px, halo de ouro intensifica, número da figura brilha, botão preenche a ouro.</span>
+    </div>
+    <div class="frames">
+      <div class="frame">
+        <span class="cap">Default</span>
+        <div class="ccB">
+          <div class="glow"></div>
+          <div class="av-wrap">
+            <span class="avatar ring" style="width:72px;height:72px;font-size:26px">IC</span>
+            <span class="coin"><span class="gold-num">3</span></span>
+          </div>
+          <div class="name">Inês Carvalho</div>
+          <div class="vrow"><span class="vpill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 13l4.5 4.5L19 7" stroke="#3fb984" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Verificado</span></div>
+          <div class="spec">Apartamentos · Arrendamento</div>
+          <div class="tagrow"><span class="tag-rising">Rising Talent</span></div>
+          <div class="figure"><div class="n gold-num">61%</div><div class="l">Taxa de fecho · 90d</div></div>
+          <a class="btn" href="#">Ver perfil</a>
+        </div>
+      </div>
+      <div class="frame">
+        <span class="cap">Hover</span>
+        <div class="ccB is-hover">
+          <div class="glow"></div>
+          <div class="av-wrap">
+            <span class="avatar ring" style="width:72px;height:72px;font-size:26px">IC</span>
+            <span class="coin"><span class="gold-num">3</span></span>
+          </div>
+          <div class="name">Inês Carvalho</div>
+          <div class="vrow"><span class="vpill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 13l4.5 4.5L19 7" stroke="#3fb984" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Verificado</span></div>
+          <div class="spec">Apartamentos · Arrendamento</div>
+          <div class="tagrow"><span class="tag-rising">Rising Talent</span></div>
+          <div class="figure"><div class="n gold-num">61%</div><div class="l">Taxa de fecho · 90d</div></div>
+          <a class="btn" href="#">Ver perfil</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ============ PropertyCard ============ -->
+  <div class="sec-head">
+    <span class="eyebrow">Redesign · PropertyCard</span>
+    <h2>Imóvel, com presença</h2>
+    <p>Mesmos dados — imagem, tag Venda/Arrenda, selo "Dados de demonstração", preço a ouro, título, specs e consultor. Foto com overlay em gradiente, preço sobre a imagem e zoom no hover.</p>
+  </div>
+
+  <!-- Direction A -->
+  <div class="dir">
+    <div class="dir-label">
+      <b>Direção A</b><span>· Editorial Overlay — preço pousado sobre a foto</span>
+      <span class="motion">Entrada: imagem revela com leve zoom-out (1.04→1), texto sobe + fade. Hover: card sobe 5px, foto faz zoom 1.06, preço desliza 3px para cima.</span>
+    </div>
+    <div class="frames">
+      <div class="frame">
+        <span class="cap">Default</span>
+        <div class="pcA">
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=720&q=80" alt="" />
+            <div class="overlay"></div>
+            <div class="tags-top"><span class="tag-neutral" style="background:rgba(8,18,38,0.7);backdrop-filter:blur(6px)">Venda</span><span class="tag-gold" style="background:rgba(8,18,38,0.7);backdrop-filter:blur(6px)">Dados de demonstração</span></div>
+            <span class="price gold-num">€ 720 000</span>
+          </div>
+          <div class="body">
+            <div>
+              <div class="title">Apartamento T3 renovado</div>
+              <div class="loc"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg>Lisboa · Estrela</div>
+            </div>
+            <div class="specs">
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v11M3 12h18v6M21 18v-4a3 3 0 0 0-3-3H8"/></svg><b>3</b> quartos</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3ZM6 12V6a2 2 0 0 1 4 0"/></svg><b>2</b> wc</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16 16 4l4 4L8 20zM9 9l1.5 1.5M12 6l1.5 1.5"/></svg><b>128</b> m²</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3fb984" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b style="color:#3fb984">A+</b></span>
+            </div>
+            <div class="agent">
+              <span class="avatar" style="width:26px;height:26px;font-size:11px">SM</span>
+              <span class="nm">Sofia Marques</span>
+              <a class="spec-link" href="#">Ver detalhe →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame">
+        <span class="cap">Hover</span>
+        <div class="pcA is-hover">
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=720&q=80" alt="" />
+            <div class="overlay"></div>
+            <div class="tags-top"><span class="tag-neutral" style="background:rgba(8,18,38,0.7);backdrop-filter:blur(6px)">Venda</span><span class="tag-gold" style="background:rgba(8,18,38,0.7);backdrop-filter:blur(6px)">Dados de demonstração</span></div>
+            <span class="price gold-num">€ 720 000</span>
+          </div>
+          <div class="body">
+            <div>
+              <div class="title">Apartamento T3 renovado</div>
+              <div class="loc"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg>Lisboa · Estrela</div>
+            </div>
+            <div class="specs">
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v11M3 12h18v6M21 18v-4a3 3 0 0 0-3-3H8"/></svg><b>3</b> quartos</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3ZM6 12V6a2 2 0 0 1 4 0"/></svg><b>2</b> wc</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16 16 4l4 4L8 20zM9 9l1.5 1.5M12 6l1.5 1.5"/></svg><b>128</b> m²</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3fb984" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b style="color:#3fb984">A+</b></span>
+            </div>
+            <div class="agent">
+              <span class="avatar" style="width:26px;height:26px;font-size:11px">SM</span>
+              <span class="nm">Sofia Marques</span>
+              <a class="spec-link" href="#">Ver detalhe →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Direction B -->
+  <div class="dir">
+    <div class="dir-label">
+      <b>Direção B</b><span>· Gold Plate — preço numa placa de ouro sobreposta</span>
+      <span class="motion">Entrada: card sobe + fade, placa de preço entra 80ms depois (sobe 8px). Hover: card sobe 5px, foto zoom 1.07, placa sobe 4px e ganha halo de ouro.</span>
+    </div>
+    <div class="frames">
+      <div class="frame">
+        <span class="cap">Default</span>
+        <div class="pcB">
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=720&q=80" alt="" />
+            <div class="ov"></div>
+            <div class="tags-top"><span class="tag-neutral" style="background:rgba(8,18,38,0.7);backdrop-filter:blur(6px)">Arrenda</span><span class="tag-gold" style="background:rgba(8,18,38,0.7);backdrop-filter:blur(6px)">Dados de demonstração</span></div>
+          </div>
+          <div class="plate"><span class="price gold-num">€ 2 400<span style="font-size:14px"> /mês</span></span><span class="deal">T2 · 86 m²</span></div>
+          <div class="body">
+            <div>
+              <div class="title">T2 luminoso no centro</div>
+              <div class="loc"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg>Lisboa · Chiado</div>
+            </div>
+            <div class="specs">
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v11M3 12h18v6M21 18v-4a3 3 0 0 0-3-3H8"/></svg><b>2</b> quartos</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3ZM6 12V6a2 2 0 0 1 4 0"/></svg><b>1</b> wc</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16 16 4l4 4L8 20zM9 9l1.5 1.5M12 6l1.5 1.5"/></svg><b>86</b> m²</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3fb984" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b style="color:#3fb984">B</b></span>
+            </div>
+            <div class="agent">
+              <span class="avatar" style="width:26px;height:26px;font-size:11px">IC</span>
+              <span class="nm">Inês Carvalho</span>
+              <a class="spec-link" href="#">Ver detalhe →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame">
+        <span class="cap">Hover</span>
+        <div class="pcB is-hover">
+          <div class="media">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=720&q=80" alt="" />
+            <div class="ov"></div>
+            <div class="tags-top"><span class="tag-neutral" style="background:rgba(8,18,38,0.7);backdrop-filter:blur(6px)">Arrenda</span><span class="tag-gold" style="background:rgba(8,18,38,0.7);backdrop-filter:blur(6px)">Dados de demonstração</span></div>
+          </div>
+          <div class="plate"><span class="price gold-num">€ 2 400<span style="font-size:14px"> /mês</span></span><span class="deal">T2 · 86 m²</span></div>
+          <div class="body">
+            <div>
+              <div class="title">T2 luminoso no centro</div>
+              <div class="loc"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.8"/></svg>Lisboa · Chiado</div>
+            </div>
+            <div class="specs">
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v11M3 12h18v6M21 18v-4a3 3 0 0 0-3-3H8"/></svg><b>2</b> quartos</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3ZM6 12V6a2 2 0 0 1 4 0"/></svg><b>1</b> wc</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16 16 4l4 4L8 20zM9 9l1.5 1.5M12 6l1.5 1.5"/></svg><b>86</b> m²</span>
+              <span class="s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3fb984" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b style="color:#3fb984">B</b></span>
+            </div>
+            <div class="agent">
+              <span class="avatar" style="width:26px;height:26px;font-size:11px">IC</span>
+              <span class="nm">Inês Carvalho</span>
+              <a class="spec-link" href="#">Ver detalhe →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

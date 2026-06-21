@@ -1,0 +1,84 @@
+/* ===========================================================================
+   RealFairTrust — Color tokens
+   Dark sapphire-navy stage · gold signal · verified green · warm ivory light
+   =========================================================================== */
+
+:root {
+  /* --- Navy base scale (the dark stage) ------------------------------------ */
+  --navy-950: #020812;
+  --navy-900: #060f22;
+  --navy-800: #0a1a34;
+  --navy-700: #122a4f;
+  --navy-600: #19365f; /* derived — borders / raised panels */
+  --navy-500: #21436f; /* derived — hairlines on navy */
+
+  /* The signature page background. Fixed — do not alter. */
+  --bg-navy-radial: radial-gradient(ellipse 90% 70% at 50% 30%, #122a4f, #0a1a34, #060f22, #020812);
+
+  /* Card / surface fills sitting on the navy stage */
+  --surface-card: rgba(255, 255, 255, 0.035);
+  --surface-card-raised: rgba(255, 255, 255, 0.06);
+  --surface-card-solid: #0c1d39;
+  --surface-inset: rgba(2, 8, 18, 0.45);
+
+  /* --- Gold · BRIGHT (titles, logo, prices, key numerals) ------------------ */
+  /* Smooth vertical gradient is the signature treatment for display gold.    */
+  --gold-100: #ffe9b3;
+  --gold-200: #ffe089;
+  --gold-300: #ffd86e; /* peak highlight */
+  --gold-500: #e3a812; /* mid */
+  --gold-600: #d19e1d; /* deep base */
+  --gold-700: #b8862a; /* shadow */
+  --gradient-gold-title: linear-gradient(180deg, #ffe6a0 0%, #ffd86e 28%, #e3a812 100%); /* @kind color */
+  --gradient-gold-hairline: linear-gradient(90deg, rgba(227,168,18,0) 0%, rgba(227,168,18,0.55) 50%, rgba(227,168,18,0) 100%); /* @kind color */
+
+  /* --- Gold · CALM (buttons, quiet accents) -------------------------------- */
+  /* Less bright, more antique — sits comfortably for large tappable areas.   */
+  --gold-calm: #d8b34f;
+  --gold-calm-soft: #e6c163;
+  --gold-calm-deep: #c39327;
+  --gradient-gold-button: linear-gradient(160deg, #ffe79e 0%, #f4c95c 46%, #dca233 100%); /* @kind color */
+  --gradient-gold-button-hover: linear-gradient(160deg, #fff0b6 0%, #fad36c 46%, #e9ae3b 100%); /* @kind color */
+  --gold-tint: rgba(201, 162, 74, 0.12); /* faint gold wash for chips/hover */
+  --gold-border: rgba(227, 168, 18, 0.38);
+  --gold-border-soft: rgba(201, 162, 74, 0.22);
+
+  /* --- Verified green · SUCCESS ONLY --------------------------------------- */
+  --green-verified: #3fb984;
+  --green-verified-deep: #2f9a6c;
+  --green-tint: rgba(63, 185, 132, 0.14);
+  --green-border: rgba(63, 185, 132, 0.40);
+
+  /* --- Warm ivory (light section) ------------------------------------------ */
+  --ivory: #fbf8f2;
+  --ivory-100: #f5efe3;
+  --ivory-200: #ece3d2; /* borders / dividers on ivory */
+  --ivory-card: #ffffff;
+
+  /* --- Text -------------------------------------------------------------- */
+  /* Wordmark — "Real" cream, "Fair" gold, "Trust" muted slate. */
+  --wordmark-cream: #f5f1ea;
+  --wordmark-slate: #8a93a3;
+  /* On navy */
+  --text-strong: #f5f1ea;             /* warm near-white */
+  --text-body: rgba(245, 241, 234, 0.78);
+  --text-muted: rgba(245, 241, 234, 0.58);
+  --text-faint: rgba(245, 241, 234, 0.40);
+  /* On ivory */
+  --text-ink: #1c2942;                /* navy-ink body on ivory */
+  --text-ink-strong: #111c30;
+  --text-ink-muted: #5a6678;
+
+  /* --- Functional / status (kept minimal & calm) --------------------------- */
+  --status-info: #6ba3e0;
+  --status-warn: #e0a23c;
+  --status-danger: #d97070;
+
+  /* --- Semantic aliases ---------------------------------------------------- */
+  --color-bg: var(--bg-navy-radial);
+  --color-accent: var(--gold-500);
+  --color-accent-calm: var(--gold-calm);
+  --color-success: var(--green-verified);
+  --hairline: rgba(245, 241, 234, 0.10);
+  --hairline-strong: rgba(245, 241, 234, 0.16);
+}

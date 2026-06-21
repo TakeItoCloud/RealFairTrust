@@ -6,6 +6,43 @@
 
 ---
 
+## 2026-06-21 · Phase 4.3 — Design-apply step 1: reconciliation plan (docs only)
+
+**Done** (plan-only session; **no app code/tokens/components changed**)
+- Unzipped the design bundle `design/RealFairTrust_Design_System.zip` into `design/handoff/`
+  (flattened out of the nested `design_handoff_realfairtrust/` folder) and stripped the trailing
+  `.txt` from all component files so they read as real `.jsx` / `.d.ts` / `.html`. Reference/spec
+  only — not shipped.
+- Read the hand-off fully: `README.md` (authoritative), all `reference/tokens/*.css`, and the
+  component specs under `reference/components/**`. Compared against the live codebase:
+  `app/design-tokens.css`, `app/globals.css` (@theme), `app/layout.tsx` (fonts),
+  `components/ui/*`, `components/Wordmark.tsx` + Header/Footer, and `ConsultantCard`/`PropertyCard`.
+- Wrote **`docs/DESIGN-APPLY-PLAN.md`**: a token-by-token diff (✅ match / 🟡 new / 🔶 value
+  mismatch), the **alias-don't-migrate** reconciliation strategy (least churn + green), a phased
+  checklist with a Status column mapping to run-order steps 2→6, and explicit confirmation that
+  decisions (a)–(d) are reflected.
+- Key findings: the **card-system tokens, the 8-step type scale, both gold gradients, and the
+  navy radial background already match the hand-off value-for-value** (landed under #45);
+  **fonts already load via `next/font/google`** (decision b satisfied — bundle `fonts.css`
+  @import excluded); **PropertyCard energy cert is already NEUTRAL** (decision c upheld);
+  `lucide-react` is **not yet a dependency** (added in step 2); the **profile page already
+  exists fully built** (step 6 = re-skin, not green-field). Real gaps = translucent/blurred
+  surfaces, full navy/gold/space/radius scales, blur tokens, locked easing + `--dur-slow`,
+  deeper shadows + glow shadows, three-step text ramp + navy-ink-on-ivory.
+- Flagged README-vs-bundle discrepancies (typography.css hero 76 vs README 72; ivory label
+  #d19e1d vs AA #8C5E12) — README + decisions win; do not blind-import the bundle token CSS.
+
+**Changed**
+- Added `design/handoff/` (extracted reference bundle) and `docs/DESIGN-APPLY-PLAN.md`; this
+  worklog. No app/code/token/component changes.
+
+**Next**
+- Planning chat authors Prompts 2→6 from this gap analysis. Step 2 = tokens (+ `lucide-react`,
+  keep `next/font`), then step 3 primitives → step 4 cards → step 5 home variety → step 6
+  profile re-skin. Each green-gated, stop-and-confirm.
+
+---
+
 ## 2026-06-21 · Phase 4.3 — Design hand-off adopted; decisions #46–#50 logged (docs only)
 
 **Done** (docs-only session; no app code touched)
