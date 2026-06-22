@@ -6,6 +6,48 @@
 
 ---
 
+## 2026-06-22 · Phase 4.3 — Design-apply step 5: HOME SECTION VARIETY (ivory breaks)
+
+**Done** (branch `chore/design-apply-home`; fixes the "flat single-navy" feel)
+
+- **`.rft-ivory` section helper** added to `app/globals.css` (deferred from Step 2): warm ivory
+  bg + navy-ink text. Plus a new SectionWrapper **`tone="ivory"`** that applies it (`warm` kept as
+  the legacy alias). On ivory, use Eyebrow `tone="light"` (#8C5E12), the Card **"ivory"** variant
+  (white + `--shadow-ivory`), and on-light green **#157048** — never #3fb984 on light (#34/#52/#53).
+- **Muted consolidation (plan §2.7):** `--rft-text-mut` → `var(--text-muted)` = **.58** (was .66).
+  Computed AA before adopting — worst case (cream-muted blended over the frosted-card light bg)
+  **4.94:1**, navy glow-centre **5.25:1** — both clear 4.5 → no exception needed, shipped at .58.
+- **Hairline warm-tint (plan §2.10):** `--rft-line` `rgba(255,255,255,.07)` → **rgba(245,241,234,.10)**
+  (= `--hairline`). Decorative borders only; visual-QA'd.
+- **Home section rhythm** (PROPOSED — flagged for sign-off): **N · I · N · N · I · N · N**
+  1. Hero — navy radial · 2. **HowItWorks — IVORY** (restyled: ink text, white step Cards) ·
+  3. Top consultants — navy stage · 4. Featured listings — navy stage (was `surface`) ·
+  5. **Clients/consultants split — IVORY** (was `warm`; now white Card "ivory" panels) ·
+  6. Trust band — navy stage · 7. Join CTA — navy stage (was `surface`; signature gold-on-dark close).
+  Rationale: dark-first brand (#33) preserved; ConsultantCard/PropertyCard sections stay on the navy
+  stage (frosted cards float on the radial); two clear ivory breaks bracket the card showcase and
+  break up the page. All former solid `bg-surface` section bands removed (navy sections are now the
+  continuous radial; the only `bg-surface` left is the small HomeHero proof card — intentional).
+- Wired the Step-4 cards into the restructured sections; entrance stagger (per-card index delay) +
+  hover intact; motion still reduced-motion-safe (unchanged).
+
+**Ivory-section AA** (computed, fail-closed, bg = `--ivory` #fbf8f2): navy-ink #1c2942 **13.71:1**;
+ink-strong #111c30 **16.07:1**; ink-muted #5a6678 **5.49:1**; eyebrow #8C5E12 **5.32:1**; on-light
+green #157048 **5.75:1**; ink-muted on white card **5.82:1** — all ≥4.5. No AA exception required.
+
+**Green gate** (Node 22.22.3 / pnpm 11.4): `pnpm build` ✅ · `tsc --noEmit` ✅ (exit 0) · `eslint`
+✅ 0/0. **Runtime smoke** (`next start`): `/` and `/en` **200**; 2 ivory break sections render, 9
+cards intact, ink text + gold-deep eyebrow present on ivory. Home now reads varied, not flat.
+
+**Deferrals carried forward:** consultant profile re-skin → **Step 6**; new public pages → after Step 6.
+
+**Next**
+- Step 6 (final): re-skin the consultant profile (`/consultores/[slug]`) onto the finalized
+  system (header, ScoreBreakdown, listings as PropertyCards, reviews + empty state, inline/sticky
+  contact), honoring #18/#28. Then the remaining 4.3 pages.
+
+---
+
 ## 2026-06-22 · Phase 4.3 — Design-apply step 4: THE TWO CARDS (surface flip + motion)
 
 **Done** (branch `chore/design-apply-cards`; the biggest visual change of the apply)

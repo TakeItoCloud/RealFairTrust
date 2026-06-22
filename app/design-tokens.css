@@ -139,9 +139,9 @@
   --rft-bg-glow:   var(--navy-700);   /* alias (#122a4f) — brightest sapphire at the glow centre */
   --rft-bg-elev:   #0D1F38;     /* slightly elevated dark surface (kept — no hand-off equivalent) */
   --rft-surface:   #10233C;     /* cards on dark (translucency deferred → Step 4) */
-  --rft-line:      rgba(255,255,255,0.07);  /* hairline on navy (warm-tint .10 deferred → Step 3/5) */
+  --rft-line:      rgba(245,241,234,0.10);  /* Step 5: warm-tinted hairline (was white .07) = --hairline */
   --rft-text:      var(--text-strong);   /* alias (#f5f1ea) — body on dark */
-  --rft-text-mut:  rgba(245,241,234,0.66);  /* live muted; consolidation to --text-muted (.58) deferred → Step 3/5 */
+  --rft-text-mut:  var(--text-muted);  /* Step 5: consolidated to .58 (was .66); AA worst-case 4.94:1 on frosted card */
   --rft-slate:     var(--wordmark-slate);   /* alias (#8a93a3) — wordmark "Trust" */
 
   /* Reusable dark page background: brighter sapphire in the centre, darker at the edges. */

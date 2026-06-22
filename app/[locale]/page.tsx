@@ -4,7 +4,7 @@
 import { getTranslations } from 'next-intl/server'
 import { getConsultants, getListings } from '@/lib/data'
 import { Link } from '@/i18n/navigation'
-import { Button, Eyebrow, SectionWrapper } from '@/components/ui'
+import { Button, Card, Eyebrow, SectionWrapper } from '@/components/ui'
 import { ConsultantCard, PropertyCard } from '@/components'
 import { IconCheck } from '@/components/ui/icons'
 import { HomeHero } from '@/components/home/HomeHero'
@@ -44,8 +44,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </SectionWrapper>
 
-      {/* Featured listings */}
-      <SectionWrapper tone="surface">
+      {/* Featured listings — navy stage (frosted PropertyCards float on the radial) */}
+      <SectionWrapper tone="dark">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <Eyebrow>{t('featured.eyebrow')}</Eyebrow>
@@ -62,25 +62,25 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </SectionWrapper>
 
-      {/* Clients / consultants split (warm light section) */}
-      <SectionWrapper tone="warm">
+      {/* Clients / consultants split — IVORY light break (content; white Card panels) */}
+      <SectionWrapper tone="ivory">
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-lg border border-line-lt bg-surface-lt p-8">
-            <h2 className="text-subsection text-ink-on-light">{t('split.clientsTitle')}</h2>
-            <p className="mt-2 text-ink-on-light/70">{t('split.clientsDesc')}</p>
+          <Card variant="ivory" padding={32}>
+            <h2 className="text-subsection text-[var(--text-ink-strong)]">{t('split.clientsTitle')}</h2>
+            <p className="mt-2 text-[var(--text-ink-muted)]">{t('split.clientsDesc')}</p>
             <Link href="/consultores" className="mt-5 inline-block">
               <Button onLight>{tc('cta.findConsultant')}</Button>
             </Link>
-          </div>
-          <div className="rounded-lg border border-line-lt bg-surface-lt p-8">
-            <h2 className="text-subsection text-ink-on-light">{t('split.consultantsTitle')}</h2>
-            <p className="mt-2 text-ink-on-light/70">{t('split.consultantsDesc')}</p>
+          </Card>
+          <Card variant="ivory" padding={32}>
+            <h2 className="text-subsection text-[var(--text-ink-strong)]">{t('split.consultantsTitle')}</h2>
+            <p className="mt-2 text-[var(--text-ink-muted)]">{t('split.consultantsDesc')}</p>
             <Link href="/consultores/aderir" className="mt-5 inline-block">
               <Button variant="secondary" onLight>
                 {tc('cta.joinAsConsultant')}
               </Button>
             </Link>
-          </div>
+          </Card>
         </div>
       </SectionWrapper>
 
@@ -103,8 +103,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </SectionWrapper>
 
-      {/* Join CTA */}
-      <SectionWrapper tone="surface">
+      {/* Join CTA — navy stage (signature gold-on-dark close) */}
+      <SectionWrapper tone="dark">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-section text-cream">{t('join.title')}</h2>
           <p className="mt-3 text-cream-muted">{t('join.desc')}</p>

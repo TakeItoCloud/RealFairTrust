@@ -16,10 +16,11 @@ export function HowItWorks() {
   ]
 
   return (
-    <section className="bg-surface">
+    // Ivory light break (Step 5) — varies the page rhythm against the navy stage.
+    <section className="rft-ivory">
       <div className="container-page py-14 md:py-20">
-        <Eyebrow>{t('eyebrow')}</Eyebrow>
-        <h2 className="mt-3 max-w-2xl font-display text-3xl text-cream">{t('title')}</h2>
+        <Eyebrow tone="light">{t('eyebrow')}</Eyebrow>
+        <h2 className="mt-3 max-w-2xl font-display text-3xl text-[var(--text-ink-strong)]">{t('title')}</h2>
 
         <ol className="mt-10 grid gap-6 md:grid-cols-3">
           {steps.map((step, i) => (
@@ -29,13 +30,13 @@ export function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.25, ease: 'easeOut', delay: reduce ? 0 : i * 0.08 }}
-              className="rounded-lg border border-line bg-ink-elev p-6"
+              className="rounded-[var(--card-radius)] border border-[var(--ivory-200)] bg-[var(--ivory-card)] p-6 shadow-[var(--shadow-ivory)]"
             >
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gold font-display font-semibold text-ink">
                 {step.n}
               </span>
-              <h3 className="mt-4 font-display text-xl text-cream">{step.title}</h3>
-              <p className="mt-2 text-sm text-cream-muted">{step.desc}</p>
+              <h3 className="mt-4 font-display text-xl text-[var(--text-ink-strong)]">{step.title}</h3>
+              <p className="mt-2 text-sm text-[var(--text-ink-muted)]">{step.desc}</p>
             </motion.li>
           ))}
         </ol>

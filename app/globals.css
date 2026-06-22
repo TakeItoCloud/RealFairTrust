@@ -103,6 +103,15 @@ body {
   }
 }
 
+/* .rft-ivory (design-apply Step 5) — the warm light section break that varies the page rhythm
+   against the navy stage. Navy-ink text on warm ivory (AA: ink 13.7:1, ink-muted 5.5:1). Inside,
+   use Eyebrow tone="light" (#8C5E12), the Card "ivory" variant (white + --shadow-ivory), and the
+   on-light verified ink #157048 for any green — never #3fb984 on light (#34/#52/#53). */
+.rft-ivory {
+  background: var(--ivory);
+  color: var(--text-ink);
+}
+
 /* Primary gold button (Decision #45) — gradient fill + dark text + inset/drop shadow. */
 .btn-gold {
   background: var(--rft-gold-button);
