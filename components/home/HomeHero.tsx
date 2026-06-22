@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl'
 import type { ConsultantSummary } from '@/lib/types'
 import { Link, useRouter } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
-import { Avatar, Button, Eyebrow, Input, RankIndicator } from '@/components/ui'
+import { Avatar, Button, Eyebrow, Input, RankBadge } from '@/components/ui'
 
 export function HomeHero({ topConsultant }: { topConsultant: ConsultantSummary | null }) {
   const t = useTranslations('home.hero')
@@ -83,7 +83,7 @@ export function HomeHero({ topConsultant }: { topConsultant: ConsultantSummary |
                     {ts('closeRate')} {topConsultant.score?.sub.closeRate}%
                   </p>
                 </div>
-                <RankIndicator rank={topConsultant.score?.rank ?? 1} label={ts('rank')} className="ml-auto" />
+                <RankBadge rank={topConsultant.score?.rank ?? 1} label={ts('rank')} size={36} className="ml-auto" />
               </div>
               <Link
                 href={{ pathname: '/consultores/[slug]', params: { slug: topConsultant.slug } }}

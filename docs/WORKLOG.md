@@ -6,6 +6,68 @@
 
 ---
 
+## 2026-06-22 · Phase 4.3 — Design-apply step 3: PRIMITIVES (+ icons, radius, verified-ink)
+
+**Done** (branch `chore/design-apply-primitives`; ISOLATION RULE held — Consultant/PropertyCard
+internals untouched; only NON-CARD consumers migrated)
+
+- **Verified-ink swap (#53 implemented):** `--rft-verified-ink` **#1E8F62 → #157048** (on-light
+  verified ink; 5.22:1 on the real badge bg). Audit: #1E8F62 had exactly one live consumer
+  (VerifiedBadge `tone="light"` via `text-verified-ink`); after the swap **#1E8F62 has no
+  remaining app usage** (only the unimported legacy `brand/design/` copy retains it) — retired.
+  Bright on-dark `--green-verified #3fb984` left untouched.
+- **Radius remap (#54):** re-pointed `--rft-r-sm/-md/-lg` → `--radius-xs/-md/-lg`, so
+  `rounded-md` 10→**14**, `rounded-lg` 16→**20**, `rounded-sm` stays **6**. Audit covered all
+  `rounded-*` / `--rft-r-*` / `var(--radius-*)` usages. Cards confirmed on explicit
+  `--card-radius` (22) → unaffected; form wells pinned to `--radius-sm` (10) so Inputs keep their
+  10px corners. Verified in compiled CSS (`.rounded-md{border-radius:var(--rft-r-md)}` →
+  `--radius-md` = 14).
+- **Icons → lucide-react (#55):** rewrote `components/ui/icons.tsx` as a **re-export shim**
+  (chosen over per-consumer migration — 13 icons across 9 files; zero consumer churn). Each
+  `Icon*` keeps its name + API, now backed by lucide (2px stroke, currentColor, 1em box):
+  Check, ShieldCheck (verified), Star (filled), TrendingUp (rising), Trophy, Inbox, ChevronDown,
+  Bed, Bath, Ruler (area), Zap (energy — neutral; green flip is Step 4), MapPin, Loader2 (spinner).
+  Canonical set also exported (Search/ArrowRight/ChevronRight/Clock/Scale/RefreshCw/Globe/Menu).
+  All 15 target exports verified present in lucide-react@1.21.0. Header's animated hamburger +
+  Modal/MediaImage inline SVGs left as-is (out of scope).
+- **New primitives** (`components/ui/`): **Card** (default/raised/featured/ivory; hairline +
+  shadow-card + `--card-radius`; backdrop-blur `--blur-panel` wired but INERT over the still-solid
+  surface — reveals in Step 4; shadows NOT deepened), **StatBlock** (Fraunces 30px, `gold` clips
+  the title gradient, `delta` green/muted, `align`), **RankBadge** (coin; 1–3 gold gradient +
+  `--shadow-gold-glow`, 4+ neutral), **Badge** (unified gold/rising/success/neutral pill,
+  `iconLeft`, `onIvory`), **Tag** (quiet outline chip, `onIvory`).
+- **Aligned primitives:** Input/Select/Textarea → `--surface-inset` well + `--gold-border-soft`
+  hover + `--radius-sm`; **Avatar** gained a `ring` prop (gold-gradient border-box ring);
+  **Wordmark** gained `onIvory` (Real/Trust → dark ink, Fair stays gold); **VerifiedBadge**
+  gained the **seal** form (Concept B, #12) + on-light ink now #157048.
+- **Non-card consumer migrations:** slug profile (RisingTalentTag→Badge rising, top→Badge gold,
+  RankIndicator→RankBadge, building→Badge neutral, specialities→Tag, Avatar `ring`; kept
+  PerformanceBadge for the numeric `score` + the #18 gating logic), ScoreBreakdown
+  (building→Badge neutral), HomeHero (RankIndicator→RankBadge). PerformanceBadge / RisingTalentTag
+  / RankIndicator / StatTile **retained** (still consumed by the frozen ConsultantCard or Showcase;
+  migrate/remove in Step 4).
+- **Dev showcases:** `/dev/primitives` gained Badge / RankBadge / Tag / StatBlock / Card /
+  Avatar-ring / VerifiedBadge-seal sections (+ onIvory demos). `/dev/components` auto-reflects the
+  aligned composites (ScoreBreakdown→Badge, lucide icons, new radii).
+- **Hygiene:** `eslint.config.mjs` now ignores `design/handoff/**` → the 2 reference-bundle
+  `<img>` warnings are gone.
+
+**Deferrals carried forward (untouched):** surface translucency reveal + `--shadow-card/-raised`
+deepen + card entrance/hover motion + ConsultantCard/PropertyCard rewiring + energy-cert green
+flip → **Step 4**; muted .66→.58 + hairline warm-tint + `.rft-ivory` section helper → **Step 5**.
+
+**Green gate** (Node 22.22.3 / pnpm 11.4): `pnpm build` ✅ · `tsc --noEmit` ✅ (exit 0) ·
+`eslint` ✅ **0 warnings / 0 errors**. **Runtime smoke** (`next start`): `/`, `/consultores`,
+`/consultores/ana-silva`, `/en`, `/en/consultants`, `/en/consultants/ana-silva` all **200**;
+lucide icons render (79 refs on home, 124 on profile); Badge/VerifiedBadge render on the profile.
+
+**Next**
+- Step 4 (Cards): rewire ConsultantCard "Spotlight" + PropertyCard "Editorial Overlay" onto the
+  new primitives, flip the surface translucent (+ reveal the wired blur) + deepen card shadows +
+  Framer entrance/hover motion, and apply the **energy-cert GREEN** flip (#52). Then Step 5/6.
+
+---
+
 ## 2026-06-22 · Governance sync — zip = supreme authority; energy cert green; AA exceptions (docs only)
 
 **Done** (docs-only; no app code/tokens/components — branch `chore/design-governance-sync`)

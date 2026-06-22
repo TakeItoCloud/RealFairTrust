@@ -52,7 +52,7 @@
 
   /* --- Verified green · SUCCESS ONLY (#34; plan §2.5) --- */
   --green-verified:      #3fb984;
-  --green-verified-deep: #2f9a6c;   /* spec value; the live verified-ink stays #1E8F62 for AA */
+  --green-verified-deep: #2f9a6c;   /* spec value (zip); on-light verified ink uses #157048 instead — AA (#53) */
   --green-tint:   rgba(63,185,132,0.14);
   --green-border: rgba(63,185,132,0.40);
 
@@ -129,7 +129,7 @@
   --label-gold-on-ivory: #8C5E12;  /* darkened from #d19e1d — AA-safe for small text on ivory */
 
   --rft-verified:    var(--green-verified);   /* alias → hand-off source (#3fb984) — verified/success only */
-  --rft-verified-ink:#1E8F62;   /* verified text on light */
+  --rft-verified-ink:#157048;   /* verified ink on LIGHT/ivory — #157048 = 5.22:1 on the real badge bg (#53; was #1E8F62 @ 3.48:1, AA fail) */
   --rft-danger:      #E5484D;   /* error / invalid state only */
   --rft-danger-ink:  #C2333A;   /* error text on light */
 
@@ -186,7 +186,10 @@
   --rft-s5: var(--space-6); --rft-s6: var(--space-8); --rft-s7: var(--space-12); --rft-s8: var(--space-16); --rft-s9: var(--space-24);
 
   /* ---- Radius ---- */
-  --rft-r-sm: 6px; --rft-r-md: 10px; --rft-r-lg: 16px; --rft-r-pill: 999px;
+  /* Radius remap (Step 3, plan §2.9): rounded-* now bind to the hand-off scale.
+     rounded-sm → 6 (--radius-xs, unchanged) · rounded-md → 14 (--radius-md, was 10) ·
+     rounded-lg → 20 (--radius-lg, was 16). Cards use explicit --card-radius (22), unaffected. */
+  --rft-r-sm: var(--radius-xs);  --rft-r-md: var(--radius-md);  --rft-r-lg: var(--radius-lg);  --rft-r-pill: var(--radius-pill);
 
   /* ---- Elevation ---- */
   --rft-shadow-card: 0 1px 0 rgba(255,255,255,0.02), 0 8px 24px rgba(0,0,0,0.35);

@@ -6,15 +6,17 @@ import { getTranslations } from 'next-intl/server'
 import { getConsultant } from '@/lib/data'
 import {
   Avatar,
+  Badge,
   Button,
   EmptyState,
   Eyebrow,
   PerformanceBadge,
-  RankIndicator,
-  RisingTalentTag,
+  RankBadge,
   StarRating,
+  Tag,
   VerifiedBadge,
 } from '@/components/ui'
+import { IconTrophy } from '@/components/ui/icons'
 import { PropertyCard, ReviewItem, ScoreBreakdown } from '@/components'
 import { ProfileContact } from '@/components/consultores/ProfileContact'
 
@@ -43,30 +45,32 @@ export default async function ConsultantProfilePage({
           <div className="space-y-12 pb-24 lg:pb-0">
             {/* Header */}
             <header className="flex flex-col gap-6 sm:flex-row sm:items-start">
-              <Avatar src={consultant.photo} name={consultant.name} size="xl" className="ring-2 ring-gold/30" />
+              <Avatar src={consultant.photo} name={consultant.name} size="xl" ring />
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-3">
                   <h1 className="text-section text-cream">{consultant.name}</h1>
                   {consultant.verified ? <VerifiedBadge label={ts('verified')} /> : null}
                 </div>
-                <p className="mt-1 text-cream-muted">
-                  {consultant.specializations.map((s) => tspec(s)).join(' · ')}
-                </p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {consultant.specializations.map((s) => (
+                    <Tag key={s}>{tspec(s)}</Tag>
+                  ))}
+                </div>
 
                 {/* Rank / Top / Rising + mérito score (Decision #18) */}
                 {score ? (
                   <div className="mt-4 flex flex-wrap items-center gap-3">
                     {score.risingTalent ? (
-                      <RisingTalentTag label={ts('risingTalent')} />
+                      <Badge variant="rising">{ts('risingTalent')}</Badge>
                     ) : score.rank === 1 ? (
-                      <PerformanceBadge variant="top" label={ts('topThisMonth')} />
+                      <Badge variant="gold" iconLeft={<IconTrophy />}>{ts('topThisMonth')}</Badge>
                     ) : score.rank ? (
-                      <RankIndicator rank={score.rank} label={ts('rank')} />
+                      <RankBadge rank={score.rank} label={ts('rank')} />
                     ) : null}
                     {confident ? (
                       <PerformanceBadge variant="score" label={t('meritoScore')} value={score.composite} />
                     ) : (
-                      <PerformanceBadge variant="building" label={ts('buildingTrackRecord')} />
+                      <Badge variant="neutral">{ts('buildingTrackRecord')}</Badge>
                     )}
                   </div>
                 ) : null}

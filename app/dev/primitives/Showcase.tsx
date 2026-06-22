@@ -5,20 +5,26 @@
 import { useState } from 'react'
 import {
   Avatar,
+  Badge,
   Button,
+  Card,
   EmptyState,
   Eyebrow,
   Input,
   PerformanceBadge,
+  RankBadge,
   RankIndicator,
   RisingTalentTag,
   Select,
   Skeleton,
   StarRating,
+  StatBlock,
   StatTile,
+  Tag,
   Textarea,
   VerifiedBadge,
 } from '@/components/ui'
+import { IconSparkUp, IconTrophy } from '@/components/ui/icons'
 
 function Group({ title, children, light }: { title: string; children: React.ReactNode; light?: boolean }) {
   return (
@@ -107,11 +113,67 @@ export function Showcase() {
         </Group>
 
         {/* Avatars */}
-        <Group title="Avatar — image fallback to initials">
+        <Group title="Avatar — image fallback to initials (+ gold-gradient ring)">
           <Avatar name="Ana Silva" src="/images/consultants/ana-silva.jpg" size="xl" />
           <Avatar name="João Pereira" size="lg" />
           <Avatar name="Maria Santos" size="md" />
           <Avatar name="Rui" size="sm" />
+          <Avatar name="Ana Silva" size="lg" ring />
+          <Avatar name="João Pereira" size="md" ring />
+        </Group>
+
+        {/* ---- Hand-off primitives (design-apply Step 3) ---- */}
+        <Group title="Badge — gold · rising · success · neutral (unified)">
+          <Badge variant="gold" iconLeft={<IconTrophy />}>Top deste mês</Badge>
+          <Badge variant="rising" iconLeft={<IconSparkUp />}>Rising Talent</Badge>
+          <Badge variant="success">Verificado</Badge>
+          <Badge variant="neutral">Building track record</Badge>
+        </Group>
+
+        <Group title="RankBadge — coin (1–3 gold + glow, 4+ neutral)">
+          <RankBadge rank={1} label="Rank" />
+          <RankBadge rank={2} label="Rank" />
+          <RankBadge rank={3} label="Rank" />
+          <RankBadge rank={7} label="Rank" />
+          <RankBadge rank={1} label="Rank" size={56} />
+        </Group>
+
+        <Group title="Tag — quiet outline chips">
+          <Tag>Compra</Tag>
+          <Tag>Arrendamento</Tag>
+          <Tag>Investimento</Tag>
+        </Group>
+
+        <Group title="StatBlock — metric primitive (gold headline + delta)">
+          <StatBlock value="92" label="Mérito · 90d" gold />
+          <StatBlock value="90%" label="Taxa de fecho" delta="+4%" />
+          <StatBlock value="1.2h" label="Resposta" delta="-12%" align="end" />
+        </Group>
+
+        <Group title="VerifiedBadge — pill & seal">
+          <VerifiedBadge label="Verificado" />
+          <VerifiedBadge label="Verificado" iconOnly />
+          <VerifiedBadge variant="seal" label="Verificado" />
+          <VerifiedBadge variant="seal" label="Verificado" sealSize={88} />
+        </Group>
+
+        <Group title="Card — default · raised · featured · ivory">
+          <Card className="w-60">
+            <p className="font-display text-cream">Default card</p>
+            <p className="mt-1 text-meta text-cream-muted">Hairline + shadow-card; frost wired (inert).</p>
+          </Card>
+          <Card variant="raised" className="w-60">
+            <p className="font-display text-cream">Raised card</p>
+            <p className="mt-1 text-meta text-cream-muted">shadow-raised.</p>
+          </Card>
+          <Card variant="featured" className="w-60">
+            <p className="font-display text-cream">Featured card</p>
+            <p className="mt-1 text-meta text-cream-muted">Gold hairline + gold glow.</p>
+          </Card>
+          <Card variant="ivory" className="w-60">
+            <p className="font-display">Ivory card</p>
+            <p className="mt-1 text-meta text-[var(--text-ink-muted)]">Light-section surface + navy ink.</p>
+          </Card>
         </Group>
 
         {/* StatTiles */}
@@ -157,6 +219,10 @@ export function Showcase() {
             <RankIndicator rank={4} label="Rank" tone="light" />
             <PerformanceBadge variant="building" label="Building track record" tone="light" />
             <StatTile label="Close rate" value="84%" tone="light" className="w-44" />
+            <Badge variant="gold" onIvory iconLeft={<IconTrophy />}>Top deste mês</Badge>
+            <Badge variant="success" onIvory>Verificado</Badge>
+            <Badge variant="neutral" onIvory>Building</Badge>
+            <Tag onIvory>Compra</Tag>
           </div>
           <div className="mt-6 w-80">
             <EmptyState tone="light" title="No listings yet" description="Demo data only during pre-launch." />

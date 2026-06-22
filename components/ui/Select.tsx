@@ -57,10 +57,10 @@ export function Select({
         aria-label={aria['aria-label']}
         aria-invalid={invalid || undefined}
         className={cn(
-          'inline-flex min-h-11 w-full items-center justify-between gap-2 rounded-md border px-4 text-base transition-colors',
+          'inline-flex min-h-11 w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] border px-4 text-base transition-colors',
           onLight
-            ? 'border-line-lt bg-surface-lt text-ink-on-light data-[placeholder]:text-ink-on-light/45'
-            : 'border-line bg-surface text-cream data-[placeholder]:text-cream-muted',
+            ? 'border-line-lt bg-surface-lt text-ink-on-light data-[placeholder]:text-ink-on-light/45 hover:border-[var(--gold-border-soft)]'
+            : 'border-line bg-[var(--surface-inset)] text-cream data-[placeholder]:text-cream-muted hover:border-[var(--gold-border-soft)]',
           invalid && 'border-danger',
           'disabled:cursor-not-allowed disabled:opacity-50',
           onLight ? focusRingLight : focusRing,

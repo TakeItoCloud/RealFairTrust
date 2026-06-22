@@ -15,10 +15,10 @@ export function Textarea({ onLight = false, className, rows = 4, ...rest }: Text
     <textarea
       rows={rows}
       className={cn(
-        'w-full rounded-md border px-4 py-3 text-base transition-colors',
+        'w-full rounded-[var(--radius-sm)] border px-4 py-3 text-base transition-colors',
         onLight
-          ? 'border-line-lt bg-surface-lt text-ink-on-light placeholder:text-ink-on-light/45'
-          : 'border-line bg-surface text-cream placeholder:text-cream-muted',
+          ? 'border-line-lt bg-surface-lt text-ink-on-light placeholder:text-ink-on-light/45 hover:border-[var(--gold-border-soft)]'
+          : 'border-line bg-[var(--surface-inset)] text-cream placeholder:text-cream-muted hover:border-[var(--gold-border-soft)]',
         'aria-[invalid=true]:border-danger',
         'disabled:cursor-not-allowed disabled:opacity-50',
         onLight ? focusRingLight : focusRing,

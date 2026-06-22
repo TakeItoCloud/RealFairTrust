@@ -6,7 +6,7 @@
 import { useTranslations } from 'next-intl'
 import type { PerformanceScore, PerformanceSubScores } from '@/lib/types'
 import { cn } from '@/lib/cn'
-import { PerformanceBadge } from '@/components/ui'
+import { Badge, PerformanceBadge } from '@/components/ui'
 
 const SIGNALS: { key: keyof PerformanceSubScores; labelKey: string }[] = [
   { key: 'satisfaction', labelKey: 'satisfaction' },
@@ -36,7 +36,7 @@ export function ScoreBreakdown({ score, target = 80, band = 5, className }: Scor
         {revealComposite ? (
           <PerformanceBadge variant="score" label={t('composite')} value={score.composite} />
         ) : (
-          <PerformanceBadge variant="building" label={t('buildingTrackRecord')} />
+          <Badge variant="neutral">{t('buildingTrackRecord')}</Badge>
         )}
       </div>
 
