@@ -75,7 +75,7 @@ export function ConsultantCard({ consultant, index = 0 }: { consultant: Consulta
               <p className="gold-title font-display text-[38px] font-semibold leading-none transition-[filter] duration-[var(--dur-base)] group-hover:[filter:drop-shadow(0_0_14px_rgba(255,216,110,0.45))] motion-reduce:transition-none">
                 {score.composite}
               </p>
-              <p className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[var(--text-faint)]">
+              <p className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-cream-muted">
                 {t('score.merit90d')}
               </p>
             </div>
@@ -107,7 +107,7 @@ export function ConsultantCard({ consultant, index = 0 }: { consultant: Consulta
 
         {/* Footer */}
         <div className="flex items-center justify-between border-t border-line pt-4">
-          <span className="text-[12.5px] text-[var(--text-faint)]">{rank != null ? `#${rank}` : ''}</span>
+          <span className="text-[12.5px] text-cream-muted">{rank != null ? `#${rank}` : ''}</span>
           <span className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-gold transition-[gap] duration-[var(--dur-base)] group-hover:gap-2.5">
             {t('common.actions.viewProfile')} →
           </span>

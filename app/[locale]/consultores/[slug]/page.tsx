@@ -10,14 +10,14 @@ import {
   Button,
   EmptyState,
   Eyebrow,
-  PerformanceBadge,
   RankBadge,
   StarRating,
+  StatBlock,
   Tag,
   VerifiedBadge,
 } from '@/components/ui'
 import { IconTrophy } from '@/components/ui/icons'
-import { PropertyCard, ReviewItem, ScoreBreakdown } from '@/components'
+import { PropertyCard, Reveal, ReviewItem, ScoreBreakdown } from '@/components'
 import { ProfileContact } from '@/components/consultores/ProfileContact'
 
 export default async function ConsultantProfilePage({
@@ -44,58 +44,88 @@ export default async function ConsultantProfilePage({
           {/* ---- Content ---- */}
           <div className="space-y-12 pb-24 lg:pb-0">
             {/* Header */}
-            <header className="flex flex-col gap-6 sm:flex-row sm:items-start">
-              <Avatar src={consultant.photo} name={consultant.name} size="xl" ring />
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-3">
-                  <h1 className="text-section text-cream">{consultant.name}</h1>
-                  {consultant.verified ? <VerifiedBadge label={ts('verified')} /> : null}
-                </div>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {consultant.specializations.map((s) => (
-                    <Tag key={s}>{tspec(s)}</Tag>
-                  ))}
+            <Reveal>
+              <header className="flex flex-col gap-6 sm:flex-row sm:items-start">
+                <Avatar src={consultant.photo} name={consultant.name} size="xl" ring />
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h1 className="text-section text-cream">{consultant.name}</h1>
+                    {consultant.verified ? (
+                      <VerifiedBadge variant="seal" sealSize={44} label={ts('verified')} />
+                    ) : null}
+                  </div>
+
+                  {/* Standing badge — rank/top gated by #18 (confident only); Rising always */}
+                  {score ? (
+                    <div className="mt-3 flex flex-wrap items-center gap-3">
+                      {score.risingTalent ? (
+                        <Badge variant="rising">{ts('risingTalent')}</Badge>
+                      ) : confident && score.rank === 1 ? (
+                        <Badge variant="gold" iconLeft={<IconTrophy />}>{ts('topThisMonth')}</Badge>
+                      ) : confident && score.rank ? (
+                        <RankBadge rank={score.rank} label={ts('rank')} />
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  {/* Header stats */}
+                  {score ? (
+                    <div className="mt-5 flex flex-wrap gap-8">
+                      <StatBlock value={`${score.sub.closeRate}%`} label={ts('closeRate')} />
+                      <StatBlock value={score.sub.satisfaction} label={ts('satisfaction')} />
+                      <StatBlock value={score.sub.responsiveness} label={ts('responsiveness')} />
+                    </div>
+                  ) : null}
+
+                  <a href="#contact" className="mt-6 hidden lg:inline-block">
+                    <Button>{t('contact')}</Button>
+                  </a>
                 </div>
 
-                {/* Rank / Top / Rising + mérito score (Decision #18) */}
+                {/* Merit score (Decision #18): the gold numeral only when confident, else building */}
                 {score ? (
-                  <div className="mt-4 flex flex-wrap items-center gap-3">
-                    {score.risingTalent ? (
-                      <Badge variant="rising">{ts('risingTalent')}</Badge>
-                    ) : score.rank === 1 ? (
-                      <Badge variant="gold" iconLeft={<IconTrophy />}>{ts('topThisMonth')}</Badge>
-                    ) : score.rank ? (
-                      <RankBadge rank={score.rank} label={ts('rank')} />
-                    ) : null}
+                  <div className="shrink-0 sm:text-right">
                     {confident ? (
-                      <PerformanceBadge variant="score" label={t('meritoScore')} value={score.composite} />
+                      <>
+                        <p className="gold-title font-display text-[38px] font-semibold leading-none">
+                          {score.composite}
+                        </p>
+                        <p className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-cream-muted">
+                          {ts('merit90d')}
+                        </p>
+                      </>
                     ) : (
                       <Badge variant="neutral">{ts('buildingTrackRecord')}</Badge>
                     )}
                   </div>
                 ) : null}
-
-                <a href="#contact" className="mt-6 hidden lg:inline-block">
-                  <Button>{t('contact')}</Button>
-                </a>
-              </div>
-            </header>
+              </header>
+            </Reveal>
 
             {/* Performance panel */}
             {score ? (
-              <section aria-labelledby="perf">
-                <Eyebrow>{t('performance')}</Eyebrow>
-                <h2 id="perf" className="mt-2 text-subsection text-cream">{ts('composite')}</h2>
-                <ScoreBreakdown score={score} className="mt-4 max-w-xl" />
-              </section>
+              <Reveal>
+                <section aria-labelledby="perf">
+                  <Eyebrow>{t('performance')}</Eyebrow>
+                  <h2 id="perf" className="mt-2 text-subsection text-cream">{ts('composite')}</h2>
+                  <ScoreBreakdown score={score} className="mt-4 max-w-xl" />
+                </section>
+              </Reveal>
             ) : null}
 
             {/* About */}
-            <section aria-labelledby="about">
-              <Eyebrow>{t('about')}</Eyebrow>
-              <h2 id="about" className="mt-2 text-subsection text-cream">{consultant.name}</h2>
-              <p className="mt-3 max-w-2xl leading-relaxed text-cream-muted">{consultant.bio}</p>
-            </section>
+            <Reveal>
+              <section aria-labelledby="about">
+                <Eyebrow>{t('about')}</Eyebrow>
+                <h2 id="about" className="mt-2 text-subsection text-cream">{consultant.name}</h2>
+                <p className="mt-3 max-w-2xl leading-relaxed text-cream-muted">{consultant.bio}</p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {consultant.specializations.map((s) => (
+                    <Tag key={s}>{tspec(s)}</Tag>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
 
             {/* Listings */}
             <section aria-labelledby="listings">
@@ -112,29 +142,32 @@ export default async function ConsultantProfilePage({
             </section>
 
             {/* Reviews */}
-            <section aria-labelledby="reviews">
-              <h2 id="reviews" className="text-subsection text-cream">{t('reviews')}</h2>
-              {consultant.reviewCount > 0 ? (
-                <>
-                  <div className="mt-3 flex items-center gap-3">
-                    <StarRating value={consultant.avgRating ?? 0} size="lg" label={t('reviews')} />
-                    <span className="font-display text-cream">
-                      {consultant.avgRating?.toFixed(1)}
-                    </span>
-                    <span className="text-meta text-cream-muted">
-                      ({consultant.reviewCount} {ts('reviews')})
-                    </span>
-                  </div>
-                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                    {consultant.reviews.map((r) => (
-                      <ReviewItem key={r.id} review={r} />
-                    ))}
-                  </div>
-                </>
-              ) : (
-                <EmptyState title={ts('noReviews')} className="mt-5" />
-              )}
-            </section>
+            <Reveal>
+              <section aria-labelledby="reviews">
+                <h2 id="reviews" className="text-subsection text-cream">{t('reviews')}</h2>
+                {consultant.reviewCount > 0 ? (
+                  <>
+                    <div className="mt-3 flex items-center gap-3">
+                      <StarRating value={consultant.avgRating ?? 0} size="lg" label={t('reviews')} />
+                      <span className="font-display text-cream">
+                        {consultant.avgRating?.toFixed(1)}
+                      </span>
+                      <span className="text-meta text-cream-muted">
+                        ({consultant.reviewCount} {ts('reviews')})
+                      </span>
+                    </div>
+                    <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                      {consultant.reviews.map((r) => (
+                        <ReviewItem key={r.id} review={r} />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  // Diogo (0 reviews) — #18-consistent "building track record" empty state.
+                  <EmptyState title={ts('noReviews')} description={ts('buildingTrackRecord')} className="mt-5" />
+                )}
+              </section>
+            </Reveal>
           </div>
 
           {/* ---- Contact (sticky desktop / sticky-bar mobile) ---- */}

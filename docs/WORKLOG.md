@@ -6,6 +6,54 @@
 
 ---
 
+## 2026-06-22 · Phase 4.3 — Design-apply step 6 (FINAL): consultant profile re-skin · APPLY COMPLETE
+
+**Done** (branch `chore/design-apply-profile`; re-skin only — data layer/routing untouched).
+**This completes the design-apply sub-phase: run order 1→6 is now COMPLETE.**
+
+- **Decision #56 logged** (item 0): the approved Home section rhythm **N·I·N·N·I·N·N** is now
+  canonical (ratifies the Step-5 proposal).
+- **Profile header** re-skinned: ringed Avatar, name + **VerifiedBadge seal** (Concept B, #12;
+  sealSize 44), standing **Badge** (rising) / **RankBadge** (gated by #18 — confident only),
+  a **StatBlock** header stat row (close-rate / satisfaction / response), and the **merit score
+  as a 38px gold-title numeral** — **#18 preserved**: the number shows only when confident, else
+  the "A construir histórico" Badge (no number). Specialities moved to **About** as Tag chips.
+- **ScoreBreakdown** re-skinned onto the **Card** primitive (frosted, navy stage); added the
+  **rating weights** (#16: 35/25/15/15/10) as a muted suffix per signal; kept the #18 numeric
+  reveal via the retained **PerformanceBadge** + the reduced-motion-safe bar fills (#37).
+- **ReviewItem** re-skinned onto the frosted surface (`--surface-card` + blur + shadow-card).
+- **Reviews**: Diogo (0 reviews) empty state **preserved** + given #18-consistent "building
+  track record" description. **About**: bio on the type ramp + speciality Tags.
+- **Contact (#28)**: already on the Step-3 primitives (Input/Select/Button wells) + the
+  sticky-solid panel from Step 4 — desktop-inline / mobile-sticky→full + RHF/Zod intact, kept.
+- **Motion (#37)**: new `components/Reveal.tsx` (reduced-motion-safe entrance) wraps the header,
+  performance panel, about and reviews; listings keep the per-card stagger; no bounce/loops.
+- **No ivory on the profile**: kept the whole page on the navy stage (focused conversion
+  experience); listings stay on navy as required. (The optional ivory blocks were not used.)
+
+**AA fix (fail-closed, #51/#53):** `--text-faint` (.40) measured **3.15–3.47:1** on navy — fails
+4.5 for the meaningful small labels (merit caption, weight %, card footer meta). Bumped those
+labels to **`cream-muted` (.58 = 4.94:1)** across ConsultantCard + the profile header +
+ScoreBreakdown (an AA-safe deviation from the zip's text-faint scoreLabel). No `text-faint`
+meaningful-text usages remain. Reused already-verified values: green energy cert **5.23:1**
+(Step 4, on listings' PropertyCards), muted **4.94:1** (Step 5); the 38px gold merit is large text.
+
+**#18 / #28 verification** (runtime, both locales): **ana-silva** (`confidence: high`, sampleSize
+34) → 38px gold merit numeral, no visible building, full ScoreBreakdown + reviews; **diogo-fernandes**
+(`risingTalent`, sampleSize 3, 0 reviews) → **no number**, Rising badge + building treatment +
+reviews empty state with building language. Unknown slug → **404** (`notFound()` preserved).
+Contact form (textarea) present on both (desktop inline; mobile sticky bar + dialog unchanged).
+
+**Green gate** (Node 22.22.3 / pnpm 11.4): `pnpm build` ✅ · `tsc --noEmit` ✅ (exit 0) · `eslint`
+✅ 0/0. **Smoke** (`next start`): `/consultores/{ana-silva,diogo-fernandes}` + `/en/consultants/...`
+all **200**; #18 gating correct in header + ScoreBreakdown + reviews; entrance/stagger render.
+
+**Next (design-apply COMPLETE → resume Phase 4.3 build):** remaining public pages — Buy/Rent
+(`/comprar`,`/arrendar`), Property detail (`/imovel/[id]`), Vender, static pages — then 4.4 app
+shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch). Per PROJECT-STATE §5.
+
+---
+
 ## 2026-06-22 · Phase 4.3 — Design-apply step 5: HOME SECTION VARIETY (ivory breaks)
 
 **Done** (branch `chore/design-apply-home`; fixes the "flat single-navy" feel)

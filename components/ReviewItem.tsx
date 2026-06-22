@@ -18,7 +18,7 @@ export function ReviewItem({ review }: { review: Review }) {
   const rating = overall(review)
 
   return (
-    <article className="rounded-lg border border-line bg-surface p-4">
+    <article className="rounded-[var(--radius-lg)] border border-line bg-[var(--surface-card)] p-4 shadow-[var(--shadow-card)] backdrop-blur-[var(--blur-panel)]">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <StarRating value={rating} size="sm" label={t('score.reviews')} />
