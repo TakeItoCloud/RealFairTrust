@@ -6,6 +6,78 @@
 
 ---
 
+## 2026-06-22 · Phase 4.3 — Design-apply step 2: TOKENS (pure-additive + lucide-react)
+
+**Done** (token layer only — no component files touched; branch `chore/design-apply-tokens`)
+- Added the **hand-off design-system token layer** to `app/design-tokens.css` as a pure-additive
+  block (decision #46, plan §2), then **aliased the legacy `--rft-*` names to the new hand-off
+  sources** where value-identical (plan §1 — "alias, don't migrate"). Concretely:
+  - **Navy** §2.1: added `--navy-900/-600/-500`; `--navy-950/-800/-700` + `--bg-navy-radial`
+    (kept the #45 explicit-stop form) are now the sources; `--rft-bg-deep/-bg/-bg-glow/
+    -bg-gradient` alias them. `--rft-bg-elev` (#0D1F38) left as-is.
+  - **Gold bright** §2.3: added `--gold-100…-700`, `--gradient-gold-title`,
+    `--gradient-gold-hairline`; `--rft-gold` → `var(--gold-500)`, `--rft-gold-gradient` →
+    `var(--gradient-gold-title)`.
+  - **Gold calm/button** §2.4: kept `--rft-gold-button(-hover)` ≡ `--gradient-gold-button(-hover)`;
+    added `--gold-calm/-soft/-deep-calm`, `--gold-tint`, `--gold-border`, `--gold-border-soft`.
+    **Override preserved:** `--rft-gold-deep` / `--label-gold-on-ivory` stay **#8C5E12** (AA),
+    not the hand-off's #d19e1d/`--gold-600` (#45).
+  - **Green** §2.5: added `--green-verified(-deep)`, `--green-tint`, `--green-border`;
+    `--rft-verified` → `var(--green-verified)`. **Kept `--rft-verified-ink #1E8F62`** for AA
+    (did not adopt #2f9a6c).
+  - **Ivory** §2.6: added `--ivory`, `--ivory-100`, `--ivory-200`, `--ivory-card`;
+    `--rft-bg-warm`/`--rft-surface-lt` alias them. (No `.rft-ivory` class — that's Step 5.)
+  - **Text** §2.7: added `--text-body/.78`, `--text-muted/.58`, `--text-faint/.40`,
+    `--text-ink #1c2942`, `--text-ink-strong`, `--text-ink-muted`, `--hairline-strong`,
+    `--wordmark-*`. Repointed **ivory body text to navy-ink** (`--rft-text-lt` →
+    `var(--text-ink)`; `--rft-text-lt-mut` → `var(--text-ink-muted)`) — deliberate brown→navy
+    per plan §2.7 + PROJECT-STATE §7 (AA re-verify on ivory deferred to Step 5).
+  - **Spacing** §2.8: added full `--space-0…-32`, `--container-narrow`, `--section-pad-y`;
+    `--rft-s1…-s9`, `--rft-content-max`, `--rft-gutter` alias the matching `--space-*`/layout
+    tokens.
+  - **Radii** §2.9: added `--radius-xs/sm/md/lg/xl/pill`. **Remap DEFERRED to Step 3** —
+    `--rft-r-*` and the Tailwind `rounded-*` mapping untouched (verified below).
+  - **Shadows/blur** §2.10: added `--shadow-sm/-gold-glow/-green-glow/-ivory`, `--blur-panel/
+    -nav`. **`--shadow-card`/`--shadow-raised` NOT deepened — deferred to Step 4.**
+  - **Surfaces** §2.2: added `--surface-card-solid #0c1d39`, `--surface-inset`. **Translucency
+    flip of `--surface-card`/`-raised` DEFERRED to Step 4.**
+  - **Motion** §2.10: adopted the LOCKED `--ease-out cubic-bezier(0.22,0.61,0.36,1)` (+
+    `--ease-in-out`); `--rft-ease` → `var(--ease-out)`, `--rft-dur-fast` → `var(--dur-fast)`
+    (140), `--rft-dur` → `var(--dur-base)`. Added `--dur-slow 420ms`. (`--rft-ease` has **no
+    live consumers**, so the curve adoption is inert today.)
+- **Typography:** kept current `--fs-*` (hero 72); did **not** import the bundle's
+  `tokens/typography.css` (hero 76) or `tokens/fonts.css` `@import` (decision b — fonts stay on
+  `next/font/google`).
+- **Dependency (decision a):** `pnpm add lucide-react` → **lucide-react 1.21.0**. No icons
+  replaced yet (icon migration is Step 3); unused dep is green-safe.
+
+**Two staging resolutions applied** (the "if unsure, keep current + note it" calls):
+1. **Muted text not consolidated.** Live `--rft-text-mut` (→ Tailwind `cream-muted`) kept at
+   **.66**; hand-off `--text-muted` (.58) added but unconsumed. Flipping .66→.58 site-wide is a
+   visible change → deferred to the step that restyles text (Step 3/5).
+2. **Hairline not warm-tinted.** Live `--rft-line`/`--hairline` kept at **white .07**;
+   `--hairline-strong` (.16) added. Warming to `rgba(245,241,234,.10)` is visible → deferred to
+   Step 3/5.
+
+**Changed**
+- `app/design-tokens.css` (additive tokens + alias repoints), `package.json` + `pnpm-lock.yaml`
+  (lucide-react). **No `app/globals.css`, no component, no font changes.**
+
+**Green gate** — `nvm use 22` (Node 22.22.3, pnpm 11.4):
+- `pnpm build` ✅ · `tsc --noEmit` ✅ · `eslint` ✅ **0 errors** (2 `<img>` warnings, both in the
+  non-shipped `design/handoff/` reference JSX — out of scope).
+- **Zero visual change verified empirically:** compiled CSS shows `.rounded-sm/md/lg` still
+  resolve to `var(--rft-r-*)` (6/10/16), and no component uses `rounded-xs/xl` or reads
+  `var(--radius-*)` directly — so the new `--radius-*` scale is inert to current rendering
+  (the dual `--radius-*` declaration is cosmetic and is Step 3's remap concern).
+
+**Next**
+- Step 3 (Primitives): consume the new tokens — Button secondary borders, new Card/StatBlock/
+  RankBadge/Badge/Tag, Input/Select wells, Avatar gradient ring; **the radius remap + `rounded-*`
+  audit**, the muted/hairline consolidations, and the `lucide-react` icon migration land here.
+
+---
+
 ## 2026-06-21 · Phase 4.3 — Design-apply step 1: reconciliation plan (docs only)
 
 **Done** (plan-only session; **no app code/tokens/components changed**)

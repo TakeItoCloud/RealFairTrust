@@ -229,7 +229,7 @@ Legend — **✅ match** (value-identical, name may differ) · **🟡 new** (abs
 
 | # | Step | Scope (from this diff) | Status |
 |---|---|---|---|
-| **2** | **Tokens** | Add full navy/gold/green/ivory scales, three-step text ramp + navy-ink-on-ivory (§2.7), full `--space-*` (§2.8), hand-off radius scale + remap (§2.9), `--shadow-sm/gold-glow/green-glow/ivory` + deepen card/raised (§2.10), `--blur-panel/nav`, locked `--ease-out` + `--dur-slow` (§2.10), `--surface-inset`. Alias `--rft-*` ↔ hand-off tokens per §1. Wire **`lucide-react`** dependency (decision a). **Keep** `next/font` fonts (decision b — no `fonts.css` @import). Keep `--rft-gold-deep`/neutral-cert overrides. | ⬜ Not started |
+| **2** | **Tokens** | Add full navy/gold/green/ivory scales, three-step text ramp + navy-ink-on-ivory (§2.7), full `--space-*` (§2.8), hand-off radius scale + remap (§2.9), `--shadow-sm/gold-glow/green-glow/ivory` + deepen card/raised (§2.10), `--blur-panel/nav`, locked `--ease-out` + `--dur-slow` (§2.10), `--surface-inset`. Alias `--rft-*` ↔ hand-off tokens per §1. Wire **`lucide-react`** dependency (decision a). **Keep** `next/font` fonts (decision b — no `fonts.css` @import). Keep `--rft-gold-deep`/neutral-cert overrides. | ✅ **Done 2026-06-22** (additive only; lucide-react 1.21.0; green) |
 | **3** | **Primitives** | Button (secondary→`--gold-border-soft`/`--gold-tint`/`--gold-border`; focus ring spec); new **Card** (translucent + 18px blur + featured glow), **StatBlock** (30px, `gold`/`delta`/`align`), **RankBadge** (gradient coin + glow, supersedes hand-rolled coin), **Badge**+**Tag** unified chips; Input/Select wells (`--surface-inset`, gold focus); **Avatar** gradient ring; **Logo/Wordmark** tri-tone (already ✅, verify ivory ink switch); **VerifiedBadge** pill/seal. Replace inline `icons.tsx` SVGs with **`lucide-react`** (search, map-pin, star, arrow-right, chevron-right, clock, shield-check, trending-up, scale, refresh-cw, bed, bath, ruler, globe, menu). Refresh `/dev/primitives` + `/dev/components`. | ⬜ Not started |
 | **4** | **Cards** | ConsultantCard "Spotlight" + PropertyCard "Editorial Overlay" onto the new translucent surfaces + 18px blur + deepened shadows; Framer Motion entrance (opacity+y, stagger 60–80ms, image scale 1.04→1) + hover (lift, **accent-bar `scaleX 0→1` over `--dur-slow`**, score glow, image zoom 1.06/500ms) on the **locked `--ease-out`**, reduced-motion-safe. **Energy cert stays NEUTRAL (decision c / #49)** — do not adopt the README's verified-green cert. | ⬜ Not started |
 | **5** | **Home section variety** | Apply `.rft-ivory` light break + navy-stage alternation across Home sections; align ivory shadows/ink (§2.6/2.7/2.10); wire the redesigned cards. Verify AA on the (new navy-ink) ivory sections. | ⬜ Not started |
@@ -266,5 +266,20 @@ Legend — **✅ match** (value-identical, name may differ) · **🟡 new** (abs
   Step 4 so primitives stay green first.
 - **AA re-verification** is required when (i) ivory body text moves to navy-ink (§2.7) and
   (ii) hairlines warm to `rgba(245,241,234,.10)` (§2.7).
+
+### Step 2 staging resolutions (applied 2026-06-22)
+Step 2 was kept strictly **visually inert** — the two judgement calls flagged in §2.7 were both
+deferred rather than flipped:
+1. **Muted text:** live `--rft-text-mut` (→ `cream-muted`) kept at **.66**; hand-off
+   `--text-muted` (.58) added but unconsumed. Consolidation (.66→.58) → **Step 3/5**.
+2. **Hairline:** live `--rft-line`/`--hairline` kept at **white .07**; `--hairline-strong` (.16)
+   added. Warm-tint to `rgba(245,241,234,.10)` → **Step 3/5**.
+
+Also staged out of Step 2 (token values added, but not yet consumed/flipped): the **radius
+remap** (`--rft-r-*` / `rounded-*` still bind to 6/10/16 — the new `--radius-*` scale is inert
+until **Step 3**), the **surface translucency** flip and **`--shadow-card`/`-raised` deepen**
+(**Step 4**). The ivory body-text **navy-ink** change (§2.7) *was* applied this step (green-safe;
+AA re-verify on ivory at **Step 5**). The "alias-don't-migrate" convention (§1) is now committed
+project-wide per decision #50 (no new decision number — refinement of #50).
 </content>
 </invoke>
