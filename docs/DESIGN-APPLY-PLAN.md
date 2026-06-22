@@ -5,11 +5,13 @@
 > code, tokens, or components were changed in this session** — this is the plan that steps 2→6
 > execute against.
 >
-> **Authority:** the hand-off `README.md` wins on any design value (it states "this README
-> wins" and reflects the latest locked decisions). Where a logged decision (#45/#49 AA & brand
-> overrides) contradicts the README, the **decision wins** and is called out explicitly below.
+> **Authority (updated 2026-06-22, decision #51):** the Claude Design export (`design/handoff/`)
+> is the **supreme authority for all visual/design values** and supersedes any conflicting prior
+> decision — **except** where the zip's literal value would damage **WCAG AA** or **performance**,
+> in which case the AA/perf-safe deviation is retained as a documented, justified exception (#53).
+> When the zip self-contradicts, its `README.md` self-declares authority and wins.
 >
-> **Date:** 2026-06-21 · **Branch:** `chore/design-apply-plan` (off `feat/pages-public`).
+> **Date:** 2026-06-21 (governance sync appended 2026-06-22) · **Branch:** `chore/design-apply-plan` (off `feat/pages-public`).
 
 ---
 
@@ -32,8 +34,9 @@ match** and need no work:
 - **Fonts** load via `next/font/google` (Fraunces + Inter → `--rft-font-display` /
   `--rft-font-sans`) — **decision (b) already satisfied**; the bundle's `tokens/fonts.css`
   `@import` is **not** to be adopted.
-- **PropertyCard energy cert already renders NEUTRAL** (`text-cream-muted`) — **decision (c)
-  already upheld**; the hand-off's "verified-green energy cert" is to be ignored, not undone.
+- **PropertyCard energy cert → GREEN per the zip** (decision #52, supersedes #49; explicit
+  exception to #34). It currently renders neutral (`text-cream-muted`); the green flip lands in
+  **Step 4**. The verified-green token is no longer verification-exclusive.
 
 The remaining work is **additive**: bring in the parts of the hand-off that #45 summarized but
 did not fully enumerate — the **translucent frosted surfaces**, the **full navy / gold / spacing
@@ -62,9 +65,13 @@ wire the primitives, cards, home variety, and profile page to consume them.
 - Where values **differ on purpose** (surface translucency, radii, easing, ink-on-ivory), do
   **not** alias — make the value change **in the step that wants the visual change**, with AA
   re-verification, so the build stays green between steps.
-- **Preserve the logged overrides:** `--rft-gold-deep #8C5E12` (ivory label, AA — overrides the
-  hand-off's `#d19e1d`/`--gold-600`, per #45) and the **neutral energy cert** (#49). These are
-  deliberate and must survive reconciliation.
+- **Preserve the AA/perf exceptions retained under zip supremacy (#51 → #53):**
+  `--rft-gold-deep #8C5E12` (ivory label — 5.32:1; overrides the zip's `#d19e1d` at 2.30:1),
+  **verified-ink-on-light → `#157048`** (5.22:1 on the real badge bg; supersedes the interim
+  `#1E8F62` at 3.48:1 and the zip's `#2f9a6c` at 3.01:1 — token swap in Step 3), fonts via
+  `next/font/google` (not the zip `@import`), and the README type scale (hero 72). These are
+  deliberate and must survive reconciliation. **NOTE — energy cert is no longer an exception:**
+  per #52 it now renders **GREEN** per the zip (supersedes #49; explicit exception to #34).
 
 **Net effect:** steps 2→6 introduce the full hand-off token set and re-point primitives/cards to
 it, but no step requires a sweeping find-replace of class names across pages.
@@ -124,7 +131,7 @@ Legend — **✅ match** (value-identical, name may differ) · **🟡 new** (abs
 | Hand-off token | Value | Current | Status |
 |---|---|---|---|
 | `--green-verified` | `#3fb984` | `--rft-verified` | ✅ (name) |
-| `--green-verified-deep` | `#2f9a6c` | `--rft-verified-ink` `#1E8F62` | 🔶 minor (keep current ink for AA) |
+| `--green-verified-deep` | `#2f9a6c` | `--rft-verified-ink` `#1E8F62` | 🔶 **AA fail** — both literals fail on the light badge (`#2f9a6c` 3.01:1, interim `#1E8F62` 3.48:1). Move verified-ink-on-light → **#157048** (5.22:1) in **Step 3** (#53) |
 | `--green-tint` / `--green-border` | `rgba(.14)` / `rgba(.40)` | — | 🟡 new |
 
 ### 2.6 Warm ivory (light section)
@@ -229,9 +236,9 @@ Legend — **✅ match** (value-identical, name may differ) · **🟡 new** (abs
 
 | # | Step | Scope (from this diff) | Status |
 |---|---|---|---|
-| **2** | **Tokens** | Add full navy/gold/green/ivory scales, three-step text ramp + navy-ink-on-ivory (§2.7), full `--space-*` (§2.8), hand-off radius scale + remap (§2.9), `--shadow-sm/gold-glow/green-glow/ivory` + deepen card/raised (§2.10), `--blur-panel/nav`, locked `--ease-out` + `--dur-slow` (§2.10), `--surface-inset`. Alias `--rft-*` ↔ hand-off tokens per §1. Wire **`lucide-react`** dependency (decision a). **Keep** `next/font` fonts (decision b — no `fonts.css` @import). Keep `--rft-gold-deep`/neutral-cert overrides. | ✅ **Done 2026-06-22** (additive only; lucide-react 1.21.0; green) |
+| **2** | **Tokens** | Add full navy/gold/green/ivory scales, three-step text ramp + navy-ink-on-ivory (§2.7), full `--space-*` (§2.8), hand-off radius scale + remap (§2.9), `--shadow-sm/gold-glow/green-glow/ivory` + deepen card/raised (§2.10), `--blur-panel/nav`, locked `--ease-out` + `--dur-slow` (§2.10), `--surface-inset`. Alias `--rft-*` ↔ hand-off tokens per §1. Wire **`lucide-react`** dependency (decision a). **Keep** `next/font` fonts (decision b — no `fonts.css` @import). Keep `--rft-gold-deep` override (energy-cert green flip + verified-ink #157048 land later, #52/#53). | ✅ **Done 2026-06-22** (additive only; lucide-react 1.21.0; green) |
 | **3** | **Primitives** | Button (secondary→`--gold-border-soft`/`--gold-tint`/`--gold-border`; focus ring spec); new **Card** (translucent + 18px blur + featured glow), **StatBlock** (30px, `gold`/`delta`/`align`), **RankBadge** (gradient coin + glow, supersedes hand-rolled coin), **Badge**+**Tag** unified chips; Input/Select wells (`--surface-inset`, gold focus); **Avatar** gradient ring; **Logo/Wordmark** tri-tone (already ✅, verify ivory ink switch); **VerifiedBadge** pill/seal. Replace inline `icons.tsx` SVGs with **`lucide-react`** (search, map-pin, star, arrow-right, chevron-right, clock, shield-check, trending-up, scale, refresh-cw, bed, bath, ruler, globe, menu). Refresh `/dev/primitives` + `/dev/components`. | ⬜ Not started |
-| **4** | **Cards** | ConsultantCard "Spotlight" + PropertyCard "Editorial Overlay" onto the new translucent surfaces + 18px blur + deepened shadows; Framer Motion entrance (opacity+y, stagger 60–80ms, image scale 1.04→1) + hover (lift, **accent-bar `scaleX 0→1` over `--dur-slow`**, score glow, image zoom 1.06/500ms) on the **locked `--ease-out`**, reduced-motion-safe. **Energy cert stays NEUTRAL (decision c / #49)** — do not adopt the README's verified-green cert. | ⬜ Not started |
+| **4** | **Cards** | ConsultantCard "Spotlight" + PropertyCard "Editorial Overlay" onto the new translucent surfaces + 18px blur + deepened shadows; Framer Motion entrance (opacity+y, stagger 60–80ms, image scale 1.04→1) + hover (lift, **accent-bar `scaleX 0→1` over `--dur-slow`**, score glow, image zoom 1.06/500ms) on the **locked `--ease-out`**, reduced-motion-safe. **Energy cert renders GREEN per the zip (decision #52 — supersedes #49; exception to #34)** — adopt the README's verified-green cert. | ⬜ Not started |
 | **5** | **Home section variety** | Apply `.rft-ivory` light break + navy-stage alternation across Home sections; align ivory shadows/ink (§2.6/2.7/2.10); wire the redesigned cards. Verify AA on the (new navy-ink) ivory sections. | ⬜ Not started |
 | **6** | **Profile page** | `/[locale]/consultores/[slug]` **already exists & is fully built** — Step 6 is **align-to-system, not green-field**: re-skin header/ScoreBreakdown/about/listings/reviews+empty-state/inline-LeadForm onto the finalized primitives & cards; keep `getConsultant(slug)` + `notFound()`, #18 score gating, Diogo 0-review empty state, #28 desktop-inline/mobile-sticky contact. | ⬜ Not started |
 
@@ -245,9 +252,10 @@ Legend — **✅ match** (value-identical, name may differ) · **🟡 new** (abs
 - **(b) Fonts via `next/font/google`** — ✅ **already in place** (`app/layout.tsx` loads
   Fraunces + Inter → `--rft-font-display`/`--rft-font-sans`). Plan **explicitly excludes** the
   bundle's `tokens/fonts.css` `@import`; no change needed beyond keeping the current setup.
-- **(c) PropertyCard energy cert NEUTRAL** — ✅ **already neutral** in the current
-  `PropertyCard` (`text-cream-muted`). Plan records this as an explicit **override of the
-  README's verified-green cert** (decisions #34/#49); Step 4 must **not** regress it to green.
+- **(c) PropertyCard energy cert — REVERSED to GREEN per the zip** (decision #52, supersedes
+  #49; explicit exception to #34). The original Prompt-1 instruction (c) "energy cert NEUTRAL" no
+  longer holds: under zip supremacy (#51) the cert renders the verified-green per the EU/PT
+  energy-label convention. It is still neutral in code today; **Step 4 applies the green flip.**
 - **(d) Careful token reconciliation for least churn + green** — ✅ the **alias-don't-migrate**
   strategy in §1: keep the Tailwind `@theme` + direct-var surfaces components already read,
   add the hand-off tokens alongside, collapse same-value pairs to one source + one alias, and
@@ -257,6 +265,11 @@ Legend — **✅ match** (value-identical, name may differ) · **🟡 new** (abs
 
 ## 5 · Notes / flags for the planning chat
 
+- **Design-authority rule (2026-06-22, #51):** the zip is the supreme visual authority and
+  supersedes conflicting prior decisions, except where its literal value damages WCAG AA or
+  performance (documented exceptions in #53). Energy cert now renders **green** (#52, supersedes
+  #49). Verified-ink-on-light moves to **#157048** (#53) — the interim #1E8F62 measured 3.48:1
+  (AA fail) at its real badge background.
 - **Profile page already exists** (committed 2026-06-13) — PROJECT-STATE §5/§6 describe Step 6 as
   "build the paused profile page", but it is built; reframe Step 6 as a **re-skin/alignment**.
 - **README vs bundle token files**: `tokens/typography.css` (hero 76) and the ivory label

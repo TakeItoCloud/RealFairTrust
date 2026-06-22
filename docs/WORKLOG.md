@@ -6,6 +6,48 @@
 
 ---
 
+## 2026-06-22 · Governance sync — zip = supreme authority; energy cert green; AA exceptions (docs only)
+
+**Done** (docs-only; no app code/tokens/components — branch `chore/design-governance-sync`)
+- Logged the new governance rule and its consequences in `docs/DECISIONS.md` as **#51–#53**:
+  - **#51 — DESIGN AUTHORITY:** the Claude Design export (`design/handoff/`) is the supreme
+    authority for all visual values, superseding any conflicting prior decision **except** where
+    the zip's literal value damages WCAG AA or performance (documented exceptions). README wins
+    on zip self-contradiction.
+  - **#52 — ENERGY CERT GREEN** (supersedes #49; explicit exception to #34): PropertyCard energy
+    cert renders verified-green per the EU/PT convention; green is no longer verification-only.
+    Implemented in run-order **Step 4**.
+  - **#53 — AA/perf exceptions retained** (ratios **measured**, not estimated — see below).
+- Reconciled `docs/DESIGN-APPLY-PLAN.md`: reframed the §1 overrides + §4(c) + §0 summary as
+  "AA/perf exceptions under zip supremacy"; **reversed the energy-cert instruction everywhere**
+  (Prompt-1 (c) and the §3 Step-4 row now read **GREEN per the zip, #52**); updated the §2.5
+  verified-ink row (AA fail → #157048 in Step 3); added the design-authority note to §5.
+- Updated `docs/PROJECT-STATE.md`: §4 adds #51–#53 and marks #49 superseded; §7 flips the energy
+  cert to green, sets ivory label `#8C5E12` + verified-ink-on-light `#157048` as AA exceptions,
+  and adds the design-authority/exceptions summary; refreshed the "Last updated" + §8 lines.
+
+**Measured WCAG contrast ratios** (computed against the real rendered backgrounds, sRGB):
+- Ivory label gold **#8C5E12** on `--ivory #fbf8f2` = **5.32:1** ✅ AA; zip's `#d19e1d` = **2.30:1** ❌.
+- Verified-ink **#1E8F62** (interim) on the real badge bg (`bg-verified/12` over ivory) =
+  **3.48:1** ❌ AA-4.5 for the labelled pill text (clears only the 3:1 icon bar); on pure white
+  4.07:1 ❌. The zip's `#2f9a6c` = **3.01:1** ❌ — worse.
+- **Resolution (user-approved):** verified-ink-on-light → **#157048** = **5.22:1** on the real
+  badge bg / **6.10:1** on white ✅ AA. Recorded as the #53 exception; **token swap happens in
+  Step 3** (this session is docs-only, so `app/design-tokens.css` still holds the interim value).
+
+**Process note:** the Prompt's STOP-and-report contingency for verified-ink triggered — #1E8F62
+failed AA at its usage, so a third value was needed. Confirmed with the user (chose #157048)
+before writing the decision, rather than recording a false "passes AA" claim.
+
+**Changed:** `docs/DECISIONS.md`, `docs/DESIGN-APPLY-PLAN.md`, `docs/PROJECT-STATE.md`, this
+worklog. No app/code/token/component changes.
+
+**Next**
+- Step 3 (Primitives) now also carries: swap `--rft-verified-ink` #1E8F62 → **#157048**; the
+  energy-cert green flip is **Step 4** (#52). Then steps 4→6 as planned.
+
+---
+
 ## 2026-06-22 · Phase 4.3 — Design-apply step 2: TOKENS (pure-additive + lucide-react)
 
 **Done** (token layer only — no component files touched; branch `chore/design-apply-tokens`)
