@@ -82,18 +82,18 @@ export function ComponentsShowcase({ consultants, listings, regions, detail }: P
             <p className="text-cream-muted">Real seed data via lib/data, passed down as props.</p>
           </header>
 
-          <Section title="ConsultantCard">
+          <Section title="ConsultantCard — Spotlight (entrance stagger + hover)">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {consultants.slice(0, 6).map((c) => (
-                <ConsultantCard key={c.id} consultant={c} />
+              {consultants.slice(0, 6).map((c, i) => (
+                <ConsultantCard key={c.id} consultant={c} index={i} />
               ))}
             </div>
           </Section>
 
-          <Section title="PropertyCard">
+          <Section title="PropertyCard — Editorial Overlay (entrance stagger + hover)">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {listings.slice(0, 6).map((l) => (
-                <PropertyCard key={l.id} listing={l} />
+              {listings.slice(0, 6).map((l, i) => (
+                <PropertyCard key={l.id} listing={l} index={i} />
               ))}
             </div>
           </Section>

@@ -1,15 +1,19 @@
 'use client'
 
-// ConsultantCard — "Spotlight" (Decision #45): a horizontal card led by a gold rank coin +
-// ringed avatar, with the close rate as the hero numeral. Honors Decision #18 — the gold
-// rank coin/number shows only for statistically-confident consultants; low-sample shows a
-// "building track record" badge; Rising Talent gets its tag. Keeps every existing field.
+// ConsultantCard — "Spotlight" (zip AgentCard reference; #51). Rebuilt on the Step-3 primitives
+// and the now-translucent frosted Card surface. Honors #18: the merit composite numeral shows
+// ONLY when statistically confident; otherwise the "building track record" treatment (Diogo,
+// 0 reviews → building). Top-3 get a gold RankBadge + ringed avatar; #1 confident = featured.
+// Motion (#37): Framer entrance + lift, CSS group-hover accent-bar/score-glow, reduced-motion-safe.
 import { motion, useReducedMotion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import type { ConsultantSummary } from '@/lib/types'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
-import { Avatar, PerformanceBadge, RisingTalentTag, VerifiedBadge } from '@/components/ui'
+import { Avatar, Badge, RankBadge, StatBlock, Tag, VerifiedBadge } from '@/components/ui'
+import { IconTrophy } from '@/components/ui/icons'
+
+const EASE = [0.22, 0.61, 0.36, 1] as const
 
 export function ConsultantCard({ consultant, index = 0 }: { consultant: ConsultantSummary; index?: number }) {
   const t = useTranslations()
@@ -17,7 +21,10 @@ export function ConsultantCard({ consultant, index = 0 }: { consultant: Consulta
   const score = consultant.score
 
   const confident = !!score && !score.risingTalent && score.confidence !== 'low'
-  const buildingTrackRecord = !!score && !score.risingTalent && score.confidence === 'low'
+  const building = !!score && !score.risingTalent && score.confidence === 'low'
+  const rank = confident ? score?.rank ?? null : null
+  const topRanked = rank != null && rank <= 3
+  const featured = confident && score?.rank === 1
 
   return (
     <Link
@@ -28,83 +35,82 @@ export function ConsultantCard({ consultant, index = 0 }: { consultant: Consulta
         initial={reduce ? false : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.42, ease: 'easeOut', delay: reduce ? 0 : Math.min(index * 0.07, 0.42) }}
+        transition={{ duration: 0.42, ease: EASE, delay: reduce ? 0 : Math.min(index * 0.07, 0.42) }}
         whileHover={reduce ? undefined : { y: -4 }}
         whileTap={reduce ? undefined : { y: 1 }}
-        style={{ boxShadow: 'var(--shadow-card)' }}
+        style={{ boxShadow: featured ? 'var(--shadow-gold-glow)' : 'var(--shadow-card)' }}
         className={cn(
-          'relative overflow-hidden rounded-[var(--card-radius)] border border-line bg-[var(--surface-card)]',
-          'transition-shadow duration-300 group-hover:shadow-[var(--shadow-raised)]',
+          'relative flex flex-col gap-[18px] overflow-hidden rounded-[var(--card-radius)] p-[var(--card-pad)]',
+          'border backdrop-blur-[var(--blur-panel)] transition-[box-shadow,border-color] duration-[var(--dur-base)] ease-[cubic-bezier(0.22,0.61,0.36,1)]',
+          featured
+            ? 'border-[var(--gold-border)] bg-[var(--surface-card-raised)]'
+            : 'border-line bg-[var(--surface-card)] group-hover:border-[var(--gold-border-soft)] group-hover:shadow-[var(--shadow-raised)]',
         )}
       >
-        {/* gold top accent bar — wipes in on hover */}
+        {/* Gold accent bar — always on when featured; wipes in on hover otherwise. */}
         <span
           aria-hidden
           style={{ backgroundImage: 'var(--accent-bar)' }}
-          className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100 motion-reduce:transition-none"
+          className={cn(
+            'absolute inset-x-0 top-0 h-[3px] origin-left transition-transform duration-[var(--dur-slow)] ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none',
+            featured ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
+          )}
         />
 
-        <div className="p-[var(--card-pad)]">
-          {/* Row 1 — lead + name + hero close rate */}
-          <div className="flex items-start gap-4">
-            {confident && score?.rank ? (
-              <span
-                aria-hidden
-                style={{ backgroundImage: 'var(--rft-gold-button)' }}
-                className="grid h-10 w-10 shrink-0 place-items-center rounded-full font-display text-sm font-semibold text-on-gold"
-              >
-                #{score.rank}
-              </span>
-            ) : null}
+        {/* Top row — rank + avatar + name / score */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-3.5">
+            {topRanked && rank != null ? <RankBadge rank={rank} label={t('score.rank')} size={40} /> : null}
+            <Avatar src={consultant.photo} name={consultant.name} size="lg" ring={featured || topRanked} />
+            <div className="flex min-w-0 items-center gap-2">
+              <p className="truncate font-display text-[21px] font-semibold leading-tight text-cream">
+                {consultant.name}
+              </p>
+              {consultant.verified ? <VerifiedBadge iconOnly size="sm" label={t('score.verified')} /> : null}
+            </div>
+          </div>
 
-            <Avatar src={consultant.photo} name={consultant.name} size="lg" className="ring-2 ring-gold/30" />
-
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <p className="truncate font-display text-[21px] font-semibold text-cream group-hover:text-gold">
-                  {consultant.name}
-                </p>
-                {consultant.verified ? <VerifiedBadge label={t('score.verified')} iconOnly size="sm" /> : null}
-              </div>
-              <p className="mt-0.5 truncate text-meta text-cream-muted">
-                {consultant.specializations.map((s) => t(`specializations.${s}`)).join(' · ')}
+          {confident && score ? (
+            <div className="shrink-0 text-right">
+              <p className="gold-title font-display text-[38px] font-semibold leading-none transition-[filter] duration-[var(--dur-base)] group-hover:[filter:drop-shadow(0_0_14px_rgba(255,216,110,0.45))] motion-reduce:transition-none">
+                {score.composite}
+              </p>
+              <p className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[var(--text-faint)]">
+                {t('score.merit90d')}
               </p>
             </div>
-
-            {score ? (
-              <div className="shrink-0 text-right transition-[filter] duration-300 group-hover:[filter:drop-shadow(0_2px_10px_rgba(227,168,18,0.35))]">
-                <p className="gold-title font-display text-[38px] font-semibold leading-none">{score.sub.closeRate}%</p>
-                <p className="mt-1 text-eyebrow text-cream-muted">{t('score.closeRate')}</p>
-              </div>
-            ) : null}
-          </div>
-
-          {/* Row 2 — tag / status pills */}
-          {score ? (
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              {score.risingTalent ? <RisingTalentTag label={t('score.risingTalent')} size="sm" /> : null}
-              {buildingTrackRecord ? (
-                <PerformanceBadge variant="building" label={t('score.buildingTrackRecord')} />
-              ) : null}
-              {confident && score.rank === 1 ? (
-                <PerformanceBadge variant="top" label={t('score.topThisMonth')} />
-              ) : null}
-            </div>
           ) : null}
+        </div>
 
-          {/* Footer — gold hairline + response-time meta + CTA */}
-          <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-            {score ? (
-              <span className="text-meta text-cream-muted">
-                {t('score.responsiveness')} · {score.sub.responsiveness}
-              </span>
-            ) : (
-              <span />
-            )}
-            <span className="text-meta font-medium text-gold">
-              {t('common.actions.viewProfile')} →
-            </span>
+        {/* Tags row — standing badge + specialities */}
+        <div className="flex flex-wrap items-center gap-2">
+          {score?.risingTalent ? <Badge variant="rising">{t('score.risingTalent')}</Badge> : null}
+          {building ? <Badge variant="neutral">{t('score.buildingTrackRecord')}</Badge> : null}
+          {featured ? (
+            <Badge variant="gold" iconLeft={<IconTrophy />}>
+              {t('score.topThisMonth')}
+            </Badge>
+          ) : null}
+          {consultant.specializations.map((s) => (
+            <Tag key={s}>{t(`specializations.${s}`)}</Tag>
+          ))}
+        </div>
+
+        {/* Stats row */}
+        {score ? (
+          <div className="flex gap-6 border-t border-line pt-4">
+            <StatBlock size="sm" value={`${score.sub.closeRate}%`} label={t('score.closeRate')} />
+            <StatBlock size="sm" value={score.sub.satisfaction} label={t('score.satisfaction')} />
+            <StatBlock size="sm" value={score.sub.responsiveness} label={t('score.responsiveness')} />
           </div>
+        ) : null}
+
+        {/* Footer */}
+        <div className="flex items-center justify-between border-t border-line pt-4">
+          <span className="text-[12.5px] text-[var(--text-faint)]">{rank != null ? `#${rank}` : ''}</span>
+          <span className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-gold transition-[gap] duration-[var(--dur-base)] group-hover:gap-2.5">
+            {t('common.actions.viewProfile')} →
+          </span>
         </div>
       </motion.article>
     </Link>

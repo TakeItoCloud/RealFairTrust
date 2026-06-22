@@ -6,6 +6,73 @@
 
 ---
 
+## 2026-06-22 · Phase 4.3 — Design-apply step 4: THE TWO CARDS (surface flip + motion)
+
+**Done** (branch `chore/design-apply-cards`; the biggest visual change of the apply)
+
+- **Surface translucency flip (plan §2.2 — now LIVE):** `--surface-card` `#10233C` →
+  **rgba(255,255,255,0.035)**, `--surface-card-raised` `#15294a` → **rgba(255,255,255,0.06)**.
+  This activates the `backdrop-blur(--blur-panel)` already wired on the cards/Card primitive →
+  frosted glass over the navy radial.
+  - **Surface-consumer audit:** the only `var(--surface-card)` consumers were ConsultantCard,
+    PropertyCard, the Card primitive, and ProfileContact. All opaque chrome (Modal, Toast,
+    Select dropdown, CookieBanner, Footer, Header) already uses `bg-ink-elev`/`bg-ink` →
+    unaffected. **ProfileContact** (sticky contact form) repointed to **`--surface-card-solid`**
+    (#0c1d39) to stay crisp/legible while sticky.
+- **Deepened shadows (plan §2.10):** `--shadow-card` → `0 22px 60px -28px rgba(2,8,18,.9)`;
+  `--shadow-raised` → `0 30px 80px -32px rgba(2,8,18,.95)`.
+- **ConsultantCard "Spotlight"** rebuilt per the zip AgentCard reference on the Step-3
+  primitives: ringed Avatar (gold-gradient ring on featured/top-3), **RankBadge** (1–3 gold +
+  glow), **VerifiedBadge** pill, **Badge** (rising/gold/neutral), **StatBlock** stats row
+  (close-rate/satisfaction/response, new `size="sm"`=18px), speciality **Tag** chips, gold
+  accent bar + score glow on hover, gold-hairline footer "Ver perfil →". **#18 preserved:** the
+  38px gold **composite** numeral renders only when statistically confident; otherwise the
+  "A construir histórico" Badge (Diogo, 0 reviews → building, no rank coin). #1 confident = the
+  `featured` (gold-glow) treatment.
+- **PropertyCard "Editorial Overlay"** rebuilt per the zip: full-bleed 220px media + scrim,
+  30px gold price on the image, frosted deal chip + gold demo chip (#20), spec row with lucide
+  bed/bath/area, agent mini-row "Ver detalhe →". **Energy cert now renders GREEN per #52**
+  (reverses the old neutral; explicit exception to #34) — value + bolt in verified-green.
+  Media stays full-bleed per the zip Editorial-Overlay (top corners follow the card radius via
+  overflow-hidden); kept **MediaImage** (graceful placeholder) rather than raw `next/image`
+  because seed images are placeholders that don't resolve yet (real imagery = 4.5, §9).
+- **Motion (#37, reduced-motion-safe, locked `--ease-out`):** entrance opacity+y (PropertyCard
+  media also settles scale 1.04→1), **stagger** kept via the existing per-card index delay
+  (60–80ms steps) at every card list (Home top-consultants/featured, Consultores grid + Rising
+  board, profile listings) — motion-only, no layout change, no server→client conversion of the
+  grids. Hover: lift −4 / −5, accent-bar `scaleX 0→1` over `--dur-slow`, merit-score glow, image
+  zoom 1.06 over `--dur-img`, price nudge −3, link-gap widen; press y+1. `useReducedMotion()`
+  disables transforms/entrance; `motion-reduce:` guards on the CSS effects.
+- **Legacy retired:** after the cards moved to Badge/RankBadge/StatBlock, **RisingTalentTag,
+  RankIndicator, StatTile** had zero importers (dev Showcase only) → removed from Showcase +
+  barrel and **deleted**. **PerformanceBadge retained** (real consumers: ScoreBreakdown + the
+  profile header use its numeric `score` #18 reveal).
+- **Dev showcases:** `/dev/components` cards now render in 6-up grids **with `index`** (stagger +
+  hover visible); `/dev/primitives` Badge/RankBadge/StatBlock sections replace the retired demos.
+- **StatBlock** gained `size?: 'sm'|'md'` (sm=18px for the in-card stats row; md=30px headline).
+  Added `score.merit90d` message key (pt "Mérito · 90d" / en "Merit · 90d") at parity.
+
+**Green gate** (Node 22.22.3 / pnpm 11.4): `pnpm build` ✅ · `tsc --noEmit` ✅ (exit 0) ·
+`eslint` ✅ 0 warnings/0 errors. **Runtime smoke** (`next start`): `/`, `/consultores`,
+`/consultores/ana-silva`, `/en`, `/en/consultants`, `/en/consultants/ana-silva` all **200**;
+Consultores renders 12 spotlight cards; Home cards show the green cert + translucent surface +
+active backdrop-blur.
+
+**AA spot-check** (computed against the real frosted-card bg = white-0.035 over the navy radial,
+worst case = lightest glow centre): cream body **11.49:1** ✅ · muted cream (.66, blended)
+**5.91:1** ✅ · **green energy cert #3fb984 5.23:1** (worst) / 6.43:1 typical ✅ (>4.5 for the
+~12.5px cert) · frosted chips: deal cream 15.1:1 / demo gold-300 12.4:1 ✅. Price (30px) + merit
+score (38px) are large gold text (≥3:1). Fail-closed satisfied — no sub-4.5 text.
+
+**Deferrals carried forward:** muted .66→.58, hairline warm-tint, `.rft-ivory` section helper +
+section-background alternation → **Step 5**; new public pages → after Step 6.
+
+**Next**
+- Step 5 (Home section variety): `.rft-ivory` light break + navy-stage alternation, ivory ink/
+  shadow consolidation, AA re-verify on ivory. Then Step 6 (profile re-skin).
+
+---
+
 ## 2026-06-22 · Phase 4.3 — Design-apply step 3: PRIMITIVES (+ icons, radius, verified-ink)
 
 **Done** (branch `chore/design-apply-primitives`; ISOLATION RULE held — Consultant/PropertyCard

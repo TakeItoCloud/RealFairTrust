@@ -22,7 +22,8 @@ export function ProfileContact({ consultantId, consultantName, regionId }: Profi
     <>
       {/* Desktop — inline sticky panel */}
       <div id="contact" className="hidden lg:block">
-        <div className="sticky top-24 rounded-[var(--card-radius)] border border-line bg-[var(--surface-card)] p-[var(--card-pad)]">
+        {/* Opaque (surface-card-solid) so the contact form stays crisp while sticky over scroll. */}
+        <div className="sticky top-24 rounded-[var(--card-radius)] border border-line bg-[var(--surface-card-solid)] p-[var(--card-pad)]">
           <h2 className="text-subsection text-cream">{t('contact')}</h2>
           <div className="mt-4">
             <LeadForm relatedAgentId={consultantId} regionId={regionId} />

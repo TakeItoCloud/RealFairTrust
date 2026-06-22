@@ -17,8 +17,7 @@ export { StatBlock } from './StatBlock'
 export { RankBadge } from './RankBadge'
 export { Badge } from './Badge'
 export { Tag } from './Tag'
-// Superseded but retained until their card-internal consumers migrate (Step 4):
+// Retained — the numeric #18 score reveal (top/building/score), still used by ScoreBreakdown +
+// the profile header. RisingTalentTag/RankIndicator/StatTile were retired in Step 4 (superseded
+// by Badge/RankBadge/StatBlock; zero importers remained).
 export { PerformanceBadge } from './PerformanceBadge'
-export { RisingTalentTag } from './RisingTalentTag'
-export { RankIndicator } from './RankIndicator'
-export { StatTile } from './StatTile'

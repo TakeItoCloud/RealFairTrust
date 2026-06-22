@@ -13,13 +13,10 @@ import {
   Input,
   PerformanceBadge,
   RankBadge,
-  RankIndicator,
-  RisingTalentTag,
   Select,
   Skeleton,
   StarRating,
   StatBlock,
-  StatTile,
   Tag,
   Textarea,
   VerifiedBadge,
@@ -98,18 +95,11 @@ export function Showcase() {
           </div>
         </Group>
 
-        {/* Badges */}
-        <Group title="Performance · Verified · Rising Talent · Rank">
+        {/* PerformanceBadge (retained — the numeric #18 score reveal + top/building pills) */}
+        <Group title="PerformanceBadge — top · building · score (#18)">
           <PerformanceBadge variant="top" label="Top this month" />
           <PerformanceBadge variant="building" label="Building track record" />
           <PerformanceBadge variant="score" label="Composite score" value={92} />
-          <VerifiedBadge label="Verified" />
-          <VerifiedBadge label="Verified" iconOnly />
-          <RisingTalentTag label="Rising Talent" />
-          <RankIndicator rank={1} label="Rank" />
-          <RankIndicator rank={2} label="Rank" />
-          <RankIndicator rank={3} label="Rank" />
-          <RankIndicator rank={7} label="Rank" />
         </Group>
 
         {/* Avatars */}
@@ -176,13 +166,6 @@ export function Showcase() {
           </Card>
         </Group>
 
-        {/* StatTiles */}
-        <Group title="StatTile">
-          <StatTile label="Close rate" value="90%" sub="vs target 80%" className="w-44" />
-          <StatTile label="Response time" value="1.2h" sub="median" className="w-44" />
-          <StatTile label="Satisfaction" value="96" sub="/ 100" className="w-44" />
-        </Group>
-
         {/* Skeletons */}
         <Group title="Skeleton">
           <div className="w-64 space-y-2">
@@ -215,10 +198,8 @@ export function Showcase() {
             <Input placeholder="Light input" onLight aria-label="Light input" className="w-56" />
             <Select options={cityOptions} onLight placeholder="Light select" aria-label="Light select" className="w-56" />
             <VerifiedBadge label="Verified" tone="light" />
-            <RisingTalentTag label="Rising Talent" tone="light" />
-            <RankIndicator rank={4} label="Rank" tone="light" />
             <PerformanceBadge variant="building" label="Building track record" tone="light" />
-            <StatTile label="Close rate" value="84%" tone="light" className="w-44" />
+            <Badge variant="rising" onIvory iconLeft={<IconSparkUp />}>Rising Talent</Badge>
             <Badge variant="gold" onIvory iconLeft={<IconTrophy />}>Top deste mês</Badge>
             <Badge variant="success" onIvory>Verificado</Badge>
             <Badge variant="neutral" onIvory>Building</Badge>
