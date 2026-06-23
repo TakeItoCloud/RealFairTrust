@@ -5,7 +5,7 @@ import { cn } from '@/lib/cn'
 
 interface SectionWrapperProps {
   children: ReactNode
-  tone?: 'dark' | 'warm' | 'surface'
+  tone?: 'dark' | 'warm' | 'surface' | 'ivory'
   /** Vertical padding rhythm. */
   size?: 'sm' | 'md' | 'lg'
   as?: ElementType
@@ -16,7 +16,11 @@ interface SectionWrapperProps {
 }
 
 const toneClasses: Record<NonNullable<SectionWrapperProps['tone']>, string> = {
-  dark: 'bg-ink text-cream',
+  // 'dark' is transparent so the body's deep-navy radial glow shows through (Decision #42);
+  // 'ivory'/'surface'/'warm' paint their own solid bands on top. 'ivory' (Step 5) is the warm
+  // light break that varies the page rhythm; 'warm' is its legacy alias.
+  dark: 'text-cream',
+  ivory: 'rft-ivory',
   warm: 'bg-warm text-ink-on-light',
   surface: 'bg-surface text-cream',
 }

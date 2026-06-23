@@ -23,6 +23,7 @@
       "viewProfile": "View profile",
       "contact": "Contact",
       "viewListing": "View listing",
+      "viewDetail": "View details",
       "seeAll": "See all",
       "search": "Search",
       "filter": "Filter",
@@ -42,6 +43,75 @@
     "closeMenu": "Close menu",
     "login": "Log in"
   },
+  "home": {
+    "hero": {
+      "eyebrow": "Merit, not seniority",
+      "headline": "Find the right real-estate consultant — chosen on performance.",
+      "subtitle": "We compare consultants in Lisbon and Porto on satisfaction, close rate and response time. Recomputed every month so trust stays current.",
+      "searchPlaceholder": "Search by area, type or reference",
+      "posterAlt": "Featured RealFairTrust consultants"
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "title": "Trust that's earned every month",
+      "step1Title": "Compare transparently",
+      "step1Desc": "See consultants ranked on real performance over the last 90 days — not ad spend.",
+      "step2Title": "Talk to those who deliver",
+      "step2Desc": "Pick a consultant and contact them directly — free, no account needed.",
+      "step3Title": "Review and keep it fair",
+      "step3Desc": "Verified reviews feed a ranking that resets every month."
+    },
+    "topConsultants": {
+      "eyebrow": "Top this month",
+      "title": "Featured consultants"
+    },
+    "featured": {
+      "eyebrow": "Listings",
+      "title": "Featured homes"
+    },
+    "split": {
+      "clientsTitle": "For clients",
+      "clientsDesc": "Buy, sell or rent with a consultant chosen on merit.",
+      "consultantsTitle": "For consultants",
+      "consultantsDesc": "Show your performance and compete on quality, not tenure."
+    },
+    "trust": {
+      "eyebrow": "Transparency",
+      "title": "Fair by design",
+      "desc": "Verified scores, a rolling 90-day window, and a dedicated board for new talent.",
+      "point1": "Verified-transaction reviews",
+      "point2": "Recomputed every month",
+      "point3": "Rising Talent board"
+    },
+    "join": {
+      "title": "Are you a real-estate consultant?",
+      "desc": "Join RealFairTrust and let your performance speak for itself.",
+      "button": "Join as a consultant"
+    }
+  },
+  "consultores": {
+    "eyebrow": "Consultants",
+    "title": "Find the right consultant",
+    "subtitle": "Compare on real performance over the last 90 days. Recomputed monthly.",
+    "specialization": "Specialization",
+    "allSpecializations": "All",
+    "viewRanked": "Ranked",
+    "viewAll": "All",
+    "risingTalentTitle": "Rising Talent",
+    "risingTalentSubtitle": "Consultants active under 6 months — judged separately, for a fair race.",
+    "suggestForMe": "Suggest one for me",
+    "empty": "No consultants match your filters."
+  },
+  "profile": {
+    "contact": "Contact",
+    "contactName": "Contact {name}",
+    "about": "About",
+    "performance": "Performance",
+    "listings": "This consultant's listings",
+    "reviews": "Reviews",
+    "noListings": "No active listings right now.",
+    "meritoScore": "Merit score"
+  },
   "score": {
     "buildingTrackRecord": "Building track record",
     "risingTalent": "Rising Talent",
@@ -54,6 +124,7 @@
     "conversion": "Conversion",
     "activity": "Activity",
     "composite": "Overall score",
+    "merit90d": "Merit · 90d",
     "target": "Target",
     "noReviews": "No reviews yet",
     "reviews": "reviews"

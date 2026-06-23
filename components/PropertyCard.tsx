@@ -1,64 +1,113 @@
 'use client'
 
-// PropertyCard — listing summary with agent + rating chip. The isDemo flag is shown
-// visibly as a "Demo data" badge (Decision #20) so seed inventory is never mistaken for real.
+// PropertyCard — "Editorial Overlay" (zip PropertyCard reference; #51). Full-bleed 220px media
+// under a scrim with the gold price sitting on the image; frosted deal chip + gold demo chip
+// (#20); spec row with lucide bed/bath/ruler; energy cert in verified-GREEN per #52 (reverses the
+// old neutral, exception to #34); agent mini-row. Media stays full-bleed per the zip (top corners
+// follow the card radius via overflow-hidden) — MediaImage gives a graceful placeholder until real
+// imagery lands (4.5). Motion (#37): Framer entrance + image settle, CSS group-hover zoom/lift,
+// reduced-motion-safe.
+import { motion, useReducedMotion } from 'framer-motion'
 import { useLocale, useTranslations } from 'next-intl'
 import type { ListingWithAgent, Locale } from '@/lib/types'
 import { Link } from '@/i18n/navigation'
-import { cn } from '@/lib/cn'
 import { formatArea, formatListingPrice } from '@/lib/format'
-import { Avatar, VerifiedBadge } from '@/components/ui'
-import { focusRing } from '@/components/ui/styles'
+import { Avatar } from '@/components/ui'
+import { IconArea, IconBath, IconBed, IconBolt, IconPin } from '@/components/ui/icons'
 import { MediaImage } from './MediaImage'
 
-export function PropertyCard({ listing }: { listing: ListingWithAgent }) {
+const EASE = [0.22, 0.61, 0.36, 1] as const
+
+export function PropertyCard({ listing, index = 0 }: { listing: ListingWithAgent; index?: number }) {
   const t = useTranslations()
   const locale = useLocale() as Locale
+  const reduce = useReducedMotion()
+  const location = listing.zoneName ? `${listing.zoneName}, ${listing.regionName}` : listing.regionName
 
   return (
-    <Link
-      href={{ pathname: '/imovel/[id]', params: { id: listing.id } }}
-      className={cn(
-        'group flex flex-col overflow-hidden rounded-lg border border-line bg-surface transition-transform',
-        'hover:-translate-y-0.5 motion-reduce:transform-none',
-        focusRing,
-      )}
-    >
-      <div className="relative aspect-[4/3] w-full overflow-hidden">
-        <MediaImage src={listing.media[0]} alt={listing.title} />
-        <span className="absolute left-2 top-2 inline-flex items-center rounded-full bg-ink/85 px-2 py-0.5 text-xs font-medium text-gold">
-          {listing.type === 'sale' ? t('listing.forSale') : t('listing.forRent')}
-        </span>
-        {listing.isDemo ? (
-          <span className="absolute right-2 top-2 inline-flex items-center rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-ink">
-            {t('common.demoBadge')}
-          </span>
-        ) : null}
-      </div>
+    <Link href={{ pathname: '/imovel/[id]', params: { id: listing.id } }} className="group block">
+      <motion.article
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.42, ease: EASE, delay: reduce ? 0 : Math.min(index * 0.07, 0.42) }}
+        whileHover={reduce ? undefined : { y: -5 }}
+        whileTap={reduce ? undefined : { y: 1 }}
+        style={{ boxShadow: 'var(--shadow-card)' }}
+        className="relative overflow-hidden rounded-[var(--radius-lg)] border border-line bg-[var(--surface-card)] backdrop-blur-[var(--blur-panel)] transition-[box-shadow,border-color] duration-[var(--dur-base)] ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:border-[var(--gold-border-soft)] group-hover:shadow-[var(--shadow-raised)]"
+      >
+        {/* Media — full-bleed 220px + scrim + chips + price */}
+        <div className="relative h-[220px] w-full overflow-hidden">
+          <motion.div
+            initial={reduce ? false : { scale: 1.04 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="h-full w-full"
+          >
+            <div className="h-full w-full transition-transform duration-[var(--dur-img)] ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[var(--img-zoom)] motion-reduce:transform-none motion-reduce:transition-none">
+              <MediaImage src={listing.media[0]} alt={listing.title} />
+            </div>
+          </motion.div>
 
-      <div className="flex flex-1 flex-col p-4">
-        <p className="font-display text-lg text-gold">
-          {formatListingPrice(listing.price, listing.type, locale, t('listing.perMonth'))}
-        </p>
-        <p className="mt-1 line-clamp-2 text-sm font-medium text-cream">{listing.title}</p>
+          <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: 'var(--overlay-scrim)' }} aria-hidden />
 
-        <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-cream-muted">
-          <li>{listing.beds} {t('listing.beds')}</li>
-          <li>{listing.baths} {t('listing.baths')}</li>
-          <li>{formatArea(listing.areaM2, locale)}</li>
-          <li>{t('listing.energyCert')} {listing.energyCert}</li>
-        </ul>
+          {/* Frosted chips */}
+          <div className="absolute inset-x-3.5 top-3.5 flex items-start justify-between gap-2">
+            <span className="inline-flex items-center rounded-full border border-[var(--hairline-strong)] bg-[rgba(8,18,38,0.7)] px-2.5 py-1 text-[11.5px] font-semibold text-cream backdrop-blur-[6px]">
+              {listing.type === 'sale' ? t('listing.forSale') : t('listing.forRent')}
+            </span>
+            {listing.isDemo ? (
+              <span className="inline-flex items-center rounded-full border border-[var(--gold-border)] bg-[rgba(8,18,38,0.7)] px-2.5 py-1 text-[11.5px] font-semibold tracking-[0.02em] text-[var(--gold-300)] backdrop-blur-[6px]">
+                {t('common.demoBadge')}
+              </span>
+            ) : null}
+          </div>
 
-        <div className="mt-4 flex items-center gap-2 border-t border-line pt-3">
-          <Avatar name={listing.agent.name} size="sm" />
-          <span className="truncate text-xs text-cream-muted">
-            {t('listing.by')} {listing.agent.name}
-          </span>
-          {listing.agent.verified ? (
-            <VerifiedBadge label={t('score.verified')} iconOnly size="sm" className="ml-auto" />
-          ) : null}
+          {/* Gold price on the image */}
+          <p className="gold-title absolute bottom-4 left-[18px] font-display text-[30px] font-semibold leading-none transition-transform duration-[var(--dur-slow)] ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:-translate-y-[3px] motion-reduce:transform-none">
+            {formatListingPrice(listing.price, listing.type, locale, t('listing.perMonth'))}
+          </p>
         </div>
-      </div>
+
+        {/* Body */}
+        <div className="flex flex-col gap-3.5 p-[18px]">
+          <div>
+            <p className="line-clamp-2 text-base font-semibold leading-snug text-cream">{listing.title}</p>
+            <p className="mt-1 flex items-center gap-1.5 text-meta text-cream-muted">
+              <IconPin className="text-sm" aria-hidden /> {location}
+            </p>
+          </div>
+
+          {/* Spec row — energy cert in verified-green (#52) */}
+          <ul className="flex flex-wrap items-center gap-x-3.5 gap-y-1 border-t border-line pt-3.5 text-[12.5px] text-cream-muted">
+            <li className="flex items-center gap-1.5">
+              <IconBed className="text-base" aria-hidden /> <b className="font-semibold text-cream">{listing.beds}</b>
+              <span className="sr-only">{t('listing.beds')}</span>
+            </li>
+            <li className="flex items-center gap-1.5">
+              <IconBath className="text-base" aria-hidden /> <b className="font-semibold text-cream">{listing.baths}</b>
+              <span className="sr-only">{t('listing.baths')}</span>
+            </li>
+            <li className="flex items-center gap-1.5">
+              <IconArea className="text-base" aria-hidden /> <b className="font-semibold text-cream">{formatArea(listing.areaM2, locale)}</b>
+            </li>
+            <li className="flex items-center gap-1.5 text-verified">
+              <IconBolt className="text-base" aria-hidden /> <b className="font-semibold">{listing.energyCert}</b>
+              <span className="sr-only">{t('listing.energyCert')}</span>
+            </li>
+          </ul>
+
+          {/* Agent + CTA */}
+          <div className="flex items-center gap-2 border-t border-line pt-3.5">
+            <Avatar name={listing.agent.name} size="sm" />
+            <span className="truncate text-[12.5px] text-cream-muted">{listing.agent.name}</span>
+            <span className="ml-auto inline-flex items-center gap-1.5 text-[13px] font-medium text-gold transition-[gap] duration-[var(--dur-base)] group-hover:gap-2.5">
+              {t('common.actions.viewDetail')} →
+            </span>
+          </div>
+        </div>
+      </motion.article>
     </Link>
   )
 }

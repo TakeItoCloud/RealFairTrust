@@ -13,6 +13,8 @@ interface AvatarProps {
   /** Full name — drives the initials and the alt text. */
   name: string
   size?: 'sm' | 'md' | 'lg' | 'xl'
+  /** Gold-gradient ring (border-box layering) — reserve for featured / top-ranked (§2.13). */
+  ring?: boolean
   className?: string
 }
 
@@ -30,7 +32,7 @@ function initials(name: string): string {
   return (first + last).toUpperCase() || '?'
 }
 
-export function Avatar({ src, name, size = 'md', className }: AvatarProps) {
+export function Avatar({ src, name, size = 'md', ring = false, className }: AvatarProps) {
   const imgRef = useRef<HTMLImageElement>(null)
   const [loaded, setLoaded] = useState(false)
   const [errored, setErrored] = useState(!src)
@@ -45,15 +47,16 @@ export function Avatar({ src, name, size = 'md', className }: AvatarProps) {
 
   const showImage = src && !errored
 
-  return (
+  const avatar = (
     <span
       role="img"
       aria-label={name}
       className={cn(
         'relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full',
-        'bg-gold/15 font-display font-semibold text-gold ring-1 ring-line select-none',
+        'bg-gold/15 font-display font-semibold text-gold select-none',
+        ring ? 'ring-0' : 'ring-1 ring-line',
         sizeClasses[size],
-        className,
+        !ring && className,
       )}
     >
       <span aria-hidden className="absolute inset-0 flex items-center justify-center">
@@ -73,6 +76,18 @@ export function Avatar({ src, name, size = 'md', className }: AvatarProps) {
           onError={() => setErrored(true)}
         />
       ) : null}
+    </span>
+  )
+
+  if (!ring) return avatar
+
+  // Gold-gradient ring via border-box layering: the inner avatar sits inside a 2px gradient frame.
+  return (
+    <span
+      className={cn('inline-block shrink-0 rounded-full', className)}
+      style={{ padding: 2, background: 'var(--gradient-gold-title)', borderRadius: 9999 }}
+    >
+      {avatar}
     </span>
   )
 }

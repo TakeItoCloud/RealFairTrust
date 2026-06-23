@@ -5,69 +5,239 @@
    Consumed by the Tailwind v4 theme (tailwind-theme.css) and app/globals.css in Phase 4. */
 
 :root {
-  /* ---- Brand / accent ---- */
-  --rft-gold:        #C8A86B;   /* primary accent */
-  --rft-gold-bright: #D6B87A;   /* hover / highlight */
-  --rft-gold-deep:   #8A6D2F;   /* on light backgrounds, links */
-  --rft-verified:    #3FB984;   /* verified / success only */
-  --rft-verified-ink:#1E8F62;   /* verified text on light */
+  /* =====================================================================
+     HAND-OFF DESIGN-SYSTEM TOKENS (design/handoff/, decision #46)
+     Run-order STEP 2 — PURE-ADDITIVE. These unprefixed tokens are the
+     source of truth; the legacy --rft-* names below are repointed to them
+     as aliases where value-identical (plan §1: alias, don't migrate).
+     Deliberate VALUE flips are DEFERRED to their consuming steps:
+       · surface translucency + deepened --shadow-card/-raised → Step 4
+       · radius remap (rounded-* / --rft-r-*)                  → Step 3
+       · .rft-ivory helper class                               → Step 5
+       · hairline warm-tint (.07 → .10) + muted .66 → .58      → Step 3/5
+     See docs/DESIGN-APPLY-PLAN.md §2.
+     ===================================================================== */
+
+  /* --- Navy stage (plan §2.1) --- */
+  --navy-950: #020812;
+  --navy-900: #060f22;   /* new — between base and deepest edge */
+  --navy-800: #0a1a34;
+  --navy-700: #122a4f;
+  --navy-600: #19365f;   /* new — raised-panel borders */
+  --navy-500: #21436f;   /* new — hairlines on navy */
+  /* Signature page background. Explicit stops are the #45-locked form, kept so the
+     --rft-bg-gradient alias is value-identical to the live value (no visual change). */
+  --bg-navy-radial: radial-gradient(ellipse 90% 70% at 50% 30%,
+    #122a4f 0%, #0a1a34 42%, #060f22 72%, #020812 100%);
+
+  /* --- Gold · BRIGHT — titles / logo / prices / merit numerals (plan §2.3) --- */
+  --gold-100: #ffe9b3;
+  --gold-200: #ffe089;
+  --gold-300: #ffd86e;   /* peak highlight */
+  --gold-500: #e3a812;   /* mid — solid companion */
+  --gold-600: #d19e1d;   /* deep base — NB: the ivory label keeps the AA override #8C5E12, not this (#45) */
+  --gold-700: #b8862a;   /* shadow */
+  --gradient-gold-title:    linear-gradient(180deg,#ffe6a0 0%,#ffd86e 28%,#e3a812 100%);
+  --gradient-gold-hairline: linear-gradient(90deg,rgba(227,168,18,0) 0%,rgba(227,168,18,0.55) 50%,rgba(227,168,18,0) 100%);
+
+  /* --- Gold · CALM / button (plan §2.4) --- */
+  --gold-calm:      #d8b34f;
+  --gold-soft:      #e6c163;
+  --gold-deep-calm: #c39327;
+  --gradient-gold-button:       linear-gradient(160deg,#ffe79e 0%,#f4c95c 46%,#dca233 100%);
+  --gradient-gold-button-hover: linear-gradient(160deg,#fff0b6 0%,#fad36c 46%,#e9ae3b 100%);
+  --gold-tint:        rgba(201,162,74,0.12);
+  --gold-border:      rgba(227,168,18,0.38);
+  --gold-border-soft: rgba(201,162,74,0.22);
+
+  /* --- Verified green · SUCCESS ONLY (#34; plan §2.5) --- */
+  --green-verified:      #3fb984;
+  --green-verified-deep: #2f9a6c;   /* spec value (zip); on-light verified ink uses #157048 instead — AA (#53) */
+  --green-tint:   rgba(63,185,132,0.14);
+  --green-border: rgba(63,185,132,0.40);
+
+  /* --- Warm ivory light section (plan §2.6) --- */
+  --ivory:      #fbf8f2;
+  --ivory-100:  #f5efe3;   /* new */
+  --ivory-200:  #ece3d2;   /* new — borders/dividers on ivory (live --rft-line-lt #E6DECF kept; minor delta) */
+  --ivory-card: #ffffff;
+
+  /* --- Text ramp (plan §2.7) --- */
+  --text-strong: #f5f1ea;
+  --text-body:   rgba(245,241,234,0.78);   /* new */
+  --text-muted:  rgba(245,241,234,0.58);   /* spec value; live cream-muted stays .66 (consolidation → Step 3/5) */
+  --text-faint:  rgba(245,241,234,0.40);   /* new */
+  /* On ivory — navy-ink wins (plan §2.7 + PROJECT-STATE §7): live ivory text moves brown → navy */
+  --text-ink:        #1c2942;
+  --text-ink-strong: #111c30;
+  --text-ink-muted:  #5a6678;
+  --hairline-strong: rgba(245,241,234,0.16);   /* new (live --hairline kept at white-.07; warm-tint deferred) */
+  --wordmark-cream: #f5f1ea;
+  --wordmark-slate: #8a93a3;
+
+  /* --- Spacing scale, 4px base (plan §2.8) --- */
+  --space-0: 0;     --space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px;  --space-5: 20px;  --space-6: 24px;  --space-8: 32px;
+  --space-10: 40px; --space-12: 48px; --space-16: 64px; --space-20: 80px;
+  --space-24: 96px; --space-32: 128px;
+  --container-max:    1200px;
+  --container-narrow: 760px;   /* new */
+  --section-pad-y:    96px;    /* new */
+  --gutter:           24px;
+
+  /* --- Radii (plan §2.9) — ADD the scale; the rounded-* / --rft-r-* remap is DEFERRED to Step 3 --- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* --- Surfaces (plan §2.2) — translucency flip DEFERRED to Step 4 --- */
+  --surface-card-solid: #0c1d39;          /* new — opaque card variant */
+  --surface-inset:      rgba(2,8,18,0.45);/* new — form wells (Step 3) */
+
+  /* --- Shadows / blur (plan §2.10) — --shadow-card/-raised DEEPEN deferred to Step 4 --- */
+  --shadow-sm:         0 4px 14px -6px rgba(2,8,18,0.6);
+  --shadow-gold-glow:  0 0 0 1px rgba(227,168,18,0.22), 0 18px 50px -18px rgba(227,168,18,0.28);
+  --shadow-green-glow: 0 0 0 1px rgba(63,185,132,0.22), 0 14px 40px -16px rgba(63,185,132,0.22);
+  --shadow-ivory:      0 18px 44px -24px rgba(28,41,66,0.22);
+  --blur-panel: 18px;   /* new — frosted cards (Step 3/4) */
+  --blur-nav:   14px;   /* new — sticky nav (Step 3/4) */
+
+  /* --- Motion (plan §2.10) — adopt the LOCKED easing --- */
+  --ease-out:    cubic-bezier(0.22,0.61,0.36,1);
+  --ease-in-out: cubic-bezier(0.65,0,0.35,1);
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 420ms;   /* new — accent-bar wipe (Step 4) */
+
+  /* ---- Gold — finalized visual system (Decision #45, supersedes #44) ---- */
+  --rft-gold:        var(--gold-500);   /* alias → hand-off source (#e3a812) — small pills/badges/chips/borders/icons */
+  --rft-gold-bright: #f0c14a;   /* hover / highlight */
+  --rft-gold-deep:   #8C5E12;   /* gold text/links on warm light sections (AA on ivory) */
+  --rft-on-gold:     #2a1d04;   /* dark text on gold buttons */
+  /* .gold-title clip gradient — titles / logo wordmark / prices (fallback = --rft-gold-title-solid) */
+  --rft-gold-gradient:      var(--gradient-gold-title);   /* alias → hand-off source */
+  --rft-gold-title-solid:   var(--gold-500);              /* alias (#e3a812) */
+  /* Primary gold button fills */
+  --rft-gold-button:        var(--gradient-gold-button);       /* alias → hand-off source */
+  --rft-gold-button-hover:  var(--gradient-gold-button-hover); /* alias → hand-off source */
+
+  /* Labels / eyebrows — solid (the clip gradient is for titles, not small label text) */
+  --label-gold-on-navy:  #e3a812;
+  --label-gold-on-ivory: #8C5E12;  /* darkened from #d19e1d — AA-safe for small text on ivory */
+
+  --rft-verified:    var(--green-verified);   /* alias → hand-off source (#3fb984) — verified/success only */
+  --rft-verified-ink:#157048;   /* verified ink on LIGHT/ivory — #157048 = 5.22:1 on the real badge bg (#53; was #1E8F62 @ 3.48:1, AA fail) */
   --rft-danger:      #E5484D;   /* error / invalid state only */
   --rft-danger-ink:  #C2333A;   /* error text on light */
 
-  /* ---- Dark surfaces (hero, marketing, dashboard chrome) ---- */
-  --rft-bg:        #0E0F16;
-  --rft-bg-elev:   #12141D;
-  --rft-surface:   #181B26;     /* cards on dark */
-  --rft-line:      rgba(200,168,107,0.20);
-  --rft-text:      #F5F1EA;     /* body on dark */
-  --rft-text-mut:  rgba(245,241,234,0.66);
+  /* ---- Dark surfaces — "Sapphire twilight" darkened (Decision #43, supersedes #42) ---- */
+  --rft-bg-deep:   var(--navy-950);   /* alias (#020812) — deepest edge of the page glow */
+  --rft-bg:        var(--navy-800);   /* alias (#0a1a34) — base navy (solid fallback / chrome) */
+  --rft-bg-glow:   var(--navy-700);   /* alias (#122a4f) — brightest sapphire at the glow centre */
+  --rft-bg-elev:   #0D1F38;     /* slightly elevated dark surface (kept — no hand-off equivalent) */
+  --rft-surface:   #10233C;     /* cards on dark (translucency deferred → Step 4) */
+  --rft-line:      rgba(245,241,234,0.10);  /* Step 5: warm-tinted hairline (was white .07) = --hairline */
+  --rft-text:      var(--text-strong);   /* alias (#f5f1ea) — body on dark */
+  --rft-text-mut:  var(--text-muted);  /* Step 5: consolidated to .58 (was .66); AA worst-case 4.94:1 on frosted card */
+  --rft-slate:     var(--wordmark-slate);   /* alias (#8a93a3) — wordmark "Trust" */
+
+  /* Reusable dark page background: brighter sapphire in the centre, darker at the edges. */
+  --rft-bg-gradient: var(--bg-navy-radial);   /* alias → hand-off source (same stops) */
 
   /* ---- Warm light surfaces (content, legal, how-it-works) ---- */
-  --rft-bg-warm:    #FBF8F2;
-  --rft-surface-lt: #FFFFFF;
-  --rft-line-lt:    #E6DECF;
-  --rft-text-lt:    #211C17;    /* body on light */
-  --rft-text-lt-mut:rgba(33,28,23,0.62);
+  --rft-bg-warm:    var(--ivory);        /* alias (#fbf8f2) */
+  --rft-surface-lt: var(--ivory-card);   /* alias (#ffffff) */
+  --rft-line-lt:    #E6DECF;             /* kept; hand-off --ivory-200 #ece3d2 is a near-match (minor delta) */
+  --rft-text-lt:    var(--text-ink);     /* navy-ink (was warm #211C17) — plan §2.7; AA re-verify on ivory → Step 5 */
+  --rft-text-lt-mut:var(--text-ink-muted); /* navy-ink muted (was rgba(33,28,23,.62)) */
 
   /* ---- Typography ---- */
   --rft-font-display: "Fraunces", Georgia, "Times New Roman", serif; /* headlines */
   --rft-font-sans:    "Inter", system-ui, Arial, sans-serif;          /* UI / body */
-  --rft-fs-eyebrow: 0.75rem;   /* 12px, uppercase, +0.18em tracking */
-  --rft-fs-body:    1rem;      /* 16px */
-  --rft-fs-lead:    1.125rem;  /* 18px */
-  --rft-fs-h3:      1.375rem;  /* 22px */
-  --rft-fs-h2:      1.875rem;  /* 30px */
-  --rft-fs-h1:      2.5rem;    /* 40px */
-  --rft-fs-display: 3.5rem;    /* 56px */
+
+  /* Finalized type scale (Decision #45) — Fraunces for hero/section/subsection, Inter rest */
+  --fs-hero:       4.5rem;     /* 72px · 600 / 1.03 / -0.015em (Fraunces) */
+  --fs-section:    2.5rem;     /* 40px · 600 / 1.08 / -0.014em (Fraunces) */
+  --fs-subsection: 1.625rem;   /* 26px · 500 / 1.20 / -0.01em  (Fraunces) */
+  --fs-lead:       1.25rem;    /* 20px · 400 / 1.55 (Inter) */
+  --fs-body:       1rem;       /* 16px · 400 / 1.65 (Inter) */
+  --fs-meta:       0.8125rem;  /* 13px · 500 / 1.50 (Inter) */
+  --fs-eyebrow:    0.75rem;    /* 12px · 600 / 0.2em / UPPERCASE (Inter) */
+  --fs-button:     0.9375rem;  /* 15px · 600 / 0.01em (Inter) */
+  --lh-tight: 1.1;
+  --lh-body:  1.6;
+  /* legacy aliases (kept so existing references resolve) */
+  --rft-fs-eyebrow: var(--fs-eyebrow);
+  --rft-fs-body:    var(--fs-body);
+  --rft-fs-lead:    1.125rem;
+  --rft-fs-h3:      var(--fs-subsection);
+  --rft-fs-h2:      var(--fs-section);
+  --rft-fs-h1:      var(--fs-section);
+  --rft-fs-display: var(--fs-hero);
   --rft-lh-tight: 1.1;
   --rft-lh-body:  1.6;
 
   /* ---- Spacing scale (4px base) ---- */
-  --rft-s1: 4px;  --rft-s2: 8px;  --rft-s3: 12px; --rft-s4: 16px;
-  --rft-s5: 24px; --rft-s6: 32px; --rft-s7: 48px; --rft-s8: 64px; --rft-s9: 96px;
+  /* aliases → hand-off --space-* scale (value-identical; note the 4px-base index shift) */
+  --rft-s1: var(--space-1);  --rft-s2: var(--space-2);  --rft-s3: var(--space-3); --rft-s4: var(--space-4);
+  --rft-s5: var(--space-6); --rft-s6: var(--space-8); --rft-s7: var(--space-12); --rft-s8: var(--space-16); --rft-s9: var(--space-24);
 
   /* ---- Radius ---- */
-  --rft-r-sm: 6px; --rft-r-md: 10px; --rft-r-lg: 16px; --rft-r-pill: 999px;
+  /* Radius remap (Step 3, plan §2.9): rounded-* now bind to the hand-off scale.
+     rounded-sm → 6 (--radius-xs, unchanged) · rounded-md → 14 (--radius-md, was 10) ·
+     rounded-lg → 20 (--radius-lg, was 16). Cards use explicit --card-radius (22), unaffected. */
+  --rft-r-sm: var(--radius-xs);  --rft-r-md: var(--radius-md);  --rft-r-lg: var(--radius-lg);  --rft-r-pill: var(--radius-pill);
 
   /* ---- Elevation ---- */
   --rft-shadow-card: 0 1px 0 rgba(255,255,255,0.02), 0 8px 24px rgba(0,0,0,0.35);
   --rft-shadow-lt:   0 1px 2px rgba(33,28,23,0.06), 0 10px 30px rgba(33,28,23,0.08);
-  --rft-glow-gold:   0 0 0 1px var(--rft-line), 0 8px 30px rgba(200,168,107,0.10);
+  --rft-glow-gold:   0 0 0 1px var(--rft-line), 0 8px 30px rgba(227,168,18,0.14);
+
+  /* ---- Card effects (Decision #45) ---- */
+  --card-radius:        22px;
+  --card-radius-media:  14px;
+  --card-pad:           26px;
+  --lift-card:          -4px;
+  --lift-card-media:    -5px;
+  --img-zoom:           1.06;
+  --dur-img:            500ms;
+  --accent-bar:    linear-gradient(90deg,#ffe6a0,#e3a812);
+  --overlay-scrim: linear-gradient(180deg,rgba(2,8,18,0) 38%,rgba(2,8,18,.5) 70%,rgba(2,8,18,.88) 100%);
+  --plate-bg:      rgba(8,18,38,0.92);
+  /* Step 4 surface flip: cards are now translucent frosted glass (pairs with --blur-panel).
+     Surfaces needing opacity for legibility (modals/menus/toasts/header/the contact panel)
+     use --surface-card-solid or bg-ink-elev instead. Was solid #10233C / #15294a. */
+  --surface-card:        rgba(255,255,255,0.035);
+  --surface-card-raised: rgba(255,255,255,0.06);
+  --hairline:            var(--rft-line);         /* white 0.07 */
+  /* Step 4: deepened, navy-tinted (plan §2.10) so frosted cards float on the stage. */
+  --shadow-card:   0 22px 60px -28px rgba(2,8,18,0.9);
+  --shadow-raised: 0 30px 80px -32px rgba(2,8,18,0.95);
 
   /* ---- Layout ---- */
-  --rft-content-max: 1200px;
-  --rft-gutter: var(--rft-s5);
+  --rft-content-max: var(--container-max);   /* alias (1200px) */
+  --rft-gutter: var(--gutter);                /* alias (24px) */
 
   /* ---- Motion ---- */
-  --rft-dur-fast: 150ms; --rft-dur: 220ms; --rft-ease: cubic-bezier(.2,.6,.2,1);
+  /* aliases → hand-off motion tokens; --rft-ease adopts the LOCKED ease-out (plan §2.10) */
+  --rft-dur-fast: var(--dur-fast); --rft-dur: var(--dur-base); --rft-ease: var(--ease-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root { --rft-dur-fast: 0ms; --rft-dur: 0ms; }
 }
 
-/* Contrast notes (target WCAG AA):
-   - Body text on dark = cream (--rft-text) on --rft-bg  → high contrast, OK.
-   - Gold is for accents, large headings, icons, borders — NOT for body copy on dark.
-   - On light, links/accents use --rft-gold-deep (#8A6D2F) for sufficient contrast.
-   - Verified green used only for the verified/success state, never as body text. */
+/* Contrast notes (target WCAG AA) — re-verified on the finalized system (Decision #45):
+   - Cream (#F5F1EA) on navy base #0A1A34 ≈ 15.4:1; on glow centre #122A4F ≈ 12.7:1 — AA/AAA.
+   - Solid label gold (#E3A812) on navy base ≈ 8.2:1; on glow centre ≈ 6.7:1 — AA.
+   - Dark button text (#2A1D04) on the gold button gradient ≈ 10.5:1 (light mid) /
+     ≈ 7.3:1 (darkest stop) — AA.
+   - Ivory label gold (#8C5E12) on warm cream #FBF8F2 ≈ 5.3:1 — AA. NOTE: the spec's nominal
+     #D19E1D was only ≈ 2.3:1 on ivory, so it was darkened to #8C5E12 for small label text.
+   - Cards (--surface-card #10233C) sit one step above the base with a white-0.07 hairline so
+     they separate on both the navy base and the glow centre.
+   - Verified green (#3FB984) used ONLY for verified/success (Decision #34); never body text or
+     other metadata (energy cert uses the neutral muted label, same as quartos/wc/m²). */

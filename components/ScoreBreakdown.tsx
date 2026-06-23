@@ -5,8 +5,8 @@
 // "building track record" state. Bar fills animate with a motion-safe transition.
 import { useTranslations } from 'next-intl'
 import type { PerformanceScore, PerformanceSubScores } from '@/lib/types'
-import { cn } from '@/lib/cn'
-import { PerformanceBadge } from '@/components/ui'
+import { RATING_WEIGHTS } from '@/lib/types'
+import { Badge, Card, PerformanceBadge } from '@/components/ui'
 
 const SIGNALS: { key: keyof PerformanceSubScores; labelKey: string }[] = [
   { key: 'satisfaction', labelKey: 'satisfaction' },
@@ -30,13 +30,13 @@ export function ScoreBreakdown({ score, target = 80, band = 5, className }: Scor
   const revealComposite = score.confidence === 'high'
 
   return (
-    <div className={cn('rounded-lg border border-line bg-surface p-5', className)}>
+    <Card variant="default" padding={20} className={className}>
       <div className="mb-5 flex items-center justify-between gap-3">
         <span className="text-xs uppercase tracking-[0.14em] text-cream-muted">{t('composite')}</span>
         {revealComposite ? (
           <PerformanceBadge variant="score" label={t('composite')} value={score.composite} />
         ) : (
-          <PerformanceBadge variant="building" label={t('buildingTrackRecord')} />
+          <Badge variant="neutral">{t('buildingTrackRecord')}</Badge>
         )}
       </div>
 
@@ -45,8 +45,14 @@ export function ScoreBreakdown({ score, target = 80, band = 5, className }: Scor
           const value = score.sub[key]
           return (
             <li key={key}>
-              <div className="mb-1 flex items-center justify-between text-sm">
-                <span className="text-cream-muted">{t(labelKey)}</span>
+              <div className="mb-1 flex items-center justify-between gap-2 text-sm">
+                <span className="flex items-baseline gap-1.5 text-cream-muted">
+                  {t(labelKey)}
+                  {/* weight (#16: 35/25/15/15/10) */}
+                  <span className="text-[10.5px] font-medium uppercase tracking-[0.08em] text-cream-muted">
+                    {Math.round(RATING_WEIGHTS[key] * 100)}%
+                  </span>
+                </span>
                 <span className="font-display text-cream tabular-nums">{value}</span>
               </div>
               <div
@@ -80,6 +86,6 @@ export function ScoreBreakdown({ score, target = 80, band = 5, className }: Scor
       <p className="mt-4 text-xs text-cream-muted">
         {t('target')}: {target}
       </p>
-    </div>
+    </Card>
   )
 }

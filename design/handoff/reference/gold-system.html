@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RealFairTrust — Gold system applied</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
+<link rel="stylesheet" href="../../styles.css" />
+<style>
+  html, body { margin: 0; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<script type="text/babel">
+const { Logo, Button, AgentCard, Badge } = window.RealFairTrustDesignSystem_b440fa;
+
+const GOLD_TITLE = { background: "linear-gradient(180deg,#ffe6a0 0%,#ffd86e 28%,#e3a812 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent" };
+
+function Eyebrow({ children, onIvory }) {
+  return <span style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", color: onIvory ? "#d19e1d" : "#e3a812" }}>{children}</span>;
+}
+
+const AGENTS = [
+  { rank: 1, name: "Sofia Marques", photo: "https://randomuser.me/api/portraits/women/44.jpg", city: "Lisboa · Príncipe Real", score: "94", badge: "top", specialities: ["Apartamentos", "Compra"], stats: [{ value: "68%", label: "Taxa de fecho" }, { value: "1.2h", label: "Resposta" }, { value: "4.9", label: "Satisfação" }] },
+  { rank: 2, name: "Miguel Costa", photo: "https://randomuser.me/api/portraits/men/32.jpg", city: "Porto · Foz do Douro", score: "91", specialities: ["Moradias", "Venda"], stats: [{ value: "64%", label: "Taxa de fecho" }, { value: "1.6h", label: "Resposta" }, { value: "4.8", label: "Satisfação" }] },
+];
+
+function Page() {
+  return (
+    <div style={{ paddingBottom: 64 }}>
+      {/* Header — tri-colour wordmark */}
+      <header style={{ borderBottom: "1px solid var(--hairline)", background: "rgba(6,15,34,0.6)" }}>
+        <div className="wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 40px" }}>
+          <Logo variant="full" size={23} />
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <a href="#" onClick={(e) => e.preventDefault()} style={{ fontFamily: "var(--font-body)", fontSize: 14, fontWeight: 500, color: "var(--text-muted)" }}>Entrar</a>
+            <Button variant="primary" size="sm">Encontrar consultor</Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="wrap" style={{ padding: "72px 40px 56px", display: "flex", flexDirection: "column", gap: 24, maxWidth: 760 }}>
+        <Eyebrow>Performance you can see</Eyebrow>
+        <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 72, lineHeight: 1.03, letterSpacing: "-0.015em", margin: 0, color: "var(--text-strong)" }}>
+          Os melhores consultores, escolhidos por <span style={GOLD_TITLE}>mérito</span>.
+        </h1>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: 20, fontWeight: 400, color: "var(--text-body)", lineHeight: 1.55, margin: 0, maxWidth: 560 }}>
+          Desempenho medido com justiça, atualizado todos os meses e mostrado abertamente. Lisboa &amp; Porto.
+        </p>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: 16, fontWeight: 400, color: "var(--text-muted)", lineHeight: 1.65, margin: 0, maxWidth: 560 }}>
+          Cada consultor é avaliado pela qualidade por oportunidade — satisfação, taxa de fecho e tempo de resposta — numa janela móvel de 90 dias, recalculada todos os meses. <span style={{ fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 500, color: "var(--text-faint)" }}>↑ corpo 16px · este texto a 13px (meta)</span>
+        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 4 }}>
+          <Button variant="primary" size="lg">Encontrar consultor</Button>
+          <Button variant="secondary" size="lg">Como funciona</Button>
+          <div style={{ marginLeft: 8, display: "flex", flexDirection: "column", gap: 2 }}>
+            <span style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 38, lineHeight: 1, letterSpacing: "-0.01em", ...GOLD_TITLE }}>€ 720 000</span>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "var(--text-faint)" }}>preço · Fraunces, gradiente vertical</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Two consultant cards */}
+      <section className="wrap" style={{ padding: "0 40px 64px", display: "flex", flexDirection: "column", gap: 28 }}>
+        <Eyebrow>Top este mês</Eyebrow>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          {AGENTS.map((a) => <AgentCard key={a.name} {...a} featured={a.rank === 1} />)}
+        </div>
+      </section>
+
+      {/* Ivory strip — deeper eyebrow gold on light */}
+      <section style={{ background: "var(--ivory)" }}>
+        <div className="wrap" style={{ padding: "56px 40px", display: "flex", flexDirection: "column", gap: 14 }}>
+          <Eyebrow onIvory>Confiança verificada</Eyebrow>
+          <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 40, lineHeight: 1.08, letterSpacing: "-0.014em", margin: 0, color: "var(--text-ink-strong)" }}>
+            Na secção ivory, as eyebrows usam o ouro mais profundo.
+          </h2>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "var(--text-ink-muted)", lineHeight: 1.65, margin: 0, maxWidth: 580 }}>
+            #d19e1d em vez de #e3a812 — para manter contraste e legibilidade no fundo claro. Os títulos a ouro reservam-se para o palco escuro.
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+</script>
+</body>
+</html>

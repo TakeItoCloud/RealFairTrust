@@ -23,6 +23,7 @@
       "viewProfile": "Ver perfil",
       "contact": "Contactar",
       "viewListing": "Ver imóvel",
+      "viewDetail": "Ver detalhe",
       "seeAll": "Ver todos",
       "search": "Pesquisar",
       "filter": "Filtrar",
@@ -42,6 +43,75 @@
     "closeMenu": "Fechar menu",
     "login": "Entrar"
   },
+  "home": {
+    "hero": {
+      "eyebrow": "Mérito, não antiguidade",
+      "headline": "Encontre o consultor imobiliário certo — escolhido pelo desempenho.",
+      "subtitle": "Comparamos consultores em Lisboa e no Porto por satisfação, taxa de fecho e resposta. Recalculado todos os meses para que a confiança se mantenha atual.",
+      "searchPlaceholder": "Pesquisar por zona, tipo ou referência",
+      "posterAlt": "Consultores RealFairTrust em destaque"
+    },
+    "howItWorks": {
+      "eyebrow": "Como funciona",
+      "title": "Confiança que se ganha todos os meses",
+      "step1Title": "Compare com transparência",
+      "step1Desc": "Veja consultores ordenados pelo desempenho real dos últimos 90 dias — não por anúncios.",
+      "step2Title": "Fale com quem entrega",
+      "step2Desc": "Escolha um consultor e contacte-o diretamente, sem custos e sem conta.",
+      "step3Title": "Avalie e mantenha justo",
+      "step3Desc": "As avaliações verificadas alimentam um ranking que se renova mensalmente."
+    },
+    "topConsultants": {
+      "eyebrow": "Top deste mês",
+      "title": "Consultores em destaque"
+    },
+    "featured": {
+      "eyebrow": "Imóveis",
+      "title": "Imóveis em destaque"
+    },
+    "split": {
+      "clientsTitle": "Para quem procura",
+      "clientsDesc": "Compre, venda ou arrende com um consultor escolhido pelo mérito.",
+      "consultantsTitle": "Para consultores",
+      "consultantsDesc": "Mostre o seu desempenho e compita por qualidade, não por antiguidade."
+    },
+    "trust": {
+      "eyebrow": "Transparência",
+      "title": "Justo por desenho",
+      "desc": "Pontuações verificadas, janela móvel de 90 dias e um quadro próprio para novos talentos.",
+      "point1": "Avaliações de transações verificadas",
+      "point2": "Recalculado todos os meses",
+      "point3": "Quadro de talentos em ascensão"
+    },
+    "join": {
+      "title": "É consultor imobiliário?",
+      "desc": "Junte-se à RealFairTrust e deixe o seu desempenho falar por si.",
+      "button": "Aderir como consultor"
+    }
+  },
+  "consultores": {
+    "eyebrow": "Consultores",
+    "title": "Encontre o consultor certo",
+    "subtitle": "Compare por desempenho real dos últimos 90 dias. Recalculado mensalmente.",
+    "specialization": "Especialização",
+    "allSpecializations": "Todas",
+    "viewRanked": "Ranking",
+    "viewAll": "Todos",
+    "risingTalentTitle": "Talentos em ascensão",
+    "risingTalentSubtitle": "Consultores com menos de 6 meses — avaliados em separado, para uma competição justa.",
+    "suggestForMe": "Sugerir um para mim",
+    "empty": "Nenhum consultor corresponde aos filtros."
+  },
+  "profile": {
+    "contact": "Contactar",
+    "contactName": "Contactar {name}",
+    "about": "Sobre",
+    "performance": "Desempenho",
+    "listings": "Imóveis deste consultor",
+    "reviews": "Avaliações",
+    "noListings": "Sem imóveis ativos de momento.",
+    "meritoScore": "Pontuação de mérito"
+  },
   "score": {
     "buildingTrackRecord": "A construir histórico",
     "risingTalent": "Talento em ascensão",
@@ -54,6 +124,7 @@
     "conversion": "Conversão",
     "activity": "Atividade",
     "composite": "Pontuação global",
+    "merit90d": "Mérito · 90d",
     "target": "Meta",
     "noReviews": "Ainda sem avaliações",
     "reviews": "avaliações"

@@ -1,68 +1,118 @@
 'use client'
 
-// ConsultantCard — badges + close rate + specialization (Decision #27). The composite
-// number is never shown on the card; it's revealed only on the profile and only when the
-// sample is fair (Decision #18). Rising Talent and Verified marks appear where applicable.
+// ConsultantCard — "Spotlight" (zip AgentCard reference; #51). Rebuilt on the Step-3 primitives
+// and the now-translucent frosted Card surface. Honors #18: the merit composite numeral shows
+// ONLY when statistically confident; otherwise the "building track record" treatment (Diogo,
+// 0 reviews → building). Top-3 get a gold RankBadge + ringed avatar; #1 confident = featured.
+// Motion (#37): Framer entrance + lift, CSS group-hover accent-bar/score-glow, reduced-motion-safe.
+import { motion, useReducedMotion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import type { ConsultantSummary } from '@/lib/types'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
-import {
-  Avatar,
-  PerformanceBadge,
-  RankIndicator,
-  RisingTalentTag,
-  VerifiedBadge,
-} from '@/components/ui'
-import { focusRing } from '@/components/ui/styles'
+import { Avatar, Badge, RankBadge, StatBlock, Tag, VerifiedBadge } from '@/components/ui'
+import { IconTrophy } from '@/components/ui/icons'
 
-export function ConsultantCard({ consultant }: { consultant: ConsultantSummary }) {
+const EASE = [0.22, 0.61, 0.36, 1] as const
+
+export function ConsultantCard({ consultant, index = 0 }: { consultant: ConsultantSummary; index?: number }) {
   const t = useTranslations()
+  const reduce = useReducedMotion()
   const score = consultant.score
+
+  const confident = !!score && !score.risingTalent && score.confidence !== 'low'
+  const building = !!score && !score.risingTalent && score.confidence === 'low'
+  const rank = confident ? score?.rank ?? null : null
+  const topRanked = rank != null && rank <= 3
+  const featured = confident && score?.rank === 1
 
   return (
     <Link
       href={{ pathname: '/consultores/[slug]', params: { slug: consultant.slug } }}
-      className={cn(
-        'group flex flex-col rounded-lg border border-line bg-surface p-5 transition-transform',
-        'hover:-translate-y-0.5 motion-reduce:transform-none',
-        focusRing,
-      )}
+      className="group block"
     >
-      <div className="flex items-start gap-3">
-        <Avatar src={consultant.photo} name={consultant.name} size="lg" />
-        <div className="min-w-0 flex-1">
-          <p className="truncate font-display text-lg font-semibold text-cream group-hover:text-gold">
-            {consultant.name}
-          </p>
-          <p className="mt-0.5 truncate text-sm text-cream-muted">
-            {consultant.specializations.map((s) => t(`specializations.${s}`)).join(' · ')}
-          </p>
-        </div>
-        {consultant.verified ? <VerifiedBadge label={t('score.verified')} iconOnly /> : null}
-      </div>
+      <motion.article
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.42, ease: EASE, delay: reduce ? 0 : Math.min(index * 0.07, 0.42) }}
+        whileHover={reduce ? undefined : { y: -4 }}
+        whileTap={reduce ? undefined : { y: 1 }}
+        style={{ boxShadow: featured ? 'var(--shadow-gold-glow)' : 'var(--shadow-card)' }}
+        className={cn(
+          'relative flex flex-col gap-[18px] overflow-hidden rounded-[var(--card-radius)] p-[var(--card-pad)]',
+          'border backdrop-blur-[var(--blur-panel)] transition-[box-shadow,border-color] duration-[var(--dur-base)] ease-[cubic-bezier(0.22,0.61,0.36,1)]',
+          featured
+            ? 'border-[var(--gold-border)] bg-[var(--surface-card-raised)]'
+            : 'border-line bg-[var(--surface-card)] group-hover:border-[var(--gold-border-soft)] group-hover:shadow-[var(--shadow-raised)]',
+        )}
+      >
+        {/* Gold accent bar — always on when featured; wipes in on hover otherwise. */}
+        <span
+          aria-hidden
+          style={{ backgroundImage: 'var(--accent-bar)' }}
+          className={cn(
+            'absolute inset-x-0 top-0 h-[3px] origin-left transition-transform duration-[var(--dur-slow)] ease-[cubic-bezier(0.22,0.61,0.36,1)] motion-reduce:transition-none',
+            featured ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
+          )}
+        />
 
-      {/* Performance signals */}
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        {score?.risingTalent ? (
-          <RisingTalentTag label={t('score.risingTalent')} size="sm" />
-        ) : score?.rank === 1 ? (
-          <PerformanceBadge variant="top" label={t('score.topThisMonth')} />
-        ) : score?.rank ? (
-          <RankIndicator rank={score.rank} label={t('score.rank')} size="sm" />
-        ) : null}
-        {score && score.confidence === 'low' && !score.risingTalent ? (
-          <PerformanceBadge variant="building" label={t('score.buildingTrackRecord')} />
-        ) : null}
-      </div>
+        {/* Top row — rank + avatar + name / score */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-3.5">
+            {topRanked && rank != null ? <RankBadge rank={rank} label={t('score.rank')} size={40} /> : null}
+            <Avatar src={consultant.photo} name={consultant.name} size="lg" ring={featured || topRanked} />
+            <div className="flex min-w-0 items-center gap-2">
+              <p className="truncate font-display text-[21px] font-semibold leading-tight text-cream">
+                {consultant.name}
+              </p>
+              {consultant.verified ? <VerifiedBadge iconOnly size="sm" label={t('score.verified')} /> : null}
+            </div>
+          </div>
 
-      {/* Close rate (a sub-signal — fine to show; only the composite is gated) */}
-      {score ? (
-        <div className="mt-4 border-t border-line pt-3">
-          <p className="text-xs uppercase tracking-[0.14em] text-cream-muted">{t('score.closeRate')}</p>
-          <p className="font-display text-xl text-gold">{score.sub.closeRate}%</p>
+          {confident && score ? (
+            <div className="shrink-0 text-right">
+              <p className="gold-title font-display text-[38px] font-semibold leading-none transition-[filter] duration-[var(--dur-base)] group-hover:[filter:drop-shadow(0_0_14px_rgba(255,216,110,0.45))] motion-reduce:transition-none">
+                {score.composite}
+              </p>
+              <p className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-cream-muted">
+                {t('score.merit90d')}
+              </p>
+            </div>
+          ) : null}
         </div>
-      ) : null}
+
+        {/* Tags row — standing badge + specialities */}
+        <div className="flex flex-wrap items-center gap-2">
+          {score?.risingTalent ? <Badge variant="rising">{t('score.risingTalent')}</Badge> : null}
+          {building ? <Badge variant="neutral">{t('score.buildingTrackRecord')}</Badge> : null}
+          {featured ? (
+            <Badge variant="gold" iconLeft={<IconTrophy />}>
+              {t('score.topThisMonth')}
+            </Badge>
+          ) : null}
+          {consultant.specializations.map((s) => (
+            <Tag key={s}>{t(`specializations.${s}`)}</Tag>
+          ))}
+        </div>
+
+        {/* Stats row */}
+        {score ? (
+          <div className="flex gap-6 border-t border-line pt-4">
+            <StatBlock size="sm" value={`${score.sub.closeRate}%`} label={t('score.closeRate')} />
+            <StatBlock size="sm" value={score.sub.satisfaction} label={t('score.satisfaction')} />
+            <StatBlock size="sm" value={score.sub.responsiveness} label={t('score.responsiveness')} />
+          </div>
+        ) : null}
+
+        {/* Footer */}
+        <div className="flex items-center justify-between border-t border-line pt-4">
+          <span className="text-[12.5px] text-cream-muted">{rank != null ? `#${rank}` : ''}</span>
+          <span className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-gold transition-[gap] duration-[var(--dur-base)] group-hover:gap-2.5">
+            {t('common.actions.viewProfile')} →
+          </span>
+        </div>
+      </motion.article>
     </Link>
   )
 }

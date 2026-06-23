@@ -13,7 +13,8 @@ export function Eyebrow({ children, tone = 'dark', className }: EyebrowProps) {
   return (
     <span
       className={cn(
-        'inline-block text-xs font-semibold uppercase tracking-[0.18em]',
+        // Labels/eyebrows are SOLID gold (Decision #45) — the clip gradient is for titles only.
+        'inline-block text-eyebrow',
         tone === 'dark' ? 'text-gold' : 'text-gold-deep',
         className,
       )}

@@ -1,6 +1,6 @@
 // Listings repository. Attaches a light agent reference (name + verified + score) so
 // cards can show the rating chip without a second lookup. Mock now → Supabase in Phase 5.
-import { consultants, listings, scores } from '@/lib/mock'
+import { consultants, listings, regions, scores } from '@/lib/mock'
 import type {
   ListingAgentRef,
   ListingDetail,
@@ -20,9 +20,20 @@ function agentRef(agentId: string): ListingAgentRef {
   }
 }
 
-function withAgent(p: Property): ListingWithAgent {
-  return { ...p, agent: agentRef(p.agentId) }
+function regionName(id: string | null): string | null {
+  return id ? (regions.find((r) => r.id === id)?.name ?? null) : null
 }
+
+/** Compose a Property into a ListingWithAgent (agent ref + resolved region/zone names). */
+export function toListingWithAgent(p: Property): ListingWithAgent {
+  return {
+    ...p,
+    agent: agentRef(p.agentId),
+    regionName: regionName(p.regionId) ?? '',
+    zoneName: regionName(p.zoneId),
+  }
+}
+const withAgent = toListingWithAgent
 
 export async function getListings(filter: ListingFilter = {}): Promise<ListingWithAgent[]> {
   let result = listings.filter((l) => l.status === 'active')

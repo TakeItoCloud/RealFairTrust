@@ -7,6 +7,7 @@ import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
 import { focusRing } from '@/components/ui/styles'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { Wordmark } from './Wordmark'
 
 function FooterCol({ heading, children }: { heading: string; children: ReactNode }) {
   return (
@@ -40,7 +41,7 @@ export function Footer() {
       <div className="container-page py-12">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-1">
-            <p className="font-display text-lg font-semibold">{t('brand')}</p>
+            <Wordmark className="text-lg" />
             <p className="mt-1 text-sm text-cream-muted">{t('tagline')}</p>
           </div>
 
