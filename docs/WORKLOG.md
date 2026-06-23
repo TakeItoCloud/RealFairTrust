@@ -6,6 +6,28 @@
 
 ---
 
+## 2026-06-23 · Phase 4.3 — Promote to `main` (Vercel production branch) + harden build
+
+**Done** (process/config only — no app-code or design changes).
+
+- **Hardened `package.json` for Vercel** (additive, no behavior change): added
+  `engines.node = "22.x"` and `packageManager = "pnpm@11.4.0"` — the exact dev-host versions
+  (Node 22.22.3 / pnpm 11.4.0; pnpm patch read live, not guessed). `pnpm install` reported
+  "Already up to date" — **lockfile unchanged**. Green-gated on `develop`
+  (`tsc` ✅ · `eslint` ✅ · `pnpm build` ✅). Commit `1450f49`, pushed.
+- **Docs to final** on `develop`: PROJECT-STATE "Last updated" → 2026-06-23, §8 DONE +=
+  promoted to main + Vercel-ready, new **§11 Deployment** (production branch = `main`; shipped =
+  Home + Consultores + Consultant profile on SEED/mock data with placeholder imagery; Buy/Rent,
+  property-detail, Vender, static NOT built; Supabase/env = Phase 5, none configured). Refreshed
+  the `CLAUDE.md` status section.
+- **Promoted `develop` → `main`** preserving history. `main` had no divergent commits
+  (only the original kickoff, an ancestor of `develop`), so the merge was a **fast-forward**.
+  Green-gated on `main` (`tsc` ✅ · `eslint` ✅ · `pnpm build` ✅) and pushed.
+
+**Result:** `main` is now the Vercel production branch and is build-ready. No `DECISIONS.md`
+entry (promotion is process, not a design decision). **Next:** the remaining 4.3 public pages.
+**Vercel connection itself is a one-time browser step (not done here).**
+
 ## 2026-06-23 · Phase 4.3 — Consolidate design-apply into `develop` (branch hygiene)
 
 **Done** (process/branch work only — no app-code or design changes).

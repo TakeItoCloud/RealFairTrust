@@ -118,9 +118,11 @@ per-agent, filtered per city). Full detail: `docs/notes/city-expansion.md`.
 
 ## Current status
 
-**Phase 4.3 — design-system application, run order step 1 (reconciliation plan).**
-The design hand-off (`design/handoff/`) is adopted as the authoritative visual spec
-(decisions #46–#50). The full roadmap, the 1→6 run order, and what's done/next live in
+**Phase 4.3 — design-system application COMPLETE (run order 1→6); promoted to `main`.**
+The design hand-off (`design/handoff/`) is the authoritative visual spec (decisions #46–#56).
+The design-apply work was banked to `develop` (PR #7 merged, `3d91a99`) and **promoted to
+`main` = the Vercel production branch** (build hardened: Node 22.x / pnpm 11.4.0 pinned). The
+full roadmap, the 1→6 run order (all ✅), deployment note, and what's next live in
 **`docs/PROJECT-STATE.md`** (the orientation file — read it first each session). Authoritative
-detail: `docs/DECISIONS.md` (decision log) · `docs/WORKLOG.md` (per-session history). Active
-build branch: `feat/pages-public` (PR #7).
+detail: `docs/DECISIONS.md` (decision log) · `docs/WORKLOG.md` (per-session history).
+**NEXT:** the remaining 4.3 public pages (Buy/Rent, Property detail, Vender, static).

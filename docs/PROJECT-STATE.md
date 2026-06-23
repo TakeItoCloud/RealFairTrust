@@ -2,7 +2,7 @@
 
 > **Purpose.** Single orientation document for the project. If you are starting a **new planning chat** (claude.ai) or a **new Claude Code session** (VS Code), read this file first. It holds roles/workflow, locked decisions, the visual system, the **complete phase roadmap**, what is done, what is next, and what is still open. `docs/DECISIONS.md` and `docs/WORKLOG.md` on the machine remain authoritative for the full decision log and per-session history; this file is the high-level snapshot — **keep it in sync every session.**
 >
-> **Last updated:** 2026-06-22 (governance sync: zip = supreme authority #51; energy cert green #52 supersedes #49; AA/perf exceptions #53). Prior: 2026-06-21 (design hand-off adopted; #46–#50; roadmap consolidated).
+> **Last updated:** 2026-06-23 (design-apply run order 1→6 banked to `develop` via PR #7 + promoted to `main` = Vercel production branch; Node/pnpm pinned for Vercel; §11 Deployment added). Prior: 2026-06-22 (governance sync #51–#53; design-apply #54–#56).
 
 ---
 
@@ -162,8 +162,8 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 
 ## 8. DONE / IN PROGRESS / NEXT / TODO
 
-- **DONE:** Phases 0–3; Phase 4.0/4.1/4.2; Phase 4.3 Home + Consultores; design hand-off adopted (#46–#50); governance sync (#51–#53); **design-system application run order 1→6 COMPLETE (#54–#56)** — tokens → primitives → cards → Home variety → profile re-skin, all green + AA; **banked to `develop` (PR #7 merged, merge commit `3d91a99`)**.
-- **IN PROGRESS:** — (between sub-phases; design-apply complete and promoted).
+- **DONE:** Phases 0–3; Phase 4.0/4.1/4.2; Phase 4.3 Home + Consultores; design hand-off adopted (#46–#50); governance sync (#51–#53); **design-system application run order 1→6 COMPLETE (#54–#56)** — tokens → primitives → cards → Home variety → profile re-skin, all green + AA; **banked to `develop` (PR #7 merged, merge commit `3d91a99`)**; **promoted to `main` (Vercel production branch) + build hardened (Node 22.x / pnpm 11.4.0 pinned) — Vercel-ready** (see §11).
+- **IN PROGRESS:** — (between sub-phases; design-apply complete and promoted to `main`).
 - **NEXT:** remaining 4.3 pages (Buy/Rent `/comprar` + `/arrendar`, Property detail `/imovel/[id]`, Vender, static pages).
 - **TODO (after 4.3):** 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).
 
@@ -204,3 +204,23 @@ Claude Code; Claude Code (on the remote machine) does all builds/git. Keep phase
 order 1->6 in PROJECT-STATE.md section 6; after that, the remaining 4.3 pages, then 4.4 shells,
 4.5 polish, Phase 5 (Supabase), Phase 6 (launch).
 ```
+
+---
+
+## 11. DEPLOYMENT
+
+- **Production branch = `main`** (Vercel). The public review/preview URL serves **`main`**;
+  `develop` and feature branches still get their own Vercel preview URLs. Branch model is
+  unchanged: `feat/* → develop → main`.
+- **Build env pinned** for reproducibility: `engines.node = "22.x"` and
+  `packageManager = "pnpm@11.4.0"` in `package.json` (matches the dev host: Node 22.22.3 / pnpm 11.4.0).
+- **What is shipped on `main` today:** Home (`/[locale]`), Consultores discovery
+  (`/[locale]/consultores`), and the Consultant profile (`/[locale]/consultores/[slug]`) —
+  rendered on **SEED / mock data** (the `isDemo`-flagged set, #20) with **placeholder property
+  imagery** (real photos land in 4.5 polish).
+- **NOT yet built:** Buy/Rent (`/comprar`, `/arrendar`), Property detail (`/imovel/[id]`),
+  Vender, and the static pages — these routes scaffold-render but are not the finished 4.3 pages.
+- **No backend yet:** Supabase + environment variables remain **Phase 5** — **none configured**.
+  The site runs entirely on the mock data layer; no secrets/env are required to build or deploy.
+- **Connecting Vercel is a one-time browser step** (not done from Claude Code): import the repo,
+  set the production branch to `main`, framework = Next.js. No env vars needed at this stage.
