@@ -6,6 +6,26 @@
 
 ---
 
+## 2026-06-23 · Phase 4.3 — Consolidate design-apply into `develop` (branch hygiene)
+
+**Done** (process/branch work only — no app-code or design changes).
+
+- **Banked the design-apply work.** Fast-forwarded `feat/pages-public` (was `abf92e6` on origin,
+  one docs commit ahead locally at `2de483c`) to include all seven design-apply commits
+  (`eb6f868` step-1 plan … `8503af3` step-6 final) by ff-merging `chore/design-apply-profile`.
+  Green-gated (`pnpm build` ✅ · `tsc --noEmit` ✅ · `eslint` ✅) and pushed.
+- **Merged PR #7** (`feat/pages-public` → `develop`) as a **merge commit** (no squash, history
+  preserved) → merge commit **`3d91a99`**. Local `develop` fast-forwarded to it; tree is
+  identical to the green-gated `feat/pages-public` tip.
+- **Status docs refreshed** on `develop`: PROJECT-STATE §4 (#54–#56 now listed), §5/§6
+  (design-apply ✅ COMPLETE, next = remaining 4.3 pages), §8 (DONE += run-order 1→6 complete +
+  banked to develop). `docs/DESIGN-APPLY-PLAN.md` was already marked ✅ COMPLETE (step 6).
+- **Pruned** the seven now-redundant `chore/design-apply-*` / `chore/design-governance-sync`
+  branches (local + remote) after the merges were confirmed green and pushed.
+
+**Next:** harden the build for Vercel (pin Node/pnpm in `package.json`), then promote
+`develop` → `main` (the Vercel production branch). After that: the remaining 4.3 pages.
+
 ## 2026-06-22 · Phase 4.3 — Design-apply step 6 (FINAL): consultant profile re-skin · APPLY COMPLETE
 
 **Done** (branch `chore/design-apply-profile`; re-skin only — data layer/routing untouched).

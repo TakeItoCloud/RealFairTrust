@@ -43,7 +43,7 @@ GitHub: `github.com/TakeItoCloud/RealFairTrust` (private). Branches: `main → d
 
 **#1–#45** (see `docs/DECISIONS.md` for full text). Highlights: name + Lisboa/Porto launch; commission + Pro subscription; rating rolling-90/monthly/per-opportunity + Rising Talent; weights 35/25/15/15/10; **#12** logo Concept C "Verified Roofline" = primary mark, Concept B "Trust Seal" = in-product verified badge; **#15** PT primary/EN secondary; **#18** badge-until-confident; **#20** seeded listings flagged `isDemo`; **#22** consultant slug; **#32** Fraunces + Inter; **#34** verified-green is verification-only; **#36** Radix scope; **#37** Framer Motion subtle/reduced-motion-safe; **#40** ~12 consultants/~24 listings; **#41** Phase 4 greenlit; **#45** finalized visual system (now superseded in detail by the design hand-off, #46). *(Note: **#34** verification-only is relaxed by **#52** — green also denotes the energy cert.)*
 
-**Confirmed this session (to be logged as #46–#50):**
+**Logged #46–#50:**
 - **#46 — Design hand-off adopted.** The "RealFairTrust Design System" bundle (`design/handoff/`) is the **authoritative visual spec**, superseding earlier ad-hoc mockups. It is the fully-specified form of #45 (same navy/gold/Fraunces+Inter system) plus the ivory light section, the gold bright/calm split, the full token set, and the Framer-Motion interaction spec.
 - **#47 — Icons: `lucide-react`** (2px stroke), replacing inline SVGs.
 - **#48 — Fonts via `next/font/google`** (Fraunces + Inter); self-hosting woff2 optional later.
@@ -54,6 +54,11 @@ GitHub: `github.com/TakeItoCloud/RealFairTrust` (private). Branches: `main → d
 - **#51 — DESIGN AUTHORITY (supremacy rule).** The Claude Design export (`design/handoff/`) is the **supreme authority for all visual/design values**, superseding any conflicting prior decision — **except** where the zip's literal value damages **WCAG AA** or **performance**, in which case the AA/perf-safe deviation is retained and documented (#53). When the zip self-contradicts, its `README.md` wins.
 - **#52 — Energy cert renders GREEN** per the zip (EU/PT energy-label convention). **Supersedes #49; explicit exception to #34** — verified-green is no longer verification-exclusive. Implemented in run-order Step 4.
 - **#53 — AA/perf exceptions retained under #51** (ratios measured, not estimated): **(a)** ivory label gold **#8C5E12** (5.32:1; zip's #d19e1d = 2.30:1, fail); **(b)** verified-ink-on-light **#157048** (5.22:1 on the real badge bg; supersedes the interim #1E8F62 = 3.48:1 fail and the zip's #2f9a6c = 3.01:1; token swap Step 3); **(c)** fonts via `next/font/google` (#48), not the zip `@import`; **(d)** type scale per the zip README (hero 72 / section 40), not the bundle's `typography.css` (hero 76).
+
+**Design-apply implementation decisions, logged as #54–#56:**
+- **#54 — Radius scale adopted project-wide** (Step 3): `rounded-sm`=6 · `rounded-md`=14 (was 10) · `rounded-lg`=20 (was 16), via re-pointing `--rft-r-*` → `--radius-*`; form wells pin `--radius-sm` (10), cards keep `--card-radius` (22).
+- **#55 — Icon layer = `lucide-react` re-export shim** (implements #47): `components/ui/icons.tsx` keeps the `Icon*` names as thin lucide wrappers (2px stroke, currentColor) so consumers are unchanged; inline SVGs removed.
+- **#56 — Home section rhythm canonical** (Step 5/6): **N·I·N·N·I·N·N** — Hero navy · HowItWorks ivory · Top consultants navy · Featured navy · Clients/consultants split ivory · Trust navy · Join CTA navy. Keeps the dark-first brand (#33); card showcases stay on the navy stage.
 
 ---
 
@@ -70,28 +75,28 @@ GitHub: `github.com/TakeItoCloud/RealFairTrust` (private). Branches: `main → d
 - **4.0 Foundations** — ✅ DONE (PR #4). Types + repository (Supabase-swap-ready) + typed seed + next-intl scaffolding + base layout.
 - **4.1 Primitives** — ✅ DONE (PR #5). 16 `components/ui/` primitives + `/dev/primitives`. *(Revisited in design-apply step 3.)*
 - **4.2 Composite components** — ✅ DONE (PR #6). Header/Footer/ConsultantCard/PropertyCard/ScoreBreakdown/FilterBar/LeadForm/ReviewItem/Pagination/CookieBanner/Modal/Toast + `/dev/components`. *(Revisited in design-apply steps 3–4.)*
-- **4.3 Public pages** — 🟡 IN PROGRESS (PR #7 open, `feat/pages-public`):
-  - ✅ Home (`/[locale]`) *(gets section-variety in design-apply step 5)*
+- **4.3 Public pages** — 🟡 IN PROGRESS (PR #7 **MERGED** → banked to `develop`; promoted to `main`):
+  - ✅ Home (`/[locale]`) *(section-variety applied — design-apply step 5)*
   - ✅ Consultores (`/[locale]/consultores`)
-  - 🟡 **Design-System Application sub-phase — CURRENT WORK (see §6, run order 1→6).** Step 6 of that run order builds the paused **Consultant profile page**.
-  - ⬜ **Remaining 4.3 pages (AFTER design-apply):** Buy/Rent (`/comprar`, `/arrendar`), Property detail (`/imovel/[id]`), Vender, static pages.
+  - ✅ **Design-System Application sub-phase — COMPLETE (run order 1→6 done; see §6).** Consultant profile page re-skinned onto the finalized system (step 6).
+  - ⬜ **Remaining 4.3 pages (NEXT):** Buy/Rent (`/comprar`, `/arrendar`), Property detail (`/imovel/[id]`), Vender, static pages.
 - **4.4 App shells** — ⬜ TODO. Dashboard, admin, auth — **UI-only** (#39).
 - **4.5 Polish** — ⬜ TODO. Real imagery (hero + property photos), PT/EN copy pass, accessibility, performance, responsive QA, motion polish.
 
 ---
 
-## 6. CURRENT WORK — Design-System Application (run order 1 → 6)
+## 6. DESIGN-SYSTEM APPLICATION (run order 1 → 6) — ✅ COMPLETE (2026-06-22; banked to `develop` + promoted to `main` 2026-06-23)
 
-Reconcile the codebase to the adopted design hand-off (#46). Each step = one Claude Code prompt, repo-anchored, **green-gated**, stop-and-confirm. Confirmed decisions (#47–#50) are already settled — do not re-ask.
+Reconciled the codebase to the adopted design hand-off (#46). Each step = one green-gated Claude Code prompt. **All six steps done; build green; AA verified.** Authoritative detail: `docs/DESIGN-APPLY-PLAN.md` §3 (all ✅) + the 2026-06-22 `docs/WORKLOG.md` entries.
 
-1. **Review + reconciliation plan** → produces `docs/DESIGN-APPLY-PLAN.md` (no app-code changes). **Prompt 1 is embedded below.**
-2. **Tokens** — reconcile `app/design-tokens.css` / `app/globals.css` to the hand-off tokens; wire Fraunces + Inter via `next/font/google`; add `lucide-react`. Green.
-3. **Primitives** — align Button (calm-gold gradient), Badge/Tag/RankBadge, Card/StatBlock/Avatar, Input/Select, Logo (tri-tone), VerifiedBadge to spec; refresh `/dev/components`. Green.
-4. **Cards** — ConsultantCard ("Spotlight") + PropertyCard ("Editorial Overlay") to spec + Framer Motion entrance/hover (lift, accent-bar wipe, score glow, image zoom), reduced-motion-safe; **energy cert NEUTRAL (#49)**. Green.
-5. **Home-page section variety** — apply `.rft-ivory` light break + navy-stage alternation across sections; wire the redesigned cards. Green.
-6. **Consultant profile page** (`/[locale]/consultores/[slug]`) — the paused 4.3 item, built on the finalized system: profile header, ScoreBreakdown panel (honors #18), about, consultant's listings as PropertyCards, reviews + empty state (Diogo = 0 reviews), inline LeadForm (desktop) / sticky→full (mobile, #28), `getConsultant(slug)` + `notFound()`. Green.
+1. ✅ **Review + reconciliation plan** → `docs/DESIGN-APPLY-PLAN.md`.
+2. ✅ **Tokens** — hand-off token layer (additive, aliased); `lucide-react` added; fonts via `next/font/google`.
+3. ✅ **Primitives** — Button/Card/StatBlock/RankBadge/Badge/Tag/Avatar to spec; radius remap (#54); lucide shim (#55); verified-ink #157048 (#53).
+4. ✅ **Cards** — ConsultantCard "Spotlight" + PropertyCard "Editorial Overlay" on translucent surfaces + Framer Motion; **energy cert GREEN (#52, supersedes #49)**.
+5. ✅ **Home section variety** — `.rft-ivory` breaks + navy alternation (rhythm #56); muted .58; warm hairline.
+6. ✅ **Consultant profile page** (`/[locale]/consultores/[slug]`) re-skinned onto the finalized system: header (seal + 38px gold merit, #18), ScoreBreakdown Card (+weights #16), about, listings as PropertyCards, reviews + Diogo 0-review empty state, inline/sticky LeadForm (#28), `getConsultant(slug)` + `notFound()`.
 
-**After run order 6:** return to the **remaining 4.3 pages** (Buy/Rent, Property detail, Vender, static) → **4.4 shells** → **4.5 polish** → **Phase 5 (Supabase)** → **Phase 6 (launch)**. (Per §5.)
+**NEXT (per §5):** the **remaining 4.3 pages** (Buy/Rent, Property detail, Vender, static) → **4.4 shells** → **4.5 polish** → **Phase 5 (Supabase)** → **Phase 6 (launch)**.
 
 **Prompts 2–6 are authored by the planning chat *after* Prompt 1's gap analysis comes back** (so they reference the real, reconciled code rather than guesses).
 
@@ -157,10 +162,10 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 
 ## 8. DONE / IN PROGRESS / NEXT / TODO
 
-- **DONE:** Phases 0–3; Phase 4.0/4.1/4.2; Phase 4.3 Home + Consultores; design hand-off reviewed + adopted (#46–#50); governance sync (#51–#53); design-apply Step 2 tokens.
-- **IN PROGRESS:** design-system application (§6), starting at run-order step 1 (Prompt 1).
-- **NEXT:** run Prompt 1 → planning chat authors Prompts 2–6 from the gap analysis → execute steps 2→6 (tokens → primitives → cards → home variety → profile page), each green-gated.
-- **TODO (after §6):** remaining 4.3 pages → 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).
+- **DONE:** Phases 0–3; Phase 4.0/4.1/4.2; Phase 4.3 Home + Consultores; design hand-off adopted (#46–#50); governance sync (#51–#53); **design-system application run order 1→6 COMPLETE (#54–#56)** — tokens → primitives → cards → Home variety → profile re-skin, all green + AA; **banked to `develop` (PR #7 merged, merge commit `3d91a99`)**.
+- **IN PROGRESS:** — (between sub-phases; design-apply complete and promoted).
+- **NEXT:** remaining 4.3 pages (Buy/Rent `/comprar` + `/arrendar`, Property detail `/imovel/[id]`, Vender, static pages).
+- **TODO (after 4.3):** 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).
 
 ---
 
