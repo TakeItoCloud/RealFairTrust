@@ -20,8 +20,9 @@
   --color-gold-bright:  var(--rft-gold-bright);
   --color-gold-deep:    var(--rft-gold-deep);    /* gold text on warm light sections */
   --color-on-gold:      var(--rft-on-gold);      /* dark-navy text on gold buttons */
-  --color-verified:     var(--rft-verified);     /* verified / success only */
-  --color-verified-ink: var(--rft-verified-ink);
+  --color-verified:        var(--rft-verified);     /* verified / success — icons/large/accents */
+  --color-verified-ink:    var(--rft-verified-ink);  /* on-light green TEXT (#157048, #53) */
+  --color-verified-strong: var(--green-verified-strong); /* on-DARK green TEXT (#5fd2a1, R5 AA) */
   --color-danger:       var(--rft-danger);        /* error / invalid only */
   --color-danger-ink:   var(--rft-danger-ink);
   --color-warm:         var(--rft-bg-warm);      /* warm light section bg */

@@ -42,7 +42,7 @@ export function StatBlock({ value, label, delta, gold = false, align = 'start', 
       <span className={cn('flex items-center gap-1.5 text-cream-muted', size === 'sm' ? 'text-xs' : 'text-meta')}>
         {label}
         {delta ? (
-          <span className={cn('font-medium', positive ? 'text-verified' : 'text-cream-muted')}>{delta}</span>
+          <span className={cn('font-medium', positive ? 'text-verified-strong' : 'text-cream-muted')}>{delta}</span>
         ) : null}
       </span>
     </div>

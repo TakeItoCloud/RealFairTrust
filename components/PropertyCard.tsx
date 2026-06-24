@@ -92,7 +92,7 @@ export function PropertyCard({ listing, index = 0 }: { listing: ListingWithAgent
             <li className="flex items-center gap-1.5">
               <IconArea className="text-base" aria-hidden /> <b className="font-semibold text-cream">{formatArea(listing.areaM2, locale)}</b>
             </li>
-            <li className="flex items-center gap-1.5 text-verified">
+            <li className="flex items-center gap-1.5 text-verified-strong">
               <IconBolt className="text-base" aria-hidden /> <b className="font-semibold">{listing.energyCert}</b>
               <span className="sr-only">{t('listing.energyCert')}</span>
             </li>

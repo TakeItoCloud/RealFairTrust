@@ -6,6 +6,70 @@
 
 ---
 
+## 2026-06-24 · Design REVISION R5 (FINAL) — global AA consolidation + DECISIONS #57–#64 + state docs
+
+**Done** (branch `chore/design-revision-consolidate` off `chore/design-revision-home`). **This
+completes the revision run order R1→R5.** `main` + `develop` untouched/frozen at `04b6a1b`;
+chain **UNMERGED** pending promotion. Green + smoke.
+
+**Global AA sweep — found + fixed 2 genuine regressions from the brighter background (R2/#58):**
+- The verified-green `#3fb984` **small TEXT** had dropped below 4.5 on the navy stage (3.46 on a
+  frosted card @centre; even **4.21** on the dominant `#173a63` — widespread, not an edge case).
+  → Added **`--green-verified-strong #5fd2a1`** (on-dark green text; symmetric with the #53 on-light
+  `#157048`). Applied to the **PropertyCard energy cert** + **StatBlock delta**. `#3fb984` kept for
+  icons/seals/large/accents/borders. (LeadForm success sits on the solid `bg-surface` = 6.39 ✅, no change.)
+- The tinted **pill/badge chips** (translucent gold/green over the bright stage) had dropped to
+  4.35 (gold) / 2.97 (green). → **VerifiedBadge labelled pill** + **Badge gold/rising/success (navy)**
+  now sit on a **solid dark chip** (`--surface-card-solid`): green **6.78**, gold **9.05**. onIvory
+  chip paths unchanged.
+
+**Consolidated AA table (final; measured vs the REAL composited bg; ≥4.5 small / ≥3 large/icon):**
+
+| Surface | value / bg | ratio | verdict |
+|---|---|---|---|
+| **Navy text** strong/body.78/muted.70/faint.40 @ `#1e4680` | cream | 8.32 / 5.74 / 4.66* / 2.66(dec.) | ✅ (*muted on frosted card) |
+| navy small-gold/eyebrow `#efb52a` @centre | / stage | 5.04 | ✅ |
+| Button primary text `#2a1d04` / gold gradient (darkest stop) | / #c8901f | 5.85 | ✅ |
+| Button secondary cream / ghost body.78 @centre | | 7.85 / 5.74 | ✅ |
+| **Green small TEXT** energy cert/StatBlock delta `#5fd2a1` @ frosted card centre | | 4.58 | ✅ (was 3.46) |
+| green icons/seal check `#3fb984` (icon ≥3) @centre / solid | | 3.46 / 6.78 | ✅ |
+| **VerifiedBadge pill** `#3fb984` / solid dark chip | / #0c1d39 | 6.78 | ✅ (was 2.97) |
+| **Badge** gold `#efb52a` / green `#3fb984` / dark chip | / #0c1d39 | 9.05 / 6.78 | ✅ (gold was 4.35) |
+| Badge/Tag neutral muted.70 / bg-surface | / #10233C | high | ✅ |
+| Input/Select cream / placeholder.70 / inset well | | 11.74 / 6.56 | ✅ |
+| **Champagne** eyebrow `#7c5a12` / ink `#2b2415` / ink-muted `#5c5340` | / #ece2cb | 4.90 / 11.94 / 5.89 | ✅ |
+| step-card (navy on champagne) h3 / body.78 | / #0c1d39 | 14.92 / 9.44 | ✅ |
+| Footer Logo Real/Trust · headings/links @ champagne | | 13.23/11.28 · 4.90/5.89 | ✅ |
+| AgentCTA panel eyebrow/h2/body @ panel | | 7.39 / 12.18 / 8.00 | ✅ |
+| verified-ink on-light `#157048` @ champ / white | | 4.74 / 6.10 | ✅ |
+| ivory-label `#8C5E12` @ ivory (moot on champagne) | | 5.32 | ✅ |
+
+> **All shipped surfaces clear AA.** No global text token was lowered; every fix is a local
+> fail-closed deviation, recorded in **DECISIONS #64**.
+
+**Ratified DECISIONS (appended #57–#64):** #57 revision adopted (supreme; extends #51) · #58 new
+radial (supersedes #45/#46 bg) · #59 90° gold (supersedes 180°/160°; hover→§1.2 token) · #60 type
+76/42/56 (**supersedes #53(d)**) · #61 champagne family + usage rule (**supersedes #56 ivory rhythm**)
+· #62 Home = marketing kit (split + trust-band removed) · #63 component alignment (Button pill /
+Select strings / Eyebrow champagne / ConsultantCard name + onIvory≡onLight) · #64 AA/a11y exception
+set (muted .70 · gold #efb52a · champagne-eyebrow #7c5a12 · ivory-label kept · verified-ink carried
+· featured/floating .035 fill · **green-verified-strong #5fd2a1** · **pill/badge dark chips**).
+
+**State docs refreshed** (this branch only): PROJECT-STATE §4 (#57–#64 + #45/#46-bg/#53(d)/#56 marked
+superseded), §7 (visual system → champagne revision values), §5/§8 (Home rebuilt; revision COMPLETE +
+unmerged; remaining 4.3 pages = NEXT after promotion), §10 (drift fix: resume blurbs + Project-
+instructions reference copy no longer cite the completed design-system application), §12 (R1→R5
+COMPLETE, frozen, awaiting promotion), "Last updated" bumped. `docs/DESIGN-REVISION-PLAN.md` R5 → ✅,
+plan marked **COMPLETE**.
+
+**Green gate:** `tsc` ✅ · `eslint` ✅ · `pnpm build` ✅ (all 0). **Smoke** (`next start`): `/`, `/en`,
+`/consultores`, `/consultores/ana-silva` → **200**; energy cert renders `text-verified-strong`;
+`--green-verified-strong:#5fd2a1` in the compiled CSS.
+
+**REVISION CHAIN COMPLETE + UNMERGED.** `main` + `develop` frozen at `04b6a1b` (Vercel production).
+**Next = Carlos's promotion decision** (consolidate `chore/design-revision-*` → `develop` → `main` →
+Vercel); after promotion, the remaining 4.3 pages. **No promotion without explicit approval.**
+
 ## 2026-06-24 · Design REVISION R4 — Home rebuilt to the marketing kit + champagne wired + AA at render
 
 **Done** (branch `chore/design-revision-home` off `chore/design-revision-primitives`). The biggest

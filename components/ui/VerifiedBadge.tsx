@@ -68,8 +68,14 @@ export function VerifiedBadge({
     )
   }
 
+  // R5 AA: the labelled pill uses a SOLID dark chip (not bg-verified/12 over the bright stage,
+  // which dropped green text to 2.97 @centre). On the dark chip #3fb984 holds 6.78:1. On light the
+  // chip stays a faint green-tint with the on-light verified ink (#157048). Green icon ≥3 either way.
+  const chip = tone === 'dark'
+    ? 'bg-[var(--surface-card-solid)] border border-[var(--green-border)]'
+    : 'bg-verified/12'
   return (
-    <span className={cn('inline-flex items-center rounded-full bg-verified/12 font-medium', text, sizing, className)}>
+    <span className={cn('inline-flex items-center rounded-full font-medium', chip, text, sizing, className)}>
       <IconVerified className="text-[1.1em]" />
       {label}
     </span>

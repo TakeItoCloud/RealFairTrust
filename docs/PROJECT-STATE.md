@@ -2,7 +2,7 @@
 
 > **Purpose.** Single orientation document for the project. If you are starting a **new planning chat** (claude.ai) or a **new Claude Code session** (VS Code), read this file first. It holds roles/workflow, locked decisions, the visual system, the **complete phase roadmap**, what is done, what is next, and what is still open. `docs/DECISIONS.md` and `docs/WORKLOG.md` on the machine remain authoritative for the full decision log and per-session history; this file is the high-level snapshot — **keep it in sync every session.**
 >
-> **Last updated:** 2026-06-24 (DESIGN REVISION started on `chore/design-revision-*` off `develop`; new export adopted into `design/handoff/`; `docs/DESIGN-REVISION-PLAN.md` authored; §12 Active work + branch model added. **main + develop FROZEN at `04b6a1b`** — this note is branch-only.) Prior: 2026-06-23 (design-apply promoted to `main`; §11 Deployment).
+> **Last updated:** 2026-06-24 (DESIGN REVISION **R1→R5 COMPLETE** on `chore/design-revision-*` off `develop`; DECISIONS #57–#64 ratified; §4/§7/§8/§10/§12 refreshed to the champagne revision; global AA consolidated. **UNMERGED — main + develop FROZEN at `04b6a1b`** pending promotion approval; this note is branch-only.) Prior: 2026-06-23 (design-apply promoted to `main`; §11 Deployment).
 
 ---
 
@@ -58,7 +58,17 @@ GitHub: `github.com/TakeItoCloud/RealFairTrust` (private). Branches: `main → d
 **Design-apply implementation decisions, logged as #54–#56:**
 - **#54 — Radius scale adopted project-wide** (Step 3): `rounded-sm`=6 · `rounded-md`=14 (was 10) · `rounded-lg`=20 (was 16), via re-pointing `--rft-r-*` → `--radius-*`; form wells pin `--radius-sm` (10), cards keep `--card-radius` (22).
 - **#55 — Icon layer = `lucide-react` re-export shim** (implements #47): `components/ui/icons.tsx` keeps the `Icon*` names as thin lucide wrappers (2px stroke, currentColor) so consumers are unchanged; inline SVGs removed.
-- **#56 — Home section rhythm canonical** (Step 5/6): **N·I·N·N·I·N·N** — Hero navy · HowItWorks ivory · Top consultants navy · Featured navy · Clients/consultants split ivory · Trust navy · Join CTA navy. Keeps the dark-first brand (#33); card showcases stay on the navy stage.
+- **#56 — Home section rhythm canonical** (Step 5/6): N·I·N·N·I·N·N (ivory rhythm). **⚠ SUPERSEDED by #61** (champagne rhythm).
+
+**DESIGN REVISION decisions, logged as #57–#64 (2026-06-24; R-series, on the `chore/design-revision-*` chain, UNMERGED):**
+- **#57 — Design revision adopted** (new champagne export = supreme visual source of truth; extends #51).
+- **#58 — Background** new brighter centred radial `#1e4680…#040e20`. **Supersedes the #45/#46 background.**
+- **#59 — Gold** symmetric 90° title + button(+hover) gradients. **Supersedes the #45 180°/160°** (hover → README §1.2 token).
+- **#60 — Type scale** hero 76 / section 42 / display-2 56 + kit aliases. **SUPERSEDES #53(d)** (72/40).
+- **#61 — Champagne family** + `.rft-champagne`/`.rft-step-card`; champagne ONLY on Home "Como Funciona" + footer. **SUPERSEDES the #56 ivory rhythm.**
+- **#62 — Home composition = the marketing kit** (search-pill hero + featured card + floating stat · champagne HowItWorks · leaderboard · featured · agent-CTA · champagne footer); the "split" + "trust band" sections **REMOVED**.
+- **#63 — Component alignment** (R3): Button = pill (a11y tap targets kept); Select `(string\|{value,label})[]`; Eyebrow `tone="champagne"`; ConsultantCard name kept w/ AgentCard spec (#G); `onIvory ≡ onLight`.
+- **#64 — AA/a11y exceptions** (measured, fail-closed): muted .58→.70 (4.66); navy small-gold #e3a812→**#efb52a** (5.04, shared token); champagne-eyebrow #a9791a→**#7c5a12** (4.90); ivory-label #8C5E12 kept (moot on champagne); verified-ink #157048 carried; hero featured + floating stat raised→**.035** fill (4.66); on-dark green TEXT → **`--green-verified-strong #5fd2a1`** (4.58); verified pill + Badge tinted chips → **solid dark chip** (green 6.78 / gold 9.05).
 
 ---
 
@@ -76,9 +86,9 @@ GitHub: `github.com/TakeItoCloud/RealFairTrust` (private). Branches: `main → d
 - **4.1 Primitives** — ✅ DONE (PR #5). 16 `components/ui/` primitives + `/dev/primitives`. *(Revisited in design-apply step 3.)*
 - **4.2 Composite components** — ✅ DONE (PR #6). Header/Footer/ConsultantCard/PropertyCard/ScoreBreakdown/FilterBar/LeadForm/ReviewItem/Pagination/CookieBanner/Modal/Toast + `/dev/components`. *(Revisited in design-apply steps 3–4.)*
 - **4.3 Public pages** — 🟡 IN PROGRESS (PR #7 **MERGED** → banked to `develop`; promoted to `main`):
-  - ✅ Home (`/[locale]`) *(section-variety applied — design-apply step 5)*
-  - ✅ Consultores (`/[locale]/consultores`)
-  - ✅ **Design-System Application sub-phase — COMPLETE (run order 1→6 done; see §6).** Consultant profile page re-skinned onto the finalized system (step 6).
+  - ✅ Home (`/[locale]`) *(REBUILT to the marketing kit in the revision R4 — search-pill hero + featured card + floating stat · champagne HowItWorks · leaderboard · featured · agent-CTA · champagne footer; #62)*
+  - ✅ Consultores (`/[locale]/consultores`) *(inherits the revision look via tokens)*
+  - ✅ **Design-System Application sub-phase — COMPLETE (run order 1→6 done; see §6).** Then **DESIGN REVISION R1→R5 COMPLETE** (champagne export; #57–#64) — on the `chore/design-revision-*` chain, **UNMERGED** (see §12).
   - ⬜ **Remaining 4.3 pages (NEXT):** Buy/Rent (`/comprar`, `/arrendar`), Property detail (`/imovel/[id]`), Vender, static pages.
 - **4.4 App shells** — ⬜ TODO. Dashboard, admin, auth — **UI-only** (#39).
 - **4.5 Polish** — ⬜ TODO. Real imagery (hero + property photos), PT/EN copy pass, accessibility, performance, responsive QA, motion polish.
@@ -139,32 +149,34 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 
 ---
 
-## 7. VISUAL SYSTEM (authoritative source: `design/handoff/`, #46)
+## 7. VISUAL SYSTEM (authoritative source: `design/handoff/` — the **champagne revision**, #57; shipped on the revision chain, UNMERGED)
 
-**LOCKED:**
-- **Background:** sapphire-navy radial `radial-gradient(ellipse 90% 70% at 50% 30%, #122a4f, #0a1a34, #060f22, #020812)`, fixed.
-- **Palette family (only these):** black/near-black, blues with gradients, gold (solid + gradient), grey, white/ivory.
-- **Gold, two roles:** **bright** title gradient `linear-gradient(180deg,#ffe6a0,#ffd86e,#e3a812)` for titles/prices/merit numerals; **calm/luxe** button gradient `linear-gradient(160deg,#ffe79e,#f4c95c,#dca233)` — deeper/warmer so it never competes. **Rule: one bright-gold focal point per view.** Eyebrows = flat solid gold (`#e3a812` on navy / **`#8C5E12` on ivory** — AA exception #53; the zip's `#d19e1d` fails at 2.30:1).
-- **Warm ivory light section** (`--ivory #fbf8f2`, `.rft-ivory`) for section variety; ink text `#1c2942`.
-- **Verified green** (`#3fb984`) = success/verification — **plus the PropertyCard energy cert** (green now denotes energy rating too; #52, exception to #34). Verified-ink-on-light = **`#157048`** (AA exception #53; supersedes the interim #1E8F62 which failed at 3.48:1).
-- **Type:** Fraunces (display/titles/prices) + Inter (body/UI). Hero 72 / section 40 / subsection 26 / lead 20 / body 16 / meta 13 / eyebrow 12 (0.2em, uppercase) / button 15.
-- **Tri-tone wordmark:** Real `#F5F1EA` · Fair = title-gold gradient · Trust `#8A93A3` (on ivory, Real/Trust switch to dark ink).
-- **Cards:** ConsultantCard "Spotlight" (data-forward, merit score 38px gold, RankBadge coin, ringed avatar, verified pill, stats row, gold-hairline footer "Ver perfil →"); PropertyCard "Editorial Overlay" (220px media, scrim, frosted deal + gold demo chips, 30px gold price on image, spec row, agent mini-row "Ver detalhe →"; **energy cert GREEN per the zip (EU/PT convention; #52, supersedes #49, exception to #34)**). Card tokens: radius 22 / media 14 / pad 26 / lift -4 (-5 media) / img-zoom 1.06 / dur-img 500ms / accent-bar / overlay-scrim / plate-bg.
-- **Motion (Framer Motion, reduced-motion-safe):** ease-out `cubic-bezier(0.22,0.61,0.36,1)`; entrance opacity+y, stagger 60–80ms; hover lift + accent-bar `scaleX 0→1` + score glow + image zoom; press `y+1`. No bounce, no loops.
-- **Icons:** `lucide-react`, 2px stroke (#47). **Fonts:** `next/font/google` (#48).
-- **Design authority (#51):** the zip is supreme for all visual values, except where its literal damages WCAG AA / perf. **Retained AA/perf exceptions (#53):** ivory label `#8C5E12`, verified-ink-on-light `#157048`, fonts via `next/font/google` (not the zip `@import`), type scale per the zip README (hero 72, not the bundle's 76). Everything else defers to the zip.
+**LOCKED (post-revision R1→R5):**
+- **Background (#58):** brighter centred sapphire-navy radial `radial-gradient(ellipse 89% 81% at 50% 48%, #1e4680, #173a63 33%, #0e2545 59%, #081830 81%, #040e20)`, fixed. *(Centre `#1e4680` is the AA worst case.)* Supersedes the #45/#46 radial.
+- **Palette family (only these):** black/near-black, blues with gradients, gold (solid + gradient), grey, white/ivory, **champagne (warm sand)**.
+- **Gold, two roles (#59):** **bright** title gradient **symmetric 90°** `linear-gradient(90deg,#d8950f,#e3a812 16%,#ffe6a0 50%,#e3a812 84%,#d8950f)` (titles/prices/merit); **calm/luxe** button **90°** `linear-gradient(90deg,#c8901f,#e9bb52 28%,#ffe79e 50%,#e9bb52 72%,#c8901f)` (+hover). One bright-gold focal point per view. **Solid/eyebrow gold = `--gold-500` #efb52a** (AA #64b; brightened from #e3a812 — gradient stops keep #e3a812). Ivory eyebrow `#8C5E12`; **champagne eyebrow `#7c5a12`** (#64c/d).
+- **Champagne light section (#61):** `--champagne #ece2cb` (+ `-card #fbf7ee`, `-border #e3d7bd`, `-ink #2b2415`, `-ink-muted #5c5340`, `-eyebrow #7c5a12`) via `.rft-champagne` + navy `.rft-step-card`/`.rft-step-coin`. Used **ONLY** on Home "Como Funciona" + footer. **Supersedes the #56 ivory rhythm** (ivory tokens retained but unused).
+- **Verified green (#34/#52):** `#3fb984` = icons/seals/large/accents + the PropertyCard energy cert. **On-DARK green small TEXT = `--green-verified-strong #5fd2a1`** (AA #64g); **on-LIGHT green text = `#157048`** (#53). Tinted green/gold **chips sit on a solid dark base** on navy (#64h).
+- **Type (#60):** Fraunces + Inter. **Hero 76 / section 42 / display-2 (CTA) 56** / subsection 26 / lead 20 / body 16 / meta 13 / eyebrow 12 (0.2em) / button 15. Supersedes #53(d) (72/40).
+- **Text on navy:** strong `#f5f1ea` / body `.78` / **muted `.70`** (#64a) / faint `.40` (decorative/large only).
+- **Tri-tone wordmark:** Real `#F5F1EA` · Fair = title-gold gradient · Trust `#8A93A3` (on ivory/champagne, Real/Trust → dark ink `#111c30`/`#1c2942`).
+- **Cards:** ConsultantCard "Spotlight" (merit 38px gold, RankBadge coin, ringed avatar, verified pill, stats, "Ver perfil →"; **featured uses the `.035` fill** + gold border + glow + accent, #64f); PropertyCard "Editorial Overlay" (220px media, scrim, frosted deal + gold demo chips, 30px gold price, spec row, agent mini-row "Ver detalhe →"; energy cert green #52). Card tokens: radius 22 / media 14 / pad 26 / lift −4/−5 / img-zoom 1.06 / dur-img 500ms / accent-bar / overlay-scrim / plate-bg. **Buttons = pill** (#63).
+- **Motion (Framer Motion, reduced-motion-safe):** ease-out `cubic-bezier(0.22,0.61,0.36,1)`; entrance opacity+y, stagger 60–80ms; hover lift + accent-bar `scaleX 0→1` + score glow + image zoom; press `y+1`. No bounce/loops.
+- **Icons:** `lucide-react` shim, 2px (#47/#55). **Fonts:** `next/font/google` (#48).
+- **Design authority (#57/#51):** the champagne export is supreme, except where its literal damages WCAG AA/perf → AA-safe deviations kept (the #64 set + #53). README wins on bundle self-contradiction.
 
-**Token files (bundle):** `tokens/{colors,typography,spacing,effects,fonts,base}.css` + `styles.css` manifest. Demos: `card-redesign.html`, `gold-system.html`.
+**Token files (bundle):** `tokens/{colors,typography,spacing,effects,fonts,base}.css` + `styles.css`. Demos: `card-redesign.html`, `gold-system.html`, **`champagne-full-page.html`**; full screens under `ui_kits/marketing/`.
 
-**Superseded / rejected:** the six alternate non-navy palettes (teal/sage/terracotta/forest/petrol/charcoal) were REJECTED; the ad-hoc homepage mockup is SUPERSEDED by the hand-off.
+**Superseded / rejected:** the six non-navy palettes REJECTED; ad-hoc mockup superseded; the **pre-revision look** (180°/160° gold, #122a4f radial, 72/40 type, ivory rhythm) superseded by #57–#64.
 
 ---
 
 ## 8. DONE / IN PROGRESS / NEXT / TODO
 
 - **DONE:** Phases 0–3; Phase 4.0/4.1/4.2; Phase 4.3 Home + Consultores; design hand-off adopted (#46–#50); governance sync (#51–#53); **design-system application run order 1→6 COMPLETE (#54–#56)** — tokens → primitives → cards → Home variety → profile re-skin, all green + AA; **banked to `develop` (PR #7 merged, merge commit `3d91a99`)**; **promoted to `main` (Vercel production branch) + build hardened (Node 22.x / pnpm 11.4.0 pinned) — Vercel-ready** (see §11).
-- **IN PROGRESS:** — (between sub-phases; design-apply complete and promoted to `main`).
-- **NEXT:** remaining 4.3 pages (Buy/Rent `/comprar` + `/arrendar`, Property detail `/imovel/[id]`, Vender, static pages).
+- **DONE (revision):** **DESIGN REVISION R1→R5 COMPLETE (#57–#64)** — new champagne export adopted; brighter radial + 90° gold + 76/42/56 type + champagne family (R2); primitives/cards refresh + Button pill + Select strings (R3); **Home rebuilt to the marketing kit + champagne footer** (R4); global AA consolidation + green/chip fixes (R5). All green + AA-recorded. **On the `chore/design-revision-*` chain, UNMERGED** — `main`+`develop` frozen at `04b6a1b` awaiting Carlos's promotion approval (§12).
+- **IN PROGRESS:** — (none; revision complete, pending promotion).
+- **NEXT (after promotion):** remaining 4.3 pages (Buy/Rent `/comprar` + `/arrendar`, Property detail `/imovel/[id]`, Vender, static pages).
 - **TODO (after 4.3):** 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).
 
 ---
@@ -179,10 +191,10 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 ## 10. HOW TO RESUME (zero drift)
 
 **New planning chat (inside the Project):** the Project instructions + this file (in Project knowledge) load automatically. Say:
-> "Read PROJECT-STATE.md. We're on the design-system application (§6). Confirm the run order and the confirmed decisions, then help me drive steps 1→6 by authoring Claude Code prompts. Follow §0 (never guess)."
+> "Read PROJECT-STATE.md. The **design revision (R1→R5) is COMPLETE on the `chore/design-revision-*` chain but UNMERGED** — `main`/`develop` are frozen at the shipped design-apply state pending my promotion approval (§12). Help me decide promotion, then drive the **remaining 4.3 pages** (Buy/Rent, property-detail, Vender, static). Follow §0 (never guess)."
 
 **New Claude Code session:** it auto-reads `CLAUDE.md`. Then say:
-> "Read docs/PROJECT-STATE.md, docs/DECISIONS.md, docs/DESIGN-APPLY-PLAN.md (if present), and the latest docs/WORKLOG.md. Confirm current branch + phase, then wait for my instruction. Follow CLAUDE.md §0."
+> "Read docs/PROJECT-STATE.md, docs/DECISIONS.md, docs/DESIGN-REVISION-PLAN.md, and the latest docs/WORKLOG.md. Note the design revision is COMPLETE + UNMERGED (chain off `develop`; main/develop frozen). Confirm current branch + phase, then wait for my instruction. Follow CLAUDE.md §0."
 
 **Keep this file current:** update it at the end of any session that changes scope/decisions/status, then re-upload it to the Project knowledge (Project knowledge is a static snapshot — it does not auto-sync with the repo).
 
@@ -200,8 +212,10 @@ product/tool/UI facts before stating them.
 
 Workflow: this planning chat authors plans, decisions, visual specs, and copy-paste prompts for
 Claude Code; Claude Code (on the remote machine) does all builds/git. Keep phase-gate discipline
-— stop and confirm before each new phase. Current work = the design-system application, run
-order 1->6 in PROJECT-STATE.md section 6; after that, the remaining 4.3 pages, then 4.4 shells,
+— stop and confirm before each new phase. Current state = the **design REVISION (R1->R5) is
+COMPLETE on the chore/design-revision-* chain but UNMERGED**; main + develop are frozen at the
+shipped design-apply state (Vercel production = main) pending Carlos's promotion approval. After
+promotion: the remaining 4.3 pages (Buy/Rent, property-detail, Vender, static), then 4.4 shells,
 4.5 polish, Phase 5 (Supabase), Phase 6 (launch).
 ```
 
@@ -235,8 +249,8 @@ order 1->6 in PROJECT-STATE.md section 6; after that, the remaining 4.3 pages, t
 - **What:** a **new, revised** Claude Design export supersedes the prior one — new navy background,
   new symmetric-90° gold gradients, a larger type scale (hero 76 / section 42 / CTA 56), a new
   **champagne** warm-section family (replacing the ivory rhythm), and a full **marketing-kit Home**.
-  The prior design-apply (#46–#56) is **COMPLETE + shipped**; this revision supersedes specific
-  values per decisions (A)–(H) in the revision plan, to be **ratified as DECISIONS #57+ in R5**.
+  The prior design-apply (#46–#56) is COMPLETE + shipped; this revision supersedes specific values,
+  **ratified as DECISIONS #57–#64** (see §4). **Run order R1→R5 is now COMPLETE.**
 - **Where:** the reconciliation plan is `docs/DESIGN-REVISION-PLAN.md` (run order **R2→R5**, each a
   separate green-gated, stop-and-confirm apply prompt). The new reference bundle is in
   `design/handoff/` (spec only, eslint-ignored, never shipped).
@@ -246,6 +260,8 @@ order 1->6 in PROJECT-STATE.md section 6; after that, the remaining 4.3 pages, t
   public review URL stays stable. **Nothing in this revision touches `main` or `develop`** and no
   PR is opened. **Only on Carlos's explicit approval** does the chain consolidate **→ `develop` →
   `main` → Vercel**.
-- **Status:** R-plan authored (this branch). NEXT = planning chat authors the **R2** prompt from
-  the gap analysis → R2 (tokens+gold+type+champagne + navy-bg AA) → R3 (primitives/cards) → R4
-  (Home rebuild + champagne AA) → R5 (global AA + decisions/docs).
+- **Status: R1→R5 COMPLETE** (all green + AA-recorded) on the revision chain:
+  R1 plan (`chore/design-revision-plan`) → R2 tokens (`-tokens`) → R3 primitives (`-primitives`) →
+  R4 Home (`-home`) → R5 consolidate (`-consolidate`). **UNMERGED.** `main` + `develop` frozen at
+  `04b6a1b`. **NEXT = Carlos's promotion decision** (consolidate the chain → `develop` → `main` →
+  Vercel); after promotion, the remaining 4.3 pages. **Do NOT promote without explicit approval.**

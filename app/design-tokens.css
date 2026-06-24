@@ -60,8 +60,13 @@
   --gold-border-soft: rgba(201,162,74,0.22);
 
   /* --- Verified green · SUCCESS ONLY (#34; plan §2.5) --- */
-  --green-verified:      #3fb984;
+  --green-verified:      #3fb984;   /* icons / seals / large / accents / borders / tints */
   --green-verified-deep: #2f9a6c;   /* spec value (zip); on-light verified ink uses #157048 instead — AA (#53) */
+  /* R5 AA (fail-closed; symmetric with the on-light #157048, #53): the new bright bg dropped the
+     #3fb984 SMALL TEXT below 4.5 on the navy stage (3.46 on a frosted card @centre; even 4.21 on the
+     dominant #173a63). #5fd2a1 is the brighter on-DARK green for small green TEXT (energy cert,
+     StatBlock delta, success copy) — 4.58 on a frosted card @centre. Icons/large keep #3fb984. */
+  --green-verified-strong: #5fd2a1;
   --green-tint:   rgba(63,185,132,0.14);
   --green-border: rgba(63,185,132,0.40);
 
