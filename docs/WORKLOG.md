@@ -34,6 +34,16 @@
 kit 76/42/56 **wins over** README §3 72/40 (decision B, supersedes #53(d)); button-hover — §1.2
 **token** 90° wins over README §2 `.btn-primary` 160° (decision D).
 
+**Addendum (same session) — branch/deployment model recorded.** Confirmed parity **main ==
+develop == `04b6a1b`** and that `chore/design-revision-plan` is based on **`develop`'s tip**
+(its commit equals `main`'s only because the two are at parity — no `main`-only commit is
+involved). Corrected the plan header to read "base = develop" and added a **Branch model**
+block to `docs/DESIGN-REVISION-PLAN.md` + a new **§12 ACTIVE WORK (branch model)** to
+`docs/PROJECT-STATE.md` (branch-only; **main/develop FROZEN** — Vercel production = `main`,
+public URL stable; consolidate `→ develop → main → Vercel` only on Carlos's explicit approval).
+Re-ran the zip fingerprint (still NEW revision ✅). **`main` and `develop` untouched this
+session; no PR; not merged.**
+
 **Next:** planning chat authors the R2 prompt from this gap analysis → execute **R2** (tokens +
 gold + type + champagne + navy AA) → R3 (primitives/cards) → R4 (Home rebuild + champagne AA) →
 R5 (global AA + decisions/docs). No PR for this plan session.

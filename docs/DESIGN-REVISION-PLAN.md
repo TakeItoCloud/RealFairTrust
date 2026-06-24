@@ -5,11 +5,19 @@
 > current codebase (which already ran the prior apply, `docs/DESIGN-APPLY-PLAN.md`, run order
 > 1→6, COMPLETE). The apply happens later in green-gated steps **R2→R5** (§6).
 >
-> **Date:** 2026-06-24 · **Branch:** `chore/design-revision-plan` (off `main` @ `04b6a1b`).
+> **Date:** 2026-06-24 · **Branch:** `chore/design-revision-plan` (base = **develop** @ `04b6a1b`).
 > **New bundle fingerprint CONFIRMED (all three):** `tokens/colors.css` has `--champagne:`;
 > `reference/ui_kits/marketing/Home.jsx` exists; `reference/champagne-full-page.html` exists.
 > **Prior bundle remains in git history**; `design/handoff/**` stays eslint-ignored (spec only,
 > never shipped). README is authoritative where the bundle self-contradicts (decision A).
+>
+> **Branch model (deployment).** This revision lives entirely on the `chore/design-revision-*`
+> chain, **based on `develop`**. **`main` and `develop` are FROZEN** at the shipped design-apply
+> state (`04b6a1b`; **main == develop**, parity) — `main` is the Vercel **production** branch and
+> the public review URL stays stable. **Nothing here touches `main` or `develop`** and no PR is
+> opened. Only when Carlos **explicitly approves** does the chain consolidate **→ `develop` →
+> `main` → Vercel**. The prior design-apply (#46–#56) is COMPLETE + shipped; this revision
+> supersedes specific values per (A)–(H), ratified as DECISIONS #57+ in **R5**.
 
 ---
 

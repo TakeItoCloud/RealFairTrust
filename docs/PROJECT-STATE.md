@@ -2,7 +2,7 @@
 
 > **Purpose.** Single orientation document for the project. If you are starting a **new planning chat** (claude.ai) or a **new Claude Code session** (VS Code), read this file first. It holds roles/workflow, locked decisions, the visual system, the **complete phase roadmap**, what is done, what is next, and what is still open. `docs/DECISIONS.md` and `docs/WORKLOG.md` on the machine remain authoritative for the full decision log and per-session history; this file is the high-level snapshot — **keep it in sync every session.**
 >
-> **Last updated:** 2026-06-23 (design-apply run order 1→6 banked to `develop` via PR #7 + promoted to `main` = Vercel production branch; Node/pnpm pinned for Vercel; §11 Deployment added). Prior: 2026-06-22 (governance sync #51–#53; design-apply #54–#56).
+> **Last updated:** 2026-06-24 (DESIGN REVISION started on `chore/design-revision-*` off `develop`; new export adopted into `design/handoff/`; `docs/DESIGN-REVISION-PLAN.md` authored; §12 Active work + branch model added. **main + develop FROZEN at `04b6a1b`** — this note is branch-only.) Prior: 2026-06-23 (design-apply promoted to `main`; §11 Deployment).
 
 ---
 
@@ -224,3 +224,28 @@ order 1->6 in PROJECT-STATE.md section 6; after that, the remaining 4.3 pages, t
   The site runs entirely on the mock data layer; no secrets/env are required to build or deploy.
 - **Connecting Vercel is a one-time browser step** (not done from Claude Code): import the repo,
   set the production branch to `main`, framework = Next.js. No env vars needed at this stage.
+
+---
+
+## 12. ACTIVE WORK — DESIGN REVISION (branch model)
+
+> *This section lives on the `chore/design-revision-*` chain only — it is intentionally NOT on
+> `main`/`develop`, which are frozen. A fresh session should read `docs/DESIGN-REVISION-PLAN.md`.*
+
+- **What:** a **new, revised** Claude Design export supersedes the prior one — new navy background,
+  new symmetric-90° gold gradients, a larger type scale (hero 76 / section 42 / CTA 56), a new
+  **champagne** warm-section family (replacing the ivory rhythm), and a full **marketing-kit Home**.
+  The prior design-apply (#46–#56) is **COMPLETE + shipped**; this revision supersedes specific
+  values per decisions (A)–(H) in the revision plan, to be **ratified as DECISIONS #57+ in R5**.
+- **Where:** the reconciliation plan is `docs/DESIGN-REVISION-PLAN.md` (run order **R2→R5**, each a
+  separate green-gated, stop-and-confirm apply prompt). The new reference bundle is in
+  `design/handoff/` (spec only, eslint-ignored, never shipped).
+- **Branch model (deployment):** all revision work is on the **`chore/design-revision-*` chain,
+  based on `develop`**. **`main` and `develop` are FROZEN** at the shipped design-apply state
+  (`04b6a1b`; **main == develop**, parity). **`main` is the Vercel production branch** and the
+  public review URL stays stable. **Nothing in this revision touches `main` or `develop`** and no
+  PR is opened. **Only on Carlos's explicit approval** does the chain consolidate **→ `develop` →
+  `main` → Vercel**.
+- **Status:** R-plan authored (this branch). NEXT = planning chat authors the **R2** prompt from
+  the gap analysis → R2 (tokens+gold+type+champagne + navy-bg AA) → R3 (primitives/cards) → R4
+  (Home rebuild + champagne AA) → R5 (global AA + decisions/docs).
