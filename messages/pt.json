@@ -45,48 +45,45 @@
   },
   "home": {
     "hero": {
-      "eyebrow": "Mérito, não antiguidade",
-      "headline": "Encontre o consultor imobiliário certo — escolhido pelo desempenho.",
-      "subtitle": "Comparamos consultores em Lisboa e no Porto por satisfação, taxa de fecho e resposta. Recalculado todos os meses para que a confiança se mantenha atual.",
-      "searchPlaceholder": "Pesquisar por zona, tipo ou referência",
-      "posterAlt": "Consultores RealFairTrust em destaque"
+      "eyebrow": "Desempenho que se vê",
+      "headline": "Os melhores consultores, escolhidos por <gold>mérito</gold>.",
+      "subtitle": "O marketplace imobiliário onde o desempenho dos consultores é medido com justiça, atualizado todos os meses e mostrado abertamente. Lisboa e Porto.",
+      "cityLabel": "Cidade",
+      "searchPlaceholder": "Zona, especialidade ou nome",
+      "searchButton": "Procurar",
+      "trustVerified": "Consultores verificados",
+      "trustMonthly": "Ranking mensal",
+      "trustCities": "Lisboa e Porto",
+      "statValue": "+6 lugares",
+      "statCaption": "nos últimos 90 dias"
     },
     "howItWorks": {
       "eyebrow": "Como funciona",
-      "title": "Confiança que se ganha todos os meses",
-      "step1Title": "Compare com transparência",
-      "step1Desc": "Veja consultores ordenados pelo desempenho real dos últimos 90 dias — não por anúncios.",
-      "step2Title": "Fale com quem entrega",
-      "step2Desc": "Escolha um consultor e contacte-o diretamente, sem custos e sem conta.",
-      "step3Title": "Avalie e mantenha justo",
-      "step3Desc": "As avaliações verificadas alimentam um ranking que se renova mensalmente."
+      "title": "Confiança que se ganha, não que se afirma.",
+      "lede": "Um motor de avaliação periódico e transparente. Tudo o resto — imóveis, perfis, contactos — assenta na credibilidade que ele cria.",
+      "step1Title": "Mérito sobre volume",
+      "step1Desc": "Os consultores são avaliados pela qualidade por oportunidade — satisfação, taxa de fecho, resposta — e não pelo número de negócios.",
+      "step2Title": "Uma corrida que reinicia",
+      "step2Desc": "Janela móvel de 90 dias, recalculada todos os meses. Os veteranos não enterram quem chega; o topo tem de ser merecido sempre.",
+      "step3Title": "Justo para quem começa",
+      "step3Desc": "Um quadro Rising Talent dedicado dá visibilidade a consultores com menos de 6 meses, antes de terem um histórico completo."
     },
-    "topConsultants": {
-      "eyebrow": "Top deste mês",
-      "title": "Consultores em destaque"
+    "leaderboard": {
+      "eyebrow": "Top este mês",
+      "title": "Consultores em destaque",
+      "seeAll": "Ver ranking completo"
     },
     "featured": {
-      "eyebrow": "Imóveis",
-      "title": "Imóveis em destaque"
+      "eyebrow": "Imóveis em destaque",
+      "title": "Listados por consultores de topo",
+      "seeAll": "Ver todos os imóveis"
     },
-    "split": {
-      "clientsTitle": "Para quem procura",
-      "clientsDesc": "Compre, venda ou arrende com um consultor escolhido pelo mérito.",
-      "consultantsTitle": "Para consultores",
-      "consultantsDesc": "Mostre o seu desempenho e compita por qualidade, não por antiguidade."
-    },
-    "trust": {
-      "eyebrow": "Transparência",
-      "title": "Justo por desenho",
-      "desc": "Pontuações verificadas, janela móvel de 90 dias e um quadro próprio para novos talentos.",
-      "point1": "Avaliações de transações verificadas",
-      "point2": "Recalculado todos os meses",
-      "point3": "Quadro de talentos em ascensão"
-    },
-    "join": {
-      "title": "É consultor imobiliário?",
-      "desc": "Junte-se à RealFairTrust e deixe o seu desempenho falar por si.",
-      "button": "Aderir como consultor"
+    "agentCta": {
+      "eyebrow": "Para consultores",
+      "title": "Concorra por <gold>mérito</gold>, não por antiguidade.",
+      "body": "Visibilidade ganha pelo desempenho, leads de clientes reais e ferramentas para crescer. Split progressivo que premeia a qualidade.",
+      "apply": "Candidatar-me como consultor",
+      "methodology": "Ver a metodologia"
     }
   },
   "consultores": {
@@ -213,6 +210,8 @@
     "privacy": "Privacidade",
     "terms": "Termos",
     "cookies": "Cookies",
-    "rights": "Todos os direitos reservados."
+    "rights": "Todos os direitos reservados.",
+    "slogan": "Desempenho que se vê",
+    "madeIn": "Feito em Portugal"
   }
 }

@@ -1,99 +1,124 @@
 'use client'
 
-// HomeHero — split hero (Decision #25): value proposition + inline search on the left,
-// a poster-first media panel on the right with a "Top this month" proof card surfacing
-// the current #1 consultant. Poster is an optimized gradient placeholder for now — no
-// video yet (Decision #38); a real poster image drops in during 4.5.
+// HomeHero — REVISION R4: rebuilt to the marketing kit's Home hero (#F). Two columns on the
+// navy stage (dark-first, #33): left = value + an inline search-PILL (city Select + search Input
+// + primary "Procurar" → /consultores) + a lucide trust row; right = a featured ConsultantCard
+// (the AgentCard "Spotlight" spec, #G) with a floating "raised" stat card + a soft gold glow.
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import type { ConsultantSummary } from '@/lib/types'
-import { Link, useRouter } from '@/i18n/navigation'
-import { cn } from '@/lib/cn'
-import { Avatar, Button, Eyebrow, Input, RankBadge } from '@/components/ui'
+import { useRouter } from '@/i18n/navigation'
+import { Button, Card, Eyebrow, Input, Select } from '@/components/ui'
+import { IconPin, IconRefresh, IconSearch, IconSparkUp, IconVerified } from '@/components/ui/icons'
+import { ConsultantCard } from '@/components/ConsultantCard'
+import { Reveal } from '@/components/Reveal'
 
 export function HomeHero({ topConsultant }: { topConsultant: ConsultantSummary | null }) {
   const t = useTranslations('home.hero')
-  const tc = useTranslations('common')
-  const ts = useTranslations('score')
   const router = useRouter()
+  const [city, setCity] = useState('Lisboa')
   const [q, setQ] = useState('')
 
-  return (
-    // Transparent so the page-level navy glow (Decision #42) reads through the hero.
-    <section>
-      <div className="container-page grid items-center gap-10 py-14 lg:grid-cols-2 lg:gap-16 lg:py-24">
-        {/* Left — value + search + CTAs */}
-        <div>
-          <Eyebrow>{t('eyebrow')}</Eyebrow>
-          {/* Hero display heading — gold-title clip + hero type scale (Decision #45). */}
-          <h1 className="mt-4 max-w-2xl text-balance gold-title font-display text-4xl leading-[1.05] tracking-[-0.015em] sm:text-5xl lg:text-[length:var(--fs-hero)] lg:leading-[1.03]">
-            {t('headline')}
-          </h1>
-          <p className="mt-4 max-w-xl text-lg text-cream-muted">{t('subtitle')}</p>
+  const trust = [
+    { Icon: IconVerified, label: t('trustVerified') },
+    { Icon: IconRefresh, label: t('trustMonthly') },
+    { Icon: IconPin, label: t('trustCities') },
+  ]
 
+  return (
+    // Transparent so the page-level navy radial reads through the hero (dark-first, #33).
+    <section>
+      <div className="container-page grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
+        {/* Left — value + search pill + trust row */}
+        <div className="flex flex-col gap-6">
+          <Eyebrow>{t('eyebrow')}</Eyebrow>
+          <h1 className="max-w-xl text-balance font-display text-4xl font-semibold leading-[1.05] tracking-[-0.015em] text-cream sm:text-5xl lg:text-[length:var(--fs-display-1)] lg:leading-[1.02]">
+            {t.rich('headline', { gold: (chunks) => <span className="gold-title">{chunks}</span> })}
+          </h1>
+          <p className="max-w-md text-lead text-[var(--text-body)]">{t('subtitle')}</p>
+
+          {/* Search pill — raised Card, pill radius, holds city Select + search Input + Procurar */}
           <form
+            role="search"
             onSubmit={(e) => {
               e.preventDefault()
-              router.push({ pathname: '/comprar', query: q.trim() ? { q: q.trim() } : undefined })
+              router.push({
+                pathname: '/consultores',
+                query: { ...(city ? { cidade: city } : {}), ...(q.trim() ? { q: q.trim() } : {}) },
+              })
             }}
-            className="mt-7 flex max-w-md gap-2"
-            role="search"
+            className="w-full max-w-[520px]"
           >
-            <Input
-              type="search"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder={t('searchPlaceholder')}
-              aria-label={t('searchPlaceholder')}
-            />
-            <Button type="submit" variant="secondary">
-              {tc('actions.search')}
-            </Button>
+            <Card
+              variant="raised"
+              padding={8}
+              style={{ borderRadius: 'var(--radius-pill)' }}
+              className="flex items-stretch gap-2"
+            >
+              <div className="w-[122px] shrink-0">
+                <Select
+                  options={['Lisboa', 'Porto']}
+                  value={city}
+                  onValueChange={setCity}
+                  aria-label={t('cityLabel')}
+                />
+              </div>
+              <div className="relative flex-1">
+                <IconSearch
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base text-cream-muted"
+                  aria-hidden
+                />
+                <Input
+                  type="search"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder={t('searchPlaceholder')}
+                  aria-label={t('searchPlaceholder')}
+                  className="pl-9"
+                />
+              </div>
+              <Button type="submit" variant="primary">
+                {t('searchButton')}
+              </Button>
+            </Card>
           </form>
 
-          <div className="mt-5 flex flex-wrap gap-3">
-            <Link href="/consultores">
-              <Button>{tc('cta.findConsultant')}</Button>
-            </Link>
-            <Link href="/comprar">
-              <Button variant="ghost">{tc('cta.browseHomes')}</Button>
-            </Link>
-          </div>
+          {/* Trust row */}
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            {trust.map(({ Icon, label }) => (
+              <li key={label} className="flex items-center gap-2 text-[13px] text-cream-muted">
+                <Icon className="text-base text-gold" aria-hidden />
+                {label}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Right — poster + proof card */}
-        <div className="relative">
-          <div
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-line bg-linear-to-br from-surface via-ink-elev to-ink"
-            role="img"
-            aria-label={t('posterAlt')}
-          >
-            {/* subtle brand motif on the optimized poster placeholder */}
-            <div className="absolute inset-0 opacity-30 [background:radial-gradient(circle_at_30%_20%,rgba(216,163,60,0.28),transparent_55%)]" aria-hidden />
-          </div>
-
-          {topConsultant ? (
-            <div className="absolute inset-x-4 -bottom-5 rounded-lg border border-line bg-surface/95 p-4 shadow-2xl backdrop-blur sm:inset-x-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">{ts('topThisMonth')}</p>
-              <div className="mt-2 flex items-center gap-3">
-                <Avatar src={topConsultant.photo} name={topConsultant.name} size="md" />
-                <div className="min-w-0">
-                  <p className="truncate font-display text-cream">{topConsultant.name}</p>
-                  <p className="truncate text-xs text-cream-muted">
-                    {ts('closeRate')} {topConsultant.score?.sub.closeRate}%
+        {/* Right — featured ConsultantCard + floating stat + gold glow */}
+        {topConsultant ? (
+          <div className="relative">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-8 -top-12 h-80 w-80 rounded-full"
+              style={{ background: 'radial-gradient(circle, rgba(227,168,18,0.16), transparent 70%)', filter: 'blur(8px)' }}
+            />
+            <div className="relative">
+              <ConsultantCard consultant={topConsultant} featured />
+              <Reveal delay={0.15} className="absolute -bottom-5 -left-5">
+                {/* R4 AA: default (.035) fill, not raised (.06) — keeps cream-muted caption at
+                    4.66:1 over the hero's bright centre (raised would drop it to 4.38). */}
+                <Card variant="default" padding={16} className="flex items-center gap-3 shadow-[var(--shadow-raised)]">
+                  <IconSparkUp className="text-xl text-verified" aria-hidden />
+                  <p className="text-[12.5px] leading-tight text-cream-muted">
+                    <b className="font-semibold text-cream">{t('statValue')}</b>
+                    <br />
+                    {t('statCaption')}
                   </p>
-                </div>
-                <RankBadge rank={topConsultant.score?.rank ?? 1} label={ts('rank')} size={36} className="ml-auto" />
-              </div>
-              <Link
-                href={{ pathname: '/consultores/[slug]', params: { slug: topConsultant.slug } }}
-                className={cn('mt-3 inline-block text-sm font-medium text-gold underline-offset-2 hover:underline')}
-              >
-                {tc('actions.viewProfile')}
-              </Link>
+                </Card>
+              </Reveal>
             </div>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </div>
     </section>
   )

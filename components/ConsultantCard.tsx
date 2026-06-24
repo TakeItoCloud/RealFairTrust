@@ -15,7 +15,17 @@ import { IconTrophy } from '@/components/ui/icons'
 
 const EASE = [0.22, 0.61, 0.36, 1] as const
 
-export function ConsultantCard({ consultant, index = 0 }: { consultant: ConsultantSummary; index?: number }) {
+export function ConsultantCard({
+  consultant,
+  index = 0,
+  featured: featuredProp,
+}: {
+  consultant: ConsultantSummary
+  index?: number
+  /** Force the "featured" spotlight treatment (kit AgentCard `featured`). Defaults to the
+   *  computed #1-confident rule; the Home hero forces it on the top-ranked card. */
+  featured?: boolean
+}) {
   const t = useTranslations()
   const reduce = useReducedMotion()
   const score = consultant.score
@@ -24,7 +34,7 @@ export function ConsultantCard({ consultant, index = 0 }: { consultant: Consulta
   const building = !!score && !score.risingTalent && score.confidence === 'low'
   const rank = confident ? score?.rank ?? null : null
   const topRanked = rank != null && rank <= 3
-  const featured = confident && score?.rank === 1
+  const featured = featuredProp ?? (confident && score?.rank === 1)
 
   return (
     <Link
@@ -42,8 +52,12 @@ export function ConsultantCard({ consultant, index = 0 }: { consultant: Consulta
         className={cn(
           'relative flex flex-col gap-[18px] overflow-hidden rounded-[var(--card-radius)] p-[var(--card-pad)]',
           'border backdrop-blur-[var(--blur-panel)] transition-[box-shadow,border-color] duration-[var(--dur-base)] ease-[cubic-bezier(0.22,0.61,0.36,1)]',
+          // R4 AA: featured fill uses --surface-card (.035), NOT --surface-card-raised (.06).
+          // The lighter .06 frosting let the hero's bright radial centre (#1e4680) bleed through,
+          // dropping cream-muted to 4.38:1 (fail); .035 holds it at 4.66:1. Featured still reads
+          // featured via the gold border + --shadow-gold-glow + always-on accent bar.
           featured
-            ? 'border-[var(--gold-border)] bg-[var(--surface-card-raised)]'
+            ? 'border-[var(--gold-border)] bg-[var(--surface-card)]'
             : 'border-line bg-[var(--surface-card)] group-hover:border-[var(--gold-border-soft)] group-hover:shadow-[var(--shadow-raised)]',
         )}
       >

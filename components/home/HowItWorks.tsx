@@ -1,9 +1,14 @@
 'use client'
 
-// HowItWorks — three-step explainer. Subtle, reduced-motion-safe staggered fade-in.
+// HowItWorks — REVISION R4: the champagne "Como Funciona" band (#E/#F). The ONLY in-page
+// champagne surface (the footer is the other). Navy `.rft-step-card`s float on the warm sand,
+// each with a gold `.rft-step-coin` (01/02/03). Reduced-motion-safe staggered entrance (#37);
+// the gold accent-bar hover lives in the base.css `.rft-step-card` rule.
 import { motion, useReducedMotion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Eyebrow } from '@/components/ui'
+
+const EASE = [0.22, 0.61, 0.36, 1] as const
 
 export function HowItWorks() {
   const t = useTranslations('home.howItWorks')
@@ -16,27 +21,29 @@ export function HowItWorks() {
   ]
 
   return (
-    // Ivory light break (Step 5) — varies the page rhythm against the navy stage.
-    <section className="rft-ivory">
-      <div className="container-page py-14 md:py-20">
-        <Eyebrow tone="light">{t('eyebrow')}</Eyebrow>
-        <h2 className="mt-3 max-w-2xl font-display text-3xl text-[var(--text-ink-strong)]">{t('title')}</h2>
+    <section className="rft-champagne">
+      <div className="container-page py-20 md:py-24">
+        <div className="flex max-w-2xl flex-col gap-3.5">
+          <Eyebrow tone="champagne">{t('eyebrow')}</Eyebrow>
+          <h2 className="text-section text-[var(--champagne-ink)]">{t('title')}</h2>
+          <p className="text-[var(--champagne-ink-muted)]">{t('lede')}</p>
+        </div>
 
-        <ol className="mt-10 grid gap-6 md:grid-cols-3">
+        <ol className="mt-12 grid gap-6 md:grid-cols-3">
           {steps.map((step, i) => (
             <motion.li
               key={step.n}
-              initial={reduce ? false : { opacity: 0, y: 10 }}
+              initial={reduce ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.25, ease: 'easeOut', delay: reduce ? 0 : i * 0.08 }}
-              className="rounded-[var(--card-radius)] border border-[var(--ivory-200)] bg-[var(--ivory-card)] p-6 shadow-[var(--shadow-ivory)]"
+              transition={{ duration: 0.42, ease: EASE, delay: reduce ? 0 : i * 0.08 }}
+              className="rft-step-card flex flex-col gap-3.5"
             >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gold font-display font-semibold text-ink">
-                {step.n}
+              <span className="rft-step-coin">
+                <span>{String(step.n).padStart(2, '0')}</span>
               </span>
-              <h3 className="mt-4 font-display text-xl text-[var(--text-ink-strong)]">{step.title}</h3>
-              <p className="mt-2 text-sm text-[var(--text-ink-muted)]">{step.desc}</p>
+              <h3 className="text-[21px]">{step.title}</h3>
+              <p className="text-[14.5px] leading-relaxed">{step.desc}</p>
             </motion.li>
           ))}
         </ol>

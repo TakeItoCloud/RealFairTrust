@@ -6,6 +6,80 @@
 
 ---
 
+## 2026-06-24 · Design REVISION R4 — Home rebuilt to the marketing kit + champagne wired + AA at render
+
+**Done** (branch `chore/design-revision-home` off `chore/design-revision-primitives`). The biggest
+visual change of the revision. `main` + `develop` untouched/frozen at `04b6a1b`. Green + smoke +
+AA recorded.
+
+**Home rebuilt to the kit (`app/[locale]/page.tsx` + `components/home/*`), section-by-section (#F):**
+- **Hero (navy):** eyebrow + h1 `--fs-display-1`(76) with "mérito" in the gold-title gradient (via
+  `t.rich` `<gold>`) + lead; an inline **search-pill** (`Card variant="raised"`, pill radius, pad 8:
+  city `Select ["Lisboa","Porto"]` + search `Input` + primary **"Procurar"** → `/consultores?cidade&q`)
+  + a 3-item lucide trust row (verified / refresh / map-pin, muted). Right = a **featured
+  ConsultantCard** (new `featured` prop) + a **floating stat** Card ("+6 lugares / nos últimos 90
+  dias", green trending icon) + a soft gold radial glow.
+- **HowItWorks (CHAMPAGNE — first champagne render):** `section.rft-champagne`, eyebrow
+  `tone="champagne"`, h2 `--fs-section`(42) `--champagne-ink`, lede `--champagne-ink-muted`, then 3
+  `.rft-step-card` (navy cards on champagne) with gold `.rft-step-coin` 01/02/03, reduced-motion-safe
+  staggered entrance.
+- **Leaderboard (navy):** eyebrow + h2(42) + "Ver ranking completo →" (gold-300) → `/consultores`;
+  3 ConsultantCards.
+- **FeaturedProperties (navy):** eyebrow + h2 + "Ver todos os imóveis →" → `/comprar` (existing
+  route); 3 PropertyCards.
+- **AgentCTA (navy):** gold-bordered panel (`--gold-border` + `--shadow-gold-glow` + `--radius-xl`
+  + navy gradient + radial glow), eyebrow + h2 `--fs-display-2`(56) "Concorra por <gold>mérito</gold>…"
+  + body + primary "Candidatar-me como consultor" + secondary "Ver a metodologia".
+- **Footer → CHAMPAGNE** (`components/Footer.tsx`, shared layout): `--champagne` bg, champagne-border
+  hairlines, champagne-ink-muted text, column headings champagne-eyebrow, **Logo `onIvory`** ink
+  switch, kit bottom row (© · slogan / "Feito em Portugal 🇵🇹"). Kept **real-route** link columns
+  (no invented routes); dropped the now-redundant footer LanguageSwitcher (it lives in the Header).
+
+**Removed (not in the kit):** the Home **"Clients/consultants split" (ivory)** + **"Trust band"**
+sections. Orphaned **i18n keys deleted** (pt+en): `home.split.*`, `home.trust.*`, `home.join.*`,
+`home.topConsultants.*`, `home.hero.posterAlt`. **Added i18n** (pt+en, PT-primary, full parity):
+`home.hero.*` (eyebrow/headline/subtitle/cityLabel/searchPlaceholder/searchButton/trust×3/statValue/
+statCaption), `home.howItWorks.*` (eyebrow/title/lede/step1–3), `home.leaderboard.*`,
+`home.featured.*` (retitled), `home.agentCta.*`, `footer.slogan`, `footer.madeIn`. **Component
+changes:** ConsultantCard `featured?` override prop; Eyebrow `tone="champagne"`. No hardcoded
+user-facing strings.
+
+**AA AT RENDER (fail-closed, computed vs the REAL composited bg; ≥4.5 small / ≥3 large-or-icon):**
+
+| Surface @ real bg | ratio | verdict |
+|---|---|---|
+| **Champagne band** champ-eyebrow #7c5a12 / #ece2cb | 4.90 | ✅ |
+| champ-ink #2b2415 / champ · champ-ink-muted #5c5340 / champ (lede/body) | 11.94 · 5.89 | ✅ |
+| **Step-card** (navy on champagne) h3 #f5f1ea / #0c1d39 · body .78 | 14.92 · 9.44 | ✅ |
+| **Footer** Logo Real #111c30 · Trust #1c2942 / champ | 13.23 · 11.28 | ✅ |
+| footer headings #7c5a12 · links/© #5c5340 / champ | 4.90 · 5.89 | ✅ |
+| **Hero featured card** name #f5f1ea / raised@centre | 7.07 | ✅ |
+| hero featured **cream-muted .70** (scoreLabel/meta/stats) — raised@centre | 4.38 → **4.66** | ✅ **fixed** |
+| **Floating stat** caption .70 @ centre | 4.38 → **4.66** | ✅ **fixed** |
+| Leaderboard card cream-muted .70 / default@centre | 4.66 | ✅ |
+| floating-stat green icon #3fb984 / surface@centre | ~3.2 | ✅ (icon ≥3) |
+| **Search-pill** input cream / inset · placeholder .70 / inset | 11.74 · 6.56 | ✅ |
+| **AgentCTA panel** eyebrow #efb52a · h2 cream · body .78 | 7.39 · 12.18 · 8.00 | ✅ |
+
+> **Fix (local, fail-closed; muted NOT lowered globally):** the **raised** frosting (`white .06`)
+> let the hero's bright radial centre `#1e4680` bleed through, dropping cream-muted to **4.38** on
+> the featured ConsultantCard + the floating stat. Both switched to the **default `.035`** fill
+> (featured keeps its gold border + `--shadow-gold-glow` + accent bar; floating stat keeps a deep
+> shadow) → **4.66** (matches the R2 default-card measurement). To be ratified in R5.
+
+**Motion (#37):** hero featured card self-entrance + floating-stat `Reveal`; section headers
+`Reveal`; leaderboard/properties grids keep staggered entrance + hover; `.rft-step-card` uses its
+base.css gold accent-bar hover; all reduced-motion-safe.
+
+**Green gate:** `tsc` ✅ · `eslint` ✅ · `pnpm build` ✅ (all 0). **Smoke** (`next start`): `/`,
+`/en`, `/consultores`, `/consultores/ana-silva` → **200**; PT+EN render the full kit composition
+(search-pill hero + featured card + floating stat + champagne HowItWorks step-cards + leaderboard +
+properties + agent-CTA + champagne footer); champagne confirmed **only** on HowItWorks + footer
+(no leak to /consultores); dark-first hero intact; dropped sections absent.
+
+**Next (R5):** global AA consolidation sweep (all pages on the new bg/gold/type) + ratify the
+revision supersessions + AA/a11y exceptions as **DECISIONS #57+**; refresh PROJECT-STATE §4/§7/§12.
+
 ## 2026-06-24 · Design REVISION R3 — primitives + cards value refresh (propagation verify + 2 spec aligns)
 
 **Done** (branch `chore/design-revision-primitives` off `chore/design-revision-tokens`;
