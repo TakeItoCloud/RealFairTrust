@@ -13,8 +13,12 @@ export interface SelectOption {
   label: string
 }
 
+/** Options accept either a plain string (value === label) or an explicit {value,label}
+ *  (handoff §6.5: `(string | {value,label})[]` — e.g. the R4 hero pill passes ["Lisboa","Porto"]). */
+export type SelectOptions = (string | SelectOption)[]
+
 interface SelectProps {
-  options: SelectOption[]
+  options: SelectOptions
   value?: string
   defaultValue?: string
   onValueChange?: (value: string) => void
@@ -84,7 +88,9 @@ export function Select({
           )}
         >
           <RadixSelect.Viewport className="p-1">
-            {options.map((opt) => (
+            {options.map((raw) => {
+              const opt: SelectOption = typeof raw === 'string' ? { value: raw, label: raw } : raw
+              return (
               <RadixSelect.Item
                 key={opt.value}
                 value={opt.value}
@@ -100,7 +106,8 @@ export function Select({
                 </RadixSelect.ItemIndicator>
                 <RadixSelect.ItemText>{opt.label}</RadixSelect.ItemText>
               </RadixSelect.Item>
-            ))}
+              )
+            })}
           </RadixSelect.Viewport>
         </RadixSelect.Content>
       </RadixSelect.Portal>

@@ -6,6 +6,56 @@
 
 ---
 
+## 2026-06-24 · Design REVISION R3 — primitives + cards value refresh (propagation verify + 2 spec aligns)
+
+**Done** (branch `chore/design-revision-primitives` off `chore/design-revision-tokens`;
+value-refresh, **not a rebuild**). `main` + `develop` untouched/frozen at `04b6a1b`. Green + smoke.
+
+**Propagation audit (no edits needed — R2 tokens flow correctly):** grep found **zero** hard-coded
+old gradients (180°/160°), old gold hexes, or old type sizes (72/40) in any component. Every gold
+surface reads a canonical token, so all updated automatically:
+- Merit score 38px + price 30px + Wordmark "Fair" + RankBadge coin (1–3) + VerifiedBadge seal +
+  StatBlock `gold` → all via `.gold-title` → new **90° title gradient**.
+- Avatar ring → `var(--gradient-gold-title)` (90°); Card featured hairline → `var(--gradient-gold-hairline)`;
+  ConsultantCard accent-bar → `var(--accent-bar)`.
+- Small gold text (eyebrow, card "Ver perfil/detalhe →", `suggestForMe`, Badge, demo-pill uses
+  gold-300) → `text-gold` = `--gold-500` **#efb52a** (R2 AA). `--text-muted` .70, 76/42 type, the
+  new radial — all live. PropertyCard energy cert = `text-verified` green (#52) intact.
+
+**Two genuine spec divergences fixed (handoff §6 differs from what we shipped):**
+1. **Button → PILL** (`components/ui/Button.tsx`): base radius `rounded-md` → `rounded-full`.
+   Handoff §6.1/§2 + reference `Button.jsx` use `--radius-pill` for all variants; we'd shipped
+   rounded-md. Applies to all variants (matches reference). Kept the a11y tap targets
+   (min-h-11/13) — a deliberate deviation, not reverted. `.btn-gold` already carries the new 90°
+   gradient + sheen; secondary/ghost/onLight unchanged (functional `onIvory` equiv = our `onLight`).
+2. **Select accepts plain strings** (`components/ui/Select.tsx`): `options` type
+   `SelectOption[]` → `(string | SelectOption)[]` with string→{value:s,label:s} normalisation
+   (handoff §6.5 `(string|{value,label})[]`; R4 hero pill passes `["Lisboa","Porto"]`). RHF/Zod path
+   untouched.
+
+**Verified API for R4 (no change needed):** Card `raised` + custom `padding` (number|string) +
+custom radius via inline `style={{borderRadius}}` (kit hero search-pill / floating stat use these);
+StatBlock `sm`(18)/`md`(30) + `gold`/`delta`/`align`; RankBadge gold-glow coin; Badge/Tag; Input/
+Select inset wells + gold focus; Avatar gold-gradient ring; Wordmark onIvory ink switch (R2 AA:
+Real #111c30 13.23:1, Trust #1c2942 ~10:1 on champagne — ours uses the darker text-ink, AA-safe).
+
+**AA spot-check:** no NEW small-gold/text introduced by R3 (Button pill + Select string options are
+structural, not colour). All colour values inherit R2's recorded ratios (muted 4.98/4.66, gold
+#efb52a 5.04, etc.). Nothing sub-AA. (Deferred per instructions: muted-on-frosted-card re-measure
+vs composited Home backgrounds = R4.)
+
+**Green gate:** `tsc` ✅ · `eslint` ✅ · `pnpm build` ✅ (all 0). **Smoke:** `next start` —
+`/`, `/consultores`, `/consultores/ana-silva`, `/en` → **200**; compiled CSS serves `rounded-full`
+(pill), the 90° gold gradient, `--fs-section:42px`, `--gold-500:#efb52a`. Dev showcases
+(`flags.devShowcase` hard-off in production → 404 under `next start`, **by design / pre-existing**,
+not an R3 regression) verified under `pnpm dev`: `/dev/primitives` + `/dev/components` → **200**,
+rendering pill buttons, new gold-title, and both cards ("Ver perfil/detalhe", "Top deste mês").
+
+**Next (R4):** rebuild Home to the marketing kit (search-pill hero + featured AgentCard + floating
+stat; champagne HowItWorks step-cards; navy Leaderboard/Featured; navy AgentCTA `--fs-display-2`;
+champagne footer) + wire `.rft-champagne`/`SectionWrapper` champagne tone + champagne-bg AA at first
+render. Then R5 (global AA consolidation + ratify DECISIONS #57+).
+
 ## 2026-06-24 · Design REVISION R2 — tokens + gold + type + champagne tokens + navy-bg AA fix
 
 **Done** (branch `chore/design-revision-tokens` off `chore/design-revision-plan`; **tokens/helpers

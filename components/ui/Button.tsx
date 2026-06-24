@@ -60,7 +60,8 @@ export function Button({
       disabled={isDisabled}
       aria-busy={loading || undefined}
       className={cn(
-        'relative inline-flex items-center justify-center rounded-md font-medium',
+        // R3 (handoff §6.1/§2): buttons are PILLs (--radius-pill), was rounded-md. All variants.
+        'relative inline-flex items-center justify-center rounded-full font-medium',
         'transition-[background-color,color,transform] duration-150',
         'motion-safe:active:scale-[0.98]',
         'disabled:pointer-events-none disabled:opacity-50',
