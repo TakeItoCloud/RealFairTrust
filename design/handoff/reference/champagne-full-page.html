@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RealFairTrust — Champagne C</title>
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  html, body { margin: 0; }
+  body { background: var(--bg-navy-radial); background-attachment: fixed; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 44px; }
+  .gold { background: var(--gradient-gold-title); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .eyebrow { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #e3a812; }
+  .lead { font-family: var(--font-body); font-size: 19px; line-height: 1.6; color: var(--text-body); margin: 0; max-width: 540px; }
+  .btn { font-family: var(--font-body); font-weight: 600; font-size: 15px; color: #2a1d04; padding: 15px 28px; border-radius: 999px; border: 1px solid rgba(140,92,18,0.4); background: var(--gradient-gold-button); box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 12px 34px -12px rgba(227,168,18,0.6); cursor: pointer; }
+  .btn.ghost { background: transparent; color: inherit; box-shadow: none; }
+  .card { background: var(--surface-card); border: 1px solid var(--hairline); border-radius: 18px; box-shadow: var(--shadow-card); backdrop-filter: blur(18px); }
+  .nav { position: sticky; top: 0; z-index: 20; background: rgba(6,15,34,0.72); backdrop-filter: blur(14px); border-bottom: 1px solid var(--hairline); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; padding: 16px 44px; }
+  .word { font-family: var(--font-display); font-weight: 600; font-size: 22px; letter-spacing: -0.01em; color: #f5f1ea; }
+  .word .f { background: var(--gradient-gold-title); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .word .t { color: #8a93a3; }
+  .pad { padding: 92px 0; }
+  .hero h1 { font-family: var(--font-display); font-weight: 600; font-size: 70px; line-height: 1.03; letter-spacing: -0.015em; color: var(--text-strong); margin: 0; }
+  .champagne { background: var(--champagne); }
+  .champagne .eyebrow { color: var(--champagne-eyebrow); }
+  .champagne h2 { font-family: var(--font-display); font-weight: 600; font-size: 42px; line-height: 1.08; letter-spacing: -0.014em; color: var(--champagne-ink); margin: 0; }
+  .champagne .lede { font-family: var(--font-body); font-size: 16px; line-height: 1.65; color: var(--champagne-ink-muted); margin: 0; max-width: 540px; }
+  .navsec h2 { font-family: var(--font-display); font-weight: 600; font-size: 42px; line-height: 1.08; letter-spacing: -0.014em; color: var(--text-strong); margin: 0; }
+  .agent { display: flex; align-items: center; gap: 14px; padding: 20px; }
+  .av { width: 50px; height: 50px; border-radius: 999px; background: linear-gradient(160deg,#16335c,#0a1a34); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 600; color: #ffd86e; box-shadow: var(--shadow-gold-glow); border: 2px solid transparent; background-image: linear-gradient(160deg,#16335c,#0a1a34), var(--gradient-gold-title); background-origin: border-box; background-clip: padding-box, border-box; }
+  .score { margin-left: auto; font-family: var(--font-display); font-weight: 600; font-size: 30px; line-height: 1; }
+  .badge-label { position: fixed; top: 12px; left: 12px; z-index: 99; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #2a1d04; background: var(--gradient-gold-button); padding: 6px 12px; border-radius: 999px; box-shadow: 0 6px 18px -8px rgba(0,0,0,0.5); }
+
+  .step { position: relative; background: var(--surface-card-solid); border: 1px solid rgba(255,255,255,0.10); border-radius: 18px; padding: 26px 24px; overflow: hidden;
+    box-shadow: 0 22px 50px -26px rgba(2,8,18,0.7); transition: transform .26s var(--ease-out), box-shadow .26s var(--ease-out), border-color .26s var(--ease-out); }
+  .step::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-gold-title); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease-out); }
+  .step:hover { transform: translateY(-5px); border-color: var(--gold-border-soft); box-shadow: 0 30px 64px -24px rgba(2,8,18,0.8); }
+  .step:hover::before { transform: scaleX(1); }
+  .step .num { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 13px; font-family: var(--font-display); font-weight: 600; font-size: 17px; color: transparent; background: rgba(2,8,18,0.5); border: 1px solid var(--gold-border); box-shadow: var(--shadow-gold-glow); }
+  .step .num span { background: var(--gradient-gold-title); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .step h3 { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.18; letter-spacing: -0.01em; color: var(--text-strong); margin: 14px 0 6px; }
+  .step p { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: var(--text-body); margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="wrap">
+    <span class="word">Real<span class="f">Fair</span><span class="t">Trust</span></span>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <a href="#" onclick="return false" style="font-family:var(--font-body); font-size:14px; color:var(--text-muted);">Entrar</a>
+      <button class="btn" style="padding:11px 20px; font-size:13.5px;">Encontrar consultor</button>
+    </div>
+  </div>
+</div>
+
+<section class="hero pad">
+  <div class="wrap" style="display:flex; flex-direction:column; gap:24px; max-width:760px;">
+    <span class="eyebrow">Performance you can see</span>
+    <h1>Os melhores consultores, escolhidos por <span class="gold">mérito</span>.</h1>
+    <p class="lead">Desempenho medido com justiça, atualizado todos os meses e mostrado abertamente. Lisboa &amp; Porto.</p>
+    <div style="display:flex; align-items:center; gap:16px; margin-top:4px;">
+      <button class="btn">Encontrar consultor</button>
+      <div class="card" style="display:flex; align-items:center; gap:12px; padding:14px 18px;">
+        <span style="font-family:var(--font-display); font-weight:600; font-size:30px; line-height:1;" class="gold">94</span>
+        <span style="font-family:var(--font-body); font-size:12px; color:var(--text-muted); line-height:1.4;">Mérito · 90d<br>Sofia Marques</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="champagne pad">
+  <div class="wrap">
+    <div style="display:flex; flex-direction:column; gap:14px; max-width:620px; margin-bottom:44px;">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Confiança que se ganha,<br>não que se afirma.</h2>
+      <p class="lede">Um motor de avaliação periódico e transparente. Os consultores são classificados pela qualidade por oportunidade — não pelo volume.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px;">
+      <div class="step"><div class="num"><span>01</span></div><h3>Mérito sobre volume</h3><p>Satisfação, taxa de fecho e resposta — não o número de negócios.</p></div>
+      <div class="step"><div class="num"><span>02</span></div><h3>Uma corrida que reinicia</h3><p>Janela móvel de 90 dias, recalculada todos os meses.</p></div>
+      <div class="step"><div class="num"><span>03</span></div><h3>Justo para quem começa</h3><p>Um quadro Rising Talent dá visibilidade a quem chega.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="navsec pad">
+  <div class="wrap">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:32px;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <span class="eyebrow">Top deste mês</span>
+        <h2>Consultores em destaque</h2>
+      </div>
+      <a href="#" onclick="return false" style="font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--gold-300);">Ver ranking completo →</a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+      <div class="card agent"><span class="av">SM</span><div><div style="font-family:var(--font-display); font-weight:600; font-size:17px; color:var(--text-strong);">Sofia Marques</div><div style="font-family:var(--font-body); font-size:12.5px; color:var(--text-muted);">Lisboa · Príncipe Real</div></div><span class="score gold">94</span></div>
+      <div class="card agent"><span class="av">MC</span><div><div style="font-family:var(--font-display); font-weight:600; font-size:17px; color:var(--text-strong);">Miguel Costa</div><div style="font-family:var(--font-body); font-size:12.5px; color:var(--text-muted);">Porto · Foz do Douro</div></div><span class="score gold">91</span></div>
+      <div class="card agent"><span class="av">IC</span><div><div style="font-family:var(--font-display); font-weight:600; font-size:17px; color:var(--text-strong);">Inês Carvalho</div><div style="font-family:var(--font-body); font-size:12.5px; color:var(--text-muted);">Lisboa · Chiado</div></div><span class="score gold">89</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="champagne pad">
+  <div class="wrap" style="display:flex; flex-direction:column; gap:20px; max-width:620px;">
+    <span class="eyebrow">Para consultores</span>
+    <h2>Concorra por mérito,<br>não por antiguidade.</h2>
+    <p class="lede">Visibilidade ganha pelo desempenho, leads de clientes reais e ferramentas para crescer. Split progressivo que premeia a qualidade.</p>
+    <div style="display:flex; gap:14px; margin-top:6px;">
+      <button class="btn">Candidatar-me como consultor</button>
+      <button class="btn ghost" style="color:#2b2415; border:1px solid rgba(43,36,21,0.25);">Ver a metodologia</button>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

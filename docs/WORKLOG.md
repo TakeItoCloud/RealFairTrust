@@ -6,6 +6,38 @@
 
 ---
 
+## 2026-06-24 · Design REVISION — reconciliation plan only (new export adopted into design/handoff)
+
+**Done** (PLAN + reference-bundle swap only — **no app code/tokens/components changed**).
+
+- **Verified the new bundle** at `design/RealFairTrust_Design_System.zip` is the NEW revision via
+  the required 3-point fingerprint: `tokens/colors.css` has `--champagne:`; `ui_kits/marketing/
+  Home.jsx` exists; `champagne-full-page.html` exists. (Old bundle saved by the user as
+  `design/…_System.old`, left untracked.)
+- **Replaced `design/handoff/`** with the new reference set — normalised the zip's inner
+  `design_handoff_realfairtrust/` into `design/handoff/`, stripped trailing `.txt` (60 files).
+  `design/handoff/**` stays eslint-ignored (spec only, never shipped); prior bundle remains in git
+  history. Committed the updated tracked `.zip` alongside.
+- **Read the new hand-off fully** (README authoritative; `tokens/*.css`; component specs;
+  `ui_kits/marketing/` Home/Nav/Footer/data) and diffed it against `app/design-tokens.css`,
+  `app/globals.css`, the font setup, and the current Home composition.
+- **Wrote `docs/DESIGN-REVISION-PLAN.md`** (new doc; the completed `DESIGN-APPLY-PLAN.md` is left
+  intact): token-by-token diff (background C, both 90° gold gradients D, champagne family E, type
+  scale B + name mapping, with the already-matching groups listed); a **computed** fail-closed AA
+  re-measure plan (worst case = the brighter radial centre `#1e4680`: `--text-muted` .58 → **3.93**
+  fail, navy eyebrow `#e3a812` → **4.40** borderline, champagne-eyebrow `#a9791a` → **3.00** fail;
+  ivory-label `#8C5E12` dips to 4.38 on champagne, verified-ink `#157048` holds at 4.74); the
+  Home-composition gap (F); the R2→R5 staging; confirmation of decisions (A)–(H); and a supersession
+  log for ratification as DECISIONS #57+ in R5.
+
+**Key recorded contradictions** (README wins per A, except the explicit overrides): type scale —
+kit 76/42/56 **wins over** README §3 72/40 (decision B, supersedes #53(d)); button-hover — §1.2
+**token** 90° wins over README §2 `.btn-primary` 160° (decision D).
+
+**Next:** planning chat authors the R2 prompt from this gap analysis → execute **R2** (tokens +
+gold + type + champagne + navy AA) → R3 (primitives/cards) → R4 (Home rebuild + champagne AA) →
+R5 (global AA + decisions/docs). No PR for this plan session.
+
 ## 2026-06-23 · Phase 4.3 — Promote to `main` (Vercel production branch) + harden build
 
 **Done** (process/config only — no app-code or design changes).

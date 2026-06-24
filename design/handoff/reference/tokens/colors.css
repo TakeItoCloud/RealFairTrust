@@ -12,8 +12,8 @@
   --navy-600: #19365f; /* derived — borders / raised panels */
   --navy-500: #21436f; /* derived — hairlines on navy */
 
-  /* The signature page background. Fixed — do not alter. */
-  --bg-navy-radial: radial-gradient(ellipse 90% 70% at 50% 30%, #122a4f, #0a1a34, #060f22, #020812);
+  /* The signature page background. Brighter navy, centred 4-sides radial glow. */
+  --bg-navy-radial: radial-gradient(ellipse 89% 81% at 50% 48%, #1e4680 0%, #173a63 33%, #0e2545 59%, #081830 81%, #040e20 100%);
 
   /* Card / surface fills sitting on the navy stage */
   --surface-card: rgba(255, 255, 255, 0.035);
@@ -29,7 +29,7 @@
   --gold-500: #e3a812; /* mid */
   --gold-600: #d19e1d; /* deep base */
   --gold-700: #b8862a; /* shadow */
-  --gradient-gold-title: linear-gradient(180deg, #ffe6a0 0%, #ffd86e 28%, #e3a812 100%); /* @kind color */
+  --gradient-gold-title: linear-gradient(90deg, #d8950f 0%, #e3a812 16%, #ffe6a0 50%, #e3a812 84%, #d8950f 100%); /* @kind color */
   --gradient-gold-hairline: linear-gradient(90deg, rgba(227,168,18,0) 0%, rgba(227,168,18,0.55) 50%, rgba(227,168,18,0) 100%); /* @kind color */
 
   /* --- Gold · CALM (buttons, quiet accents) -------------------------------- */
@@ -37,8 +37,8 @@
   --gold-calm: #d8b34f;
   --gold-calm-soft: #e6c163;
   --gold-calm-deep: #c39327;
-  --gradient-gold-button: linear-gradient(160deg, #ffe79e 0%, #f4c95c 46%, #dca233 100%); /* @kind color */
-  --gradient-gold-button-hover: linear-gradient(160deg, #fff0b6 0%, #fad36c 46%, #e9ae3b 100%); /* @kind color */
+  --gradient-gold-button: linear-gradient(90deg, #c8901f 0%, #e9bb52 28%, #ffe79e 50%, #e9bb52 72%, #c8901f 100%); /* @kind color */
+  --gradient-gold-button-hover: linear-gradient(90deg, #d49d28 0%, #f3c95e 28%, #fff0b6 50%, #f3c95e 72%, #d49d28 100%); /* @kind color */
   --gold-tint: rgba(201, 162, 74, 0.12); /* faint gold wash for chips/hover */
   --gold-border: rgba(227, 168, 18, 0.38);
   --gold-border-soft: rgba(201, 162, 74, 0.22);
@@ -54,6 +54,15 @@
   --ivory-100: #f5efe3;
   --ivory-200: #ece3d2; /* borders / dividers on ivory */
   --ivory-card: #ffffff;
+
+  /* --- Champagne (warm sand break — the primary section rhythm surface) ----- */
+  /* Sits between the navy bands to give the page warmth + rhythm; ties to gold. */
+  --champagne: #ece2cb;          /* section background */
+  --champagne-card: #fbf7ee;     /* lighter card on champagne */
+  --champagne-border: #e3d7bd;   /* hairline / card border on champagne */
+  --champagne-ink: #2b2415;      /* heading ink */
+  --champagne-ink-muted: #5c5340;/* body text */
+  --champagne-eyebrow: #a9791a;  /* eyebrow / accent gold on champagne */
 
   /* --- Text -------------------------------------------------------------- */
   /* Wordmark — "Real" cream, "Fair" gold, "Trust" muted slate. */

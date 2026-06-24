@@ -39,8 +39,8 @@ assets.
 --navy-600: #19365f;   /* borders / raised panels */
 --navy-500: #21436f;   /* hairlines on navy */
 
-/* The signature page background — applied to <body>, fixed on scroll */
---bg-navy-radial: radial-gradient(ellipse 90% 70% at 50% 30%, #122a4f, #0a1a34, #060f22, #020812);
+/* The signature page background — brighter navy, centred 4-sides radial glow; on <body>, fixed */
+--bg-navy-radial: radial-gradient(ellipse 89% 81% at 50% 48%, #1e4680 0%, #173a63 33%, #0e2545 59%, #081830 81%, #040e20 100%);
 
 /* Surfaces that float on the stage */
 --surface-card:        rgba(255,255,255,0.035);
@@ -51,16 +51,17 @@ assets.
 
 ### 1.2 Color — gold (the signal color, two roles)
 ```css
-/* BRIGHT — titles, logo, prices, merit numerals. Smooth VERTICAL gradient. */
+/* BRIGHT — titles, logo, prices, merit numerals. Symmetric SIDES→CENTRE gradient:
+   deep gold at the left/right edges, bright #ffe6a0 core. */
 --gold-100:#ffe9b3; --gold-200:#ffe089; --gold-300:#ffd86e;  /* peak highlight */
 --gold-500:#e3a812; /* mid */  --gold-600:#d19e1d; /* deep base */  --gold-700:#b8862a;
---gradient-gold-title: linear-gradient(180deg, #ffe6a0 0%, #ffd86e 28%, #e3a812 100%);
+--gradient-gold-title: linear-gradient(90deg, #d8950f 0%, #e3a812 16%, #ffe6a0 50%, #e3a812 84%, #d8950f 100%);
 --gradient-gold-hairline: linear-gradient(90deg, rgba(227,168,18,0) 0%, rgba(227,168,18,0.55) 50%, rgba(227,168,18,0) 100%);
 
-/* CALM / LUXE — buttons. Brighter metallic gradient, kept warmer+deeper than the title. */
+/* CALM / LUXE — buttons. Same sides→centre metallic ramp, warmer+deeper so dark text stays legible. */
 --gold-calm:#d8b34f; --gold-calm-soft:#e6c163; --gold-calm-deep:#c39327;
---gradient-gold-button:       linear-gradient(160deg, #ffe79e 0%, #f4c95c 46%, #dca233 100%);
---gradient-gold-button-hover: linear-gradient(160deg, #fff0b6 0%, #fad36c 46%, #e9ae3b 100%);
+--gradient-gold-button:       linear-gradient(90deg, #c8901f 0%, #e9bb52 28%, #ffe79e 50%, #e9bb52 72%, #c8901f 100%);
+--gradient-gold-button-hover: linear-gradient(90deg, #d49d28 0%, #f3c95e 28%, #fff0b6 50%, #f3c95e 72%, #d49d28 100%);
 --gold-tint: rgba(201,162,74,0.12);
 --gold-border: rgba(227,168,18,0.38);
 --gold-border-soft: rgba(201,162,74,0.22);
@@ -130,19 +131,19 @@ assets.
 
 | Element | Treatment | Exact CSS |
 |---|---|---|
-| **Titles / logo / prices / merit numerals** | smooth **vertical** linear gradient, clipped to text | `background: linear-gradient(180deg,#ffe6a0 0%,#ffd86e 28%,#e3a812 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;` |
+| **Titles / logo / prices / merit numerals** | symmetric **sides→centre** horizontal gradient (deep edges, bright core), clipped to text | `background: linear-gradient(90deg,#d8950f 0%,#e3a812 16%,#ffe6a0 50%,#e3a812 84%,#d8950f 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;` |
 | **Eyebrows / labels (on navy)** | **flat** solid gold | `color:#e3a812` |
 | **Eyebrows / labels (on ivory)** | **flat** deeper gold (for contrast) | `color:#d19e1d` |
-| **Buttons (primary)** | soft near-vertical 2–3 stop gradient + inset top-sheen, **dark text** | see below |
+| **Buttons (primary)** | **sides→centre** metallic gradient + inset top-sheen, **dark text** | see below |
 
 ```css
-/* Primary button — luxe gold */
+/* Primary button — luxe gold (sides→centre) */
 .btn-primary{
-  background: linear-gradient(160deg,#ffe79e 0%,#f4c95c 46%,#dca233 100%);
+  background: linear-gradient(90deg,#c8901f 0%,#e9bb52 28%,#ffe79e 50%,#e9bb52 72%,#c8901f 100%);
   color:#2a1d04;
-  border:1px solid rgba(140,92,18,0.35);
+  border:1px solid rgba(140,92,18,0.4);
   border-radius:999px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5),      /* polished sheen */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.55),      /* polished sheen */
               0 12px 34px -12px rgba(227,168,18,0.6);    /* warm glow */
 }
 .btn-primary:hover{ background: linear-gradient(160deg,#fff0b6 0%,#fad36c 46%,#e9ae3b 100%); }
@@ -327,8 +328,19 @@ reference/
   components/
     buttons/   brand/   badges/   forms/   surfaces/   discovery/
       <Name>.jsx.txt   <Name>.d.ts.txt   <Name>.prompt.md.txt   *.card.html.txt
+  ui_kits/marketing/               # the full marketing-site recreation (real screen composition)
+    index.html                     # interactive entry (Home/Discover/Profile/Properties)
+    Nav · Home · Discover · Profile · Properties · Footer · app · data · icons (.jsx.txt)
   card-redesign.html               # both card directions, default + hover states
   gold-system.html                 # the gold + type system applied on a sample page
+  champagne-full-page.html         # full page: navy sections + champagne breaks + navy step-cards
 ```
 Each component folder's `*.card.html.txt` shows the component mounted in its real states.
-Open `card-redesign.html` and `gold-system.html` in a browser to see the intended result.
+Open `card-redesign.html`, `gold-system.html` and `champagne-full-page.html` in a browser to
+see the intended result.
+
+**Champagne usage rule:** the champagne break + navy step-cards are an *optional accent*, not
+part of the always-on identity. In the current site they appear **only on the Home page** — the
+"Como Funciona" section (with `.rft-step-card` cards) and the **footer background**. Navy +
+gold is the default everywhere else; do not put champagne on Discover / Properties / Profile
+unless explicitly asked.
