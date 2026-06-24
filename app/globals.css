@@ -112,6 +112,75 @@ body {
   color: var(--text-ink);
 }
 
+/* .rft-champagne + step-card (REVISION R2, decision E) — the warm-sand section break that
+   replaces the ivory rhythm (#56). TOKENS/HELPERS ONLY this step: not wired into any page until
+   R4 (Home "Como Funciona" + footer), so these classes are currently unused/inert. */
+.rft-champagne {
+  background: var(--champagne);
+  color: var(--champagne-ink-muted);
+}
+.rft-champagne h1,
+.rft-champagne h2,
+.rft-champagne h3,
+.rft-champagne h4 { color: var(--champagne-ink); }
+
+/* Step card — navy card floating on the warm surface, gold coin + gold accent-bar on hover. */
+.rft-step-card {
+  position: relative;
+  background: var(--surface-card-solid);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 26px 24px;
+  overflow: hidden;
+  box-shadow: 0 22px 50px -26px rgba(2, 8, 18, 0.7);
+  transition: transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
+}
+.rft-step-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--gradient-gold-title);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.rft-step-card:hover {
+  transform: translateY(var(--lift-card));
+  border-color: var(--gold-border-soft);
+  box-shadow: 0 30px 64px -24px rgba(2, 8, 18, 0.8);
+}
+.rft-step-card:hover::before { transform: scaleX(1); }
+.rft-step-card .rft-step-coin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  font-family: var(--rft-font-display);
+  font-weight: 600;
+  font-size: 17px;
+  background: rgba(2, 8, 18, 0.5);
+  border: 1px solid var(--gold-border);
+  box-shadow: var(--shadow-gold-glow);
+}
+.rft-step-card .rft-step-coin > * {
+  background: var(--gradient-gold-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.rft-step-card h3 { color: var(--text-strong); }
+.rft-step-card p { color: var(--text-body); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rft-step-card,
+  .rft-step-card::before { transition: none; }
+}
+
 /* Primary gold button (Decision #45) — gradient fill + dark text + inset/drop shadow. */
 .btn-gold {
   background: var(--rft-gold-button);

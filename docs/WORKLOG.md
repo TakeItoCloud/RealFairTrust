@@ -6,6 +6,63 @@
 
 ---
 
+## 2026-06-24 · Design REVISION R2 — tokens + gold + type + champagne tokens + navy-bg AA fix
+
+**Done** (branch `chore/design-revision-tokens` off `chore/design-revision-plan`; **tokens/helpers
+only** — no primitive/card refactor, no Home wiring, no DECISIONS entries yet). `main` + `develop`
+**untouched/frozen at `04b6a1b`**. Green + AA-recorded; no PR.
+
+**Token changes** (`app/design-tokens.css`; helpers in `app/globals.css`; alias-don't-migrate #50):
+- **Background (C):** `--bg-navy-radial` → `radial-gradient(ellipse 89% 81% at 50% 48%, #1e4680,
+  #173a63 33%, #0e2545 59%, #081830 81%, #040e20)` (supersedes #45/#46). `--rft-bg-gradient` inherits.
+- **Gold (D):** `--gradient-gold-title` → symmetric 90° `#d8950f…#e3a812 16%…#ffe6a0 50%…#d8950f`;
+  `--gradient-gold-button` / `-hover` → 90° (`#c8901f…#ffe79e…` / `#d49d28…#fff0b6…`). Hover resolved
+  to the README **§1.2 token** (90°), not §2's stale 160°. Gradient `#e3a812` stops are literals — kept.
+- **Type (B, supersedes #53(d) 72/40):** `--fs-hero` 72→**76**, `--fs-section` 40→**42** (in place);
+  added kit NAMES as aliases — `--fs-display-1`(=hero 76), `--fs-display-2`(56), `--fs-h1`(=section 42),
+  `--fs-h2`(32)/`-h3`(24)/`-h4`(20), `--font-display`/`-body`/`-ui`→ Fraunces/Inter, `--fw-300..700`.
+  Verified consumers: `text-hero`/`text-section`/h1·h2 + HomeHero `var(--fs-hero)` now resolve 76/42;
+  `--fs-display-2` (56) inert until R4 AgentCTA.
+- **Champagne (E, supersedes #56 ivory rhythm):** added `--champagne #ece2cb`, `-card #fbf7ee`,
+  `-border #e3d7bd`, `-ink #2b2415`, `-ink-muted #5c5340`, `-eyebrow #7c5a12` (AA-corrected) +
+  `.rft-champagne` / `.rft-step-card` / `.rft-step-coin` helpers. **Inert** — not wired to any page
+  until R4.
+
+**NAVY-BG AA FIX (fail-closed; measured vs the REAL rendered bg — worst case = bright centre
+`#1e4680`; computed, not estimated). No sub-4.5:1 small text ships.**
+
+| Surface (small text unless noted) | Old | Old ratio | New | New ratio | Verdict |
+|---|---|---|---|---|---|
+| `--text-muted` (card city / stat labels) | rgba cream **.58** | 3.93 @ centre | **.70** | **4.98** @ #1e4680 flat · **4.66** @ frosted card over centre (#264c84) | ✅ (raised to clear the frosted-card surface too, not just flat) |
+| Solid/eyebrow gold `--gold-500` (eyebrow + ALL small gold links/badges) | **#e3a812** | 4.40 @ centre | **#efb52a** | **5.04** @ #1e4680 | ✅ (one token fixes eyebrow + ~10 small gold-text consumers; gradient stops untouched) |
+| `--champagne-eyebrow` (used in R4) | #a9791a | 3.00 @ champagne | **#7c5a12** | **4.90** @ #ece2cb (5.90 @ card) | ✅ |
+| verified-ink `--rft-verified-ink` #157048 | — | — | unchanged | **4.74** @ champagne flat · 6.10 @ white | ✅ carry forward (#53) |
+| ivory-label #8C5E12 | — | — | unchanged | **5.32** @ ivory (its real surface) | ✅ kept; **N/A on champagne** (4.38) — champagne uses #7c5a12, so #8C5E12 has no champagne consumer (moot there) |
+| `--text-body` .78 | — | — | unchanged | **5.74** @ #1e4680 | ✅ |
+| `--text-faint` .40 | — | — | unchanged | 2.66 @ #1e4680 | ✅ decorative/large-only; no meaningful small text uses it |
+| `--text-strong` #f5f1ea | — | — | unchanged | **8.32** @ #1e4680 | ✅ |
+| champagne-ink #2b2415 / -ink-muted #5c5340 | — | — | unchanged | 11.94 / **5.89** @ #ece2cb | ✅ |
+| Logo onIvory Real #111c30 / Trust #5a6678 @ champagne | — | — | unchanged | 13.23 / **4.52** @ #ece2cb | ✅ |
+| gold link #ffd86e (gold-300) | — | — | unchanged | 6.82 @ #1e4680 | ✅ |
+
+> **Scoping note for R5:** the eyebrow AA fix was applied at `--gold-500` (the shared "solid
+> companion" gold = `text-gold`) rather than an eyebrow-only token, because `text-gold` is read by
+> the eyebrow **and** ~10 other small gold-text consumers (card "Ver perfil/detalhe →", `suggestForMe`,
+> Badge text, HomeHero kicker) — fixing only the eyebrow would have shipped those at 4.40 (violates
+> fail-closed). Gradient `#e3a812` stops are literals and remain. `--label-gold-on-navy` also set to
+> #efb52a (was unused); `--label-gold-on-champagne #7c5a12` added for R4.
+
+**Green gate:** `tsc --noEmit` ✅ · `eslint` ✅ · `pnpm build` ✅ (all 0). **Smoke** (`next start`):
+`/`, `/consultores`, `/consultores/ana-silva`, `/en` → **200**; `/en/consultores`,
+`/en/consultores/ana-silva` → **307 → localized `/en/consultants[/…]` → 200** (expected, #21).
+Compiled CSS confirmed serving the new radial, 90° gold (title+button), `--fs-hero:76px`/
+`--fs-section:42px`, `--gold-500:#efb52a`, `--text-muted:#f5f1eab3` (.70), the champagne tokens, and
+`.rft-step-card`.
+
+**Next (R3):** primitives + cards value refresh to the new gold/type (Button §6.1 etc.); then R4
+(Home rebuild to the kit + champagne wiring + champagne AA at first render); R5 (global AA
+consolidation + ratify DECISIONS #57+ from these recorded values).
+
 ## 2026-06-24 · Design REVISION — reconciliation plan only (new export adopted into design/handoff)
 
 **Done** (PLAN + reference-bundle swap only — **no app code/tokens/components changed**).
