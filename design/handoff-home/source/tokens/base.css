@@ -1,0 +1,175 @@
+/* ===========================================================================
+   RealFairTrust — Base layer
+   Resets, document defaults, and the few signature helpers that encode the
+   brand's most-repeated treatments (gold gradient text, eyebrow, stages).
+   =========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-body);
+  background: var(--navy-900);
+  background: var(--bg-navy-radial);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+/* --- The dark stage & the warm ivory section ------------------------------ */
+.rft-stage {
+  background: var(--bg-navy-radial);
+  color: var(--text-body);
+}
+
+.rft-ivory {
+  background: var(--ivory);
+  color: var(--text-ink);
+}
+
+/* Champagne break — the primary warm section between navy bands. Adds page
+   rhythm + warmth without competing with the gold. Headings/eyebrows inside
+   pick up champagne-appropriate colours automatically. */
+.rft-champagne {
+  background: var(--champagne);
+  color: var(--champagne-ink-muted);
+}
+.rft-champagne h1,
+.rft-champagne h2,
+.rft-champagne h3,
+.rft-champagne h4 {
+  color: var(--champagne-ink);
+}
+.rft-champagne .rft-eyebrow {
+  color: var(--champagne-eyebrow);
+}
+
+/* Step card — the STANDARD card for any champagne section that holds cards.
+   Dark navy cards float on the warm surface (ties champagne ↔ navy sections),
+   with a gold rank-coin and a gold accent bar that grows on hover. */
+.rft-step-card {
+  position: relative;
+  background: var(--surface-card-solid);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: var(--radius-lg);
+  padding: 26px 24px;
+  overflow: hidden;
+  box-shadow: 0 22px 50px -26px rgba(2, 8, 18, 0.7);
+  transition: transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
+}
+.rft-step-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-gold-title);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.rft-step-card:hover {
+  transform: translateY(var(--lift-card));
+  border-color: var(--gold-border-soft);
+  box-shadow: 0 30px 64px -24px rgba(2, 8, 18, 0.8);
+}
+.rft-step-card:hover::before {
+  transform: scaleX(1);
+}
+.rft-step-card .rft-step-coin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: 17px;
+  background: rgba(2, 8, 18, 0.5);
+  border: 1px solid var(--gold-border);
+  box-shadow: var(--shadow-gold-glow);
+}
+.rft-step-card .rft-step-coin > * {
+  background: var(--gradient-gold-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.rft-step-card h3 {
+  color: var(--text-strong);
+}
+.rft-step-card p {
+  color: var(--text-body);
+}
+
+/* --- Headings default to the display family ------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  color: var(--text-strong);
+  margin: 0;
+}
+
+/* --- Signature: gold gradient title text ---------------------------------- */
+/* Apply to headings/prices on the navy stage. Smooth vertical gold.          */
+.rft-gold-text {
+  background: var(--gradient-gold-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* --- Signature: uppercase eyebrow / kicker -------------------------------- */
+.rft-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--gold-500);
+}
+
+/* --- Thin gold divider rule ----------------------------------------------- */
+.rft-rule-gold {
+  height: 1px;
+  border: 0;
+  background: var(--gradient-gold-hairline);
+}
+
+/* --- Prices: Fraunces, gold gradient -------------------------------------- */
+.rft-price {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(227, 168, 18, 0.28);
+  color: var(--text-strong);
+}

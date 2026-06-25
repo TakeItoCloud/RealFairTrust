@@ -6,6 +6,46 @@
 
 ---
 
+## 2026-06-25 · Design REVISION — HOME handoff RH1 (reconciliation plan only; no app code)
+
+**Done** (branch `chore/design-revision-home-plan`, off the chain tip **`2890d03`** =
+`chore/design-revision-consolidate`; `main`+`develop` FROZEN at `04b6a1b`, parity — untouched).
+
+- **State verified:** tree's only tracked change was the new Home `design/RealFairTrust_Design_System.zip`
+  (the expected delivery); `.vscode/` + 2 tarballs pre-existing untracked. main == develop == `04b6a1b`.
+- **Zip fingerprint confirmed NEW Home handoff** — all 4: top folder `design_handoff_home/`,
+  `source/HomePage.dc.html`, `source/HeroMedia.jsx`, README hero default `"Vídeo full-bleed"`.
+- **Extracted** the bundle → `design/handoff-home/` (inner folder normalised); the existing
+  champagne `design/handoff/` bundle left **untouched**. Broadened the eslint ignore to `design/**`
+  (covers the new dir; reference only, never shipped).
+- **Read the Home handoff fully** (README authoritative + `HomePage.dc.html` + `HeroMedia.jsx` +
+  `tokens/*`) and audited the current chain code (tokens, `app/[locale]/page.tsx`, `HomeHero`,
+  `HowItWorks`, `Footer`, `Wordmark`, `ConsultantCard`, `home` i18n, `public/videos/hero.mp4`).
+- **Wrote `docs/DESIGN-HOME-PLAN.md`** (NEW; does not overwrite DESIGN-REVISION-PLAN.md): token/
+  system delta (mostly already present from R2–R5; new = `--gold-on-light` named alias, slim-15px
+  champagne fade, AgentCard solid `#0c1d39` fill, on-light Wordmark Fair → `#8C5E12`, footer link
+  ink → `--champagne-ink`); component gap (**HeroMedia = new build** + staged entrance w/
+  export-safety; ConsultantCard featured 56px; Wordmark/Logo; Footer); Home-composition gap
+  (full-bleed video hero replaces the search-pill hero; Top-este-mês spotlight + floating "+6
+  lugares" badge; new copy for Como-funciona/Para-consultores; reused components + seed #20; i18n
+  add/change/remove); AA re-measure list (hero text over the video scrim, brand-reveal beats,
+  footer on champagne, AgentCard on `#0c1d39`, the green badge — fail-closed); and the **RH2→RH5
+  phased checklist** (all ⬜): RH2 system deltas · RH3 HeroMedia + video + component changes · RH4
+  Home composition + copy + i18n + seed + AA-at-render · RH5 AA consolidation + DECISIONS + state.
+
+**Changed:** added `docs/DESIGN-HOME-PLAN.md` + `design/handoff-home/**`; broadened `eslint.config.mjs`
+ignore to `design/**`; updated the new Home zip. **No app code/tokens/components changed.**
+
+**Flagged for sign-off:** the **roofline-mark `Logo`** (we ship text-only `Wordmark`) — recommend the
+minimal on-light Wordmark fix now, mark optional; the contained-panel hero mode is the alternative
+(not built unless requested); real hero poster/imagery is a 4.5 item (placeholder for now).
+
+**Next:** on Carlos's go-ahead, execute **RH2** (system deltas) on `chore/design-revision-home-tokens`
+off this branch → RH3 → RH4 → RH5, each green-gated + stop-and-confirm. Still **UNMERGED**; promotion
+to develop/main remains a separate explicit approval.
+
+---
+
 ## 2026-06-24 · Design REVISION R5 (FINAL) — global AA consolidation + DECISIONS #57–#64 + state docs
 
 **Done** (branch `chore/design-revision-consolidate` off `chore/design-revision-home`). **This

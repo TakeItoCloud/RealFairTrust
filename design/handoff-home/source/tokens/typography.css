@@ -1,0 +1,56 @@
+/* ===========================================================================
+   RealFairTrust — Typography tokens
+   Fraunces (display / titles / prices) · Inter (UI & body)
+   =========================================================================== */
+
+:root {
+  /* --- Families ------------------------------------------------------------ */
+  --font-display: "Fraunces", "Georgia", "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ui: var(--font-body);
+
+  /* --- Weights -------------------------------------------------------------- */
+  --fw-light: 300;     /* @kind font */
+  --fw-regular: 400;   /* @kind font */
+  --fw-medium: 500;    /* @kind font */
+  --fw-semibold: 600;  /* @kind font */
+  --fw-bold: 700;      /* @kind font */
+
+  /* --- Display / heading scale (Fraunces) ---------------------------------- */
+  --fs-display-1: 76px;  /* hero — marketing splash only */
+  --fs-display-2: 56px;
+  --fs-h1: 42px;
+  --fs-h2: 32px;
+  --fs-h3: 24px;
+  --fs-h4: 20px;
+
+  /* --- Body & UI scale (Inter) --------------------------------------------- */
+  --fs-lead: 20px;       /* hero sub / lead paragraphs */
+  --fs-body-lg: 17px;
+  --fs-body: 16px;       /* default reading size — generous for a trust/long-form site */
+  --fs-sm: 13px;
+  --fs-xs: 12px;
+  --fs-eyebrow: 12px;    /* uppercase kickers */
+
+  /* --- Section/subsection title aliases (Fraunces) ------------------------ */
+  --fs-section: 40px;    /* section titles */
+  --fs-subsection: 26px; /* subsection titles */
+  --fs-button: 15px;     /* button label */
+
+  /* --- Line heights -------------------------------------------------------- */
+  --lh-display: 1.04; /* @kind font */
+  --lh-tight: 1.12;   /* @kind font */
+  --lh-snug: 1.28;    /* @kind font */
+  --lh-body: 1.62;    /* @kind font */
+
+  /* --- Letter spacing ------------------------------------------------------ */
+  --ls-display: -0.015em;  /* @kind font */
+  --ls-tight: -0.01em;     /* @kind font */
+  --ls-normal: 0;          /* @kind font */
+  --ls-eyebrow: 0.2em;     /* @kind font */
+  --ls-label: 0.04em;      /* @kind font */
+
+  /* --- Optical sizing (Fraunces variable axis) ----------------------------- */
+  --opsz-display: 144; /* @kind font */
+  --opsz-text: 24;     /* @kind font */
+}

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Home page" description="RealFairTrust full home — sticky nav, navy hero (contained panel + full-bleed video), merit spotlight, champagne how-it-works, listings, consultant CTA, champagne footer" -->
+<helmet>
+<script src="./ds-base.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&display=swap">
+<style>
+  /* Keep consultant names readable in the ranked cards: wrap at spaces only,
+     never per-character (matches the AgentCard source). */
+  .rftagent__name{ overflow-wrap:normal !important; word-break:normal !important; }
+  /* On narrow ranked cards the merit score drops to its own line so the
+     name never collides with it (container-query, matches AgentCard source). */
+  .rftagent{ container-type:inline-size; }
+  @container (max-width: 344px){
+    .rftagent__head, .rftagent > .rftagent__row:first-of-type{ flex-wrap:wrap !important; }
+    .rftagent__scorecol{ width:100% !important; flex-direction:row !important; align-items:baseline !important; gap:9px !important; padding-top:12px !important; margin-top:2px !important; border-top:1px solid var(--hairline) !important; }
+  }
+  /* Full-bleed hero scroll cue */
+  @keyframes rft-scrollcue { 0%,100% { transform:translateY(0); opacity:0.55; } 50% { transform:translateY(7px); opacity:1; } }
+  .rft-scrollcue { animation:rft-scrollcue 2.1s var(--ease-in-out, ease-in-out) infinite; }
+  @media (prefers-reduced-motion: reduce){ .rft-scrollcue { animation:none; } }
+  /* Footer on champagne: darken body links/text to the champagne heading ink for real contrast */
+  footer.rft-champagne a { color: var(--champagne-ink) !important; }
+</style>
+</helmet>
+
+<div style="width:100%; overflow-x:hidden;">
+
+  <!-- ===================== NAV ===================== -->
+  <header style="position:sticky; top:0; z-index:60; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); background:rgba(6,15,34,0.74); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:1200px; margin:0 auto; padding:13px 32px; display:flex; align-items:center; justify-content:space-between; gap:28px;">
+      <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Logo" variant="full" size="{{ 20 }}" hint-size="190px,34px"></x-import>
+      <nav style="display:flex; align-items:center; gap:30px;">
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Comprar</a>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Arrendar</a>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Vender</a>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Consultores</a>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Como funciona</a>
+      </nav>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <div style="display:inline-flex; align-items:center; gap:2px; padding:3px; border-radius:999px; border:1px solid var(--hairline-strong); background:var(--surface-inset);">
+          <span style="padding:4px 11px; border-radius:999px; background:var(--gold-tint); color:var(--gold-200); font-family:var(--font-body); font-size:12px; font-weight:600;">PT</span>
+          <span style="padding:4px 11px; color:var(--text-muted); font-family:var(--font-body); font-size:12px; font-weight:600;">EN</span>
+        </div>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Entrar</a>
+        <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="primary" size="md" hint-size="210px,44px">Falar com um consultor</x-import>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== SECTION 1 · HERO ===================== -->
+  <section style="max-width:1200px; margin:0 auto; padding:64px 32px 88px;">
+
+    <!-- Contained-panel treatment -->
+    <sc-if value="{{ heroContained }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid; grid-template-columns:minmax(0,0.98fr) minmax(0,1.02fr); gap:44px; align-items:center;">
+        <div style="display:flex; flex-direction:column; gap:24px; min-width:0;">
+          <span class="rft-eyebrow">Desempenho que se vê</span>
+          <h1 style="font-size:clamp(33px, 3.3vw, 42px); line-height:1.16; letter-spacing:-0.016em; margin:0;"><span style="display:block; white-space:nowrap;">O futuro do imobiliário</span><span class="rft-gold-text" style="display:block; white-space:nowrap; font-style:italic; font-weight:500; letter-spacing:-0.008em;">está em cada um de nós.</span><span aria-hidden="true" style="display:block; width:56px; height:3px; border-radius:2px; background:var(--gradient-gold-title); margin-top:20px;"></span></h1>
+          <p style="font-family:var(--font-body); font-size:20px; color:var(--text-body); line-height:1.6; max-width:500px; margin:0;">O marketplace imobiliário onde o desempenho dos consultores é medido com justiça, atualizado todos os meses e mostrado abertamente. Lisboa &amp; Porto.</p>
+          <div style="display:flex; gap:14px; margin-top:6px;">
+            <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="primary" size="lg" hint-size="200px,52px">Encontrar consultor</x-import>
+            <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="secondary" size="lg" hint-size="160px,52px">Ver imóveis</x-import>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:24px; margin-top:14px; padding-top:22px; border-top:1px solid var(--hairline);">
+            <div style="display:flex; align-items:center; gap:9px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gold-300)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              <span style="font-family:var(--font-body); font-size:13.5px; color:var(--text-body);">Consultores verificados</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:9px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gold-300)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"></rect><path d="M3 9.5h18M8 2.5v4M16 2.5v4"></path></svg>
+              <span style="font-family:var(--font-body); font-size:13.5px; color:var(--text-body);">Ranking mensal</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:9px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gold-300)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"></path><circle cx="12" cy="9" r="2.4"></circle></svg>
+              <span style="font-family:var(--font-body); font-size:13.5px; color:var(--text-body);">Lisboa &amp; Porto</span>
+            </div>
+          </div>
+        </div>
+        <div style="height:560px;">
+          <x-import component="HeroMedia" from="./HeroMedia.jsx" variant="panel" eyebrow="A nossa promessa" interval="{{ phraseInterval }}" hint-size="100%,560px">
+            <div data-word="Real">Pessoas antes de imóveis.</div>
+            <div data-word="Fair">Mérito, não antiguidade.</div>
+            <div data-word="Trust">Confiança pela transparência.</div>
+          </x-import>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Full-bleed cinematic treatment (alternative) -->
+    <sc-if value="{{ heroFullBleed }}" hint-placeholder-val="{{ false }}">
+      <div style="position:relative; width:100vw; margin-left:50%; transform:translateX(-50%); margin-top:-64px; min-height:84vh; overflow:hidden;">
+        <div style="position:absolute; inset:0;">
+          <x-import component="HeroMedia" from="./HeroMedia.jsx" variant="bleed" interval="{{ phraseInterval }}" start-delay="{{ 2750 }}" hint-size="100%,84vh">
+            <div data-word="Real">Pessoas antes de imóveis.</div>
+            <div data-word="Fair">Mérito, não antiguidade.</div>
+            <div data-word="Trust">Confiança pela transparência.</div>
+          </x-import>
+        </div>
+        <div style="position:absolute; top:0; bottom:0; left:0; z-index:2; max-width:860px; padding:0 56px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; text-align:left; gap:22px;">
+          <h1 style="font-family:var(--font-display); font-size:clamp(38px, 4.5vw, 62px); line-height:1.12; letter-spacing:-0.016em; margin:0; text-shadow:0 2px 24px rgba(2,8,18,0.82);"><span class="rft-anim-1" style="display:block; white-space:nowrap;">O futuro do imobiliário</span><span class="rft-gold-text rft-anim-2" style="display:block; white-space:nowrap; font-family:var(--font-display); font-style:italic; font-weight:500; letter-spacing:-0.008em;">está em cada um de nós.</span><span aria-hidden="true" class="rft-anim-3" style="display:block; width:58px; height:3px; border-radius:2px; background:var(--gradient-gold-title); margin-top:20px;"></span></h1>
+          <p class="rft-anim-4" style="font-family:var(--font-body); font-size:19px; color:var(--text-strong); line-height:1.6; max-width:480px; margin:0; text-shadow:0 2px 18px rgba(2,8,18,0.78);">O marketplace imobiliário onde o desempenho dos consultores é medido com justiça, atualizado todos os meses e mostrado abertamente. Lisboa &amp; Porto.</p>
+          <div class="rft-anim-5" style="display:flex; gap:14px; margin-top:12px;">
+            <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="primary" size="lg" hint-size="200px,52px">Encontrar consultor</x-import>
+            <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="secondary" size="lg" hint-size="160px,52px">Ver imóveis</x-import>
+          </div>
+        </div>
+        <div style="position:absolute; left:50%; bottom:22px; transform:translateX(-50%); z-index:3; display:flex; flex-direction:column; align-items:center; gap:6px; pointer-events:none;">
+          <span style="font-family:var(--font-body); font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted);">Explorar</span>
+          <svg class="rft-scrollcue" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-300)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+        </div>
+      </div>
+    </sc-if>
+
+  </section>
+
+  <!-- ===================== SECTION 2 · TOP ESTE MÊS ===================== -->
+  <section style="max-width: 1200px; margin: 0 auto; padding: 36px 32px 92px; position: relative">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:40px;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <span class="rft-eyebrow">Top este mês</span>
+        <h2 style="font-size:42px; line-height:1.05; letter-spacing:-0.015em; margin:0;">Consultores em destaque</h2>
+      </div>
+      <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--gold-300); white-space:nowrap;">Ver ranking completo →</a>
+    </div>
+
+    <div style="position:relative; max-width:620px; margin:0 auto 34px; filter:drop-shadow(0 48px 84px rgba(2,8,18,0.62));">
+      <div style="position:absolute; inset:-44px -24px -20px; background:radial-gradient(56% 58% at 50% 30%, rgba(227,168,18,0.20), rgba(227,168,18,0) 72%); pointer-events:none; z-index:0;"></div>
+      
+      <div style="position:relative; z-index:1;">
+        <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.AgentCard" rank="{{ featured.rank }}" name="{{ featured.name }}" photo="{{ featured.photo }}" city="{{ featured.city }}" score="{{ featured.score }}" badge="{{ featured.badge }}" specialities="{{ featured.specialities }}" stats="{{ featured.stats }}" meta="{{ featured.meta }}" featured="{{ true }}" hint-size="100%,340px"></x-import>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:22px; align-items:stretch;">
+      <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.AgentCard" rank="{{ a2.rank }}" name="{{ a2.name }}" photo="{{ a2.photo }}" city="{{ a2.city }}" score="{{ a2.score }}" specialities="{{ a2.specialities }}" stats="{{ a2.stats }}" hint-size="100%,300px"></x-import>
+      <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.AgentCard" rank="{{ a3.rank }}" name="{{ a3.name }}" photo="{{ a3.photo }}" city="{{ a3.city }}" score="{{ a3.score }}" specialities="{{ a3.specialities }}" stats="{{ a3.stats }}" hint-size="100%,300px"></x-import>
+      <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.AgentCard" rank="{{ a4.rank }}" name="{{ a4.name }}" photo="{{ a4.photo }}" city="{{ a4.city }}" score="{{ a4.score }}" specialities="{{ a4.specialities }}" stats="{{ a4.stats }}" hint-size="100%,300px"></x-import>
+    </div>
+  <div style="position: absolute; top: 152px; z-index: 3; display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; border-radius: 999px; background: var(--green-tint); border: 1px solid var(--green-border); box-shadow: var(--shadow-green-glow); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); left: 157px; width: 148px; height: 60px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green-verified)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+        <span style="font-family:var(--font-body); font-size:12.5px; font-weight:600; color:var(--green-verified);">+6 lugares · últimos 90 dias</span>
+      </div></section>
+
+  <!-- ===================== SECTION 3 · COMO FUNCIONA (champagne) ===================== -->
+  <section class="rft-champagne" style="padding:92px 0; background:linear-gradient(180deg, rgba(236,226,203,0) 0, var(--champagne) 15px, var(--champagne) calc(100% - 15px), rgba(236,226,203,0) 100%);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 32px;">
+      <div style="max-width:680px; display:flex; flex-direction:column; gap:18px; margin-bottom:48px;">
+        <span class="rft-eyebrow">Como funciona</span>
+        <h2 style="font-size:42px; line-height:1.06; letter-spacing:-0.015em; margin:0;">Onde o Desempenho Encontra o Imobiliário</h2>
+        <p style="font-family:var(--font-body); font-size:18px; color:var(--champagne-ink-muted); line-height:1.6; margin:0;">Cada consultor é avaliado pelos mesmos critérios, à vista de todos. Sem destaques pagos, sem favores — só desempenho real, recalculado todos os meses.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;">
+        <div class="rft-step-card">
+          <span class="rft-step-coin"><span>01</span></span>
+          <h3 style="font-size:21px; margin:18px 0 10px;">Mérito sobre volume</h3>
+          <p style="font-family:var(--font-body); font-size:15px; line-height:1.58; margin:0;">A posição reflete resultados verificados — taxa de fecho, tempo de resposta e satisfação — não o número de anúncios publicados.</p>
+        </div>
+        <div class="rft-step-card">
+          <span class="rft-step-coin"><span>02</span></span>
+          <h3 style="font-size:21px; margin:18px 0 10px;">Uma corrida que reinicia</h3>
+          <p style="font-family:var(--font-body); font-size:15px; line-height:1.58; margin:0;">O ranking recomeça todos os meses. O desempenho recente é o que conta; ninguém fica preso ao que fez há anos.</p>
+        </div>
+        <div class="rft-step-card">
+          <span class="rft-step-coin"><span>03</span></span>
+          <h3 style="font-size:21px; margin:18px 0 10px;">Justo para quem começa</h3>
+          <p style="font-family:var(--font-body); font-size:15px; line-height:1.58; margin:0;">Quem entra com bom serviço sobe depressa. A antiguidade não compra lugares no topo — o trabalho, sim.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 4 · IMÓVEIS EM DESTAQUE ===================== -->
+  <section style="max-width:1200px; margin:0 auto; padding:92px 32px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:40px;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <span class="rft-eyebrow">Imóveis em destaque</span>
+        <h2 style="font-size:42px; line-height:1.05; letter-spacing:-0.015em; margin:0;">Listados por consultores de topo</h2>
+      </div>
+      <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--gold-300); white-space:nowrap;">Ver todos os imóveis →</a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;">
+      <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.PropertyCard" image="{{ p1.image }}" price="{{ p1.price }}" title="{{ p1.title }}" location="{{ p1.location }}" deal="{{ p1.deal }}" beds="{{ p1.beds }}" baths="{{ p1.baths }}" area="{{ p1.area }}" energy="{{ p1.energy }}" demo="{{ demo }}" agent-name="{{ p1.agentName }}" agent-photo="{{ p1.agentPhoto }}" hint-size="100%,430px"></x-import>
+      <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.PropertyCard" image="{{ p2.image }}" price="{{ p2.price }}" title="{{ p2.title }}" location="{{ p2.location }}" deal="{{ p2.deal }}" beds="{{ p2.beds }}" baths="{{ p2.baths }}" area="{{ p2.area }}" energy="{{ p2.energy }}" demo="{{ demo }}" agent-name="{{ p2.agentName }}" agent-photo="{{ p2.agentPhoto }}" hint-size="100%,430px"></x-import>
+      <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.PropertyCard" image="{{ p3.image }}" price="{{ p3.price }}" price-suffix="{{ p3.priceSuffix }}" title="{{ p3.title }}" location="{{ p3.location }}" deal="{{ p3.deal }}" beds="{{ p3.beds }}" baths="{{ p3.baths }}" area="{{ p3.area }}" energy="{{ p3.energy }}" demo="{{ demo }}" agent-name="{{ p3.agentName }}" agent-photo="{{ p3.agentPhoto }}" hint-size="100%,430px"></x-import>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 5 · PARA CONSULTORES (CTA) ===================== -->
+  <section style="max-width:1200px; margin:0 auto; padding:0 32px 100px;">
+    <div style="position:relative; border-radius:28px; border:1px solid var(--gold-border); background:linear-gradient(135deg, rgba(18,42,79,0.92), rgba(8,20,40,0.96)); box-shadow:var(--shadow-gold-glow), var(--shadow-raised); padding:64px 56px; overflow:hidden;">
+      <div style="position:absolute; top:-120px; right:-80px; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(227,168,18,0.18), rgba(227,168,18,0) 70%); pointer-events:none;"></div>
+      <div style="position:relative; max-width:600px; display:flex; flex-direction:column; gap:20px;">
+        <span class="rft-eyebrow">Para consultores</span>
+        <h2 style="font-size:56px; line-height:1.04; letter-spacing:-0.018em; margin:0;">O <span class="rft-gold-text">sucesso</span> depende de ti.</h2>
+        <p style="font-family:var(--font-body); font-size:17px; color:var(--text-body); line-height:1.62; margin:0;">Através de um sistema transparente de avaliação e ranking, o teu desempenho ganha visibilidade.</p>
+        <p style="font-family:var(--font-body); font-size:17px; color:var(--text-body); line-height:1.62; margin:0;">Valorizamos verdadeiramente o trabalho de cada consultor, num modelo onde mérito, desempenho e resultados são reconhecidos de forma justa.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:13px 28px; margin-top:2px;">
+          <span style="display:inline-flex; align-items:center; gap:9px; font-family:var(--font-body); font-size:14.5px; font-weight:500; color:var(--text-strong);"><span style="font-size:17px; line-height:1;">⭐</span> Avaliação transparente</span>
+          <span style="display:inline-flex; align-items:center; gap:9px; font-family:var(--font-body); font-size:14.5px; font-weight:500; color:var(--text-strong);"><span style="font-size:17px; line-height:1;">📊</span> Ranking baseado em desempenho</span>
+          <span style="display:inline-flex; align-items:center; gap:9px; font-family:var(--font-body); font-size:14.5px; font-weight:500; color:var(--text-strong);"><span style="font-size:17px; line-height:1;">🤝</span> Visível para clientes</span>
+        </div>
+        <div style="display:flex; gap:14px; margin-top:8px;">
+          <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="primary" size="lg" hint-size="220px,52px">Vem Ser Reconhecido</x-import>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 6 · FOOTER (champagne) ===================== -->
+  <footer class="rft-champagne" style="padding:72px 0 40px; background:linear-gradient(180deg, rgba(236,226,203,0) 0, var(--champagne) 15px);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 32px;">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:48px; border-bottom:1px solid var(--champagne-border);">
+        <div style="display:flex; flex-direction:column; gap:16px; max-width:300px;">
+          <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Logo" variant="full" size="{{ 22 }}" tagline="{{ true }}" onIvory="{{ true }}" hint-size="220px,46px"></x-import>
+          <p style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink); line-height:1.6; margin:0;">O marketplace onde o mérito dos consultores é medido com justiça e mostrado abertamente.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--champagne-ink); opacity:0.7;">Navegação</span>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Comprar</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Arrendar</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Vender</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Consultores</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--champagne-ink); opacity:0.7;">Contacto</span>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Lisboa · Av. da Liberdade</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Porto · Foz do Douro</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">ola@realfairtrust.pt</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--champagne-ink); opacity:0.7;">Legal</span>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Termos</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Privacidade</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Metodologia</a>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding-top:24px;">
+        <span style="font-family:var(--font-body); font-size:13px; color:var(--champagne-ink);">© 2026 RealFairTrust. Todos os direitos reservados.</span>
+        <span style="display:inline-flex; align-items:center; gap:7px; font-family:var(--font-body); font-size:13px; color:var(--champagne-ink);">Feito em Portugal <span style="font-size:15px;">🇵🇹</span></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;heroMode&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;Painel contido&quot;, &quot;Vídeo full-bleed&quot;], &quot;default&quot;: &quot;Vídeo full-bleed&quot;, &quot;tsType&quot;: &quot;\&quot;Painel contido\&quot; | \&quot;Vídeo full-bleed\&quot;&quot; },
+  &quot;phraseInterval&quot;: { &quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 3000, &quot;min&quot;: 2000, &quot;max&quot;: 5000, &quot;step&quot;: 250, &quot;tsType&quot;: &quot;number&quot; },
+  &quot;propertyDemoBadge&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot; }
+}">
+class Component extends DCLogic {
+  componentDidMount() {
+    // Staged hero entrance (full-bleed primary). Base state is visible, so
+    // print/PDF/export and no-JS all show the final layout; the reveal is
+    // applied at runtime via setTimeout (fires even when rAF is throttled).
+    const reduce = typeof window !== "undefined" && window.matchMedia
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const ease = "cubic-bezier(.2,.62,.2,1)";
+    const steps = [
+      { sel: ".rft-anim-1", delay: 0,    dur: 560, rise: 14, gold: false }, // headline line 1
+      { sel: ".rft-anim-2", delay: 700,  dur: 580, rise: 18, gold: true  }, // gold line 2 (after a hold)
+      { sel: ".rft-anim-3", delay: 1250, dur: 460, rise: 14, gold: false }, // gold rule
+      { sel: ".rft-anim-4", delay: 1700, dur: 540, rise: 14, gold: false }, // sub-text
+      { sel: ".rft-anim-5", delay: 2100, dur: 540, rise: 14, gold: false }, // buttons
+    ];
+    steps.forEach((s) => {
+      const el = document.querySelector(s.sel);
+      if (!el) return;
+      el.style.transition = "none";
+      el.style.opacity = "0";
+      el.style.transform = "translateY(" + s.rise + "px)";
+      void el.offsetWidth; // commit the hidden state before the reveal
+      setTimeout(() => {
+        el.style.transition = "opacity " + s.dur + "ms " + ease + ", transform " + s.dur + "ms " + ease + (s.gold ? ", filter " + s.dur + "ms " + ease : "");
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+        if (s.gold) el.style.filter = "drop-shadow(0 2px 14px rgba(255,216,110,0.18))";
+      }, s.delay);
+      // Commit the final visible state with no transition, so a throttled or
+      // paused timeline (background tab, PDF/export capture) still ends visible.
+      setTimeout(() => {
+        el.style.transition = "none";
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+      }, s.delay + s.dur + 90);
+    });
+  }
+
+  renderVals() {
+    const mode = this.props.heroMode ?? "Vídeo full-bleed";
+    const phraseInterval = this.props.phraseInterval ?? 3000;
+    const demo = this.props.propertyDemoBadge ?? true;
+
+    const featured = {
+      rank: 1, name: "Sofia Marques", photo: "https://randomuser.me/api/portraits/women/44.jpg",
+      city: "Lisboa · Príncipe Real", score: "96", badge: "top",
+      specialities: ["Apartamentos", "Compra", "Prime"],
+      stats: [
+        { value: "71%", label: "Taxa de fecho" },
+        { value: "1.1h", label: "Resposta média" },
+        { value: "4.9", label: "Satisfação" },
+      ],
+      meta: "38 negócios fechados · últimos 90 dias",
+    };
+    const a2 = {
+      rank: 2, name: "Miguel Costa", photo: "https://randomuser.me/api/portraits/men/32.jpg",
+      city: "Porto · Foz do Douro", score: "92",
+      specialities: ["Moradias", "Venda"],
+      stats: [
+        { value: "65%", label: "Taxa de fecho" },
+        { value: "1.6h", label: "Resposta" },
+        { value: "4.8", label: "Satisfação" },
+      ],
+    };
+    const a3 = {
+      rank: 3, name: "Inês Carvalho", photo: "https://randomuser.me/api/portraits/women/68.jpg",
+      city: "Lisboa · Chiado", score: "90",
+      specialities: ["Apartamentos", "Arrendamento"],
+      stats: [
+        { value: "62%", label: "Taxa de fecho" },
+        { value: "1.9h", label: "Resposta" },
+        { value: "4.8", label: "Satisfação" },
+      ],
+    };
+    const a4 = {
+      rank: 4, name: "Tiago Ferreira", photo: "https://randomuser.me/api/portraits/men/52.jpg",
+      city: "Porto · Cedofeita", score: "88",
+      specialities: ["Investimento", "Venda"],
+      stats: [
+        { value: "60%", label: "Taxa de fecho" },
+        { value: "2.1h", label: "Resposta" },
+        { value: "4.7", label: "Satisfação" },
+      ],
+    };
+
+    const p1 = {
+      image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80",
+      price: "€ 745 000", title: "Apartamento T3 renovado com terraço",
+      location: "Príncipe Real, Lisboa", deal: "sale", beds: 3, baths: 2, area: 142, energy: "A",
+      agentName: "Sofia Marques", agentPhoto: "https://randomuser.me/api/portraits/women/44.jpg",
+    };
+    const p2 = {
+      image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80",
+      price: "€ 1 250 000", title: "Moradia V4 com jardim e vista rio",
+      location: "Foz do Douro, Porto", deal: "sale", beds: 4, baths: 3, area: 320, energy: "A+",
+      agentName: "Miguel Costa", agentPhoto: "https://randomuser.me/api/portraits/men/32.jpg",
+    };
+    const p3 = {
+      image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=900&q=80",
+      price: "€ 2 400", priceSuffix: "/mês", title: "Apartamento T2 mobilado no centro histórico",
+      location: "Chiado, Lisboa", deal: "rent", beds: 2, baths: 1, area: 88, energy: "B",
+      agentName: "Inês Carvalho", agentPhoto: "https://randomuser.me/api/portraits/women/68.jpg",
+    };
+
+    return {
+      heroContained: mode !== "Vídeo full-bleed",
+      heroFullBleed: mode === "Vídeo full-bleed",
+      phraseInterval, demo,
+      featured, a2, a3, a4, p1, p2, p3,
+    };
+  }
+}
+</script>
+</body>
+</html>
