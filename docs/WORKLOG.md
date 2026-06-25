@@ -6,6 +6,40 @@
 
 ---
 
+## 2026-06-25 · Design REVISION — HOME RH4 fixes: "Top este mês" row (equal height + full names)
+
+**Done** (same branch `chore/design-revision-home-compose`, off `e7d31e6`; `main`+`develop` FROZEN
+at `04b6a1b`, untouched; no PR). Three issues in the 3-card row beneath the featured card, all in
+`ConsultantCard` (shared) + verified on the live Home. Review via the **production build**
+(`pnpm build && pnpm start`) — dev HMR fails over this remote host.
+
+1. **Equal height.** The grid cells stretch (CSS default) but the card didn't fill them, so #4 read
+   shorter. Made the card fill its cell: `Link` → `block h-full`, `motion.article` → adds `h-full`
+   (already `flex flex-col`), and the footer → `mt-auto` so it pins to the bottom. All three row
+   cards now match the tallest; the featured card (non-grid `max-w-[620px]` parent) is unaffected
+   (h-full = content height there).
+2. **Full names (no truncation).** The header row (coin + avatar + name + verified + 38px merit)
+   squeezed the name at ~⅓-width, so it ellipsised ("Catarina Ferreira" → "Cata…"). Fixes: the left
+   group + name block now take the available width (`flex-1 min-w-0`); the compact avatar drops from
+   `lg` (64) to `md` (44) (featured keeps `lg`); and the name `<p>` **lost `truncate`** so it wraps
+   to a second line instead of clipping. Verified: full names present, **no `truncate` on the name**,
+   the only `…` in the HTML are the unrelated i18n strings "A carregar…"/"A enviar…".
+3. **Presence.** Padding stays the consistent `--card-pad` (26px, same as featured); the `mt-auto`
+   footer balances the shorter cards so they no longer feel sparse. (3-across grid + container width
+   unchanged.)
+
+**Unchanged:** featured card width/treatment (56px merit, lg avatar); #18 gating; #37 motion; the
+`displayRank` coins (2/3/4). The card change also equalises the Consultores grid (a strict
+improvement; `h-full` only fills when a parent constrains height — no effect on non-grid usages).
+
+**Green + prod verify:** `pnpm build` ✅ · `tsc --noEmit` ✅ (exit 0) · `eslint` ✅ 0/0. `pnpm start`:
+`/` + `/en` **200**; coins **Posição 1·2·3·4**; exactly **one** featured (56px) card; full row names
+(Ana Silva / Pedro Costa / Catarina Ferreira) render; `h-full` + `mt-auto` plumbing present.
+
+**Changed:** `components/ConsultantCard.tsx`, this worklog. No DECISIONS entry.
+
+---
+
 ## 2026-06-25 · Design REVISION — HOME RH4 fixes: rank coins + EXPLORE scroll cue
 
 **Done** (same branch `chore/design-revision-home-compose`, off RH4 `db5de62`; `main`+`develop`

@@ -49,7 +49,7 @@ export function ConsultantCard({
   return (
     <Link
       href={{ pathname: '/consultores/[slug]', params: { slug: consultant.slug } }}
-      className="group block"
+      className="group block h-full"
     >
       <motion.article
         initial={reduce ? false : { opacity: 0, y: 16 }}
@@ -60,7 +60,7 @@ export function ConsultantCard({
         whileTap={reduce ? undefined : { y: 1 }}
         style={{ boxShadow: featured ? 'var(--shadow-gold-glow)' : 'var(--shadow-card)' }}
         className={cn(
-          'relative flex flex-col gap-[18px] overflow-hidden rounded-[var(--card-radius)] p-[var(--card-pad)]',
+          'relative flex h-full flex-col gap-[18px] overflow-hidden rounded-[var(--card-radius)] p-[var(--card-pad)]',
           'border transition-[box-shadow,border-color] duration-[var(--dur-base)] ease-[cubic-bezier(0.22,0.61,0.36,1)]',
           // Home handoff RH3 (§A.2): AgentCard fill = the SOLID --surface-card-solid (#0c1d39) base,
           // not the translucent .035. The solid base stops the bright radial centre bleeding through
@@ -83,14 +83,18 @@ export function ConsultantCard({
 
         {/* Top row — rank + avatar + name / score */}
         <div className="flex items-start justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3.5">
+          <div className="flex min-w-0 flex-1 items-center gap-3.5">
             {showCoin && rank != null ? <RankBadge rank={rank} label={t('score.rank')} size={40} /> : null}
-            <Avatar src={consultant.photo} name={consultant.name} size="lg" ring={featured || topRanked} />
-            <div className="flex min-w-0 items-center gap-2">
-              <p className="truncate font-display text-[21px] font-semibold leading-tight text-cream">
+            {/* Compact cards use a smaller avatar so the full name fits; featured keeps lg. */}
+            <Avatar src={consultant.photo} name={consultant.name} size={featured ? 'lg' : 'md'} ring={featured || topRanked} />
+            <div className="flex min-w-0 flex-1 items-center gap-2">
+              {/* Full name always shows — wraps to a second line rather than truncating. */}
+              <p className="min-w-0 font-display text-[21px] font-semibold leading-tight text-cream">
                 {consultant.name}
               </p>
-              {consultant.verified ? <VerifiedBadge iconOnly size="sm" label={t('score.verified')} /> : null}
+              {consultant.verified ? (
+                <VerifiedBadge iconOnly size="sm" label={t('score.verified')} className="shrink-0" />
+              ) : null}
             </div>
           </div>
 
@@ -135,8 +139,8 @@ export function ConsultantCard({
           </div>
         ) : null}
 
-        {/* Footer */}
-        <div className="flex items-center justify-between border-t border-line pt-4">
+        {/* Footer — mt-auto pins it to the bottom so equal-height cards align + read balanced */}
+        <div className="mt-auto flex items-center justify-between border-t border-line pt-4">
           <span className="text-[12.5px] text-cream-muted">{rank != null ? `#${rank}` : ''}</span>
           <span className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-gold transition-[gap] duration-[var(--dur-base)] group-hover:gap-2.5">
             {t('common.actions.viewProfile')} →
