@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
 import { focusRingLight } from '@/components/ui/styles'
-import { Wordmark } from './Wordmark'
+import { Logo } from './Logo'
 
 function FooterCol({ heading, children }: { heading: string; children: ReactNode }) {
   return (
@@ -26,7 +26,9 @@ function FooterLink({ children, href }: { children: ReactNode; href: string }) {
       <Link
         href={href as Parameters<typeof Link>[0]['href']}
         className={cn(
-          'rounded-sm text-sm text-[var(--champagne-ink-muted)] transition-colors hover:text-[var(--champagne-ink)]',
+          // Home handoff §8: footer body links use --champagne-ink (#2b2415) for contrast — NOT the
+          // lighter --champagne-ink-muted. Hover dims slightly for affordance.
+          'rounded-sm text-sm text-[var(--champagne-ink)] transition-opacity hover:opacity-70',
           focusRingLight,
         )}
       >
@@ -45,8 +47,8 @@ export function Footer() {
       <div className="container-page py-14">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-1">
-            <Wordmark className="text-lg" onIvory />
-            <p className="mt-2 max-w-[260px] text-sm text-[var(--champagne-ink-muted)]">{t('tagline')}</p>
+            <Logo className="text-lg" onIvory tagline />
+            <p className="mt-3 max-w-[260px] text-sm text-[var(--champagne-ink)]">{t('tagline')}</p>
           </div>
 
           <FooterCol heading={tf('explore')}>
@@ -74,7 +76,7 @@ export function Footer() {
           </FooterCol>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-[var(--champagne-border)] pt-6 text-xs text-[var(--champagne-ink-muted)] sm:flex-row sm:items-center">
+        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-[var(--champagne-border)] pt-6 text-xs text-[var(--champagne-ink)] sm:flex-row sm:items-center">
           <p>
             © {new Date().getFullYear()} {t('brand')} · {tf('slogan')}
           </p>

@@ -51,14 +51,14 @@ export function ConsultantCard({
         style={{ boxShadow: featured ? 'var(--shadow-gold-glow)' : 'var(--shadow-card)' }}
         className={cn(
           'relative flex flex-col gap-[18px] overflow-hidden rounded-[var(--card-radius)] p-[var(--card-pad)]',
-          'border backdrop-blur-[var(--blur-panel)] transition-[box-shadow,border-color] duration-[var(--dur-base)] ease-[cubic-bezier(0.22,0.61,0.36,1)]',
-          // R4 AA: featured fill uses --surface-card (.035), NOT --surface-card-raised (.06).
-          // The lighter .06 frosting let the hero's bright radial centre (#1e4680) bleed through,
-          // dropping cream-muted to 4.38:1 (fail); .035 holds it at 4.66:1. Featured still reads
-          // featured via the gold border + --shadow-gold-glow + always-on accent bar.
+          'border transition-[box-shadow,border-color] duration-[var(--dur-base)] ease-[cubic-bezier(0.22,0.61,0.36,1)]',
+          // Home handoff RH3 (§A.2): AgentCard fill = the SOLID --surface-card-solid (#0c1d39) base,
+          // not the translucent .035. The solid base stops the bright radial centre bleeding through
+          // → text contrast improves (cream-muted .70 → 8.46:1 here vs 4.66:1 on the translucent fill).
+          // Featured still reads featured via the gold border + --shadow-gold-glow + always-on accent.
           featured
-            ? 'border-[var(--gold-border)] bg-[var(--surface-card)]'
-            : 'border-line bg-[var(--surface-card)] group-hover:border-[var(--gold-border-soft)] group-hover:shadow-[var(--shadow-raised)]',
+            ? 'border-[var(--gold-border)] bg-[var(--surface-card-solid)]'
+            : 'border-line bg-[var(--surface-card-solid)] group-hover:border-[var(--gold-border-soft)] group-hover:shadow-[var(--shadow-raised)]',
         )}
       >
         {/* Gold accent bar — always on when featured; wipes in on hover otherwise. */}
@@ -86,7 +86,13 @@ export function ConsultantCard({
 
           {confident && score ? (
             <div className="shrink-0 text-right">
-              <p className="gold-title font-display text-[38px] font-semibold leading-none transition-[filter] duration-[var(--dur-base)] group-hover:[filter:drop-shadow(0_0_14px_rgba(255,216,110,0.45))] motion-reduce:transition-none">
+              {/* Featured (#1 / Home spotlight) uses the larger 56px merit score (handoff §4). */}
+              <p
+                className={cn(
+                  'gold-title font-display font-semibold leading-none transition-[filter] duration-[var(--dur-base)] group-hover:[filter:drop-shadow(0_0_14px_rgba(255,216,110,0.45))] motion-reduce:transition-none',
+                  featured ? 'text-[56px]' : 'text-[38px]',
+                )}
+              >
                 {score.composite}
               </p>
               <p className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-cream-muted">

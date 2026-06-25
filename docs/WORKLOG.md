@@ -6,6 +6,56 @@
 
 ---
 
+## 2026-06-25 · Design REVISION — HOME RH3a: components (Logo mark · darker AgentCard · on-light footer)
+
+**Done** (branch `chore/design-revision-home-components`, off the RH2 tip `dbdb2c4`; `main`+`develop`
+FROZEN at `04b6a1b`, untouched; no PR). **Split into RH3a (this) + RH3b (deferred, see below).**
+
+- **`Logo` (NEW, #12 "Verified Roofline"):** roofline-check **mark** (bespoke SVG per the handoff
+  Logo spec) + the tri-tone wordmark; em-sized via parent font-size (`<Logo className="text-xl" />`).
+  No existing mark asset was found → built it. On navy: mark = bright gold gradient. On ivory/
+  champagne (`onIvory`): mark + "Fair" = solid `--gold-on-light #8C5E12` (the bright gradient
+  ≈disappears on light, README §8). Reuses `Wordmark` for the word. Wired into the **Header** (full
+  lockup, mark now visible — previously text-only) and the **Footer** (on-light).
+- **`Wordmark` on-light fix:** when `onIvory`, "Fair" now renders `--gold-on-light #8C5E12` (was the
+  bright `.gold-title` gradient — invisible on champagne).
+- **`ConsultantCard` darken (handoff §A.2):** fill → solid `--surface-card-solid #0c1d39` (was the
+  translucent `.035`); dropped the now-inert backdrop-blur. Featured (#1 / Home spotlight) merit
+  score → **56px** (others stay 38px). #18 gating + #37 motion preserved. **AA improved** — see below.
+- **`Footer`:** on-light `Logo` (tagline on); body links + tagline + bottom row → `--champagne-ink
+  #2b2415` (was `-ink-muted`, per README §8). Section background unchanged (slim fade is RH4).
+
+**AA (computed, fail-closed):**
+- ConsultantCard text on solid `#0c1d39`: cream-muted **.70 → 7.82:1** (was ~4.66 on the
+  translucent fill), body .78 **9.44**, strong **14.92**, gold-500 **9.05**, green-strong **8.97** — all ✅.
+- Footer on champagne `#ece2cb`: links/body `#2b2415` **11.94** ✅; col labels `#7c5a12` **4.90** ✅;
+  "Fair"/mark `#8C5E12` **4.38** — this is the **brand logotype** (WCAG 1.4.3 logo exemption) and the
+  mark is a graphic (≥3:1); the handoff mandates `--gold-on-light` here, and **no real body text is
+  sub-4.5**, so fail-closed holds. (On ivory #fbf8f2 the same value is 5.32, #53a.)
+
+**Green + smoke:** `pnpm build` ✅ · `tsc --noEmit` ✅ (exit 0) · `eslint` ✅ 0/0. `next start`:
+`/`, `/consultores`, `/consultores/ana-silva`, `/en`, `/en/consultants` all **200** (Home NOT
+recomposed — current sections render with the darker cards + the mark Logo); roofline mark renders
+in header + footer; cards on `#0c1d39`.
+
+**Changed:** new `components/Logo.tsx`; `components/Wordmark.tsx`, `Header.tsx`, `ConsultantCard.tsx`,
+`Footer.tsx`, `components/index.ts`; `docs/DESIGN-HOME-PLAN.md` (RH3a ✅ / RH3b deferred), this worklog.
+No DECISIONS entry (RH5 consolidates #65+). The hero video/poster were **not** staged (RH3b assets).
+
+**RH3b DEFERRED — blocked on tooling:** steps 4–6 (video optimization + `HeroMedia` + staged hero
+entrance) need a transcoder; the host has **no `ffmpeg`/`ffprobe`/`avconv`/`imageio-ffmpeg`**, so the
+**8.37 MB / 5.0s** `public/videos/hero.mp4` can't be compressed. Per §0 I won't fake the optimization
+or ship an 8 MB hero. **To resume RH3b:** install `ffmpeg` on the host (e.g. `pip install
+imageio-ffmpeg` for a bundled static binary, or the system package) **or** provide a pre-optimized
+`hero.mp4` (target ~2.5–4 MB, ≤1080p, clean ~8–12s loop) + WebM alternate. Suggested command once
+available: `ffmpeg -i hero-original.mp4 -t 12 -vf scale=-2:1080 -c:v libx264 -crf 24 -preset slow
+-pix_fmt yuv420p -an -movflags +faststart hero.mp4`.
+
+**Next:** RH3b (HeroMedia + entrance + video) once ffmpeg is sorted, then RH4 (Home recomposition).
+Still UNMERGED; promotion separate.
+
+---
+
 ## 2026-06-25 · Design REVISION — HOME RH2: system deltas (additive tokens + fade helper)
 
 **Done** (branch `chore/design-revision-home-tokens`, off the RH1 plan tip `7c78022`;
