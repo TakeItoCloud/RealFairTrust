@@ -13,9 +13,12 @@
 // HeroMedia) starts only after the entrance (startDelay 2750ms). #37.
 import { useEffect, useLayoutEffect, type ReactNode } from 'react'
 import { motion, useAnimationControls, useReducedMotion } from 'framer-motion'
+import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/ui'
 import { HeroMedia, type HeroBeat } from './HeroMedia'
+
+type Href = Parameters<typeof Link>[0]['href']
 
 const ENTRANCE_EASE = [0.2, 0.62, 0.2, 1] as const
 // useLayoutEffect on the client (hide before paint → no flash); useEffect on the server (no warn).
@@ -77,6 +80,8 @@ export function HeroFullBleed({
   subtitle,
   ctaPrimary,
   ctaSecondary,
+  ctaPrimaryHref,
+  ctaSecondaryHref,
   scrollCue,
   beats,
   ariaLabel,
@@ -86,6 +91,9 @@ export function HeroFullBleed({
   subtitle: string
   ctaPrimary: string
   ctaSecondary: string
+  /** Optional typed routes — when set, the CTAs navigate (live Home); omit for a static demo. */
+  ctaPrimaryHref?: Href
+  ctaSecondaryHref?: Href
   scrollCue: string
   beats: HeroBeat[]
   ariaLabel?: string
@@ -134,10 +142,24 @@ export function HeroFullBleed({
         </Staged>
 
         <Staged delay={2100} dur={540} className="mt-3 flex flex-wrap gap-3.5">
-          <Button size="lg">{ctaPrimary}</Button>
-          <Button size="lg" variant="secondary">
-            {ctaSecondary}
-          </Button>
+          {ctaPrimaryHref ? (
+            <Link href={ctaPrimaryHref}>
+              <Button size="lg">{ctaPrimary}</Button>
+            </Link>
+          ) : (
+            <Button size="lg">{ctaPrimary}</Button>
+          )}
+          {ctaSecondaryHref ? (
+            <Link href={ctaSecondaryHref}>
+              <Button size="lg" variant="secondary">
+                {ctaSecondary}
+              </Button>
+            </Link>
+          ) : (
+            <Button size="lg" variant="secondary">
+              {ctaSecondary}
+            </Button>
+          )}
         </Staged>
       </div>
 

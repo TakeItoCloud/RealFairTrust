@@ -43,7 +43,7 @@ export function Footer() {
   const tf = useTranslations('footer')
 
   return (
-    <footer className="border-t border-[var(--champagne-border)] bg-[var(--champagne)] text-[var(--champagne-ink-muted)]">
+    <footer className="rft-champagne rft-champagne--fade-top text-[var(--champagne-ink-muted)]">
       <div className="container-page py-14">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-1">

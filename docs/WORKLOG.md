@@ -6,6 +6,76 @@
 
 ---
 
+## 2026-06-25 · Design REVISION — HOME RH4: recompose the live Home to the full-bleed kit
+
+**Done** (branch `chore/design-revision-home-compose`, off RH3b tip `6dbba0f`; `main`+`develop`
+FROZEN at `04b6a1b`, untouched; no PR). **The Home is now preview-ready.**
+
+**`app/[locale]/page.tsx` rebuilt section-by-section to the home handoff:**
+1. **Hero** — the search-pill `HomeHero` replaced by **`HeroFullBleed`** (RH3b), full-bleed 84vh
+   breakout under the sticky nav; video `/videos/hero.mp4` + poster; CTAs link
+   ("Encontrar consultor" → /consultores, "Ver imóveis" → /comprar; added optional CTA hrefs to
+   HeroFullBleed); Real/Fair/Trust beats from i18n; EXPLORAR cue.
+2. **Top este mês** (navy) — eyebrow + "Consultores em destaque" + "Ver ranking completo →"; the
+   **featured #1** ConsultantCard (`featured`, 56px merit) on a **gold-glow pedestal** with the
+   green **"+6 lugares · últimos 90 dias"** floating badge pinned upper-right; then the **3-card
+   row** (#2–#4). Mapped to OUR ranked seed (#1 = ana-silva); #18 gating + #37 motion preserved.
+3. **Como funciona** (champagne) — `HowItWorks` + `.rft-champagne--fade-both` slim fades; new copy
+   ("Onde o Desempenho Encontra o Imobiliário" + lede + 3 step-cards).
+4. **Imóveis em destaque** (navy) — 3 PropertyCards from seed (#20 demo chips, green cert #52).
+5. **Para consultores** (navy) — gold-glow CTA panel; "O <gold>sucesso</gold> depende de ti." +
+   2 paragraphs + a **3-item feature row with gold lucide line-icons** (star / bar-chart / users —
+   added `IconBarChart`, `IconUsers`; **replaced the handoff's ⭐📊🤝 emoji**) + one button
+   "Vem Ser Reconhecido" → /consultores/aderir.
+6. **Footer** (champagne, shared) — `.rft-champagne--fade-top` slim top fade (dropped the hard
+   border-top); on-light Logo + champagne-ink (from RH3a).
+
+- **i18n** (`home`, both locales, **parity verified**): added `hero.{line1,line2,ctaFind,ctaView,
+  scrollCue}`, `brand.{realPhrase,fairPhrase,trustPhrase}`, `topMonth.{eyebrow,title,seeAll,
+  floatingBadge}`, `agentCta.{body1,body2,feature1,feature2,feature3,button}`; rewrote
+  `howItWorks.*`; **removed** the search-pill keys (`hero.{eyebrow,headline,cityLabel,
+  searchPlaceholder,searchButton,trust*,statValue,statCaption}`), `leaderboard.*` (→`topMonth`),
+  `agentCta.{apply,methodology}` (→ single `button`). No external consumers of the removed keys.
+- **Removed:** the search-pill `components/home/HomeHero.tsx` (deleted; only the Home used it).
+
+**AA-at-render (computed, fail-closed):**
+
+| Element | bg | ratio | verdict |
+|---|---|---|---|
+| Hero sub-text (cream 19px) | scrim/worst frame | 6.52:1 (carried RH3b) | ✅ |
+| Brand-reveal phrase / scroll cue | radial scrim / .88 | 7.44–12.24 / 7.46 | ✅ |
+| "+6 lugares" green badge `#3fb984` | solid `#0c1d39` | **6.78:1** | ✅ |
+| CTA feature labels (cream) / gold icons `#efb52a` | CTA panel | 13.05 / 7.92 | ✅ |
+| Champagne eyebrow `#7c5a12` / ink `#2b2415` / ink-muted `#5c5340` | `#ece2cb` | 4.90 / 11.94 / 5.89 | ✅ |
+| Step-card text on `#0c1d39` (cream / muted .70) | `#0c1d39` | 14.92 / 7.82 | ✅ |
+| ConsultantCard text on `#0c1d39` | (carried RH3a) | 7.82 (muted) | ✅ |
+| Footer link `#2b2415` / logo `#8C5E12` | `#ece2cb` | 11.94 / 4.38 (logo-exempt) | ✅ |
+
+**Green + smoke:** `pnpm build` ✅ · `tsc` ✅ (exit 0) · `eslint` ✅ 0/0. `next start`: `/`, `/en`,
+`/consultores`, `/consultores/ana-silva`, `/en/consultants` all **200**; Home renders the full
+composition (7 cards: featured + 3 consultants + 3 listings); **hero headline visible in SSR (0
+`opacity:0` in the headline region → export-safe, no blank)**; **champagne confined to Como-funciona
++ footer** (`/consultores` has `fade-both`=0, only the footer).
+
+**DEVIATION flagged for sign-off:** the handoff §8 footer is **3 columns (Navegação · Contacto ·
+Legal)** with Contacto = street addresses + email and Legal incl. "Metodologia". I **kept the
+existing 4-column real-route footer** (Explore/For-consultants/Company/Legal) + applied the slim
+fade, rather than inject **placeholder business contact info** (Lisboa/Porto addresses,
+ola@realfairtrust.pt) site-wide and drop the Sobre/Recursos nav (§0: those are unverified business
+facts). Confirm whether to adopt the handoff's 3-column footer (with real contact details) in a
+follow-up.
+
+**Changed:** `app/[locale]/page.tsx`, `components/home/HeroFullBleed.tsx` (CTA hrefs),
+`components/home/HowItWorks.tsx` (fade), `components/Footer.tsx` (fade), `components/ui/icons.tsx`
+(+BarChart/Users), `messages/{pt,en}.json` (home), `docs/DESIGN-HOME-PLAN.md` (RH4 ✅), this worklog;
+**deleted** `components/home/HomeHero.tsx`. No DECISIONS entry (RH5 consolidates #65+).
+
+**Next:** RH5 — consolidate AA + log DECISIONS (#65+: Home-video revision, hero clamp, AgentCard
+solid fill, `--gold-on-light`, on-light wordmark, slim fades) + refresh PROJECT-STATE. Still
+UNMERGED; promotion separate.
+
+---
+
 ## 2026-06-25 · Design REVISION — HOME RH3b: video optimization + HeroMedia + staged entrance
 
 **Done** (same branch `chore/design-revision-home-components`, continuing from RH3a `de0af26`;

@@ -21,7 +21,7 @@ export function HowItWorks() {
   ]
 
   return (
-    <section className="rft-champagne">
+    <section className="rft-champagne rft-champagne--fade-both">
       <div className="container-page py-20 md:py-24">
         <div className="flex max-w-2xl flex-col gap-3.5">
           <Eyebrow tone="champagne">{t('eyebrow')}</Eyebrow>

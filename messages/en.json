@@ -45,45 +45,49 @@
   },
   "home": {
     "hero": {
-      "eyebrow": "Performance you can see",
-      "headline": "The best consultants, chosen on <gold>merit</gold>.",
-      "subtitle": "The real-estate marketplace where consultant performance is measured fairly, updated every month and shown openly. Lisbon & Porto.",
-      "cityLabel": "City",
-      "searchPlaceholder": "Area, speciality or name",
-      "searchButton": "Search",
-      "trustVerified": "Verified consultants",
-      "trustMonthly": "Monthly ranking",
-      "trustCities": "Lisbon & Porto",
-      "statValue": "+6 places",
-      "statCaption": "in the last 90 days"
+      "line1": "The future of real estate",
+      "line2": "is in each of us.",
+      "subtitle": "The real-estate marketplace where consultants' performance is measured fairly, updated every month, and shown openly. Lisbon & Porto.",
+      "ctaFind": "Find a consultant",
+      "ctaView": "Browse properties",
+      "scrollCue": "Explore"
+    },
+    "brand": {
+      "realPhrase": "People before properties.",
+      "fairPhrase": "Merit, not seniority.",
+      "trustPhrase": "Confidence through transparency."
+    },
+    "topMonth": {
+      "eyebrow": "Top this month",
+      "title": "Featured consultants",
+      "seeAll": "See full ranking",
+      "floatingBadge": "+6 places · last 90 days"
     },
     "howItWorks": {
       "eyebrow": "How it works",
-      "title": "Trust that's earned, not claimed.",
-      "lede": "A periodic, transparent rating engine. Everything else — listings, profiles, contacts — rests on the credibility it creates.",
+      "title": "Where Performance Meets Real Estate",
+      "lede": "Every consultant is judged by the same criteria, in plain sight. No paid placements, no favours — just real performance, recalculated every month.",
       "step1Title": "Merit over volume",
-      "step1Desc": "Consultants are judged on quality per opportunity — satisfaction, close rate, response — not deal count.",
+      "step1Desc": "Position reflects verified results — close rate, response time and satisfaction — not the number of listings published.",
       "step2Title": "A race that resets",
-      "step2Desc": "A rolling 90-day window, recomputed every month. Veterans don't bury newcomers; the top must be earned, always.",
+      "step2Desc": "The ranking restarts every month. Recent performance is what counts; no one is stuck with what they did years ago.",
       "step3Title": "Fair to newcomers",
-      "step3Desc": "A dedicated Rising Talent board gives visibility to consultants active under 6 months, before they have a full track record."
-    },
-    "leaderboard": {
-      "eyebrow": "Top this month",
-      "title": "Consultants in the spotlight",
-      "seeAll": "See full ranking"
+      "step3Desc": "Those who start with good service rise fast. Seniority doesn't buy a place at the top — the work does."
     },
     "featured": {
-      "eyebrow": "Featured listings",
+      "eyebrow": "Featured properties",
       "title": "Listed by top consultants",
-      "seeAll": "See all listings"
+      "seeAll": "See all properties"
     },
     "agentCta": {
       "eyebrow": "For consultants",
-      "title": "Compete on <gold>merit</gold>, not seniority.",
-      "body": "Visibility earned through performance, real client leads and tools to grow. A progressive split that rewards quality.",
-      "apply": "Apply as a consultant",
-      "methodology": "See the methodology"
+      "title": "<gold>Success</gold> depends on you.",
+      "body1": "Through a transparent evaluation and ranking system, your performance gains visibility.",
+      "body2": "We genuinely value every consultant's work, in a model where merit, performance and results are recognised fairly.",
+      "feature1": "Transparent evaluation",
+      "feature2": "Performance-based ranking",
+      "feature3": "Visible to clients",
+      "button": "Come Be Recognized"
     }
   },
   "consultores": {

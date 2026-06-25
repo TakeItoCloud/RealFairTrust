@@ -26,6 +26,8 @@ import {
   RefreshCw,
   Globe,
   Menu,
+  BarChart3,
+  Users,
 } from 'lucide-react'
 
 function icon(Glyph: LucideIcon, fixed?: LucideProps) {
@@ -70,3 +72,5 @@ export const IconScale = icon(Scale)
 export const IconRefresh = icon(RefreshCw)
 export const IconGlobe = icon(Globe)
 export const IconMenu = icon(Menu)
+export const IconBarChart = icon(BarChart3)
+export const IconUsers = icon(Users)

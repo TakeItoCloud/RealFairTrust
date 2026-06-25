@@ -45,33 +45,34 @@
   },
   "home": {
     "hero": {
-      "eyebrow": "Desempenho que se vê",
-      "headline": "Os melhores consultores, escolhidos por <gold>mérito</gold>.",
-      "subtitle": "O marketplace imobiliário onde o desempenho dos consultores é medido com justiça, atualizado todos os meses e mostrado abertamente. Lisboa e Porto.",
-      "cityLabel": "Cidade",
-      "searchPlaceholder": "Zona, especialidade ou nome",
-      "searchButton": "Procurar",
-      "trustVerified": "Consultores verificados",
-      "trustMonthly": "Ranking mensal",
-      "trustCities": "Lisboa e Porto",
-      "statValue": "+6 lugares",
-      "statCaption": "nos últimos 90 dias"
+      "line1": "O futuro do imobiliário",
+      "line2": "está em cada um de nós.",
+      "subtitle": "O marketplace imobiliário onde o desempenho dos consultores é medido com justiça, atualizado todos os meses e mostrado abertamente. Lisboa & Porto.",
+      "ctaFind": "Encontrar consultor",
+      "ctaView": "Ver imóveis",
+      "scrollCue": "Explorar"
+    },
+    "brand": {
+      "realPhrase": "Pessoas antes de imóveis.",
+      "fairPhrase": "Mérito, não antiguidade.",
+      "trustPhrase": "Confiança pela transparência."
+    },
+    "topMonth": {
+      "eyebrow": "Top este mês",
+      "title": "Consultores em destaque",
+      "seeAll": "Ver ranking completo",
+      "floatingBadge": "+6 lugares · últimos 90 dias"
     },
     "howItWorks": {
       "eyebrow": "Como funciona",
-      "title": "Confiança que se ganha, não que se afirma.",
-      "lede": "Um motor de avaliação periódico e transparente. Tudo o resto — imóveis, perfis, contactos — assenta na credibilidade que ele cria.",
+      "title": "Onde o Desempenho Encontra o Imobiliário",
+      "lede": "Cada consultor é avaliado pelos mesmos critérios, à vista de todos. Sem destaques pagos, sem favores — só desempenho real, recalculado todos os meses.",
       "step1Title": "Mérito sobre volume",
-      "step1Desc": "Os consultores são avaliados pela qualidade por oportunidade — satisfação, taxa de fecho, resposta — e não pelo número de negócios.",
+      "step1Desc": "A posição reflete resultados verificados — taxa de fecho, tempo de resposta e satisfação — não o número de anúncios publicados.",
       "step2Title": "Uma corrida que reinicia",
-      "step2Desc": "Janela móvel de 90 dias, recalculada todos os meses. Os veteranos não enterram quem chega; o topo tem de ser merecido sempre.",
+      "step2Desc": "O ranking recomeça todos os meses. O desempenho recente é o que conta; ninguém fica preso ao que fez há anos.",
       "step3Title": "Justo para quem começa",
-      "step3Desc": "Um quadro Rising Talent dedicado dá visibilidade a consultores com menos de 6 meses, antes de terem um histórico completo."
-    },
-    "leaderboard": {
-      "eyebrow": "Top este mês",
-      "title": "Consultores em destaque",
-      "seeAll": "Ver ranking completo"
+      "step3Desc": "Quem entra com bom serviço sobe depressa. A antiguidade não compra lugares no topo — o trabalho, sim."
     },
     "featured": {
       "eyebrow": "Imóveis em destaque",
@@ -80,10 +81,13 @@
     },
     "agentCta": {
       "eyebrow": "Para consultores",
-      "title": "Concorra por <gold>mérito</gold>, não por antiguidade.",
-      "body": "Visibilidade ganha pelo desempenho, leads de clientes reais e ferramentas para crescer. Split progressivo que premeia a qualidade.",
-      "apply": "Candidatar-me como consultor",
-      "methodology": "Ver a metodologia"
+      "title": "O <gold>sucesso</gold> depende de ti.",
+      "body1": "Através de um sistema transparente de avaliação e ranking, o teu desempenho ganha visibilidade.",
+      "body2": "Valorizamos verdadeiramente o trabalho de cada consultor, num modelo onde mérito, desempenho e resultados são reconhecidos de forma justa.",
+      "feature1": "Avaliação transparente",
+      "feature2": "Ranking baseado em desempenho",
+      "feature3": "Visível para clientes",
+      "button": "Vem Ser Reconhecido"
     }
   },
   "consultores": {
