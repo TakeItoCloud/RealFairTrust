@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Discovery / Listing page" description="RealFairTrust property discovery — one page for /comprar & /arrendar: sticky nav, navy header, inset filter well, PropertyCard grid, pagination, empty state, consultant CTA band, champagne footer" -->
+<helmet>
+<script src="./ds-base.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&amp;display=swap">
+<style>
+  footer.rft-champagne a { color: var(--champagne-ink) !important; }
+  /* Results grid — exact 3 / 2 / 1 breakpoints (can't be expressed inline) */
+  .rft-results { display:grid; grid-template-columns:repeat(3, 1fr); gap:22px; align-items:stretch; }
+  @media (max-width: 980px){ .rft-results { grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width: 640px){ .rft-results { grid-template-columns:1fr; } }
+  /* Calm staggered entrance for the cards (visible end-state is the base) */
+  @media (prefers-reduced-motion: no-preference){
+    .rft-results > * { opacity:0; transform:translateY(14px); animation:rft-rise 520ms var(--ease-out) forwards; }
+    .rft-results > *:nth-child(1){ animation-delay:40ms } .rft-results > *:nth-child(2){ animation-delay:90ms }
+    .rft-results > *:nth-child(3){ animation-delay:140ms } .rft-results > *:nth-child(4){ animation-delay:190ms }
+    .rft-results > *:nth-child(5){ animation-delay:240ms } .rft-results > *:nth-child(6){ animation-delay:290ms }
+    .rft-results > *:nth-child(7){ animation-delay:340ms } .rft-results > *:nth-child(8){ animation-delay:390ms }
+    .rft-results > *:nth-child(9){ animation-delay:440ms }
+  }
+  @keyframes rft-rise { to { opacity:1; transform:translateY(0); } }
+</style>
+</helmet>
+
+<div style="width:100%; overflow-x:hidden;">
+
+  <!-- ===================== NAV (existing sticky nav) ===================== -->
+  <header style="position:sticky; top:0; z-index:60; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); background:rgba(6,15,34,0.74); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:1200px; margin:0 auto; padding:13px 32px; display:flex; align-items:center; justify-content:space-between; gap:28px;">
+      <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Logo" variant="full" size="{{ 20 }}" hint-size="190px,34px"></x-import>
+      <nav style="display:flex; align-items:center; gap:30px;">
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:600; color:var(--gold-200);">Comprar</a>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Arrendar</a>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Vender</a>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Consultores</a>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Como funciona</a>
+      </nav>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <div style="display:inline-flex; align-items:center; gap:2px; padding:3px; border-radius:999px; border:1px solid var(--hairline-strong); background:var(--surface-inset);">
+          <span style="padding:4px 11px; border-radius:999px; background:var(--gold-tint); color:var(--gold-200); font-family:var(--font-body); font-size:12px; font-weight:600;">PT</span>
+          <span style="padding:4px 11px; color:var(--text-muted); font-family:var(--font-body); font-size:12px; font-weight:600;">EN</span>
+        </div>
+        <a href="#" style="font-family:var(--font-body); font-size:14px; font-weight:500; color:var(--text-body);">Entrar</a>
+        <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="primary" size="md" hint-size="210px,44px">Falar com um consultor</x-import>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== SECTION 1 · PAGE HEADER ===================== -->
+  <section data-screen-label="Discovery header" style="max-width:1200px; margin:0 auto; padding:56px 32px 28px;">
+    <div style="display:flex; flex-direction:column; gap:16px; max-width:760px;">
+      <span class="rft-eyebrow">{{ eyebrow }}</span>
+      <h1 style="font-family:var(--font-display); font-weight:600; font-size:42px; line-height:1.08; letter-spacing:-0.016em; color:var(--text-strong); margin:0;">{{ headingPre }} </h1>
+      <p style="font-family:var(--font-body); font-size:18px; color:var(--text-body); line-height:1.55; margin:0; max-width:600px;">Uma seleção de imóveis, apresentada pelos consultores mais bem avaliados.</p>
+    </div>
+    <div style="display:flex; align-items:baseline; gap:10px; margin-top:22px;">
+      <span style="font-family:var(--font-display); font-weight:600; font-size:24px; color:var(--text-strong); letter-spacing:-0.01em;">{{ count }}</span>
+      <span style="font-family:var(--font-body); font-size:15px; color:var(--text-muted);">imóveis {{ dealVerb }}</span>
+    </div>
+  </section>
+
+  <!-- ===================== DESIGNER NOTE · RENT VARIANT ===================== -->
+  <sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}">
+  <section style="max-width:1200px; margin:0 auto; padding:0 32px 22px;">
+    <div style="display:flex; align-items:flex-start; gap:12px; padding:13px 16px; border:1px dashed var(--hairline-strong); border-radius:var(--radius-md); background:var(--surface-inset);">
+      <span style="font-family:var(--font-body); font-size:10.5px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold-300); white-space:nowrap; padding-top:2px;">Nota · /arrendar</span>
+      <p style="font-family:var(--font-body); font-size:12.5px; line-height:1.55; color:var(--text-muted); margin:0;">Esta página serve <b style="color:var(--text-body);">/comprar</b> e <b style="color:var(--text-body);">/arrendar</b> — mesmo layout. Em <b style="color:var(--text-body);">Arrendar</b> mudam: o eyebrow (<b style="color:var(--text-body);">ARRENDAR</b>), o título, o filtro de Preço passa a <b style="color:var(--text-body);">bandas €/mês</b>, e cada cartão mostra preço com sufixo <b style="color:var(--text-body);">/mês</b> + chip <b style="color:var(--text-body);">Arrenda</b>. Alterne em <b style="color:var(--text-body);">Tweaks → Tipo de negócio</b> para ver a variante.</p>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ===================== SECTION 2 · FILTER WELL ===================== -->
+  <section style="max-width:1200px; margin:0 auto; padding:0 32px 18px;">
+    <div style="border:1px solid var(--hairline); border-radius:var(--radius-lg); background:var(--surface-inset); box-shadow:inset 0 1px 0 rgba(245,241,234,0.04); padding:20px 22px;">
+      <div style="display:flex; flex-wrap:wrap; align-items:flex-end; gap:16px;">
+        <div style="width:150px;">
+          <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Select" label="Localização" options="{{ cityOptions }}" hint-size="100%,66px"></x-import>
+        </div>
+        <div style="flex:1 1 190px; min-width:170px;">
+          <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Input" label="Zona" placeholder="ex.: Príncipe Real, Foz…" hint-size="100%,66px"></x-import>
+        </div>
+        <div style="width:168px;">
+          <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Select" label="Tipo" options="{{ typeOptions }}" hint-size="100%,66px"></x-import>
+        </div>
+        <div style="width:188px;">
+          <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Select" label="{{ priceLabel }}" options="{{ priceOptions }}" hint-size="100%,66px"></x-import>
+        </div>
+        <div style="width:140px;">
+          <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Select" label="Quartos" options="{{ roomOptions }}" hint-size="100%,66px"></x-import>
+        </div>
+        <div style="padding-bottom:1px;">
+          <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="primary" size="md" hint-size="120px,44px">Filtrar</x-import>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; margin-top:18px; padding-top:16px; border-top:1px solid var(--hairline);">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-family:var(--font-body); font-size:13px; color:var(--text-muted);">A mostrar <b style="color:var(--text-body); font-weight:600;">{{ pageRange }}</b> de {{ count }}</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-family:var(--font-body); font-size:13px; font-weight:500; color:var(--text-muted); white-space:nowrap;">Ordenar</span>
+          <div style="width:184px;">
+            <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Select" options="{{ sortOptions }}" hint-size="100%,44px"></x-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 3 · RESULTS / EMPTY ===================== -->
+  <section data-screen-label="Discovery results" style="max-width:1200px; margin:0 auto; padding:24px 32px 16px;">
+
+    <!-- RESULTS GRID -->
+    <sc-if value="{{ isResults }}" hint-placeholder-val="{{ true }}">
+    <div class="rft-results">
+      <sc-for list="{{ properties }}" as="p" hint-placeholder-count="9">
+        <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.PropertyCard" image="{{ p.image }}" price="{{ p.price }}" price-suffix="{{ p.priceSuffix }}" title="{{ p.title }}" location="{{ p.location }}" deal="{{ p.deal }}" beds="{{ p.beds }}" baths="{{ p.baths }}" area="{{ p.area }}" energy="{{ p.energy }}" demo="{{ demo }}" agent-name="{{ p.agentName }}" agent-photo="{{ p.agentPhoto }}" hint-size="100%,430px"></x-import>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <!-- EMPTY STATE -->
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:20px; max-width:520px; margin:40px auto 28px; padding:56px 40px; border:1px solid var(--hairline); border-radius:var(--radius-xl); background:var(--surface-card); box-shadow:var(--shadow-card);">
+      <span style="display:inline-flex; align-items:center; justify-content:center; width:64px; height:64px; border-radius:50%; border:1px solid var(--hairline-strong); background:var(--surface-inset);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold-300)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.3-4.3"></path><circle cx="11" cy="11" r="7"></circle><path d="M8 11h6"></path></svg>
+      </span>
+      <h3 style="font-family:var(--font-display); font-weight:600; font-size:26px; line-height:1.15; letter-spacing:-0.01em; color:var(--text-strong); margin:0;">Sem imóveis para estes filtros.</h3>
+      <p style="font-family:var(--font-body); font-size:15px; line-height:1.6; color:var(--text-muted); margin:0; max-width:380px;">Experimente alargar a zona, ajustar a banda de preço ou limpar os filtros para ver todos os imóveis disponíveis.</p>
+      <div style="margin-top:4px;">
+        <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="secondary" size="md" hint-size="150px,44px">Limpar filtros</x-import>
+      </div>
+    </div>
+    </sc-if>
+
+  </section>
+
+  <!-- ===================== SECTION 4 · PAGINATION ===================== -->
+  <sc-if value="{{ isResults }}" hint-placeholder-val="{{ true }}">
+  <section style="max-width:1200px; margin:0 auto; padding:18px 32px 8px;">
+    <nav aria-label="Paginação" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+      <a href="#" aria-label="Anterior" style="display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:50%; border:1px solid var(--hairline); background:var(--surface-card); color:var(--text-faint); font-family:var(--font-body);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+      </a>
+      <a href="#" aria-current="page" style="display:inline-flex; align-items:center; justify-content:center; min-width:42px; height:42px; padding:0 6px; border-radius:50%; background:var(--gradient-gold-button); color:#1a1407; font-family:var(--font-body); font-size:14.5px; font-weight:700; box-shadow:0 6px 18px -8px rgba(227,168,18,0.5);">1</a>
+      <a href="#" style="display:inline-flex; align-items:center; justify-content:center; min-width:42px; height:42px; padding:0 6px; border-radius:50%; border:1px solid var(--hairline); background:var(--surface-card); color:var(--text-body); font-family:var(--font-body); font-size:14.5px; font-weight:600;">2</a>
+      <a href="#" style="display:inline-flex; align-items:center; justify-content:center; min-width:42px; height:42px; padding:0 6px; border-radius:50%; border:1px solid var(--hairline); background:var(--surface-card); color:var(--text-body); font-family:var(--font-body); font-size:14.5px; font-weight:600;">3</a>
+      <a href="#" style="display:inline-flex; align-items:center; justify-content:center; min-width:42px; height:42px; padding:0 6px; border-radius:50%; border:1px solid var(--hairline); background:var(--surface-card); color:var(--text-body); font-family:var(--font-body); font-size:14.5px; font-weight:600;">4</a>
+      <span style="display:inline-flex; align-items:flex-end; justify-content:center; width:30px; height:42px; color:var(--text-faint); font-family:var(--font-body); font-size:15px;">…</span>
+      <a href="#" style="display:inline-flex; align-items:center; justify-content:center; min-width:42px; height:42px; padding:0 6px; border-radius:50%; border:1px solid var(--hairline); background:var(--surface-card); color:var(--text-body); font-family:var(--font-body); font-size:14.5px; font-weight:600;">{{ lastPage }}</a>
+      <a href="#" aria-label="Seguinte" style="display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:50%; border:1px solid var(--hairline-strong); background:var(--surface-card); color:var(--text-body); font-family:var(--font-body);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+      </a>
+    </nav>
+  </section>
+  </sc-if>
+
+  <!-- ===================== SECTION 5 · CONSULTANT CTA BAND ===================== -->
+  <sc-if value="{{ showCta }}" hint-placeholder-val="{{ true }}">
+  <section style="max-width:1200px; margin:0 auto; padding:56px 32px 80px;">
+    <div style="position:relative; border-radius:28px; border:1px solid var(--gold-border); background:linear-gradient(135deg, rgba(18,42,79,0.92), rgba(8,20,40,0.96)); box-shadow:var(--shadow-gold-glow); padding:44px 48px; overflow:hidden; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:28px;">
+      <div style="position:absolute; top:-120px; right:-80px; width:380px; height:380px; border-radius:50%; background:radial-gradient(circle, rgba(227,168,18,0.16), rgba(227,168,18,0) 70%); pointer-events:none;"></div>
+      <div style="position:relative; max-width:560px; display:flex; flex-direction:column; gap:12px;">
+        <span class="rft-eyebrow">Apoio personalizado</span>
+        <h2 style="font-family:var(--font-display); font-weight:600; font-size:30px; line-height:1.12; letter-spacing:-0.015em; color:var(--text-strong); margin:0;">Não encontra o que procura? <span class="rft-gold-text">Fale com um consultor.</span></h2>
+        <p style="font-family:var(--font-body); font-size:15.5px; color:var(--text-body); line-height:1.6; margin:0;">Um consultor avaliado por desempenho ajuda-o a encontrar o imóvel certo — e a saber sempre com quem está a falar.</p>
+      </div>
+      <div style="position:relative;">
+        <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Button" variant="primary" size="lg" hint-size="220px,52px">Falar com um consultor</x-import>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ===================== FOOTER (existing champagne footer) ===================== -->
+  <footer class="rft-champagne" style="padding:72px 0 40px; background:linear-gradient(180deg, rgba(236,226,203,0) 0, var(--champagne) 15px);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 32px;">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:48px; border-bottom:1px solid var(--champagne-border);">
+        <div style="display:flex; flex-direction:column; gap:16px; max-width:300px;">
+          <x-import component-from-global-scope="RealFairTrustDesignSystem_b440fa.Logo" variant="full" size="{{ 22 }}" tagline="{{ true }}" onIvory="{{ true }}" hint-size="220px,46px"></x-import>
+          <p style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink); line-height:1.6; margin:0;">O marketplace onde o mérito dos consultores é medido com justiça e mostrado abertamente.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--champagne-ink); opacity:0.7;">Navegação</span>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Comprar</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Arrendar</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Vender</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Consultores</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--champagne-ink); opacity:0.7;">Contacto</span>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Lisboa · Av. da Liberdade</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Porto · Foz do Douro</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">ola@realfairtrust.pt</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:13px;">
+          <span style="font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--champagne-ink); opacity:0.7;">Legal</span>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Termos</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Privacidade</a>
+          <a href="#" style="font-family:var(--font-body); font-size:14px; color:var(--champagne-ink-muted);">Metodologia</a>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding-top:24px;">
+        <span style="font-family:var(--font-body); font-size:13px; color:var(--champagne-ink);">© 2026 RealFairTrust. Todos os direitos reservados.</span>
+        <span style="display:inline-flex; align-items:center; gap:7px; font-family:var(--font-body); font-size:13px; color:var(--champagne-ink);">Feito em Portugal <span style="font-size:15px;">🇵🇹</span></span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:2200},&quot;dealType&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Comprar&quot;,&quot;Arrendar&quot;],&quot;default&quot;:&quot;Arrendar&quot;,&quot;tsType&quot;:&quot;\&quot;Comprar\&quot; | \&quot;Arrendar\&quot;&quot;},&quot;estado&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Resultados&quot;,&quot;Sem resultados&quot;],&quot;default&quot;:&quot;Resultados&quot;,&quot;tsType&quot;:&quot;\&quot;Resultados\&quot; | \&quot;Sem resultados\&quot;&quot;},&quot;showCta&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showNotes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;demoBadge&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const isRent = (this.props.dealType ?? "Comprar") === "Arrendar";
+    const demo = this.props.demoBadge ?? true;
+    const isEmpty = (this.props.estado ?? "Resultados") === "Sem resultados";
+
+    // ---- base listings (city + specs constant; price differs by deal) ----
+    const base = [
+      { image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80", title: "Apartamento T3 renovado com terraço", location: "Príncipe Real, Lisboa", beds: 3, baths: 2, area: 142, energy: "A", sale: "€ 745 000", rent: "€ 2 600", agentName: "Sofia Marques", agentPhoto: "https://randomuser.me/api/portraits/women/44.jpg" },
+      { image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80", title: "Moradia V4 com jardim e vista rio", location: "Foz do Douro, Porto", beds: 4, baths: 3, area: 320, energy: "A+", sale: "€ 1 250 000", rent: "€ 3 400", agentName: "Miguel Costa", agentPhoto: "https://randomuser.me/api/portraits/men/32.jpg" },
+      { image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=900&q=80", title: "Apartamento T2 mobilado no centro histórico", location: "Chiado, Lisboa", beds: 2, baths: 1, area: 88, energy: "B", sale: "€ 585 000", rent: "€ 2 400", agentName: "Inês Carvalho", agentPhoto: "https://randomuser.me/api/portraits/women/68.jpg" },
+      { image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80", title: "Apartamento T1 com varanda e luz natural", location: "Cedofeita, Porto", beds: 1, baths: 1, area: 56, energy: "B", sale: "€ 295 000", rent: "€ 1 100", agentName: "Tiago Ferreira", agentPhoto: "https://randomuser.me/api/portraits/men/52.jpg" },
+      { image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=900&q=80", title: "Moradia T5 com piscina e jardim", location: "Cascais, Lisboa", beds: 5, baths: 4, area: 410, energy: "A", sale: "€ 1 850 000", rent: "€ 5 200", agentName: "Sofia Marques", agentPhoto: "https://randomuser.me/api/portraits/women/44.jpg" },
+      { image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=900&q=80", title: "Apartamento T3 com vista Tejo", location: "Parque das Nações, Lisboa", beds: 3, baths: 2, area: 135, energy: "A+", sale: "€ 820 000", rent: "€ 2 900", agentName: "Inês Carvalho", agentPhoto: "https://randomuser.me/api/portraits/women/68.jpg" },
+      { image: "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=900&q=80", title: "Loft T0 renovado no centro", location: "Baixa, Porto", beds: 0, baths: 1, area: 45, energy: "C", sale: "€ 235 000", rent: "€ 950", agentName: "Miguel Costa", agentPhoto: "https://randomuser.me/api/portraits/men/32.jpg" },
+      { image: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80", title: "Apartamento T4 de luxo com suite", location: "Avenidas Novas, Lisboa", beds: 4, baths: 3, area: 188, energy: "A", sale: "€ 1 100 000", rent: "€ 3 600", agentName: "Tiago Ferreira", agentPhoto: "https://randomuser.me/api/portraits/men/52.jpg" },
+      { image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80", title: "Apartamento T2 com jardim privativo", location: "Boavista, Porto", beds: 2, baths: 2, area: 96, energy: "B", sale: "€ 430 000", rent: "€ 1 500", agentName: "Inês Carvalho", agentPhoto: "https://randomuser.me/api/portraits/women/68.jpg" },
+    ];
+
+    const properties = base.map((p) => ({
+      image: p.image, title: p.title, location: p.location,
+      beds: p.beds, baths: p.baths, area: p.area, energy: p.energy,
+      agentName: p.agentName, agentPhoto: p.agentPhoto,
+      deal: isRent ? "rent" : "sale",
+      price: isRent ? p.rent : p.sale,
+      priceSuffix: isRent ? "/mês" : null,
+    }));
+
+    // ---- header / labels switch by deal type ----
+    const eyebrow = isRent ? "ARRENDAR" : "COMPRAR";
+    const headingPre = isRent ? "Imóveis para arrendar" : "Imóveis para comprar";
+    const headingCities = "Lisboa & Porto";
+    const dealVerb = isRent ? "para arrendar" : "para comprar";
+    const count = isRent ? "86" : "128";
+    const lastPage = isRent ? "8" : "14";
+    const pageRange = "1–9";
+
+    // ---- filters ----
+    const cityOptions = ["Todas", "Lisboa", "Porto"];
+    const typeOptions = ["Todos os tipos", "Apartamento", "Moradia", "Terreno", "Loft", "Escritório"];
+    const roomOptions = ["Indiferente", "T0", "T1", "T2", "T3", "T4+"];
+    const priceLabel = isRent ? "Preço (€/mês)" : "Preço";
+    const priceOptions = isRent
+      ? ["Qualquer valor", "Até € 1 000", "€ 1 000 – 2 000", "€ 2 000 – 3 500", "€ 3 500 +"]
+      : ["Qualquer valor", "Até € 300 000", "€ 300 000 – 600 000", "€ 600 000 – 1 000 000", "€ 1 000 000 +"];
+    const sortOptions = ["Mais recentes", "Preço ↑", "Preço ↓"];
+
+    return {
+      demo, isResults: !isEmpty, isEmpty,
+      showCta: this.props.showCta ?? true,
+      showNotes: this.props.showNotes ?? true,
+      properties,
+      eyebrow, headingPre, headingCities, dealVerb, count, lastPage, pageRange,
+      cityOptions, typeOptions, roomOptions, priceLabel, priceOptions, sortOptions,
+    };
+  }
+}
+</script>
+</body>
+</html>

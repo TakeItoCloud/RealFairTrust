@@ -1,0 +1,54 @@
+/* ===========================================================================
+   RealFairTrust — Effects: radii, borders, shadows, blur, motion
+   =========================================================================== */
+
+:root {
+  /* --- Corner radii (soft, never sharp; never fully pill except chips) ----- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* --- Borders ------------------------------------------------------------- */
+  --border-hairline: 1px solid var(--hairline);
+  --border-hairline-strong: 1px solid var(--hairline-strong);
+  --border-gold: 1px solid var(--gold-border);
+  --border-gold-soft: 1px solid var(--gold-border-soft);
+  --border-green: 1px solid var(--green-border);
+  --border-ivory: 1px solid var(--ivory-200);
+
+  /* --- Shadows (deep, soft, navy-tinted — content floats on the stage) ----- */
+  --shadow-sm: 0 4px 14px -6px rgba(2, 8, 18, 0.6);
+  --shadow-card: 0 22px 60px -28px rgba(2, 8, 18, 0.9);
+  --shadow-raised: 0 30px 80px -32px rgba(2, 8, 18, 0.95);
+  --shadow-gold-glow: 0 0 0 1px rgba(227, 168, 18, 0.22), 0 18px 50px -18px rgba(227, 168, 18, 0.28);
+  --shadow-green-glow: 0 0 0 1px rgba(63, 185, 132, 0.22), 0 14px 40px -16px rgba(63, 185, 132, 0.22);
+  /* On ivory */
+  --shadow-ivory: 0 18px 44px -24px rgba(28, 41, 66, 0.22);
+
+  /* --- Blur (used sparingly: sticky nav, overlays, frosted panels) --------- */
+  --blur-panel: 18px; /* @kind other */
+  --blur-nav: 14px;   /* @kind other */
+
+  /* --- Motion (calm, no bounce; confident ease) ---------------------------- */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --dur-fast: 140ms; /* @kind other */
+  --dur-base: 220ms; /* @kind other */
+  --dur-slow: 420ms; /* @kind other */
+  --transition-base: all var(--dur-base) var(--ease-out); /* @kind other */
+
+  /* --- Card system (premium redesign) ------------------------------------- */
+  --card-radius: 22px;       /* @kind radius */
+  --card-radius-media: 14px; /* @kind radius */
+  --card-pad: 26px;          /* @kind spacing */
+  --lift-card: -4px;         /* @kind other */
+  --lift-card-media: -5px;   /* @kind other */
+  --img-zoom: 1.06;          /* @kind other */
+  --dur-img: 500ms;          /* @kind other */
+  --accent-bar: linear-gradient(90deg, #ffe6a0, #e3a812); /* @kind color */
+  --overlay-scrim: linear-gradient(180deg, rgba(2,8,18,0) 38%, rgba(2,8,18,0.5) 70%, rgba(2,8,18,0.88) 100%); /* @kind color */
+  --plate-bg: rgba(8,18,38,0.92); /* @kind color */
+}
