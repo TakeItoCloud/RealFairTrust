@@ -33,6 +33,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         ctaSecondary={t('hero.ctaView')}
         ctaSecondaryHref="/comprar"
         scrollCue={t('hero.scrollCue')}
+        scrollToId="top-este-mes"
         ariaLabel={`${t('hero.line1')} ${t('hero.line2')}`}
         beats={[
           { word: 'Real', phrase: t('brand.realPhrase') },
@@ -42,7 +43,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       />
 
       {/* 2 · TOP ESTE MÊS — merit spotlight (navy) */}
-      <SectionWrapper tone="dark">
+      <SectionWrapper tone="dark" id="top-este-mes">
         <Reveal className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <Eyebrow>{t('topMonth.eyebrow')}</Eyebrow>
@@ -65,7 +66,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               style={{ background: 'radial-gradient(56% 58% at 50% 30%, rgba(227,168,18,0.20), transparent 72%)' }}
             />
             <div className="relative" style={{ filter: 'drop-shadow(0 40px 72px rgba(2,8,18,0.6))' }}>
-              <ConsultantCard consultant={featuredConsultant} featured index={0} />
+              <ConsultantCard consultant={featuredConsultant} featured index={0} displayRank={1} />
               <div className="absolute -top-4 right-5 z-10 inline-flex items-center gap-2 rounded-full border border-[var(--green-border)] bg-[var(--surface-card-solid)] px-3.5 py-2 shadow-[var(--shadow-green-glow)]">
                 <IconSparkUp className="text-base text-verified" aria-hidden />
                 <span className="text-[12.5px] font-semibold text-verified">{t('topMonth.floatingBadge')}</span>
@@ -78,7 +79,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         {rowConsultants.length > 0 ? (
           <div className="mt-9 grid gap-5 sm:grid-cols-3">
             {rowConsultants.map((c, i) => (
-              <ConsultantCard key={c.id} consultant={c} index={i + 1} />
+              <ConsultantCard key={c.id} consultant={c} index={i + 1} displayRank={i + 2} />
             ))}
           </div>
         ) : null}

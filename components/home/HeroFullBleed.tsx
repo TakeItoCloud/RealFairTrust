@@ -83,6 +83,7 @@ export function HeroFullBleed({
   ctaPrimaryHref,
   ctaSecondaryHref,
   scrollCue,
+  scrollToId,
   beats,
   ariaLabel,
 }: {
@@ -95,9 +96,21 @@ export function HeroFullBleed({
   ctaPrimaryHref?: Href
   ctaSecondaryHref?: Href
   scrollCue: string
+  /** id of the section to reveal when the EXPLORAR cue is activated (smooth, or instant if reduced). */
+  scrollToId?: string
   beats: HeroBeat[]
   ariaLabel?: string
 }) {
+  const reduceCue = useReducedMotion()
+  function onExplore() {
+    if (typeof document === 'undefined' || !scrollToId) return
+    const el = document.getElementById(scrollToId)
+    if (!el) return
+    // land just below the 64px sticky header
+    const top = el.getBoundingClientRect().top + window.scrollY - 64
+    window.scrollTo({ top, behavior: reduceCue ? 'auto' : 'smooth' })
+  }
+
   return (
     <section
       aria-label={ariaLabel ?? `${line1} ${line2}`}
@@ -163,24 +176,52 @@ export function HeroFullBleed({
         </Staged>
       </div>
 
-      {/* Scroll cue */}
-      <div className="pointer-events-none absolute bottom-[22px] left-1/2 z-[3] flex -translate-x-1/2 flex-col items-center gap-1.5">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cream-muted">{scrollCue}</span>
-        <svg
-          className="rft-scrollcue"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="var(--gold-300)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
+      {/* Scroll cue — an accessible button when wired to a target (live Home); else decorative. */}
+      {scrollToId ? (
+        <button
+          type="button"
+          onClick={onExplore}
+          aria-label={scrollCue}
+          className={cn(
+            'group/cue absolute bottom-[22px] left-1/2 z-[3] flex -translate-x-1/2 cursor-pointer flex-col items-center gap-1.5 rounded-md p-1',
+            'outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold-border)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+          )}
         >
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </div>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cream-muted">{scrollCue}</span>
+          <svg
+            className="rft-scrollcue"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--gold-300)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+      ) : (
+        <div className="pointer-events-none absolute bottom-[22px] left-1/2 z-[3] flex -translate-x-1/2 flex-col items-center gap-1.5">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cream-muted">{scrollCue}</span>
+          <svg
+            className="rft-scrollcue"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--gold-300)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+      )}
     </section>
   )
 }

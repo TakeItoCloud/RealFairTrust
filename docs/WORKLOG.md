@@ -6,6 +6,44 @@
 
 ---
 
+## 2026-06-25 · Design REVISION — HOME RH4 fixes: rank coins + EXPLORE scroll cue
+
+**Done** (same branch `chore/design-revision-home-compose`, off RH4 `db5de62`; `main`+`develop`
+FROZEN at `04b6a1b`, untouched; no PR). Two real bugs from the RH4 Home; the earlier "broken" view
+was a **dev-only HMR websocket failure over the remote host** (not a code issue) — **review via the
+production build (`pnpm build && pnpm start`), NOT `pnpm dev`** on this host.
+
+1. **Rank coins wrong in "Top este mês"** (showed 1·2·2 in the 3-card row). Root cause: the seed's
+   `score.rank` is **per-region** (Lisboa 1–4, Porto 1–4), but `getConsultants({view:'ranked'})`
+   returns a **global** composite-sorted list — so the cross-region spotlight rendered region ranks
+   (featured = joão Porto-1; row = ana Lisboa-1 → "1", pedro Porto-2 → "2", catarina Lisboa-2 → "2").
+   Fix: added an optional **`displayRank`** prop to `ConsultantCard` — the Home passes the **global
+   position** (featured `1`; row `index+2` → 2,3,4), derived from the ranked-list order (not
+   hardcoded). The coin uses `displayRank ?? score.rank`, still **#18-gated** (only when confident).
+   Also gated coin rendering with `showCoin = rank != null && (topRanked || displayRank != null)` so
+   the spotlight shows **all four** positions (RankBadge renders #4 neutral) → row reads 2·3·4, not
+   2·3; the per-region Consultores leaderboard (no `displayRank`) keeps its top-3-only coins.
+   `featured` now keys off the effective rank, so the row's region-#1 (ana) no longer renders as a
+   second featured card. Verified in the prod build: coins **Posição 1·2·3·4**, exactly **one**
+   featured (56px) card (PT and EN).
+2. **EXPLORE/EXPLORAR cue did nothing.** It was a decorative `div`. Now, when `HeroFullBleed` gets a
+   `scrollToId`, it renders an accessible **`<button>`** (native focus + Enter/Space) that
+   smooth-scrolls to that section (offset −64px for the sticky header), or **jumps instantly under
+   `prefers-reduced-motion`**. The Home gives the Top-este-mês `SectionWrapper` `id="top-este-mes"`
+   and passes `scrollToId`. `/dev/hero` (no `scrollToId`) keeps the decorative div — no regression.
+
+**No other changes.** Seed photo 404s (ana-silva.jpg, p-001.jpg, …) remain **expected** (cards fall
+back to initials; real imagery is a 4.5 item) — no placeholder images added.
+
+**Green + prod verify:** `pnpm build` ✅ · `tsc --noEmit` ✅ (exit 0) · `eslint` ✅ 0/0. `pnpm start`:
+`/` + `/en` **200**; coins 1·2·3·4; EXPLORE is a button wired to the present `#top-este-mes` target.
+
+**Changed:** `components/ConsultantCard.tsx` (displayRank + showCoin), `components/home/HeroFullBleed.tsx`
+(scrollToId button), `app/[locale]/page.tsx` (displayRank wiring + section id + scrollToId), this
+worklog. No DECISIONS entry.
+
+---
+
 ## 2026-06-25 · Design REVISION — HOME RH4: recompose the live Home to the full-bleed kit
 
 **Done** (branch `chore/design-revision-home-compose`, off RH3b tip `6dbba0f`; `main`+`develop`

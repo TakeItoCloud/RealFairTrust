@@ -19,12 +19,17 @@ export function ConsultantCard({
   consultant,
   index = 0,
   featured: featuredProp,
+  displayRank,
 }: {
   consultant: ConsultantSummary
   index?: number
   /** Force the "featured" spotlight treatment (kit AgentCard `featured`). Defaults to the
    *  computed #1-confident rule; the Home hero forces it on the top-ranked card. */
   featured?: boolean
+  /** Override the rank-coin number with a context-specific position. The seed's `score.rank` is
+   *  PER-REGION; the Home "Top este mês" is a GLOBAL cross-region leaderboard, so it passes the
+   *  global position (1,2,3,4) here. Omitted elsewhere → the coin falls back to the region rank. */
+  displayRank?: number
 }) {
   const t = useTranslations()
   const reduce = useReducedMotion()
@@ -32,9 +37,14 @@ export function ConsultantCard({
 
   const confident = !!score && !score.risingTalent && score.confidence !== 'low'
   const building = !!score && !score.risingTalent && score.confidence === 'low'
-  const rank = confident ? score?.rank ?? null : null
+  // #18: the coin only shows for statistically-confident consultants. Use the global displayRank
+  // when given, else the per-region score.rank.
+  const rank = confident ? displayRank ?? score?.rank ?? null : null
   const topRanked = rank != null && rank <= 3
-  const featured = featuredProp ?? (confident && score?.rank === 1)
+  // Coin: top-3 get the gold coin everywhere; in the Home spotlight (displayRank given) every
+  // position shows its coin (RankBadge renders 4+ as neutral) so the row reads 2·3·4, not 2·3.
+  const showCoin = rank != null && (topRanked || displayRank != null)
+  const featured = featuredProp ?? (confident && rank === 1)
 
   return (
     <Link
@@ -74,7 +84,7 @@ export function ConsultantCard({
         {/* Top row — rank + avatar + name / score */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3.5">
-            {topRanked && rank != null ? <RankBadge rank={rank} label={t('score.rank')} size={40} /> : null}
+            {showCoin && rank != null ? <RankBadge rank={rank} label={t('score.rank')} size={40} /> : null}
             <Avatar src={consultant.photo} name={consultant.name} size="lg" ring={featured || topRanked} />
             <div className="flex min-w-0 items-center gap-2">
               <p className="truncate font-display text-[21px] font-semibold leading-tight text-cream">
