@@ -190,7 +190,7 @@ FeaturedProperties (navy) → AgentCTA (navy gold-glow) → `Footer` (champagne)
 
 | # | Step | Scope | Status |
 |---|---|---|---|
-| **RH2** | **System deltas** | `--gold-on-light` alias (A.2); slim-15px champagne fade helper/modifier; any token additions the Home needs. Green. | ⬜ Not started |
+| **RH2** | **System deltas** | `--gold-on-light` alias (A.2); slim-15px champagne fade helper/modifier; any token additions the Home needs. Green. | ✅ **Done 2026-06-25** (`chore/design-revision-home-tokens`) — `--gold-on-light: var(--rft-gold-deep)`; `.rft-champagne--fade-both` / `--fade-top` helpers. Both inert (no consumers); green; zero visual change. |
 | **RH3** | **HeroMedia + hero entrance + component changes + video asset** | Build `HeroMedia` (B.1) + the staged entrance with export-safety (B.2); wire `/videos/hero.mp4` + a poster; `ConsultantCard` fill → `#0c1d39` + featured 56px (B.3); `Wordmark` on-light Fair → `#8C5E12` (B.4); (optional `Logo` mark — flagged for sign-off). Green + reduced-motion check. | ⬜ Not started |
 | **RH4** | **Home composition + copy + i18n + seed + AA-at-render** | Rebuild `app/[locale]/page.tsx` to §C (full-bleed hero, Top-este-mês spotlight + floating badge, Como-funciona copy, Imóveis, Para-consultores CTA copy, footer alignment); i18n add/change/remove (PT+EN); seed mapping (#20); measure AA as built (§D). Green. | ⬜ Not started |
 | **RH5** | **AA consolidation + DECISIONS + PROJECT-STATE** | Re-measure the full §D list fail-closed; record any AA deviation; log DECISIONS (#65+: Home-video revision adopted, hero clamp, AgentCard solid fill, `--gold-on-light`, on-light wordmark, slim-fade) + refresh PROJECT-STATE §4/§7/§8/§12. Green. | ⬜ Not started |

@@ -6,6 +6,34 @@
 
 ---
 
+## 2026-06-25 · Design REVISION — HOME RH2: system deltas (additive tokens + fade helper)
+
+**Done** (branch `chore/design-revision-home-tokens`, off the RH1 plan tip `7c78022`;
+`main`+`develop` FROZEN at `04b6a1b`, untouched; no PR). Alias-don't-migrate; ZERO component/page
+changes.
+
+- **`--gold-on-light: var(--rft-gold-deep)`** added to `app/design-tokens.css` — named on-light gold
+  (#8C5E12) for the wordmark/mark on champagne (bright title gold disappears on light). Aliased to
+  the existing `--rft-gold-deep` (same value, #53a). **Inert** — consumed by the footer/Wordmark in RH3.
+- **Slim-15px champagne fade helpers** added to `app/globals.css` (modifiers on `.rft-champagne`,
+  README §1): `.rft-champagne--fade-both` (Como-funciona band, top+bottom) and `.rft-champagne--fade-top`
+  (footer, top only) — dissolve the champagne edge to transparent over a 15px band so the navy stage
+  shows through (no hard line/shadow). They only override `background`; the existing `.rft-champagne`
+  flat fill is unchanged. **Inert** — wired into the Home sections in RH4.
+
+**Verified:** `pnpm build` ✅ · `tsc --noEmit` ✅ (exit 0) · `eslint` ✅ 0/0. Compiled CSS carries
+`--gold-on-light:var(--rft-gold-deep)` + both fade helpers; **no app code consumes them yet** →
+zero visual change to existing pages.
+
+**Changed:** `app/design-tokens.css`, `app/globals.css`, `docs/DESIGN-HOME-PLAN.md` (RH2 ✅), this
+worklog. No DECISIONS entry (RH5 consolidates #65+).
+
+**Next:** RH3 (HeroMedia + staged entrance + `/videos/hero.mp4` + poster; ConsultantCard fill →
+solid `#0c1d39` + featured 56px; Wordmark on-light Fair → `#8C5E12`) on
+`chore/design-revision-home-media` off this branch. Still UNMERGED; promotion separate.
+
+---
+
 ## 2026-06-25 · Design REVISION — HOME handoff RH1 (reconciliation plan only; no app code)
 
 **Done** (branch `chore/design-revision-home-plan`, off the chain tip **`2890d03`** =

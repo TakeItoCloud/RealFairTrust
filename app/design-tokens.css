@@ -143,6 +143,10 @@
   --rft-gold:        var(--gold-500);   /* alias → hand-off source (#e3a812) — small pills/badges/chips/borders/icons */
   --rft-gold-bright: #f0c14a;   /* hover / highlight */
   --rft-gold-deep:   #8C5E12;   /* gold text/links on warm light sections (AA on ivory) */
+  /* Home handoff RH2 (§A.2): named on-light gold for the wordmark/mark on champagne — bright title
+     gold disappears on light surfaces. Aliased to --rft-gold-deep (same #8C5E12, #53a). Consumed
+     by the footer/wordmark in RH3 — inert until then. */
+  --gold-on-light:   var(--rft-gold-deep);
   --rft-on-gold:     #2a1d04;   /* dark text on gold buttons */
   /* .gold-title clip gradient — titles / logo wordmark / prices (fallback = --rft-gold-title-solid) */
   --rft-gold-gradient:      var(--gradient-gold-title);   /* alias → hand-off source */

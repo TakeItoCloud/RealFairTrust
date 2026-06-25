@@ -125,6 +125,23 @@ body {
 .rft-champagne h3,
 .rft-champagne h4 { color: var(--champagne-ink); }
 
+/* Slim 15px navy↔champagne fade (Home handoff RH2, README §1 / DESIGN-HOME-PLAN §A.2). Modifiers on
+   .rft-champagne that dissolve the champagne edge to transparent over a 15px band so the navy stage
+   shows through — no hard line/shadow. Inert until RH4 wires them onto the Home "Como Funciona"
+   band (both edges) + the footer (top edge only). They only override `background`. */
+.rft-champagne--fade-both {
+  background: linear-gradient(
+    180deg,
+    rgba(236, 226, 203, 0) 0,
+    var(--champagne) 15px,
+    var(--champagne) calc(100% - 15px),
+    rgba(236, 226, 203, 0) 100%
+  );
+}
+.rft-champagne--fade-top {
+  background: linear-gradient(180deg, rgba(236, 226, 203, 0) 0, var(--champagne) 15px);
+}
+
 /* Step card — navy card floating on the warm surface, gold coin + gold accent-bar on hover. */
 .rft-step-card {
   position: relative;
