@@ -2,7 +2,7 @@
 
 > **Purpose.** Single orientation document for the project. If you are starting a **new planning chat** (claude.ai) or a **new Claude Code session** (VS Code), read this file first. It holds roles/workflow, locked decisions, the visual system, the **complete phase roadmap**, what is done, what is next, and what is still open. `docs/DECISIONS.md` and `docs/WORKLOG.md` on the machine remain authoritative for the full decision log and per-session history; this file is the high-level snapshot — **keep it in sync every session.**
 >
-> **Last updated:** 2026-06-24 (DESIGN REVISION **R1→R5 COMPLETE** on `chore/design-revision-*` off `develop`; DECISIONS #57–#64 ratified; §4/§7/§8/§10/§12 refreshed to the champagne revision; global AA consolidated. **UNMERGED — main + develop FROZEN at `04b6a1b`** pending promotion approval; this note is branch-only.) Prior: 2026-06-23 (design-apply promoted to `main`; §11 Deployment).
+> **Last updated:** 2026-06-25 (**HOME VIDEO REVISION RH1→RH5 COMPLETE** on the `chore/design-revision-home-*` chain off the champagne revision; the full-bleed cinematic **video hero** is now the Home default; DECISIONS **#65–#76** ratified; §4/§7/§10/§11/§12 refreshed to the shipped video-hero composition; global AA consolidated = all pass; Vercel build-pin verified. **STILL UNMERGED — main + develop FROZEN at `04b6a1b`** pending Carlos's promotion approval; this note is branch-only.) Prior: 2026-06-24 (design REVISION R1→R5; champagne; #57–#64). 2026-06-23 (design-apply promoted to `main`; §11).
 
 ---
 
@@ -69,6 +69,20 @@ GitHub: `github.com/TakeItoCloud/RealFairTrust` (private). Branches: `main → d
 - **#62 — Home composition = the marketing kit** (search-pill hero + featured card + floating stat · champagne HowItWorks · leaderboard · featured · agent-CTA · champagne footer); the "split" + "trust band" sections **REMOVED**.
 - **#63 — Component alignment** (R3): Button = pill (a11y tap targets kept); Select `(string\|{value,label})[]`; Eyebrow `tone="champagne"`; ConsultantCard name kept w/ AgentCard spec (#G); `onIvory ≡ onLight`.
 - **#64 — AA/a11y exceptions** (measured, fail-closed): muted .58→.70 (4.66); navy small-gold #e3a812→**#efb52a** (5.04, shared token); champagne-eyebrow #a9791a→**#7c5a12** (4.90); ivory-label #8C5E12 kept (moot on champagne); verified-ink #157048 carried; hero featured + floating stat raised→**.035** fill (4.66); on-dark green TEXT → **`--green-verified-strong #5fd2a1`** (4.58); verified pill + Badge tinted chips → **solid dark chip** (green 6.78 / gold 9.05).
+
+**HOME VIDEO REVISION decisions, logged as #65–#76 (2026-06-25; RH-series, on the `chore/design-revision-home-*` chain, UNMERGED):**
+- **#65 — Home-page video revision adopted** (new `design/handoff-home/` bundle = supreme Home source of truth; extends #57/#51). **Full-bleed cinematic video hero = DEFAULT** (84vh breakout); contained-panel mode kept in reference only, **not built**. **Supersedes the R4 search-pill Home (#62).**
+- **#66 — Hero headline** "O futuro do imobiliário / está em cada um de nós." (gold-gradient italic line 2); full-bleed h1 uses a **Home-specific clamp ~max 62px**, distinct from the 76 display token (#60).
+- **#67 — Staged hero entrance (~2.6s)** with the **export-safety contract** (base visible; SSR/no-JS/reduced-motion show the final layout instantly — never a blank hero).
+- **#68 — Real/Fair/Trust brand reveal** (crossfade 3000ms, start-delay 2750ms, own radial scrim; reduced-motion → static lines).
+- **#69 — `--gold-on-light #8C5E12`** (named alias of `--rft-gold-deep`) for the on-light wordmark/mark.
+- **#70 — Roofline-mark `Logo` built (#12 finally implemented):** mark + tri-tone wordmark; on-light variant uses **#8C5E12** for "Fair" + mark (logotype exemption, 4.38:1 on champagne).
+- **#71 — AgentCard fill darkened to solid `#0c1d39`** (`--surface-card-solid`); featured merit 56px. **AA win:** muted .70 → **7.82:1**.
+- **#72 — Slim-15px navy↔champagne fade transitions** (`.rft-champagne--fade-both`/`--fade-top`; no hard line/shadow).
+- **#73 — "Top este mês" row:** equal-height cards + full names (no truncation); coins use the **GLOBAL ranked-list position via `displayRank`** (featured 1, row 2/3/4), distinct from the per-region `score.rank` used by the Consultores leaderboard; #18 gating preserved; **EXPLORE scroll cue = accessible button**.
+- **#74 — Hero video optimized 8.0→1.6 MB** (libx264 crf24 +faststart). **KNOWN 4.5 item:** 5s clip has a hard loop seam (SSIM 0.22) → crossfade-loop / longer clip at polish.
+- **#75 — Footer DEVIATION recorded:** kept the existing 4-column real-route footer rather than inject the handoff's 3-col placeholder business contact (addresses/email) — **real contact details pending from Carlos**.
+- **#76 — Seed photo 404s expected** (initials fallback); real imagery is a 4.5 item.
 
 ---
 
@@ -149,9 +163,9 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 
 ---
 
-## 7. VISUAL SYSTEM (authoritative source: `design/handoff/` — the **champagne revision**, #57; shipped on the revision chain, UNMERGED)
+## 7. VISUAL SYSTEM (authoritative source: `design/handoff/` champagne revision #57 + `design/handoff-home/` **Home video revision** #65; shipped on the revision chains, UNMERGED)
 
-**LOCKED (post-revision R1→R5):**
+**LOCKED (post-revision R1→R5 + Home revision RH1→RH5):**
 - **Background (#58):** brighter centred sapphire-navy radial `radial-gradient(ellipse 89% 81% at 50% 48%, #1e4680, #173a63 33%, #0e2545 59%, #081830 81%, #040e20)`, fixed. *(Centre `#1e4680` is the AA worst case.)* Supersedes the #45/#46 radial.
 - **Palette family (only these):** black/near-black, blues with gradients, gold (solid + gradient), grey, white/ivory, **champagne (warm sand)**.
 - **Gold, two roles (#59):** **bright** title gradient **symmetric 90°** `linear-gradient(90deg,#d8950f,#e3a812 16%,#ffe6a0 50%,#e3a812 84%,#d8950f)` (titles/prices/merit); **calm/luxe** button **90°** `linear-gradient(90deg,#c8901f,#e9bb52 28%,#ffe79e 50%,#e9bb52 72%,#c8901f)` (+hover). One bright-gold focal point per view. **Solid/eyebrow gold = `--gold-500` #efb52a** (AA #64b; brightened from #e3a812 — gradient stops keep #e3a812). Ivory eyebrow `#8C5E12`; **champagne eyebrow `#7c5a12`** (#64c/d).
@@ -160,22 +174,25 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 - **Type (#60):** Fraunces + Inter. **Hero 76 / section 42 / display-2 (CTA) 56** / subsection 26 / lead 20 / body 16 / meta 13 / eyebrow 12 (0.2em) / button 15. Supersedes #53(d) (72/40).
 - **Text on navy:** strong `#f5f1ea` / body `.78` / **muted `.70`** (#64a) / faint `.40` (decorative/large only).
 - **Tri-tone wordmark:** Real `#F5F1EA` · Fair = title-gold gradient · Trust `#8A93A3` (on ivory/champagne, Real/Trust → dark ink `#111c30`/`#1c2942`).
-- **Cards:** ConsultantCard "Spotlight" (merit 38px gold, RankBadge coin, ringed avatar, verified pill, stats, "Ver perfil →"; **featured uses the `.035` fill** + gold border + glow + accent, #64f); PropertyCard "Editorial Overlay" (220px media, scrim, frosted deal + gold demo chips, 30px gold price, spec row, agent mini-row "Ver detalhe →"; energy cert green #52). Card tokens: radius 22 / media 14 / pad 26 / lift −4/−5 / img-zoom 1.06 / dur-img 500ms / accent-bar / overlay-scrim / plate-bg. **Buttons = pill** (#63).
+- **Cards:** ConsultantCard "Spotlight" (RankBadge coin, ringed avatar, verified pill, stats, "Ver perfil →"; merit **38px default / 56px featured**; **fill = solid `--surface-card-solid #0c1d39`**, #71 — AA win muted .70 → 7.82:1; supersedes the #64f `.035`-fill note; featured keeps gold border/glow/accent + a Home gold-glow pedestal & floating badge); **equal-height row cards** (`h-full` + `mt-auto`) with full names — no truncation (#73). PropertyCard "Editorial Overlay" (220px media, scrim, frosted deal + gold demo chips, 30px gold price, spec row, agent mini-row "Ver detalhe →"; energy cert green #52). Card tokens: radius 22 / media 14 / pad 26 / lift −4/−5 / img-zoom 1.06 / dur-img 500ms / accent-bar / overlay-scrim / plate-bg. **Buttons = pill** (#63).
+- **HOME composition (shipped video revision #65–#76):** **(1) Hero** = full-bleed cinematic **`HeroFullBleed`** (84vh breakout under the sticky nav) — looping muted `/videos/hero.mp4` (1.6 MB) + Ken-Burns poster, vertical scrim + bottom fade; 2-line h1 "O futuro do imobiliário / *está em cada um de nós.*" (Home clamp ~62px, #66), gold rule, sub, 2 CTAs, "Explorar" scroll-cue button; **staged entrance ~2.6s** (export-safe, #67) + **Real/Fair/Trust brand reveal** (#68). **(2) Top este mês** (navy) — featured #1 on a gold-glow pedestal + "+6 lugares" green badge, then a 3-card row (#2–#4); coins via global `displayRank` (#73). **(3) Como funciona** (champagne, slim fade #72) — new copy "Onde o Desempenho Encontra o Imobiliário" + 3 step-cards. **(4) Imóveis em destaque** (navy) — 3 PropertyCards. **(5) Para consultores** (navy gold-glow) — "O *sucesso* depende de ti." + gold lucide feature row + "Vem Ser Reconhecido". **(6) Footer** (champagne, slim top fade) — on-light Logo + champagne-ink links; **kept 4-col real-route** (#75). Replaces the prior R4 search-pill Home (#62 superseded).
+- **Logo / wordmark:** the roofline-check **mark** is built (#12/#70) + wired into Header + Footer; tri-tone wordmark; **on-light (`onIvory`) mark + "Fair" = `--gold-on-light #8C5E12`** (#69, logotype exemption 4.38:1 on champagne).
 - **Motion (Framer Motion, reduced-motion-safe):** ease-out `cubic-bezier(0.22,0.61,0.36,1)`; entrance opacity+y, stagger 60–80ms; hover lift + accent-bar `scaleX 0→1` + score glow + image zoom; press `y+1`. No bounce/loops.
 - **Icons:** `lucide-react` shim, 2px (#47/#55). **Fonts:** `next/font/google` (#48).
 - **Design authority (#57/#51):** the champagne export is supreme, except where its literal damages WCAG AA/perf → AA-safe deviations kept (the #64 set + #53). README wins on bundle self-contradiction.
 
 **Token files (bundle):** `tokens/{colors,typography,spacing,effects,fonts,base}.css` + `styles.css`. Demos: `card-redesign.html`, `gold-system.html`, **`champagne-full-page.html`**; full screens under `ui_kits/marketing/`.
 
-**Superseded / rejected:** the six non-navy palettes REJECTED; ad-hoc mockup superseded; the **pre-revision look** (180°/160° gold, #122a4f radial, 72/40 type, ivory rhythm) superseded by #57–#64.
+**Superseded / rejected:** the six non-navy palettes REJECTED; ad-hoc mockup superseded; the **pre-revision look** (180°/160° gold, #122a4f radial, 72/40 type, ivory rhythm) superseded by #57–#64; the **R4 search-pill marketing-kit Home** (#62) superseded by the **full-bleed video-hero Home** (#65–#76).
 
 ---
 
 ## 8. DONE / IN PROGRESS / NEXT / TODO
 
 - **DONE:** Phases 0–3; Phase 4.0/4.1/4.2; Phase 4.3 Home + Consultores; design hand-off adopted (#46–#50); governance sync (#51–#53); **design-system application run order 1→6 COMPLETE (#54–#56)** — tokens → primitives → cards → Home variety → profile re-skin, all green + AA; **banked to `develop` (PR #7 merged, merge commit `3d91a99`)**; **promoted to `main` (Vercel production branch) + build hardened (Node 22.x / pnpm 11.4.0 pinned) — Vercel-ready** (see §11).
-- **DONE (revision):** **DESIGN REVISION R1→R5 COMPLETE (#57–#64)** — new champagne export adopted; brighter radial + 90° gold + 76/42/56 type + champagne family (R2); primitives/cards refresh + Button pill + Select strings (R3); **Home rebuilt to the marketing kit + champagne footer** (R4); global AA consolidation + green/chip fixes (R5). All green + AA-recorded. **On the `chore/design-revision-*` chain, UNMERGED** — `main`+`develop` frozen at `04b6a1b` awaiting Carlos's promotion approval (§12).
-- **IN PROGRESS:** — (none; revision complete, pending promotion).
+- **DONE (revision):** **DESIGN REVISION R1→R5 COMPLETE (#57–#64)** — new champagne export adopted; brighter radial + 90° gold + 76/42/56 type + champagne family (R2); primitives/cards refresh + Button pill + Select strings (R3); Home to the marketing kit + champagne footer (R4); global AA consolidation + green/chip fixes (R5). All green + AA-recorded.
+- **DONE (Home revision):** **HOME VIDEO REVISION RH1→RH5 COMPLETE (#65–#76)** — new Home handoff adopted; system deltas (`--gold-on-light`, slim-fade helpers) (RH2); roofline-mark Logo + darker AgentCard `#0c1d39` + on-light footer (RH3a); **HeroMedia + staged entrance + video 8.0→1.6 MB** (RH3b); **live Home recomposed to the full-bleed video hero** + Top-este-mês spotlight + champagne slim-fades + new copy/i18n (RH4) + the rank-coin/EXPLORE/equal-height fixes; AA consolidation + DECISIONS + state docs + Vercel build-pin verified (RH5). All green + AA-recorded. **On the `chore/design-revision-home-*` chain, UNMERGED** — `main`+`develop` frozen at `04b6a1b` awaiting Carlos's promotion approval (§12).
+- **IN PROGRESS:** — (none; both revisions complete, pending one promotion).
 - **NEXT (after promotion):** remaining 4.3 pages (Buy/Rent `/comprar` + `/arrendar`, Property detail `/imovel/[id]`, Vender, static pages).
 - **TODO (after 4.3):** 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).
 
@@ -191,10 +208,10 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 ## 10. HOW TO RESUME (zero drift)
 
 **New planning chat (inside the Project):** the Project instructions + this file (in Project knowledge) load automatically. Say:
-> "Read PROJECT-STATE.md. The **design revision (R1→R5) is COMPLETE on the `chore/design-revision-*` chain but UNMERGED** — `main`/`develop` are frozen at the shipped design-apply state pending my promotion approval (§12). Help me decide promotion, then drive the **remaining 4.3 pages** (Buy/Rent, property-detail, Vender, static). Follow §0 (never guess)."
+> "Read PROJECT-STATE.md. The **design revision + the Home video revision (RH1→RH5) are COMPLETE on the `chore/design-revision-home-*` chain but UNMERGED** — `main`/`develop` are frozen at the shipped design-apply state (`04b6a1b`) pending my promotion approval (§12). Help me decide promotion, then drive the **remaining 4.3 pages** (Buy/Rent, property-detail, Vender, static). Follow §0 (never guess)."
 
 **New Claude Code session:** it auto-reads `CLAUDE.md`. Then say:
-> "Read docs/PROJECT-STATE.md, docs/DECISIONS.md, docs/DESIGN-REVISION-PLAN.md, and the latest docs/WORKLOG.md. Note the design revision is COMPLETE + UNMERGED (chain off `develop`; main/develop frozen). Confirm current branch + phase, then wait for my instruction. Follow CLAUDE.md §0."
+> "Read docs/PROJECT-STATE.md, docs/DECISIONS.md, docs/DESIGN-HOME-PLAN.md, and the latest docs/WORKLOG.md. Note the Home video revision RH1→RH5 is COMPLETE + UNMERGED (chain `chore/design-revision-home-*`; main/develop frozen at `04b6a1b`). On this host, review the Home via **`pnpm build && pnpm start`** (dev HMR socket fails over the remote). Confirm current branch + phase, then wait for my instruction. Follow CLAUDE.md §0."
 
 **Keep this file current:** update it at the end of any session that changes scope/decisions/status, then re-upload it to the Project knowledge (Project knowledge is a static snapshot — it does not auto-sync with the repo).
 
@@ -212,11 +229,12 @@ product/tool/UI facts before stating them.
 
 Workflow: this planning chat authors plans, decisions, visual specs, and copy-paste prompts for
 Claude Code; Claude Code (on the remote machine) does all builds/git. Keep phase-gate discipline
-— stop and confirm before each new phase. Current state = the **design REVISION (R1->R5) is
-COMPLETE on the chore/design-revision-* chain but UNMERGED**; main + develop are frozen at the
-shipped design-apply state (Vercel production = main) pending Carlos's promotion approval. After
-promotion: the remaining 4.3 pages (Buy/Rent, property-detail, Vender, static), then 4.4 shells,
-4.5 polish, Phase 5 (Supabase), Phase 6 (launch).
+— stop and confirm before each new phase. Current state = the **design REVISION (R1->R5) + the
+HOME VIDEO REVISION (RH1->RH5) are COMPLETE on the chore/design-revision-home-* chain but
+UNMERGED**; main + develop are frozen at the shipped design-apply state `04b6a1b` (Vercel
+production = main) pending Carlos's promotion approval. The Home now ships a full-bleed cinematic
+video hero. After promotion: the remaining 4.3 pages (Buy/Rent, property-detail, Vender, static),
+then 4.4 shells, 4.5 polish, Phase 5 (Supabase), Phase 6 (launch).
 ```
 
 ---
@@ -228,6 +246,9 @@ promotion: the remaining 4.3 pages (Buy/Rent, property-detail, Vender, static), 
   unchanged: `feat/* → develop → main`.
 - **Build env pinned** for reproducibility: `engines.node = "22.x"` and
   `packageManager = "pnpm@11.4.0"` in `package.json` (matches the dev host: Node 22.22.3 / pnpm 11.4.0).
+  **RH5 re-verified both present & exact — no change needed.** (Harmless pnpm-11 deprecation: the
+  `pnpm.onlyBuiltDependencies` field is now ignored by pnpm 11 — a WARN only; build stays green;
+  out of the build-pin scope, left untouched.)
 - **What is shipped on `main` today:** Home (`/[locale]`), Consultores discovery
   (`/[locale]/consultores`), and the Consultant profile (`/[locale]/consultores/[slug]`) —
   rendered on **SEED / mock data** (the `isDemo`-flagged set, #20) with **placeholder property
@@ -243,25 +264,31 @@ promotion: the remaining 4.3 pages (Buy/Rent, property-detail, Vender, static), 
 
 ## 12. ACTIVE WORK — DESIGN REVISION (branch model)
 
-> *This section lives on the `chore/design-revision-*` chain only — it is intentionally NOT on
-> `main`/`develop`, which are frozen. A fresh session should read `docs/DESIGN-REVISION-PLAN.md`.*
+> *This section lives on the `chore/design-revision-home-*` chain only — it is intentionally NOT on
+> `main`/`develop`, which are frozen. A fresh session should read `docs/DESIGN-HOME-PLAN.md`
+> (Home revision) + `docs/DESIGN-REVISION-PLAN.md` (the prior champagne revision).*
 
-- **What:** a **new, revised** Claude Design export supersedes the prior one — new navy background,
-  new symmetric-90° gold gradients, a larger type scale (hero 76 / section 42 / CTA 56), a new
-  **champagne** warm-section family (replacing the ivory rhythm), and a full **marketing-kit Home**.
-  The prior design-apply (#46–#56) is COMPLETE + shipped; this revision supersedes specific values,
-  **ratified as DECISIONS #57–#64** (see §4). **Run order R1→R5 is now COMPLETE.**
-- **Where:** the reconciliation plan is `docs/DESIGN-REVISION-PLAN.md` (run order **R2→R5**, each a
-  separate green-gated, stop-and-confirm apply prompt). The new reference bundle is in
-  `design/handoff/` (spec only, eslint-ignored, never shipped).
-- **Branch model (deployment):** all revision work is on the **`chore/design-revision-*` chain,
-  based on `develop`**. **`main` and `develop` are FROZEN** at the shipped design-apply state
-  (`04b6a1b`; **main == develop**, parity). **`main` is the Vercel production branch** and the
-  public review URL stays stable. **Nothing in this revision touches `main` or `develop`** and no
+- **What:** TWO stacked revisions sit unmerged on the chain. **(1) The champagne revision (R1→R5,
+  #57–#64):** new navy radial, symmetric-90° gold, larger type (76/42/56), champagne warm-section
+  family. **(2) The HOME VIDEO revision (RH1→RH5, #65–#76)** — a new Home handoff
+  (`design/handoff-home/`) makes the **full-bleed cinematic video hero the Home default** (84vh
+  breakout, staged ~2.6s entrance, Real/Fair/Trust brand reveal), with a Top-este-mês merit
+  spotlight, a roofline-mark Logo (#12), a darker AgentCard (`#0c1d39`), an on-light footer
+  wordmark (`#8C5E12`), and slim navy↔champagne fades. **Both run orders are now COMPLETE.**
+- **Where:** plans = `docs/DESIGN-HOME-PLAN.md` (RH2→RH5, all ✅) + `docs/DESIGN-REVISION-PLAN.md`
+  (R2→R5). Reference bundles in `design/handoff/` (champagne) + `design/handoff-home/` (Home) —
+  spec only, eslint-ignored (`design/**`), never shipped.
+- **Branch model (deployment):** all revision work is on the **`chore/design-revision-home-*` chain,
+  ultimately based on `develop`**. **`main` and `develop` are FROZEN** at the shipped design-apply
+  state (`04b6a1b`; **main == develop**, parity). **`main` is the Vercel production branch** and the
+  public review URL stays stable. **Nothing in either revision touches `main` or `develop`** and no
   PR is opened. **Only on Carlos's explicit approval** does the chain consolidate **→ `develop` →
   `main` → Vercel**.
-- **Status: R1→R5 COMPLETE** (all green + AA-recorded) on the revision chain:
-  R1 plan (`chore/design-revision-plan`) → R2 tokens (`-tokens`) → R3 primitives (`-primitives`) →
-  R4 Home (`-home`) → R5 consolidate (`-consolidate`). **UNMERGED.** `main` + `develop` frozen at
-  `04b6a1b`. **NEXT = Carlos's promotion decision** (consolidate the chain → `develop` → `main` →
-  Vercel); after promotion, the remaining 4.3 pages. **Do NOT promote without explicit approval.**
+- **Review on this host:** use **`pnpm build && pnpm start`** — the dev HMR websocket fails over the
+  remote host, so `pnpm dev` falsely looks broken; the production build is the source of truth.
+- **Status: R1→R5 + RH1→RH5 COMPLETE** (all green + AA-recorded). Home chain:
+  RH1 plan (`-home-plan`) → RH2 tokens (`-home-tokens`) → RH3a/RH3b components+hero
+  (`-home-components`) → RH4 compose + fixes (`-home-compose`) → **RH5 final (`-home-final`)**.
+  **UNMERGED.** `main` + `develop` frozen at `04b6a1b`. **NEXT = Carlos's promotion decision**
+  (consolidate the chain → `develop` → `main` → Vercel); after promotion, the remaining 4.3 pages.
+  **Do NOT promote without explicit approval.**

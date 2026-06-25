@@ -1,5 +1,9 @@
 # Design Revision — HOME PAGE handoff · Reconciliation Plan
 
+> **STATUS: ✅ COMPLETE (RH1→RH5, 2026-06-25).** All steps green-gated + AA-recorded on the
+> `chore/design-revision-home-*` chain. DECISIONS #65–#76 ratified. **UNMERGED** — `main`+`develop`
+> frozen at `04b6a1b` pending Carlos's promotion approval. See the §E checklist (all ✅).
+>
 > **Plan only — NO app code/tokens/components changed this session.** Produces the RH2→RH5 staging
 > for adopting the **new Home-page handoff** (`design/handoff-home/`) on the design-revision chain.
 >
@@ -194,7 +198,7 @@ FeaturedProperties (navy) → AgentCTA (navy gold-glow) → `Footer` (champagne)
 | **RH3a** | **Components (lower-risk)** | `Logo` (roofline mark #12 + tri-tone wordmark, onIvory-aware) built + wired into Header (mark now visible) & Footer; `Wordmark` on-light Fair → `#8C5E12` (B.4); `ConsultantCard` fill → solid `#0c1d39` + featured merit **56px** (B.3, #18/#37 kept); Footer on-light Logo + links/body → `--champagne-ink`. | ✅ **Done 2026-06-25** (`chore/design-revision-home-components`) — green; AA improved (card muted .70 → 7.82:1); smoke 200. |
 | **RH3b** | **HeroMedia + entrance + video** | Build `HeroMedia` (B.1, bleed only) + staged entrance w/ export-safety (B.2); optimize + wire `/videos/hero.mp4` + poster. | ✅ **Done 2026-06-25** (`chore/design-revision-home-components`) — ffmpeg available; mp4 **8.0M→1.6M**, poster **1.1M→124K**; `HeroMedia` + `HeroFullBleed` (export-safe staged entrance, local AA scrim) on `/dev/hero`; AA over worst frame: sub **6.52:1**, brand-reveal **7.44+**, cue **7.46**; green. Loop seam jars (4.5 polish). |
 | **RH4** | **Home composition + copy + i18n + seed + AA-at-render** | Rebuild `app/[locale]/page.tsx` to §C (full-bleed hero, Top-este-mês spotlight + floating badge, Como-funciona copy, Imóveis, Para-consultores CTA copy, footer alignment); i18n add/change/remove (PT+EN); seed mapping (#20); measure AA as built (§D). Green. | ✅ **Done 2026-06-25** (`chore/design-revision-home-compose`) — HeroFullBleed wired live; Top-este-mês pedestal + "+6 lugares" badge + 3-row; champagne Como-funciona/footer slim fades; emoji→lucide CTA; i18n rewritten (parity); HomeHero deleted; green; AA all ≥4.5 (badge 6.78, champagne ink 11.94/eyebrow 4.90). **Footer kept 4-col real-route + slim fade — handoff's 3-col Contacto/Metodologia flagged for sign-off (placeholder business contact info).** |
-| **RH5** | **AA consolidation + DECISIONS + PROJECT-STATE** | Re-measure the full §D list fail-closed; record any AA deviation; log DECISIONS (#65+: Home-video revision adopted, hero clamp, AgentCard solid fill, `--gold-on-light`, on-light wordmark, slim-fade) + refresh PROJECT-STATE §4/§7/§8/§12. Green. | ⬜ Not started |
+| **RH5** | **AA consolidation + DECISIONS + PROJECT-STATE** | Re-measure the full §D list fail-closed; record any AA deviation; log DECISIONS (#65+: Home-video revision adopted, hero clamp, AgentCard solid fill, `--gold-on-light`, on-light wordmark, slim-fade) + refresh PROJECT-STATE §4/§7/§8/§12. Green. | ✅ **Done 2026-06-25** (`chore/design-revision-home-final`, off `3da09b4`) — build-pin verified already correct (Node 22.x / pnpm@11.4.0; live 22.22.3 / 11.4.0, no change); consolidated global AA sweep = **all pass** (no new regression); DECISIONS **#65–#76** ratified; PROJECT-STATE §4/§7/§10/§11/§12 refreshed; green (`pnpm build` ✅ · `tsc` ✅ · `eslint` 0/0). **RH1→RH5 COMPLETE; UNMERGED.** |
 
 **Staging rationale (why this split):** HeroMedia + staged entrance is the heaviest, highest-risk
 new build → its own step (RH3) ahead of composition. Tokens/helpers are tiny → RH2. Copy/i18n/seed

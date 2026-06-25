@@ -6,6 +6,90 @@
 
 ---
 
+## 2026-06-25 · Design REVISION — HOME RH5 (FINAL): build-pin + global AA consolidation + DECISIONS #65–#76 + state docs
+
+**Done** (branch `chore/design-revision-home-final`, branched off the chain tip **`3da09b4`** =
+`chore/design-revision-home-compose`, the RH4 equal-height card fix; `main`+`develop` FROZEN at
+`04b6a1b` — parity, untouched; no PR). **This completes the Home video revision run order RH1→RH5.**
+Docs + verification only — **no app code/tokens/components changed** (build-pin already correct; the
+global AA sweep found no regression to fix). Review on this host = `pnpm build && pnpm start` (dev
+HMR socket fails over the remote).
+
+**1 · Vercel build-pin — verified, ALREADY correct (no change).** `package.json` already carries
+`"engines": { "node": "22.x" }` and `"packageManager": "pnpm@11.4.0"`. Confirmed against the live
+host toolchain: **Node v22.22.3**, **pnpm 11.4.0** (exact patch — not guessed; matches the
+`packageManager` field and the lockfile `lockfileVersion: '9.0'`). Both present + exact → **nothing
+added**. (Note: pnpm 11 now ignores the `pnpm.onlyBuiltDependencies` field — a harmless WARN, build
+stays green; out of build-pin scope, left untouched.)
+
+**2 · Global AA sweep — ONE consolidated table (computed vs the REAL composited bg; RH3/RH4 ratios
+pulled, no gaps). All pass; no global token touched; no fix needed.**
+
+| Surface | Value | Bg | Ratio | Verdict |
+|---|---|---|---|---|
+| Hero h1 line 1 (cream, large) | `#f5f1ea` | scrim / brightest frame | ≥5.97 | ✅ (large ≥3) |
+| Hero h1 line 2 (gold-gradient italic, large) | title-gold | scrim / brightest frame | ≥5.97 | ✅ |
+| Hero sub-text (cream 19px) | `#f5f1ea` | scrim / brightest frame | 6.52 | ✅ |
+| Brand-reveal phrase (cream ~21px) | `#f5f1ea` | radial scrim / bright frame | 7.44–12.24 | ✅ |
+| Brand-reveal word (gold ~56px, large) | title-gold | radial scrim | ≥5.97 | ✅ |
+| Scroll cue "Explorar" (cream-muted) | cream .88 | scrim | 7.46 | ✅ |
+| Champagne eyebrow | `#7c5a12` | `#ece2cb` | 4.90 | ✅ |
+| Champagne ink (body) | `#2b2415` | `#ece2cb` | 11.94 | ✅ |
+| Champagne ink-muted | `#5c5340` | `#ece2cb` | 5.89 | ✅ |
+| Step-card text on navy card | cream / muted .70 | `#0c1d39` | 14.92 / 7.82 | ✅ |
+| Footer body links | `#2b2415` | `#ece2cb` | 11.94 | ✅ |
+| Footer column labels | `#7c5a12` | `#ece2cb` | 4.90 | ✅ |
+| **Footer logo "Fair" + mark** | `#8C5E12` | `#ece2cb` | **4.38** | ✅ **WCAG 1.4.3 logotype exemption** (mark = graphic ≥3; no real body text sub-4.5) |
+| ConsultantCard strong | `#f5f1ea` | `#0c1d39` | 14.92 | ✅ |
+| ConsultantCard body (.78) | cream .78 | `#0c1d39` | 9.44 | ✅ |
+| ConsultantCard muted (.70) | cream .70 | `#0c1d39` | 7.82 | ✅ |
+| ConsultantCard merit gold | `#efb52a` | `#0c1d39` | 9.05 | ✅ |
+| ConsultantCard green text | `#5fd2a1` | `#0c1d39` | 8.97 | ✅ |
+| "+6 lugares" green badge | `#3fb984` | `#0c1d39` | 6.78 | ✅ |
+| Navy small gold (eyebrow/label) | `#efb52a` | radial centre `#1e4680` | 5.04 | ✅ (#64b) |
+| Button primary (dark text on calm-gold) | `#2A1D04` | calm-gold worst edge `#c8901f` | ~5.85 (centre ~9–13) | ✅ |
+| Button outline · navy | `#efb52a` | radial | 5.04 | ✅ |
+| Button outline · light | `#8C5E12` | ivory `#fbf8f2` | 5.32 | ✅ |
+| Button ghost · navy | cream `#f5f1ea` | radial | ~15 | ✅ |
+| Button ghost · light | ink-on-light | light | >10 | ✅ |
+
+**Known 4.5 (not AA) items carried, not fixed here:** hero loop seam (#74, SSIM 0.22); seed photo
+404s → initials fallback (#76); real hero/property imagery (#9 OPEN).
+
+**3 · DECISIONS ratified — appended `docs/DECISIONS.md` #65–#76** (one row each, ratios cited,
+supersessions noted): #65 Home video revision adopted (full-bleed video hero DEFAULT; supersedes the
+R4 search-pill Home #62; contained-panel = reference-only) · #66 hero headline + Home-specific clamp
+(~62px, distinct from the 76 token) · #67 staged entrance + export-safety · #68 Real/Fair/Trust brand
+reveal (3000ms / start-delay 2750ms) · #69 `--gold-on-light #8C5E12` alias · #70 roofline-mark Logo
+built (#12; on-light 4.38 logotype-exempt) · #71 AgentCard solid `#0c1d39` (muted .70 → 7.82) · #72
+slim-15px navy↔champagne fades · #73 Top-este-mês row (equal-height, full names, `displayRank` global
+coins vs per-region `score.rank`, #18 kept, EXPLORE = accessible button) · #74 hero video 8.0→1.6 MB
+(loop-seam 4.5 item) · #75 footer DEVIATION (kept 4-col real-route; real contact pending) · #76 seed
+404s expected (4.5 imagery).
+
+**4 · PROJECT-STATE refreshed** (branch-only; main/develop copies stay frozen): §4 (#65–#76 summary)
+· §7 (shipped video-hero composition — full-bleed hero/staged entrance/brand reveal/AgentCard
+`#0c1d39`/on-light mark wordmark/slim fades/new section copy/equal-height row; reconciled the prior
+search-pill lines) · §8 (Home-revision DONE line) · §10 (resume blurbs → "Home revision complete +
+pending promotion, then remaining 4.3 pages"; review = `pnpm build && pnpm start`) · §11
+(engines.node/packageManager pin re-verified) · §12 (ACTIVE WORK = Home video revision RH1→RH5
+COMPLETE on the chain, UNMERGED, main+develop frozen at `04b6a1b`, awaiting Carlos's promotion).
+`docs/DESIGN-HOME-PLAN.md` set to COMPLETE (RH5 row ✅). "Last updated" bumped to 2026-06-25.
+
+**Green gate:** `pnpm build` ✅ (exit 0) · `tsc --noEmit` ✅ (exit 0) · `eslint .` ✅ 0/0. No app code
+changed → no `pnpm start` re-run needed (the RH4 fixes already verified `/` + `/en` **200** on this
+exact tree).
+
+**Changed:** `docs/DECISIONS.md` (#65–#76), `docs/PROJECT-STATE.md` (§4/§7/§8/§10/§11/§12 + Last
+updated), `docs/DESIGN-HOME-PLAN.md` (RH5 ✅ + COMPLETE banner), this worklog. **No app code.**
+
+**Next:** **RH1→RH5 COMPLETE.** The Home video revision is finished + UNMERGED on the
+`chore/design-revision-home-*` chain; `main`+`develop` frozen at `04b6a1b`. **Promotion (consolidate
+→ develop → main → Vercel) is a separate step on Carlos's explicit go-ahead.** After promotion: the
+remaining 4.3 pages (Buy/Rent, property-detail, Vender, static).
+
+---
+
 ## 2026-06-25 · Design REVISION — HOME RH4 fixes: "Top este mês" row (equal height + full names)
 
 **Done** (same branch `chore/design-revision-home-compose`, off `e7d31e6`; `main`+`develop` FROZEN
