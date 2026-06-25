@@ -2,7 +2,7 @@
 
 > **Purpose.** Single orientation document for the project. If you are starting a **new planning chat** (claude.ai) or a **new Claude Code session** (VS Code), read this file first. It holds roles/workflow, locked decisions, the visual system, the **complete phase roadmap**, what is done, what is next, and what is still open. `docs/DECISIONS.md` and `docs/WORKLOG.md` on the machine remain authoritative for the full decision log and per-session history; this file is the high-level snapshot — **keep it in sync every session.**
 >
-> **Last updated:** 2026-06-25 (**HOME VIDEO REVISION RH1→RH5 COMPLETE** on the `chore/design-revision-home-*` chain off the champagne revision; the full-bleed cinematic **video hero** is now the Home default; DECISIONS **#65–#76** ratified; §4/§7/§10/§11/§12 refreshed to the shipped video-hero composition; global AA consolidated = all pass; Vercel build-pin verified. **STILL UNMERGED — main + develop FROZEN at `04b6a1b`** pending Carlos's promotion approval; this note is branch-only.) Prior: 2026-06-24 (design REVISION R1→R5; champagne; #57–#64). 2026-06-23 (design-apply promoted to `main`; §11).
+> **Last updated:** 2026-06-25 (**DESIGN REVISION PROMOTED TO `main`** — champagne (#57–#64) + Home video (#65–#76) consolidated → `develop` → `main` preserving history; the full-bleed cinematic **video-hero Home** is live on Vercel production; `main` and `develop` at parity, freeze lifted, the merged `chore/design-revision-*` chain cleaned up. §8/§11/§12 + "Last updated" flipped to PROMOTED.) Prior: 2026-06-25 (Home video revision RH1→RH5 complete + unmerged). 2026-06-24 (champagne R1→R5; #57–#64). 2026-06-23 (design-apply promoted to `main`; §11).
 
 ---
 
@@ -191,9 +191,10 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 
 - **DONE:** Phases 0–3; Phase 4.0/4.1/4.2; Phase 4.3 Home + Consultores; design hand-off adopted (#46–#50); governance sync (#51–#53); **design-system application run order 1→6 COMPLETE (#54–#56)** — tokens → primitives → cards → Home variety → profile re-skin, all green + AA; **banked to `develop` (PR #7 merged, merge commit `3d91a99`)**; **promoted to `main` (Vercel production branch) + build hardened (Node 22.x / pnpm 11.4.0 pinned) — Vercel-ready** (see §11).
 - **DONE (revision):** **DESIGN REVISION R1→R5 COMPLETE (#57–#64)** — new champagne export adopted; brighter radial + 90° gold + 76/42/56 type + champagne family (R2); primitives/cards refresh + Button pill + Select strings (R3); Home to the marketing kit + champagne footer (R4); global AA consolidation + green/chip fixes (R5). All green + AA-recorded.
-- **DONE (Home revision):** **HOME VIDEO REVISION RH1→RH5 COMPLETE (#65–#76)** — new Home handoff adopted; system deltas (`--gold-on-light`, slim-fade helpers) (RH2); roofline-mark Logo + darker AgentCard `#0c1d39` + on-light footer (RH3a); **HeroMedia + staged entrance + video 8.0→1.6 MB** (RH3b); **live Home recomposed to the full-bleed video hero** + Top-este-mês spotlight + champagne slim-fades + new copy/i18n (RH4) + the rank-coin/EXPLORE/equal-height fixes; AA consolidation + DECISIONS + state docs + Vercel build-pin verified (RH5). All green + AA-recorded. **On the `chore/design-revision-home-*` chain, UNMERGED** — `main`+`develop` frozen at `04b6a1b` awaiting Carlos's promotion approval (§12).
-- **IN PROGRESS:** — (none; both revisions complete, pending one promotion).
-- **NEXT (after promotion):** remaining 4.3 pages (Buy/Rent `/comprar` + `/arrendar`, Property detail `/imovel/[id]`, Vender, static pages).
+- **DONE (Home revision):** **HOME VIDEO REVISION RH1→RH5 COMPLETE (#65–#76)** — new Home handoff adopted; system deltas (`--gold-on-light`, slim-fade helpers) (RH2); roofline-mark Logo + darker AgentCard `#0c1d39` + on-light footer (RH3a); **HeroMedia + staged entrance + video 8.0→1.6 MB** (RH3b); **live Home recomposed to the full-bleed video hero** + Top-este-mês spotlight + champagne slim-fades + new copy/i18n (RH4) + the rank-coin/EXPLORE/equal-height fixes; AA consolidation + DECISIONS + state docs + Vercel build-pin verified (RH5). All green + AA-recorded.
+- **DONE (PROMOTED 2026-06-25):** **the full design revision — champagne (#57–#64) + Home video (#65–#76) — is PROMOTED to `main`.** The revision chain consolidated → `develop` → `main` (history preserved, no squash); `main` (Vercel production) now serves the full-bleed video-hero Home. The revision is no longer unmerged/frozen — `main` and `develop` both carry it (parity). The merged `chore/design-revision-*` branches were cleaned up.
+- **IN PROGRESS:** — (none).
+- **NEXT:** the remaining Phase 4.3 pages (Buy/Rent `/comprar` + `/arrendar`, Property detail `/imovel/[id]`, Vender, static pages) — on a fresh `feat/*` branch off `develop`.
 - **TODO (after 4.3):** 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).
 
 ---
@@ -244,15 +245,19 @@ then 4.4 shells, 4.5 polish, Phase 5 (Supabase), Phase 6 (launch).
 - **Production branch = `main`** (Vercel). The public review/preview URL serves **`main`**;
   `develop` and feature branches still get their own Vercel preview URLs. Branch model is
   unchanged: `feat/* → develop → main`.
+- **`main` now serves the full design revision** (champagne #57–#64 + the Home video revision
+  #65–#76), promoted 2026-06-25. The full-bleed cinematic video-hero Home is live on production;
+  `main` and `develop` carry the revision at parity. (Vercel re-deploys `main` automatically; no
+  Claude Code action — the browser-side Vercel project is unchanged.)
 - **Build env pinned** for reproducibility: `engines.node = "22.x"` and
   `packageManager = "pnpm@11.4.0"` in `package.json` (matches the dev host: Node 22.22.3 / pnpm 11.4.0).
-  **RH5 re-verified both present & exact — no change needed.** (Harmless pnpm-11 deprecation: the
+  Verified present & exact at promotion. (Harmless pnpm-11 deprecation: the
   `pnpm.onlyBuiltDependencies` field is now ignored by pnpm 11 — a WARN only; build stays green;
   out of the build-pin scope, left untouched.)
-- **What is shipped on `main` today:** Home (`/[locale]`), Consultores discovery
-  (`/[locale]/consultores`), and the Consultant profile (`/[locale]/consultores/[slug]`) —
-  rendered on **SEED / mock data** (the `isDemo`-flagged set, #20) with **placeholder property
-  imagery** (real photos land in 4.5 polish).
+- **What is shipped on `main` today:** the revised Home (`/[locale]`, full-bleed video hero),
+  Consultores discovery (`/[locale]/consultores`), and the Consultant profile
+  (`/[locale]/consultores/[slug]`) — rendered on **SEED / mock data** (the `isDemo`-flagged set,
+  #20) with **placeholder property imagery** (real photos land in 4.5 polish).
 - **NOT yet built:** Buy/Rent (`/comprar`, `/arrendar`), Property detail (`/imovel/[id]`),
   Vender, and the static pages — these routes scaffold-render but are not the finished 4.3 pages.
 - **No backend yet:** Supabase + environment variables remain **Phase 5** — **none configured**.
@@ -262,33 +267,29 @@ then 4.4 shells, 4.5 polish, Phase 5 (Supabase), Phase 6 (launch).
 
 ---
 
-## 12. ACTIVE WORK — DESIGN REVISION (branch model)
+## 12. ACTIVE WORK — DESIGN REVISION ✅ PROMOTED (2026-06-25)
 
-> *This section lives on the `chore/design-revision-home-*` chain only — it is intentionally NOT on
-> `main`/`develop`, which are frozen. A fresh session should read `docs/DESIGN-HOME-PLAN.md`
-> (Home revision) + `docs/DESIGN-REVISION-PLAN.md` (the prior champagne revision).*
+> *The freeze is lifted. The full design revision is now merged into `main` (Vercel production) and
+> `develop` at parity; this section is no longer branch-only. A fresh session should read
+> `docs/DESIGN-HOME-PLAN.md` (Home revision) + `docs/DESIGN-REVISION-PLAN.md` (champagne revision)
+> for the full spec history.*
 
-- **What:** TWO stacked revisions sit unmerged on the chain. **(1) The champagne revision (R1→R5,
-  #57–#64):** new navy radial, symmetric-90° gold, larger type (76/42/56), champagne warm-section
-  family. **(2) The HOME VIDEO revision (RH1→RH5, #65–#76)** — a new Home handoff
-  (`design/handoff-home/`) makes the **full-bleed cinematic video hero the Home default** (84vh
-  breakout, staged ~2.6s entrance, Real/Fair/Trust brand reveal), with a Top-este-mês merit
-  spotlight, a roofline-mark Logo (#12), a darker AgentCard (`#0c1d39`), an on-light footer
-  wordmark (`#8C5E12`), and slim navy↔champagne fades. **Both run orders are now COMPLETE.**
+- **What shipped:** TWO stacked revisions. **(1) The champagne revision (R1→R5, #57–#64):** new navy
+  radial, symmetric-90° gold, larger type (76/42/56), champagne warm-section family. **(2) The HOME
+  VIDEO revision (RH1→RH5, #65–#76)** — a new Home handoff (`design/handoff-home/`) makes the
+  **full-bleed cinematic video hero the Home default** (84vh breakout, staged ~2.6s entrance,
+  Real/Fair/Trust brand reveal), with a Top-este-mês merit spotlight, a roofline-mark Logo (#12), a
+  darker AgentCard (`#0c1d39`), an on-light footer wordmark (`#8C5E12`), and slim navy↔champagne
+  fades. **Both run orders COMPLETE and PROMOTED.**
 - **Where:** plans = `docs/DESIGN-HOME-PLAN.md` (RH2→RH5, all ✅) + `docs/DESIGN-REVISION-PLAN.md`
   (R2→R5). Reference bundles in `design/handoff/` (champagne) + `design/handoff-home/` (Home) —
   spec only, eslint-ignored (`design/**`), never shipped.
-- **Branch model (deployment):** all revision work is on the **`chore/design-revision-home-*` chain,
-  ultimately based on `develop`**. **`main` and `develop` are FROZEN** at the shipped design-apply
-  state (`04b6a1b`; **main == develop**, parity). **`main` is the Vercel production branch** and the
-  public review URL stays stable. **Nothing in either revision touches `main` or `develop`** and no
-  PR is opened. **Only on Carlos's explicit approval** does the chain consolidate **→ `develop` →
-  `main` → Vercel**.
+- **Promotion (2026-06-25):** by Carlos's explicit approval, the revision chain was consolidated
+  **→ `develop` → `main`** preserving full history (no squash) — both fast-forwards, so `main` and
+  `develop` carry the identical linear revision history at parity. The merged `chore/design-revision-*`
+  branches (the whole chain, local + remote) were deleted. `main` = Vercel production now serves the
+  new video-hero Home (Vercel re-deploys automatically; the browser-side Vercel project is untouched).
 - **Review on this host:** use **`pnpm build && pnpm start`** — the dev HMR websocket fails over the
   remote host, so `pnpm dev` falsely looks broken; the production build is the source of truth.
-- **Status: R1→R5 + RH1→RH5 COMPLETE** (all green + AA-recorded). Home chain:
-  RH1 plan (`-home-plan`) → RH2 tokens (`-home-tokens`) → RH3a/RH3b components+hero
-  (`-home-components`) → RH4 compose + fixes (`-home-compose`) → **RH5 final (`-home-final`)**.
-  **UNMERGED.** `main` + `develop` frozen at `04b6a1b`. **NEXT = Carlos's promotion decision**
-  (consolidate the chain → `develop` → `main` → Vercel); after promotion, the remaining 4.3 pages.
-  **Do NOT promote without explicit approval.**
+- **NEXT:** the remaining Phase 4.3 pages (Buy/Rent, Property detail, Vender, static) on a fresh
+  `feat/*` branch off `develop` → 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).

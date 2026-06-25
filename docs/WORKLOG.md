@@ -6,6 +6,48 @@
 
 ---
 
+## 2026-06-25 · Design REVISION — AUTHORIZED PROMOTION → develop → main (freeze lifted)
+
+**Done.** By Carlos's explicit approval, the design-revision chain (champagne #57–#64 + Home video
+#65–#76) was promoted off the `chore/design-revision-home-*` chain into `develop` and then `main`.
+This is the one authorized lift of the develop/main freeze. History preserved (no squash); both
+merges were clean **fast-forwards** (develop and main had no divergent commits since `04b6a1b`).
+
+**Pre-flight (state-aware):** working tree clean (only pre-existing untracked `.vscode/`, tarballs,
+`public/videos/hero-original.mp4`); `main == develop == 04b6a1b == origin/*` (frozen parity, no
+divergence); the chain tip `chore/design-revision-home-final` = `3b8fbf2` is a **clean linear
+ancestry** back to `04b6a1b` (15 commits, **zero merge commits**, 04b6a1b confirmed ancestor, all
+design-revision commits); DECISIONS highest = #76; PROJECT-STATE reflected the RH5 final home.
+
+**A · chain → develop:** `git merge --ff-only chore/design-revision-home-final` → **fast-forward**,
+develop `04b6a1b → 3b8fbf2`. Green: `pnpm build` ✅ (exit 0) · `tsc --noEmit` ✅ (exit 0) · `eslint .`
+✅ 0/0.
+
+**B · state docs → PROMOTED (docs-only, on develop):** flipped `docs/PROJECT-STATE.md` §8 (DONE +=
+revision promoted to main; NEXT = remaining 4.3 pages on a fresh `feat/*` off develop), §11
+(Deployment: `main` now serves the video-hero Home; build-pin in place), §12 (ACTIVE WORK → ✅
+PROMOTED; freeze lifted; chain cleaned up — no volatile hashes pinned in prose), and "Last updated".
+Appended this entry. Committed on develop (docs-only). Green re-confirmed (build/tsc/eslint all 0).
+
+**C · develop → main:** `git merge --ff-only develop` → **fast-forward**, main `04b6a1b → <develop
+tip>`. Green: `pnpm build` ✅ · `tsc --noEmit` ✅ · `eslint .` ✅ 0/0. Pushed **develop AND main**.
+`main == develop` at parity.
+
+**D · cleanup:** deleted every `chore/design-revision-*` branch now fully merged into `main` (local +
+remote) — the whole revision chain. Verified each was fully merged (`git branch --merged main`)
+before deletion; nothing unmerged was touched. `main` + `develop` retained.
+
+**Vercel:** untouched — production = `main` re-deploys automatically (browser step, not Claude Code).
+
+**Changed (docs-only this session):** `docs/PROJECT-STATE.md`, `docs/WORKLOG.md`. The revision's app
+code/tokens/components/assets arrived via the fast-forward of the already-green RH5 tip — unchanged
+since `3b8fbf2`.
+
+**Next:** the remaining Phase 4.3 pages (Buy/Rent `/comprar` + `/arrendar`, Property detail
+`/imovel/[id]`, Vender, static) on a fresh `feat/*` branch off `develop`.
+
+---
+
 ## 2026-06-25 · Design REVISION — HOME RH5 (FINAL): build-pin + global AA consolidation + DECISIONS #65–#76 + state docs
 
 **Done** (branch `chore/design-revision-home-final`, branched off the chain tip **`3da09b4`** =
