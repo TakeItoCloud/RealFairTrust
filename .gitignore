@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Heavy hero source kept locally; only the optimized hero.mp4 is committed (RH3b)
+public/videos/hero-original.mp4
+public/images/hero-poster-original.jpg

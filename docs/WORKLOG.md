@@ -6,6 +6,64 @@
 
 ---
 
+## 2026-06-25 · Design REVISION — HOME RH3b: video optimization + HeroMedia + staged entrance
+
+**Done** (same branch `chore/design-revision-home-components`, continuing from RH3a `de0af26`;
+`main`+`develop` FROZEN at `04b6a1b`, untouched; no PR). **ffmpeg 4.4.2 is now on the host**, so the
+RH3b blocker is cleared.
+
+- **Video optimization:** original `hero.mp4` was H.264 **1280×720 / 30fps / 13.4 Mbps / 8.0 MB / 5.0s**.
+  Preserved → `public/videos/hero-original.mp4` (**gitignored**, kept local). Re-encoded (no upscale —
+  source is ≤1080p) `-c:v libx264 -crf 24 -preset slow -pix_fmt yuv420p -an -movflags +faststart` →
+  **1.6 MB** (within the 1.5–3.5 MB target). VP9 WebM came out **larger** (1.8 MB) → **dropped** (no
+  benefit; the mp4 is the universal baseline). Poster recompressed **1.1 MB → 124 KB** (original
+  gitignored). **Loop-seam: jarring** — first vs last frame SSIM **0.22** / PSNR **8.2 dB** (hard cut at
+  the 5s loop boundary); NOTED for 4.5 polish (crossfade-loop or a longer clip) — not blocking.
+- **`HeroMedia` (NEW, `components/home/HeroMedia.tsx`):** full-bleed bleed variant only — muted
+  autoplay loop `<video>` (desktop ≥761px, **deferred**: mounted client-side via rAF after first
+  paint so the poster + headline paint first; **not** mounted on mobile or under reduced-motion) over
+  the Ken-Burns poster; vertical scrim + ~230px bottom fade into the navy stage (README §3.2); the
+  Real/Fair/Trust **brand reveal** lower-right (gold word + cream phrase, crossfade 3000ms, own radial
+  scrim, `startDelay` 2750ms). Media layer is decorative (`aria-hidden`). `.rfthm*` CSS + scroll-cue
+  keyframes added to `globals.css`.
+- **`HeroFullBleed` (NEW, `components/home/HeroFullBleed.tsx`):** composes HeroMedia + the foreground
+  cluster (headline 2 lines, gold rule, sub-text, 2 CTAs) with the **staged entrance** (line1 0 →
+  gold line2 700 accent → rule 1250 → sub 1700 → buttons 2100, ease `cubic-bezier(.2,.62,.2,1)`) and
+  a **local left text-scrim** for AA. Copy via props (i18n in RH4) + scroll cue "Explorar".
+  - **EXPORT-SAFETY CONTRACT honored:** base state is VISIBLE (Framer `useAnimationControls` with NO
+    `initial`; hidden is `controls.set` in an isomorphic layout-effect, before paint, client-only;
+    revealed after each delay). Verified in SSR HTML — **zero `opacity:0`** on the hero → SSR / no-JS /
+    `prefers-reduced-motion` show the FINAL layout instantly (never a blank hero). Motion gated on
+    `useReducedMotion()`.
+- **Placement:** verified on a gated dev route **`/dev/hero`** (`flags.devShowcase`); the live Home is
+  **not** recomposed (RH4). Existing pages keep their current sections.
+
+**AA (computed, fail-closed, worst-case = brightest pixel in the text region YMAX 241):** with the
+local left-scrim stacked over the README vertical scrim — hero **sub-text 6.52:1** (right edge worst;
+left/mid 13.6/7.6), headline + gold line large ≥5.97; **brand-reveal phrase 7.44–12.24:1**; scroll cue
+(cream-muted) **7.46:1**. Strengthened the local scrim to `.82/.58/.22/0` for margin. All ≥4.5 (normal)
+/ ≥3 (large). No global token touched.
+
+**Green + smoke:** `pnpm build` ✅ · `tsc --noEmit` ✅ (exit 0) · `eslint` ✅ 0/0 (fixed: rAF-deferred
+setState; removed an unused eslint-disable). `next start`: `/`, `/consultores`, `/consultores/ana-silva`,
+`/en` **200**; `/dev/hero` **404** (correctly gated off in prod). `pnpm dev`: `/dev/hero` **200** —
+headline/sub/CTAs/Real·Fair·Trust beats/poster/scroll-cue all in SSR, zero `opacity:0` (export-safe),
+video client-deferred (poster in SSR, no `<video>` until client mount).
+
+**Changed:** new `components/home/HeroMedia.tsx`, `components/home/HeroFullBleed.tsx`,
+`app/dev/hero/page.tsx`; `app/globals.css` (HeroMedia + scroll-cue CSS); `.gitignore` (hero-original.mp4
++ hero-poster-original.jpg); committed `public/videos/hero.mp4` (1.6 MB) + `public/images/hero-poster.jpg`
+(124 KB); `docs/DESIGN-HOME-PLAN.md` (RH3b ✅), this worklog. No DECISIONS entry (RH5 consolidates #65+).
+
+**Live-playback caveat:** autoplay/entrance/brand-cycle are runtime browser behaviours not observable via
+curl; the SSR/no-JS/reduced-motion final-layout guarantee + deferred-video logic ARE verified. Confirm
+the animation visually at review (`pnpm dev` → `/dev/hero`).
+
+**Next:** RH4 — recompose the live Home to the marketing kit (full-bleed hero via HeroFullBleed +
+i18n + seed mapping + the slim-fade champagne sections). Still UNMERGED; promotion separate.
+
+---
+
 ## 2026-06-25 · Design REVISION — HOME RH3a: components (Logo mark · darker AgentCard · on-light footer)
 
 **Done** (branch `chore/design-revision-home-components`, off the RH2 tip `dbdb2c4`; `main`+`develop`
