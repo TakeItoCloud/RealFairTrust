@@ -128,11 +128,15 @@ export const RATING_WEIGHTS = {
 export type ListingType = 'sale' | 'rent'
 export type ListingStatus = 'draft' | 'active' | 'archived'
 export type EnergyCert = 'A+' | 'A' | 'B' | 'B-' | 'C' | 'D' | 'E' | 'F'
+/** Property kind (distinct from `type`, which is the deal — sale/rent). Additive field
+ *  backing the discovery "Tipo" filter; schema-first per Hard Rule #1 (Decision #77). */
+export type PropertyKind = 'apartment' | 'house' | 'studio' | 'loft' | 'commercial' | 'building' | 'land'
 
 export interface Property {
   id: string
   agentId: string
   type: ListingType
+  kind: PropertyKind
   title: string
   /** EUR. For rentals this is the monthly price. */
   price: number
@@ -271,13 +275,22 @@ export interface ConsultantFilter {
   view?: 'ranked' | 'all'
 }
 
+/** Discovery sort order. `merit` = the attributed consultant's composite score (desc) —
+ *  "presented by the best-rated consultants"; the discovery default (Decision #78). */
+export type ListingSort = 'merit' | 'priceAsc' | 'priceDesc'
+
 export interface ListingFilter {
   type?: ListingType
+  kind?: PropertyKind
   regionId?: string
   zoneId?: string
   minPrice?: number
   maxPrice?: number
+  minArea?: number
+  maxArea?: number
   beds?: number
   /** Free-text query against title/description. */
   q?: string
+  /** When omitted, results keep the legacy createdAt-desc order (unchanged for existing callers). */
+  sort?: ListingSort
 }

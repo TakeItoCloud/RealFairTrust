@@ -294,10 +294,20 @@ otherwise prune in D2 (note: no other consumer).
 
 | # | Step | Scope | Status |
 |---|---|---|---|
-| **D1** | **This plan** | Reconciliation plan + extract the handoff bundle. No app code. | ✅ this session (`feat/discovery`) |
-| **D0** | **Data decision (quick confirm, gates D2)** | Resolve §C.3: **(A)** add additive `Property.kind` + seed + repo filter (recommended), or **(B)** defer the Tipo control. | ⬜ awaiting Carlos |
-| **D2** | **Build** | Shared `Discovery` RSC + both routes (`dealType`); FilterBar **restyle+extend** (inset well, new field set, deal-aware price bands, row-2 + sort) + additive repo `sort` (+`kind` if D0=A); Pagination **circular restyle** via `UrlPagination`; PropertyCard surface alignment (B.1, if approved); results grid 3→2→1 + staggered entrance; EmptyState **prominent** + "Limpar filtros"; CTA band inline; `discovery` i18n (PT+EN) + seed wiring + real counts. Green. | ⬜ |
-| **D3** | **AA + DECISIONS + state** | Measure the §E list fail-closed; record any deviation; log DECISIONS #77+ (discovery page adopted; FilterBar restyle/extend; Pagination circular restyle; PropertyCard solid-surface alignment; price-band→min/max mapping; the Tipo/`kind` outcome; repo `sort` addition); refresh PROJECT-STATE §5/§8/§11 (4.3 progress + routes now built) + mark this plan COMPLETE. Green. | ⬜ |
+| **D1** | **This plan** | Reconciliation plan + extract the handoff bundle. No app code. | ✅ (`feat/discovery`) |
+| **D0** | **Data decision (quick confirm, gates D2)** | Resolve §C.3: **(A)** add additive `Property.kind` + seed + repo filter (recommended), or **(B)** defer the Tipo control. | ✅ **(A) — Carlos approved** (2026-07-12); also approved **merit-default sort** as an additive/opt-in repo change. |
+| **D2** | **Build** | Shared `Discovery` RSC + both routes (`dealType`); FilterBar reuse+extend (inset well, new field set, deal-aware price bands, row-2 + sort) + additive repo `sort`+`kind`+area; results grid 3→2→1 + staggered entrance; empty state + "Limpar filtros"; CTA band inline; `discovery` i18n (PT+EN) + seed wiring + real counts. Green. | ✅ 2026-07-12 |
+| **D3** | **AA + DECISIONS + state** | Log DECISIONS #77–#79; refresh PROJECT-STATE §5/§8/§11; WORKLOG entry; gates green (tsc/eslint/build). | ✅ 2026-07-12 |
+
+> **Build deltas vs the D1 plan (recorded):** per Carlos's guardrails the build **reused shared
+> components without restyling them** — so the planned **Pagination circular restyle** and the
+> **PropertyCard `--surface-card-solid` alignment** were **NOT done** (both are shared-component
+> style changes that would touch Consultores/Home/profile); `EmptyState` was reused as-is (not a
+> new "prominent" variant). Sort + `kind`/area filtering went into `getListings` (additive, opt-in;
+> merit never the global default — existing callers byte-for-byte unchanged). Added an **Área**
+> filter (bands) beyond the D1 field set; Zona wired as a real **zone Select** (scoped to city),
+> not free-text `q`. FilterBar kept its existing surface idiom rather than the handoff inset-well
+> literals. These are candidates for the post-preview tweak pass + 4.5 polish.
 
 **Staging rationale:** the page is mostly **compose + restyle** of shipped parts, so a single build
 step (D2) is enough; AA + decisions + docs close out (D3) — mirroring the R/RH cadence. The **only**

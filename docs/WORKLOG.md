@@ -6,6 +6,58 @@
 
 ---
 
+## 2026-07-12 · Phase 4.3 — DISCOVERY/LISTING page BUILT (D2 + D3: /comprar + /arrendar)
+
+**Done** (branch `feat/discovery`, off the promoted revision; all gates green: `tsc --noEmit`,
+`eslint`, `pnpm build`). Built the property-discovery page as ONE shared template in TWO modes —
+Buy (`/comprar` · EN `/buying`, total price) + Rent (`/arrendar` · EN `/renting`, €/mês).
+
+- **Schema (additive, Hard Rule #1, Decision #77):** added `PropertyKind` + a `kind` field to
+  `Property` (`lib/types.ts`) and seeded all 24 listings (`lib/mock/listings.ts`) — apartment/
+  house/studio/commercial/building (every offered Tipo option has ≥1 result; no dead filters).
+- **Repository (additive + opt-in, Decision #78):** `getListings` gained `kind`, `minArea`,
+  `maxArea`, and `sort` (`merit` | `priceAsc` | `priceDesc`) — all optional. **Caller audit +
+  guardrail:** the only two callers (Home featured row, dev showcase) call `getListings()` with
+  no args → `sort` undefined → the **unchanged** createdAt-desc default → byte-for-byte identical
+  output/order. **Merit is never the global default**; only the discovery pages pass it. Still a
+  pure function over the existing seed; same `ListingWithAgent[]` shape; no new mock data.
+- **Shared page** `components/discovery/Discovery.tsx` (RSC, mirrors the Consultores pattern):
+  URL searchParams → validate → `getListings({ type: dealType, …, sort })` → slice `PAGE_SIZE 9`
+  → header (eyebrow + per-mode H1 + live count) + `FilterBar` + PropertyCard grid (3→2→1) +
+  `UrlPagination` + inline gold-glow **consultant CTA band**, with a **"no results" empty state**
+  (`EmptyState` + `ClearFiltersButton`). Both route stubs now delegate to it with their `dealType`.
+- **FilterBar REUSED + evolved** (its only other consumer is the dev showcase; Consultores has its
+  own `ConsultantFilters`): added the **Buy/Rent mode** via a `dealType` prop (drives price bands +
+  label); dropped the route-fixed deal-type control; field set = Localização (city) · Zona
+  (scoped to city) · Tipo (kind) · Preço (deal-aware bands) · Área (bands) · Quartos, plus a row-2
+  **result range + Ordenar (merit/price↑/price↓)**. URL-query core kept; changes reset pagination.
+  Band/option tables live in a new pure `lib/listingFilters.ts` (shared server+client).
+- **Reused UNMODIFIED** (no shared-styling changes): `PropertyCard` (Editorial Overlay),
+  `Pagination`/`UrlPagination`, `EmptyState`, `Input`/`Select`/`Button`/`Eyebrow`, Header/Footer.
+  **Home, Consultores discovery, and the Consultant profile are untouched** (verified: their
+  `getListings` order is unchanged).
+- **i18n:** new `discovery` namespace at **PT + EN parity** (eyebrow/title per mode, subtitle,
+  count plural, showing-range, all filter labels + kind/sort options, empty state, CTA). No
+  hardcoded UI strings. `€`/`/mês` via the existing `formatListingPrice`/`formatArea`.
+- **Smoke test** (`pnpm start`): `/comprar` = **14 imóveis** (2 pages), `/arrendar` = **10 imóveis**;
+  merit default leads with ana-silva's (rank #1) listings; `kind`/`sort`/`page`/empty-state all
+  200; demo chips present; EN routes render "Properties to buy/rent".
+
+**Changed:** `lib/types.ts`, `lib/data/listings.ts`, `lib/mock/listings.ts`, `lib/listingFilters.ts`
+(new), `components/FilterBar.tsx`, `components/discovery/{Discovery,ClearFiltersButton}.tsx` (new),
+`app/[locale]/{comprar,arrendar}/page.tsx`, `app/dev/components/ComponentsShowcase.tsx` (call-site),
+`messages/{pt,en}.json`. Logged DECISIONS #77–#79.
+
+**Next:** push `feat/discovery` → PR → **Vercel preview** (share link with Carlos before merge; he
+then tweaks which filters/boxes appear). After sign-off/merge: Property detail (`/imovel/[id]`),
+Vender, static pages → 4.4 shells → 4.5 polish.
+
+**Note (unchanged from D1):** the Tailwind `suggestCanonicalClasses` warnings on shared
+`Input.tsx`/`Select.tsx` (and my new arbitrary-value classes matching that idiom) are **warnings,
+not eslint errors** — `eslint .` exits 0. Left as-is per Carlos; revisit in 4.5 polish.
+
+---
+
 ## 2026-06-25 · Phase 4.3 — DISCOVERY/LISTING page (D1: reconciliation plan only, no app code)
 
 **Done** (branch `feat/discovery`, off `develop` `07d0efa` — the promoted revision; normal `feat/*`

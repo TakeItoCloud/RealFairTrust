@@ -100,7 +100,13 @@ export function ComponentsShowcase({ consultants, listings, regions, detail }: P
 
           <Section title="FilterBar (URL-synced) + Pagination">
             <Suspense fallback={null}>
-              <FilterBar regions={regions} resultCount={listings.length} />
+              <FilterBar
+                dealType="sale"
+                cities={regions}
+                totalCount={listings.length}
+                from={1}
+                to={listings.length}
+              />
             </Suspense>
             <Pagination page={page} totalPages={5} onPageChange={setPage} className="justify-center" />
           </Section>
