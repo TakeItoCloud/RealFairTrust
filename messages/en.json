@@ -165,6 +165,51 @@
     "clear": "Clear filters",
     "results": "{count, plural, =0 {No results} one {# result} other {# results}}"
   },
+  "discovery": {
+    "eyebrow": { "sale": "Buy", "rent": "Rent" },
+    "title": { "sale": "Properties to buy", "rent": "Properties to rent" },
+    "subtitle": "A selection of properties, presented by the best-rated consultants.",
+    "count": "{count, plural, =0 {No properties} one {# property} other {# properties}}",
+    "showing": "Showing {from}–{to} of {count}",
+    "f": {
+      "location": "Location",
+      "locationAll": "All locations",
+      "zone": "Zone",
+      "zoneAll": "All zones",
+      "kind": "Type",
+      "kindAll": "All types",
+      "kinds": {
+        "apartment": "Apartment",
+        "house": "House",
+        "studio": "Studio",
+        "commercial": "Commercial",
+        "building": "Building"
+      },
+      "price": "Price",
+      "priceRent": "Price (€/mo)",
+      "priceAll": "Any price",
+      "area": "Area",
+      "areaAll": "Any area",
+      "beds": "Beds",
+      "bedsAny": "Any",
+      "upTo": "Up to {value}",
+      "over": "Over {value}",
+      "sort": "Sort",
+      "sortOptions": { "merit": "Merit", "priceAsc": "Price ↑", "priceDesc": "Price ↓" },
+      "clear": "Clear filters"
+    },
+    "empty": {
+      "title": "No properties match these filters.",
+      "body": "Try widening the zone, adjusting the price band, or clearing the filters.",
+      "clear": "Clear filters"
+    },
+    "cta": {
+      "eyebrow": "Personal support",
+      "title": "Can't find what you're looking for? <gold>Talk to a consultant.</gold>",
+      "body": "Our best-rated consultants help you find the right property — at no cost to you.",
+      "button": "Talk to a consultant"
+    }
+  },
   "leadForm": {
     "title": "Get in touch",
     "name": "Name",

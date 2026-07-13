@@ -103,7 +103,8 @@ GitHub: `github.com/TakeItoCloud/RealFairTrust` (private). Branches: `main → d
   - ✅ Home (`/[locale]`) *(REBUILT to the marketing kit in the revision R4 — search-pill hero + featured card + floating stat · champagne HowItWorks · leaderboard · featured · agent-CTA · champagne footer; #62)*
   - ✅ Consultores (`/[locale]/consultores`) *(inherits the revision look via tokens)*
   - ✅ **Design-System Application sub-phase — COMPLETE (run order 1→6 done; see §6).** Then **DESIGN REVISION R1→R5 COMPLETE** (champagne export; #57–#64) — on the `chore/design-revision-*` chain, **UNMERGED** (see §12).
-  - ⬜ **Remaining 4.3 pages (NEXT):** Buy/Rent (`/comprar`, `/arrendar`), Property detail (`/imovel/[id]`), Vender, static pages.
+  - ✅ **Buy/Rent discovery (`/comprar` + `/arrendar`)** — one shared `Discovery` RSC, two modes (sale/total · rent/€mês); reused `FilterBar` (evolved with a `dealType` mode) + `PropertyCard`/`Pagination`/`EmptyState` unmodified; merit-default sort + additive `kind`/area/sort filters (#77–#79); PT+EN parity. Built 2026-07-12 on `feat/discovery` (gates green; **PR/preview pending Carlos sign-off**).
+  - ⬜ **Remaining 4.3 pages (NEXT):** Property detail (`/imovel/[id]`), Vender, static pages.
 - **4.4 App shells** — ⬜ TODO. Dashboard, admin, auth — **UI-only** (#39).
 - **4.5 Polish** — ⬜ TODO. Real imagery (hero + property photos), PT/EN copy pass, accessibility, performance, responsive QA, motion polish.
 
@@ -193,8 +194,8 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 - **DONE (revision):** **DESIGN REVISION R1→R5 COMPLETE (#57–#64)** — new champagne export adopted; brighter radial + 90° gold + 76/42/56 type + champagne family (R2); primitives/cards refresh + Button pill + Select strings (R3); Home to the marketing kit + champagne footer (R4); global AA consolidation + green/chip fixes (R5). All green + AA-recorded.
 - **DONE (Home revision):** **HOME VIDEO REVISION RH1→RH5 COMPLETE (#65–#76)** — new Home handoff adopted; system deltas (`--gold-on-light`, slim-fade helpers) (RH2); roofline-mark Logo + darker AgentCard `#0c1d39` + on-light footer (RH3a); **HeroMedia + staged entrance + video 8.0→1.6 MB** (RH3b); **live Home recomposed to the full-bleed video hero** + Top-este-mês spotlight + champagne slim-fades + new copy/i18n (RH4) + the rank-coin/EXPLORE/equal-height fixes; AA consolidation + DECISIONS + state docs + Vercel build-pin verified (RH5). All green + AA-recorded.
 - **DONE (PROMOTED 2026-06-25):** **the full design revision — champagne (#57–#64) + Home video (#65–#76) — is PROMOTED to `main`.** The revision chain consolidated → `develop` → `main` (history preserved, no squash); `main` (Vercel production) now serves the full-bleed video-hero Home. The revision is no longer unmerged/frozen — `main` and `develop` both carry it (parity). The merged `chore/design-revision-*` branches were cleaned up.
-- **IN PROGRESS:** — (none).
-- **NEXT:** the remaining Phase 4.3 pages (Buy/Rent `/comprar` + `/arrendar`, Property detail `/imovel/[id]`, Vender, static pages) — on a fresh `feat/*` branch off `develop`.
+- **IN PROGRESS:** **Buy/Rent discovery pages built on `feat/discovery`** (D2+D3; #77–#79; all gates green) — awaiting Carlos's Vercel-preview review + filter/box tweaks before PR merge.
+- **NEXT:** the remaining Phase 4.3 pages (Property detail `/imovel/[id]`, Vender, static pages).
 - **TODO (after 4.3):** 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).
 
 ---
@@ -258,8 +259,9 @@ then 4.4 shells, 4.5 polish, Phase 5 (Supabase), Phase 6 (launch).
   Consultores discovery (`/[locale]/consultores`), and the Consultant profile
   (`/[locale]/consultores/[slug]`) — rendered on **SEED / mock data** (the `isDemo`-flagged set,
   #20) with **placeholder property imagery** (real photos land in 4.5 polish).
-- **NOT yet built:** Buy/Rent (`/comprar`, `/arrendar`), Property detail (`/imovel/[id]`),
-  Vender, and the static pages — these routes scaffold-render but are not the finished 4.3 pages.
+- **NOT yet built:** Property detail (`/imovel/[id]`), Vender, and the static pages — these
+  routes scaffold-render but are not the finished 4.3 pages. *(Buy/Rent `/comprar` + `/arrendar`
+  are built on `feat/discovery`, 2026-07-12; on `main` only after the preview review + merge.)*
 - **No backend yet:** Supabase + environment variables remain **Phase 5** — **none configured**.
   The site runs entirely on the mock data layer; no secrets/env are required to build or deploy.
 - **Connecting Vercel is a one-time browser step** (not done from Claude Code): import the repo,

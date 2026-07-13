@@ -1,49 +1,56 @@
 'use client'
 
-// FilterBar — listing filters whose state lives in the URL query (shareable, back-button
-// friendly). Selects commit immediately; text inputs commit on blur/Enter. Reads its
-// initial values from the current query string.
-import { useState } from 'react'
+// FilterBar — property discovery filters whose state lives in the URL query (shareable,
+// back-button friendly). Reused across /comprar + /arrendar; the `dealType` prop is the
+// Buy/Rent mode distinction (drives the price bands + price label). Deal type itself is
+// route-fixed, so there is no deal-type control here. Selects commit immediately and reset
+// pagination; the second row shows the result range + sort. Reads initial values from the query.
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useTranslations } from 'next-intl'
-import type { ListingType, Region } from '@/lib/types'
+import { useLocale, useTranslations } from 'next-intl'
+import type { ListingType, Locale, Region } from '@/lib/types'
 import { cn } from '@/lib/cn'
-import { Button, Input, Select } from '@/components/ui'
-import { focusRing } from '@/components/ui/styles'
+import { formatArea, formatPrice } from '@/lib/format'
+import { AREA_BANDS, BED_VALUES, KIND_VALUES, PRICE_BANDS, SORT_VALUES, type Band } from '@/lib/listingFilters'
+import { Button, Select } from '@/components/ui'
+import type { SelectOption } from '@/components/ui'
 
 interface FilterBarProps {
-  /** City-level regions for the area select. */
-  regions: Region[]
-  resultCount?: number
+  /** Buy/Rent mode — route-fixed. Drives the price bands + price label. */
+  dealType: ListingType
+  /** City-level regions for the "Localização" select. */
+  cities: Region[]
+  /** All live zones; the select scopes them to the selected city. */
+  zones?: Region[]
+  totalCount: number
+  /** 1-based range of the current page, for the "showing x–y of n" line. */
+  from: number
+  to: number
   className?: string
 }
 
-const TYPES: (ListingType | 'all')[] = ['all', 'sale', 'rent']
-const BEDS = ['1', '2', '3', '4']
-
 // Non-empty sentinels for the "no filter" option of each Select (Radix forbids value="").
-const REGION_ALL = 'all'
-const BEDS_ANY = 'any'
+const ALL = 'all'
+const ANY = 'any'
 
-export function FilterBar({ regions, resultCount, className }: FilterBarProps) {
-  const t = useTranslations('filter')
+export function FilterBar({ dealType, cities, zones = [], totalCount, from, to, className }: FilterBarProps) {
+  const t = useTranslations('discovery')
+  const locale = useLocale() as Locale
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const [q, setQ] = useState(searchParams.get('q') ?? '')
-  const [minPrice, setMinPrice] = useState(searchParams.get('minPrice') ?? '')
-  const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') ?? '')
+  const currentCity = searchParams.get('region') ?? ALL
+  const currentZone = searchParams.get('zone') ?? ALL
+  const currentKind = searchParams.get('kind') ?? ALL
+  const currentPrice = searchParams.get('price') ?? ALL
+  const currentArea = searchParams.get('area') ?? ALL
+  const currentBeds = searchParams.get('beds') ?? ANY
+  const currentSort = searchParams.get('sort') ?? 'merit'
 
-  // Radix Select forbids an empty-string item value (it's reserved for clearing), so the
-  // "all/any" options use non-empty sentinels. A sentinel means "no filter": it's never
-  // written to the URL, and an absent param maps back to the sentinel so that option shows.
-  const currentType = searchParams.get('type') ?? 'all'
-  const currentRegion = searchParams.get('region') ?? REGION_ALL
-  const currentBeds = searchParams.get('beds') ?? BEDS_ANY
-
+  // Any change resets pagination (drops the page param).
   function commit(updates: Record<string, string | undefined>) {
     const params = new URLSearchParams(searchParams.toString())
+    params.delete('page')
     for (const [key, value] of Object.entries(updates)) {
       if (value) params.set(key, value)
       else params.delete(key)
@@ -53,119 +60,140 @@ export function FilterBar({ regions, resultCount, className }: FilterBarProps) {
   }
 
   function clearAll() {
-    setQ('')
-    setMinPrice('')
-    setMaxPrice('')
     router.replace(pathname, { scroll: false })
   }
 
-  const regionOptions = [
-    { value: REGION_ALL, label: t('allRegions') },
-    ...regions.map((r) => ({ value: r.id, label: r.name })),
+  // Zones scoped to the selected city (all zones when no city is chosen).
+  const scopedZones = currentCity === ALL ? zones : zones.filter((z) => z.parentId === currentCity)
+
+  const priceLabel = (b: Band): string => {
+    const f = (n: number) => formatPrice(n, locale)
+    if (b.min != null && b.max != null) return `${f(b.min)} – ${f(b.max)}`
+    if (b.max != null) return t('f.upTo', { value: f(b.max) })
+    return t('f.over', { value: f(b.min!) })
+  }
+  const areaLabel = (b: Band): string => {
+    if (b.min != null && b.max != null) return `${b.min} – ${formatArea(b.max, locale)}`
+    if (b.max != null) return t('f.upTo', { value: formatArea(b.max, locale) })
+    return t('f.over', { value: formatArea(b.min!, locale) })
+  }
+
+  const cityOptions: SelectOption[] = [
+    { value: ALL, label: t('f.locationAll') },
+    ...cities.map((c) => ({ value: c.id, label: c.name })),
   ]
-  const bedsOptions = [
-    { value: BEDS_ANY, label: t('anyBeds') },
-    ...BEDS.map((b) => ({ value: b, label: `${b}+` })),
+  const zoneOptions: SelectOption[] = [
+    { value: ALL, label: t('f.zoneAll') },
+    ...scopedZones.map((z) => ({ value: z.id, label: z.name })),
   ]
+  const kindOptions: SelectOption[] = [
+    { value: ALL, label: t('f.kindAll') },
+    ...KIND_VALUES.map((k) => ({ value: k, label: t(`f.kinds.${k}`) })),
+  ]
+  const priceOptions: SelectOption[] = [
+    { value: ALL, label: t('f.priceAll') },
+    ...PRICE_BANDS[dealType].map((b) => ({ value: b.key, label: priceLabel(b) })),
+  ]
+  const areaOptions: SelectOption[] = [
+    { value: ALL, label: t('f.areaAll') },
+    ...AREA_BANDS.map((b) => ({ value: b.key, label: areaLabel(b) })),
+  ]
+  const bedsOptions: SelectOption[] = [
+    { value: ANY, label: t('f.bedsAny') },
+    ...BED_VALUES.map((n) => ({ value: String(n), label: n === 4 ? 'T4+' : `T${n}+` })),
+  ]
+  const sortOptions: SelectOption[] = SORT_VALUES.map((s) => ({ value: s, label: t(`f.sortOptions.${s}`) }))
+
+  const field = 'flex min-w-[8.5rem] flex-1 flex-col gap-1.5 text-xs font-medium text-cream-muted'
 
   return (
-    <div className={cn('rounded-lg border border-line bg-surface p-4', className)}>
+    <div
+      className={cn(
+        'rounded-[var(--radius-lg)] border border-line bg-[var(--surface-inset)] p-5 shadow-[inset_0_1px_0_rgba(245,241,234,0.04)]',
+        className,
+      )}
+    >
       <div className="flex flex-wrap items-end gap-3">
-        {/* Type segmented control */}
-        <div role="group" aria-label={t('type')} className="inline-flex rounded-md border border-line p-0.5">
-          {TYPES.map((type) => {
-            const active = currentType === type
-            return (
-              <button
-                key={type}
-                type="button"
-                aria-pressed={active}
-                onClick={() => commit({ type: type === 'all' ? undefined : type })}
-                className={cn(
-                  'rounded-sm px-3 py-1.5 text-sm font-medium transition-colors',
-                  active ? 'bg-gold text-ink' : 'text-cream-muted hover:text-cream',
-                  focusRing,
-                )}
-              >
-                {t(type)}
-              </button>
-            )
-          })}
-        </div>
-
-        <label className="flex flex-col gap-1 text-xs text-cream-muted">
-          {t('region')}
+        <label className={field}>
+          {t('f.location')}
           <Select
-            options={regionOptions}
-            value={currentRegion}
-            onValueChange={(v) => commit({ region: v === REGION_ALL ? undefined : v })}
-            aria-label={t('region')}
-            className="w-44"
+            options={cityOptions}
+            value={currentCity}
+            onValueChange={(v) => commit({ region: v === ALL ? undefined : v, zone: undefined })}
+            aria-label={t('f.location')}
           />
         </label>
 
-        <label className="flex flex-col gap-1 text-xs text-cream-muted">
-          {t('beds')}
+        <label className={field}>
+          {t('f.zone')}
+          <Select
+            options={zoneOptions}
+            value={scopedZones.some((z) => z.id === currentZone) ? currentZone : ALL}
+            onValueChange={(v) => commit({ zone: v === ALL ? undefined : v })}
+            aria-label={t('f.zone')}
+          />
+        </label>
+
+        <label className={field}>
+          {t('f.kind')}
+          <Select
+            options={kindOptions}
+            value={currentKind}
+            onValueChange={(v) => commit({ kind: v === ALL ? undefined : v })}
+            aria-label={t('f.kind')}
+          />
+        </label>
+
+        <label className={field}>
+          {dealType === 'rent' ? t('f.priceRent') : t('f.price')}
+          <Select
+            options={priceOptions}
+            value={currentPrice}
+            onValueChange={(v) => commit({ price: v === ALL ? undefined : v })}
+            aria-label={dealType === 'rent' ? t('f.priceRent') : t('f.price')}
+          />
+        </label>
+
+        <label className={field}>
+          {t('f.area')}
+          <Select
+            options={areaOptions}
+            value={currentArea}
+            onValueChange={(v) => commit({ area: v === ALL ? undefined : v })}
+            aria-label={t('f.area')}
+          />
+        </label>
+
+        <label className={cn(field, 'min-w-[7rem] flex-none')}>
+          {t('f.beds')}
           <Select
             options={bedsOptions}
             value={currentBeds}
-            onValueChange={(v) => commit({ beds: v === BEDS_ANY ? undefined : v })}
-            aria-label={t('beds')}
-            className="w-28"
+            onValueChange={(v) => commit({ beds: v === ANY ? undefined : v })}
+            aria-label={t('f.beds')}
           />
         </label>
 
-        <label className="flex flex-col gap-1 text-xs text-cream-muted">
-          {t('minPrice')}
-          <Input
-            type="number"
-            inputMode="numeric"
-            value={minPrice}
-            onChange={(e) => setMinPrice(e.target.value)}
-            onBlur={() => commit({ minPrice: minPrice || undefined })}
-            onKeyDown={(e) => e.key === 'Enter' && commit({ minPrice: minPrice || undefined })}
-            aria-label={t('minPrice')}
-            className="w-28"
-          />
-        </label>
-
-        <label className="flex flex-col gap-1 text-xs text-cream-muted">
-          {t('maxPrice')}
-          <Input
-            type="number"
-            inputMode="numeric"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-            onBlur={() => commit({ maxPrice: maxPrice || undefined })}
-            onKeyDown={(e) => e.key === 'Enter' && commit({ maxPrice: maxPrice || undefined })}
-            aria-label={t('maxPrice')}
-            className="w-28"
-          />
-        </label>
-
-        <label className="flex flex-1 flex-col gap-1 text-xs text-cream-muted">
-          {t('search')}
-          <Input
-            type="search"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            onBlur={() => commit({ q: q || undefined })}
-            onKeyDown={(e) => e.key === 'Enter' && commit({ q: q || undefined })}
-            aria-label={t('search')}
-            className="min-w-40"
-          />
-        </label>
-
-        <Button variant="ghost" size="sm" onClick={clearAll}>
-          {t('clear')}
+        <Button variant="ghost" size="sm" onClick={clearAll} className="ml-auto self-end">
+          {t('f.clear')}
         </Button>
       </div>
 
-      {resultCount !== undefined ? (
-        <p className="mt-3 text-sm text-cream-muted" aria-live="polite">
-          {t('results', { count: resultCount })}
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
+        <p className="text-meta text-cream-muted" aria-live="polite">
+          {t('showing', { from, to, count: totalCount })}
         </p>
-      ) : null}
+        <label className="flex items-center gap-2 text-meta font-medium text-cream-muted">
+          {t('f.sort')}
+          <Select
+            options={sortOptions}
+            value={currentSort}
+            onValueChange={(v) => commit({ sort: v === 'merit' ? undefined : v })}
+            aria-label={t('f.sort')}
+            className="w-40"
+          />
+        </label>
+      </div>
     </div>
   )
 }

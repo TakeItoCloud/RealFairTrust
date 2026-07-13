@@ -39,10 +39,13 @@ export async function getListings(filter: ListingFilter = {}): Promise<ListingWi
   let result = listings.filter((l) => l.status === 'active')
 
   if (filter.type) result = result.filter((l) => l.type === filter.type)
+  if (filter.kind) result = result.filter((l) => l.kind === filter.kind)
   if (filter.regionId) result = result.filter((l) => l.regionId === filter.regionId)
   if (filter.zoneId) result = result.filter((l) => l.zoneId === filter.zoneId)
   if (filter.minPrice !== undefined) result = result.filter((l) => l.price >= filter.minPrice!)
   if (filter.maxPrice !== undefined) result = result.filter((l) => l.price <= filter.maxPrice!)
+  if (filter.minArea !== undefined) result = result.filter((l) => l.areaM2 >= filter.minArea!)
+  if (filter.maxArea !== undefined) result = result.filter((l) => l.areaM2 <= filter.maxArea!)
   if (filter.beds !== undefined) result = result.filter((l) => l.beds >= filter.beds!)
   if (filter.q) {
     const q = filter.q.toLowerCase()
@@ -51,8 +54,31 @@ export async function getListings(filter: ListingFilter = {}): Promise<ListingWi
     )
   }
 
-  result.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-  return result.map(withAgent)
+  const mapped = result.map(withAgent)
+
+  // Sort. Omitting `sort` keeps the legacy createdAt-desc order so existing callers
+  // (Home featured row, dev showcase) are byte-for-byte unchanged; only the discovery
+  // pages pass an explicit sort (merit default). Additive + opt-in.
+  switch (filter.sort) {
+    case 'priceAsc':
+      mapped.sort((a, b) => a.price - b.price)
+      break
+    case 'priceDesc':
+      mapped.sort((a, b) => b.price - a.price)
+      break
+    case 'merit':
+      // Best-rated consultant's listings first; agents without a score sort last;
+      // ties (and the no-score group) fall back to most-recent.
+      mapped.sort((a, b) => {
+        const sa = a.agent.score?.composite ?? -1
+        const sb = b.agent.score?.composite ?? -1
+        return sb !== sa ? sb - sa : b.createdAt.localeCompare(a.createdAt)
+      })
+      break
+    default:
+      mapped.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  }
+  return mapped
 }
 
 export async function getListing(id: string): Promise<ListingDetail | null> {

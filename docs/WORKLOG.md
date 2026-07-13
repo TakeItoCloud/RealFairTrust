@@ -6,6 +6,113 @@
 
 ---
 
+## 2026-07-12 · Phase 4.3 — DISCOVERY/LISTING page BUILT (D2 + D3: /comprar + /arrendar)
+
+**Done** (branch `feat/discovery`, off the promoted revision; all gates green: `tsc --noEmit`,
+`eslint`, `pnpm build`). Built the property-discovery page as ONE shared template in TWO modes —
+Buy (`/comprar` · EN `/buying`, total price) + Rent (`/arrendar` · EN `/renting`, €/mês).
+
+- **Schema (additive, Hard Rule #1, Decision #77):** added `PropertyKind` + a `kind` field to
+  `Property` (`lib/types.ts`) and seeded all 24 listings (`lib/mock/listings.ts`) — apartment/
+  house/studio/commercial/building (every offered Tipo option has ≥1 result; no dead filters).
+- **Repository (additive + opt-in, Decision #78):** `getListings` gained `kind`, `minArea`,
+  `maxArea`, and `sort` (`merit` | `priceAsc` | `priceDesc`) — all optional. **Caller audit +
+  guardrail:** the only two callers (Home featured row, dev showcase) call `getListings()` with
+  no args → `sort` undefined → the **unchanged** createdAt-desc default → byte-for-byte identical
+  output/order. **Merit is never the global default**; only the discovery pages pass it. Still a
+  pure function over the existing seed; same `ListingWithAgent[]` shape; no new mock data.
+- **Shared page** `components/discovery/Discovery.tsx` (RSC, mirrors the Consultores pattern):
+  URL searchParams → validate → `getListings({ type: dealType, …, sort })` → slice `PAGE_SIZE 9`
+  → header (eyebrow + per-mode H1 + live count) + `FilterBar` + PropertyCard grid (3→2→1) +
+  `UrlPagination` + inline gold-glow **consultant CTA band**, with a **"no results" empty state**
+  (`EmptyState` + `ClearFiltersButton`). Both route stubs now delegate to it with their `dealType`.
+- **FilterBar REUSED + evolved** (its only other consumer is the dev showcase; Consultores has its
+  own `ConsultantFilters`): added the **Buy/Rent mode** via a `dealType` prop (drives price bands +
+  label); dropped the route-fixed deal-type control; field set = Localização (city) · Zona
+  (scoped to city) · Tipo (kind) · Preço (deal-aware bands) · Área (bands) · Quartos, plus a row-2
+  **result range + Ordenar (merit/price↑/price↓)**. URL-query core kept; changes reset pagination.
+  Band/option tables live in a new pure `lib/listingFilters.ts` (shared server+client).
+- **Reused UNMODIFIED** (no shared-styling changes): `PropertyCard` (Editorial Overlay),
+  `Pagination`/`UrlPagination`, `EmptyState`, `Input`/`Select`/`Button`/`Eyebrow`, Header/Footer.
+  **Home, Consultores discovery, and the Consultant profile are untouched** (verified: their
+  `getListings` order is unchanged).
+- **i18n:** new `discovery` namespace at **PT + EN parity** (eyebrow/title per mode, subtitle,
+  count plural, showing-range, all filter labels + kind/sort options, empty state, CTA). No
+  hardcoded UI strings. `€`/`/mês` via the existing `formatListingPrice`/`formatArea`.
+- **Smoke test** (`pnpm start`): `/comprar` = **14 imóveis** (2 pages), `/arrendar` = **10 imóveis**;
+  merit default leads with ana-silva's (rank #1) listings; `kind`/`sort`/`page`/empty-state all
+  200; demo chips present; EN routes render "Properties to buy/rent".
+
+**Changed:** `lib/types.ts`, `lib/data/listings.ts`, `lib/mock/listings.ts`, `lib/listingFilters.ts`
+(new), `components/FilterBar.tsx`, `components/discovery/{Discovery,ClearFiltersButton}.tsx` (new),
+`app/[locale]/{comprar,arrendar}/page.tsx`, `app/dev/components/ComponentsShowcase.tsx` (call-site),
+`messages/{pt,en}.json`. Logged DECISIONS #77–#79.
+
+**Next:** push `feat/discovery` → PR → **Vercel preview** (share link with Carlos before merge; he
+then tweaks which filters/boxes appear). After sign-off/merge: Property detail (`/imovel/[id]`),
+Vender, static pages → 4.4 shells → 4.5 polish.
+
+**Note (unchanged from D1):** the Tailwind `suggestCanonicalClasses` warnings on shared
+`Input.tsx`/`Select.tsx` (and my new arbitrary-value classes matching that idiom) are **warnings,
+not eslint errors** — `eslint .` exits 0. Left as-is per Carlos; revisit in 4.5 polish.
+
+---
+
+## 2026-06-25 · Phase 4.3 — DISCOVERY/LISTING page (D1: reconciliation plan only, no app code)
+
+**Done** (branch `feat/discovery`, off `develop` `07d0efa` — the promoted revision; normal `feat/*`
+flow resumed, freeze lifted; `main`==`develop` parity confirmed; no PR).
+
+- **State verified:** tree's only tracked change was the new `design/RealFairTrust_Design_System.zip`
+  (+ a `.old` backup of the prior bundle) — the **expected discovery handoff delivery**, not stray
+  work; no app/source dirty. `main == develop == 07d0efa`.
+- **Zip fingerprint confirmed = DISCOVERY handoff:** top folder `design_handoff_discovery/`,
+  `reference/Discovery.dc.html`, README titled "Property Discovery / Listing Page (`/comprar` +
+  `/arrendar`)". (Host has no `unzip` → extracted via python `zipfile`.)
+- **Extracted** → `design/handoff-discovery/` (inner folder normalised); the `design/handoff/` +
+  `design/handoff-home/` bundles left untouched. `design/**` already eslint-ignored.
+- **Read the handoff fully** (README authoritative + `Discovery.dc.html` + `components.md` +
+  `tokens/*`) and audited the real codebase: `PropertyCard`, `FilterBar`, `Pagination`/
+  `UrlPagination`, `EmptyState`, `Input`/`Select`/`Button`/`Eyebrow`, `getListings`/`ListingFilter`,
+  `lib/types.ts`, `lib/mock/listings.ts`, the two route stubs, i18n routing + message namespaces.
+- **Wrote `docs/DISCOVERY-PLAN.md`** (NEW). Headlines:
+  - **Token delta = NONE** (all referenced tokens verified present); two handoff literals SUPERSEDED
+    by our locked AA tokens — eyebrow gold `#e3a812`→**`--gold-500 #efb52a`** (#64b); energy cert
+    `#3fb984`→**`--green-verified-strong #5fd2a1`** (#64g, already used by PropertyCard).
+  - **Component reconciliation:** **PropertyCard** reuse as-is (already Editorial Overlay; one gap —
+    align fill translucent→`--surface-card-solid`, AA win + matches #71, shared w/ Home+profile,
+    flagged); **FilterBar** restyle+extend (keep its URL-query core; inset well + new field set
+    Localização/Zona/Tipo/Preço-bands/Quartos/Filtrar + row-2 count/Ordenar; drop the route-fixed
+    deal-type control; blast radius = dev showcase only); **Pagination** restyle only (keep
+    pageList/a11y; circular gold-gradient active + chevron prev/next) via the existing `UrlPagination`
+    `?page=` wrapper (also nicer on Consultores); **EmptyState** reuse + a `prominent` variant +
+    "Limpar filtros"; **Input/Select/Button/Eyebrow** as-is; **CTA band** compose inline (reuse the
+    Home #73 gold-glow panel); Header + champagne Footer as-is.
+  - **Routes:** both `/comprar` + `/arrendar` are bare stubs → a **shared `Discovery` RSC** keyed off
+    `dealType: 'sale'|'rent'`, mirroring the Consultores server pattern (searchParams → `getListings`
+    → slice 9 → grid + `UrlPagination` + `EmptyState`; client FilterBar drives the URL). EN routes
+    `/buying` + `/renting` already mapped.
+  - **Data:** maps to OUR seed — **14 sale + 10 rent** (≤2 pages @ pageSize 9), NOT the handoff's
+    128/86. Additive repo gaps: add `sort` to `ListingFilter`/`getListings`; price **bands** map to
+    existing `minPrice`/`maxPrice` (no schema change). **KEY DATA DECISION:** the handoff **"Tipo"**
+    (property kind) filter has **no backing field** (`Property.type` = deal type) → recommend an
+    **additive `Property.kind`** (schema-first, Hard Rule #1) + seed, else defer the Tipo control.
+    Flagged as **D0** (confirm before D2).
+  - **i18n:** new `discovery` namespace (deal-aware) + extend `pagination`; PT+EN parity enumerated.
+  - **AA list** (fail-closed, D3): filter-well labels/focus ring, row-2 meta, pagination active/
+    inactive, empty state, CTA band, PropertyCard surface.
+  - **Phased checklist:** D1 plan ✅ · **D0** data-field confirm (gates D2) · D2 build · D3 AA +
+    DECISIONS #77+ + state.
+
+**Changed:** added `docs/DISCOVERY-PLAN.md` + `design/handoff-discovery/**`; updated the new bundle
+`design/RealFairTrust_Design_System.zip`. **No app code/components/tokens changed.**
+
+**Next:** confirm **D0** (add `Property.kind` additively vs defer the Tipo filter) + the PropertyCard
+surface alignment, then execute **D2** (build the shared discovery page) on `feat/discovery`, then
+**D3** (AA + DECISIONS + state). No PR until the page is built + green.
+
+---
+
 ## 2026-06-25 · Design REVISION — AUTHORIZED PROMOTION → develop → main (freeze lifted)
 
 **Done.** By Carlos's explicit approval, the design-revision chain (champagne #57–#64 + Home video
