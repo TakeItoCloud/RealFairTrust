@@ -338,6 +338,17 @@ WORKLOG entry. Highlights: standalone typed geo dataset (`lib/data/geo/`) + on-d
   was intentionally not touched (would change Home).
 - **`server-only` guard** — the CAOP loader is server-only by convention (comment); adding the
   `server-only` npm package would make it a hard compile-time guard (deferred; no dep added now).
+
+## H · PROPERTY DETAIL (built 2026-07-13, `feat/property-detail`)
+
+`/imovel/[id]` (EN `/property/[id]`) replaces the stub. Gallery + gold price + specs (green energy
+badge) + description + location "Freguesia · Concelho · Distrito" (CAOP) + attributed-consultant
+mini-card (#18 merit → profile) + sticky lead panel (`PropertyContact` composing `LeadForm`+`Modal`,
+no persistence) + **Similar listings** row. **Similar** = additive **`getSimilarListings(listing,
+limit)`** (same deal type, same concelho → widen to distrito, exclude current) — **`getListing`
+untouched** (DECISION #85; maps to a distinct Supabase query in Phase 5). New `PropertyGallery` /
+`PropertyContact` compose shared components only; `PropertyCard` already links to `/imovel/[id]` so
+reachability needed no shared-component change. No map (deferred). PT/EN `property` namespace.
 - **§C.3 `Property.kind`** — recommend adding it additively (A); else defer the Tipo control (B). ← confirm.
 - **PropertyCard fill → `--surface-card-solid`** (B.1) — recommended (AA + consistency); shared with
   Home + profile. ← confirm.

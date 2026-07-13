@@ -229,6 +229,16 @@
       "button": "Falar com um consultor"
     }
   },
+  "property": {
+    "description": "Descrição",
+    "consultant": "Consultor responsável",
+    "viewProfile": "Ver perfil",
+    "similar": "Imóveis semelhantes",
+    "specType": "Tipo",
+    "contactTitle": "Falar sobre este imóvel",
+    "contactSubtitle": "Envie uma mensagem a {name}.",
+    "contactCta": "Falar sobre este imóvel"
+  },
   "leadForm": {
     "title": "Contactar",
     "name": "Nome",

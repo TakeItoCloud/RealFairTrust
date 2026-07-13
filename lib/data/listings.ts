@@ -109,3 +109,27 @@ export async function getListing(id: string): Promise<ListingDetail | null> {
 
   return { ...withAgent(property), similar }
 }
+
+/**
+ * Similar listings for a property detail page (Decision #85). Same deal type, **same concelho
+ * first, then widen to the same distrito** (CAOP), excluding the current listing. Additive +
+ * opt-in: takes the already-loaded listing (no re-fetch of the main), so it maps cleanly to a
+ * distinct Supabase query in Phase 5. Leaves `getListing` untouched.
+ */
+export async function getSimilarListings(
+  listing: Pick<Property, 'id' | 'type' | 'freguesiaId'>,
+  limit = 3,
+): Promise<ListingWithAgent[]> {
+  const concelhoId = listing.freguesiaId.slice(0, 4)
+  const distritoId = concelhoDistrito(concelhoId)
+  const pool = listings.filter(
+    (l) => l.id !== listing.id && l.status === 'active' && l.type === listing.type,
+  )
+  const sameConcelho = pool.filter((l) => l.freguesiaId.slice(0, 4) === concelhoId)
+  const sameDistrito = pool.filter(
+    (l) =>
+      l.freguesiaId.slice(0, 4) !== concelhoId &&
+      concelhoDistrito(l.freguesiaId.slice(0, 4)) === distritoId,
+  )
+  return [...sameConcelho, ...sameDistrito].slice(0, limit).map(withAgent)
+}
