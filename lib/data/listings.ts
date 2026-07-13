@@ -1,6 +1,7 @@
 // Listings repository. Attaches a light agent reference (name + verified + score) so
 // cards can show the rating chip without a second lookup. Mock now → Supabase in Phase 5.
 import { consultants, listings, regions, scores } from '@/lib/mock'
+import { concelhoDistrito } from '@/lib/data/geo/caop'
 import type {
   ListingAgentRef,
   ListingDetail,
@@ -40,6 +41,11 @@ export async function getListings(filter: ListingFilter = {}): Promise<ListingWi
 
   if (filter.type) result = result.filter((l) => l.type === filter.type)
   if (filter.kind) result = result.filter((l) => l.kind === filter.kind)
+  // CAOP location filters (standalone; derive concelho = first 4 digits, distrito via CAOP).
+  if (filter.freguesiaId) result = result.filter((l) => l.freguesiaId === filter.freguesiaId)
+  if (filter.concelhoId) result = result.filter((l) => l.freguesiaId.slice(0, 4) === filter.concelhoId)
+  if (filter.distritoId)
+    result = result.filter((l) => concelhoDistrito(l.freguesiaId.slice(0, 4)) === filter.distritoId)
   if (filter.regionId) result = result.filter((l) => l.regionId === filter.regionId)
   if (filter.zoneId) result = result.filter((l) => l.zoneId === filter.zoneId)
   if (filter.minPrice !== undefined) result = result.filter((l) => l.price >= filter.minPrice!)
@@ -67,13 +73,18 @@ export async function getListings(filter: ListingFilter = {}): Promise<ListingWi
       mapped.sort((a, b) => b.price - a.price)
       break
     case 'merit':
-      // Best-rated consultant's listings first; agents without a score sort last;
-      // ties (and the no-score group) fall back to most-recent.
+      // Discovery default: highest-merit agent first (desc), then price (asc), then
+      // announcement date (newest). Agents without a score sort last.
       mapped.sort((a, b) => {
         const sa = a.agent.score?.composite ?? -1
         const sb = b.agent.score?.composite ?? -1
-        return sb !== sa ? sb - sa : b.createdAt.localeCompare(a.createdAt)
+        if (sb !== sa) return sb - sa
+        if (a.price !== b.price) return a.price - b.price
+        return b.createdAt.localeCompare(a.createdAt)
       })
+      break
+    case 'date':
+      mapped.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
       break
     default:
       mapped.sort((a, b) => b.createdAt.localeCompare(a.createdAt))

@@ -3,24 +3,29 @@
 // FilterBar — property discovery filters whose state lives in the URL query (shareable,
 // back-button friendly). Reused across /comprar + /arrendar; the `dealType` prop is the
 // Buy/Rent mode distinction (drives the price bands + price label). Deal type itself is
-// route-fixed, so there is no deal-type control here. Selects commit immediately and reset
-// pagination; the second row shows the result range + sort. Reads initial values from the query.
+// route-fixed, so there is no deal-type control here. Location is a Distrito→Concelho→Freguesia
+// drill-down (LocationPicker) that replaces the old Localização + Zona selects; the other
+// selects commit immediately and reset pagination; the second row shows the range + sort.
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
-import type { ListingType, Locale, Region } from '@/lib/types'
+import type { ListingType, Locale } from '@/lib/types'
 import { cn } from '@/lib/cn'
 import { formatArea, formatPrice } from '@/lib/format'
 import { AREA_BANDS, BED_VALUES, KIND_VALUES, PRICE_BANDS, SORT_VALUES, type Band } from '@/lib/listingFilters'
 import { Button, Select } from '@/components/ui'
 import type { SelectOption } from '@/components/ui'
+import { LocationPicker } from './discovery/LocationPicker'
+
+interface GeoSelected {
+  id: string
+  name: string
+}
 
 interface FilterBarProps {
   /** Buy/Rent mode — route-fixed. Drives the price bands + price label. */
   dealType: ListingType
-  /** City-level regions for the "Localização" select. */
-  cities: Region[]
-  /** All live zones; the select scopes them to the selected city. */
-  zones?: Region[]
+  /** Resolved CAOP location chain (names from the server) for the picker's chips. */
+  location: { distrito?: GeoSelected; concelho?: GeoSelected; freguesia?: GeoSelected }
   totalCount: number
   /** 1-based range of the current page, for the "showing x–y of n" line. */
   from: number
@@ -32,15 +37,13 @@ interface FilterBarProps {
 const ALL = 'all'
 const ANY = 'any'
 
-export function FilterBar({ dealType, cities, zones = [], totalCount, from, to, className }: FilterBarProps) {
+export function FilterBar({ dealType, location, totalCount, from, to, className }: FilterBarProps) {
   const t = useTranslations('discovery')
   const locale = useLocale() as Locale
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const currentCity = searchParams.get('region') ?? ALL
-  const currentZone = searchParams.get('zone') ?? ALL
   const currentKind = searchParams.get('kind') ?? ALL
   const currentPrice = searchParams.get('price') ?? ALL
   const currentArea = searchParams.get('area') ?? ALL
@@ -63,9 +66,6 @@ export function FilterBar({ dealType, cities, zones = [], totalCount, from, to, 
     router.replace(pathname, { scroll: false })
   }
 
-  // Zones scoped to the selected city (all zones when no city is chosen).
-  const scopedZones = currentCity === ALL ? zones : zones.filter((z) => z.parentId === currentCity)
-
   const priceLabel = (b: Band): string => {
     const f = (n: number) => formatPrice(n, locale)
     if (b.min != null && b.max != null) return `${f(b.min)} – ${f(b.max)}`
@@ -78,14 +78,6 @@ export function FilterBar({ dealType, cities, zones = [], totalCount, from, to, 
     return t('f.over', { value: formatArea(b.min!, locale) })
   }
 
-  const cityOptions: SelectOption[] = [
-    { value: ALL, label: t('f.locationAll') },
-    ...cities.map((c) => ({ value: c.id, label: c.name })),
-  ]
-  const zoneOptions: SelectOption[] = [
-    { value: ALL, label: t('f.zoneAll') },
-    ...scopedZones.map((z) => ({ value: z.id, label: z.name })),
-  ]
   const kindOptions: SelectOption[] = [
     { value: ALL, label: t('f.kindAll') },
     ...KIND_VALUES.map((k) => ({ value: k, label: t(`f.kinds.${k}`) })),
@@ -114,25 +106,13 @@ export function FilterBar({ dealType, cities, zones = [], totalCount, from, to, 
       )}
     >
       <div className="flex flex-wrap items-end gap-3">
-        <label className={field}>
-          {t('f.location')}
-          <Select
-            options={cityOptions}
-            value={currentCity}
-            onValueChange={(v) => commit({ region: v === ALL ? undefined : v, zone: undefined })}
-            aria-label={t('f.location')}
-          />
-        </label>
-
-        <label className={field}>
-          {t('f.zone')}
-          <Select
-            options={zoneOptions}
-            value={scopedZones.some((z) => z.id === currentZone) ? currentZone : ALL}
-            onValueChange={(v) => commit({ zone: v === ALL ? undefined : v })}
-            aria-label={t('f.zone')}
-          />
-        </label>
+        {/* Location — Distrito → Concelho → Freguesia (on-demand, inventory-driven) */}
+        <LocationPicker
+          dealType={dealType}
+          distrito={location.distrito}
+          concelho={location.concelho}
+          freguesia={location.freguesia}
+        />
 
         <label className={field}>
           {t('f.kind')}

@@ -72,6 +72,9 @@ export interface ConsultantProfile {
   languages: Language[]
   specializations: Specialization[]
   serviceRegionIds: string[]
+  /** CAOP top-level ids the consultant covers (distrito 2-digit, or RA 'AC'/'MA'). Drives the
+   *  area-specialist CTA + distrito inventory. Parallel to serviceRegionIds (old Region model). */
+  coverageDistrictIds: string[]
   contact: ContactInfo
   status: ConsultantStatus
   verified: boolean
@@ -137,6 +140,9 @@ export interface Property {
   agentId: string
   type: ListingType
   kind: PropertyKind
+  /** CAOP DICOFRE (6-digit) of the listing's freguesia. concelho = slice(0,4); distrito/RA
+   *  derived via lib/data/geo/caop. Standalone CAOP location (parallel to regionId/zoneId). */
+  freguesiaId: string
   title: string
   /** EUR. For rentals this is the monthly price. */
   price: number
@@ -277,13 +283,17 @@ export interface ConsultantFilter {
 
 /** Discovery sort order. `merit` = the attributed consultant's composite score (desc) —
  *  "presented by the best-rated consultants"; the discovery default (Decision #78). */
-export type ListingSort = 'merit' | 'priceAsc' | 'priceDesc'
+export type ListingSort = 'merit' | 'priceAsc' | 'priceDesc' | 'date'
 
 export interface ListingFilter {
   type?: ListingType
   kind?: PropertyKind
   regionId?: string
   zoneId?: string
+  /** CAOP location filters (standalone; parallel to regionId/zoneId). */
+  distritoId?: string
+  concelhoId?: string
+  freguesiaId?: string
   minPrice?: number
   maxPrice?: number
   minArea?: number

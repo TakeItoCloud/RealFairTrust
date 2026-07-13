@@ -172,10 +172,16 @@
     "count": "{count, plural, =0 {No properties} one {# property} other {# properties}}",
     "showing": "Showing {from}–{to} of {count}",
     "f": {
-      "location": "Location",
-      "locationAll": "All locations",
-      "zone": "Zone",
-      "zoneAll": "All zones",
+      "distrito": "District",
+      "distritoAny": "District",
+      "concelho": "Municipality",
+      "concelhoAny": "Municipality",
+      "freguesia": "Parish",
+      "freguesiaAny": "Parish",
+      "searchDistrito": "Search district…",
+      "searchConcelho": "Search municipality…",
+      "searchFreguesia": "Search parish…",
+      "noOptions": "No options",
       "kind": "Type",
       "kindAll": "All types",
       "kinds": {
@@ -195,13 +201,26 @@
       "upTo": "Up to {value}",
       "over": "Over {value}",
       "sort": "Sort",
-      "sortOptions": { "merit": "Merit", "priceAsc": "Price ↑", "priceDesc": "Price ↓" },
+      "sortOptions": { "merit": "Merit", "priceAsc": "Price ↑", "priceDesc": "Price ↓", "date": "Date" },
       "clear": "Clear filters"
     },
     "empty": {
       "title": "No properties match these filters.",
       "body": "Try widening the zone, adjusting the price band, or clearing the filters.",
       "clear": "Clear filters"
+    },
+    "geoAttribution": "Administrative divisions: Direção-Geral do Território (DGT) · CAOP2025 · CC BY 4.0.",
+    "nearby": {
+      "title": "No properties in {location}.",
+      "lede": "There are no properties matching these filters in this location. Here are some nearby.",
+      "concelho": "In {name} municipality",
+      "distrito": "In {name} district",
+      "other": "In other areas"
+    },
+    "specialist": {
+      "eyebrow": "Specialist in {distrito}",
+      "view": "View profile",
+      "more": "+{count} consultants"
     },
     "cta": {
       "eyebrow": "Personal support",

@@ -6,6 +6,60 @@
 
 ---
 
+## 2026-07-13 · Phase 4.3 — LOCATION HIERARCHY (CAOP) on discovery (feat/location-hierarchy)
+
+**Done** (branch `feat/location-hierarchy` off `develop` `3b5012f` = the merged Buy/Rent PR #8;
+all gates green: `tsc --noEmit`, `eslint`, `pnpm build`). Replaced the Localização + Zona filters on
+`/comprar` + `/arrendar` with a real **Distrito → Concelho → Freguesia** picker backed by the
+official **CAOP2025** administrative map. **PR opened, preview pending Carlos review — NOT merged.**
+
+- **Dataset (committed):** `lib/data/geo/pt-caop2025.json` — DGT CAOP2025 (20 top-level = 18 distritos
+  + 2 RA · 308 concelhos · 3 259 freguesias), DICOFRE ids. Sourced live from DGT infogeo ArcGIS
+  (Açores via the 3 per-group layers — the combined RAA layer blanks the Grupo Oriental DICOFRE).
+  **Licence CC BY 4.0**, attribute "Direção-Geral do Território (DGT)" — recorded in `meta.licence`,
+  in `lib/data/geo/NOTICE.md`, and surfaced on the discovery pages (a `geoAttribution` line).
+- **Typed loader** `lib/data/geo/caop.ts` — server-only *by convention* (statically imports the
+  355 KB; `server-only` pkg not installed, so a comment enforces the rule); exposes level accessors +
+  `concelhoDistrito`. **Standalone** — the old `district→city→zone` Region model is UNTOUCHED (both
+  models now coexist; unifying/retiring the old one is a later decision — noted in DISCOVERY-PLAN).
+- **Shared data (additive, approved diffs):** `Property.freguesiaId` (required; 24 listings mapped to
+  real CAOP freguesias — Lisboa 1106 / Porto 1312); `ConsultantProfile.coverageDistrictIds` (required;
+  spread across 11/13/15/08/03/01/17 — Faro/Braga/Setúbal/Aveiro/Vila Real are consultant-but-no-house
+  fallback districts). `getListings` gained opt-in `distritoId`/`concelhoId`/`freguesiaId` + `date`
+  sort; merit now **desc→price asc→date newest**. **Caller audit held:** Home + dev showcase call
+  `getListings()` with no args → unchanged default order (verified: Home still leads p-001).
+- **On-demand loading:** `/api/geo/{distritos,concelhos,freguesias}` route handlers return
+  **inventory-filtered** small lists (distrito: house OR attributed consultant; concelho/freguesia:
+  house). The `LocationPicker` (client) fetches per level — the 355 KB never ships on first paint.
+- **LocationPicker** — drill-down, per-level type-to-search (accent-insensitive), removable per level,
+  URL-synced (`?distrito/?concelho/?freguesia`), RFT skin (Select/Input idiom). Server resolves the
+  selected chain's names for the chips.
+- **Nearby fallback** (RSC): a chosen location with 0 houses → "Sem imóveis em X" + widen
+  freguesia→concelho→distrito (grouped by widen level; re-sortable via the sort control) → else
+  "Noutras zonas" (all). **Area-specialist CTA** (top consultant attributed to that distrito) shows
+  near the top on a direct hit and after the fallback message.
+- **i18n:** `discovery.f` location keys + `nearby`/`specialist`/`geoAttribution` + `sortOptions.date`
+  at PT+EN parity. Deal type stays route-fixed; no shared-component styling changed; Home/Consultores/
+  profile untouched (all 200, output identical).
+- **Smoke test** (`pnpm start`): DIRECT HIT `/comprar?distrito=11` = 6 imóveis + "Especialista em
+  Lisboa"; `?freguesia=110658` (Belém) = 2; **FALLBACK** `/comprar?distrito=08` (Faro) = "Sem imóveis
+  em Faro" + "Especialista em Faro" (Catarina Ferreira) + "Noutras zonas"; `?freguesia=110601` widens
+  to "No concelho de Lisboa"; EN parity confirmed; geo API inventory correct.
+
+**Changed:** NEW `lib/data/geo/{caop.ts,inventory.ts,NOTICE.md,pt-caop2025.json}`,
+`app/api/geo/*/route.ts`, `components/discovery/LocationPicker.tsx`; edited `lib/types.ts`,
+`lib/data/listings.ts`, `lib/listingFilters.ts`, `lib/mock/{listings,consultants}.ts`,
+`components/{FilterBar,discovery/Discovery}.tsx`, `app/dev/components/ComponentsShowcase.tsx`,
+`messages/{pt,en}.json`. Logged DECISIONS #80–#84.
+
+**Preview test guide (for Carlos):** DIRECT HIT → click **Distrito = Lisboa** (or Freguesia = Belém).
+FALLBACK + specialist → click **Distrito = Faro** (Catarina Ferreira covers it; zero houses there).
+
+**Next:** Carlos reviews the preview → tweaks → merge. Then Property detail (`/imovel/[id]`), Vender,
+static pages (Methodology page should also carry the DGT attribution) → 4.4 shells → 4.5 polish.
+
+---
+
 ## 2026-07-12 · Phase 4.3 — DISCOVERY/LISTING page BUILT (D2 + D3: /comprar + /arrendar)
 
 **Done** (branch `feat/discovery`, off the promoted revision; all gates green: `tsc --noEmit`,

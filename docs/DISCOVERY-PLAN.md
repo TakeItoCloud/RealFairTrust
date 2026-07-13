@@ -314,7 +314,30 @@ step (D2) is enough; AA + decisions + docs close out (D3) — mirroring the R/RH
 fork is the `kind` data decision (D0) — a 2-line confirm that decides whether the Tipo filter ships
 in D2 or defers.
 
+## G · LOCATION HIERARCHY (D4 — built 2026-07-13, `feat/location-hierarchy`)
+
+The Localização + Zona selects were replaced by a **Distrito → Concelho → Freguesia** picker backed
+by the official **CAOP2025** dataset (DGT, CC BY 4.0). See DECISIONS #80–#84 and the 2026-07-13
+WORKLOG entry. Highlights: standalone typed geo dataset (`lib/data/geo/`) + on-demand inventory-driven
+`/api/geo` routes (no 355 KB on first paint); additive `Property.freguesiaId` +
+`ConsultantProfile.coverageDistrictIds` (existing callers byte-for-byte unchanged); nearby fallback
+(widen freguesia→concelho→distrito, grouped) + area-specialist CTA; sort merit→price→date.
+
+> **KNOWN FOLLOW-UP — two location models coexist.** The **CAOP** model (distrito/concelho/freguesia,
+> DICOFRE) now powers discovery location; the original **`district→city→zone` Region model**
+> (`regionId`/`zoneId`/`serviceRegionIds`, seed `reg-lisboa`/`reg-chiado`…) still powers Home,
+> Consultores discovery, and the Consultant profile and was left **untouched**. Unifying or retiring
+> the old Region model in favour of CAOP is a **separate later decision** (likely alongside Phase 5
+> Supabase), not done now. Until then, listings carry BOTH `regionId`/`zoneId` (old) and `freguesiaId`
+> (CAOP); consultants carry BOTH `serviceRegionIds` (old) and `coverageDistrictIds` (CAOP).
+
 **Deferred / flagged for sign-off:**
+- **Two-model split** (above) — unify/retire the old Region model later. ← follow-up
+- **DGT attribution on the Methodology page** — the discovery pages carry the CC BY 4.0 line; the
+  Methodology/attributions static page (Page 4, not yet built) should also carry it. The shared Footer
+  was intentionally not touched (would change Home).
+- **`server-only` guard** — the CAOP loader is server-only by convention (comment); adding the
+  `server-only` npm package would make it a hard compile-time guard (deferred; no dep added now).
 - **§C.3 `Property.kind`** — recommend adding it additively (A); else defer the Tipo control (B). ← confirm.
 - **PropertyCard fill → `--surface-card-solid`** (B.1) — recommended (AA + consistency); shared with
   Home + profile. ← confirm.
