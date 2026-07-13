@@ -67,7 +67,7 @@ function ToastDemo() {
   )
 }
 
-export function ComponentsShowcase({ consultants, listings, regions, detail }: Props) {
+export function ComponentsShowcase({ consultants, listings, detail }: Props) {
   const [page, setPage] = useState(1)
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -102,7 +102,7 @@ export function ComponentsShowcase({ consultants, listings, regions, detail }: P
             <Suspense fallback={null}>
               <FilterBar
                 dealType="sale"
-                cities={regions}
+                location={{}}
                 totalCount={listings.length}
                 from={1}
                 to={listings.length}

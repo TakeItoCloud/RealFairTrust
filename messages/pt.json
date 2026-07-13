@@ -172,10 +172,16 @@
     "count": "{count, plural, =0 {Sem imóveis} one {# imóvel} other {# imóveis}}",
     "showing": "A mostrar {from}–{to} de {count}",
     "f": {
-      "location": "Localização",
-      "locationAll": "Todas as localizações",
-      "zone": "Zona",
-      "zoneAll": "Todas as zonas",
+      "distrito": "Distrito",
+      "distritoAny": "Distrito",
+      "concelho": "Concelho",
+      "concelhoAny": "Concelho",
+      "freguesia": "Freguesia",
+      "freguesiaAny": "Freguesia",
+      "searchDistrito": "Procurar distrito…",
+      "searchConcelho": "Procurar concelho…",
+      "searchFreguesia": "Procurar freguesia…",
+      "noOptions": "Sem opções",
       "kind": "Tipo",
       "kindAll": "Todos os tipos",
       "kinds": {
@@ -195,13 +201,26 @@
       "upTo": "Até {value}",
       "over": "Mais de {value}",
       "sort": "Ordenar",
-      "sortOptions": { "merit": "Mérito", "priceAsc": "Preço ↑", "priceDesc": "Preço ↓" },
+      "sortOptions": { "merit": "Mérito", "priceAsc": "Preço ↑", "priceDesc": "Preço ↓", "date": "Data" },
       "clear": "Limpar filtros"
     },
     "empty": {
       "title": "Sem imóveis para estes filtros.",
       "body": "Experimente alargar a zona, ajustar a banda de preço ou limpar os filtros.",
       "clear": "Limpar filtros"
+    },
+    "geoAttribution": "Divisões administrativas: Direção-Geral do Território (DGT) · CAOP2025 · CC BY 4.0.",
+    "nearby": {
+      "title": "Sem imóveis em {location}.",
+      "lede": "Não há imóveis com estes filtros nesta localização. Veja opções nas proximidades.",
+      "concelho": "No concelho de {name}",
+      "distrito": "No distrito de {name}",
+      "other": "Noutras zonas"
+    },
+    "specialist": {
+      "eyebrow": "Especialista em {distrito}",
+      "view": "Ver perfil",
+      "more": "+{count} consultores"
     },
     "cta": {
       "eyebrow": "Apoio personalizado",

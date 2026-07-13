@@ -18,8 +18,9 @@ export const KIND_VALUES: PropertyKind[] = ['apartment', 'house', 'studio', 'com
 /** Minimum-bedroom options (getListings `beds` is a `>=` filter). */
 export const BED_VALUES = [1, 2, 3, 4] as const
 
-/** Sort options; `merit` is the discovery default (Decision #78). */
-export const SORT_VALUES: ListingSort[] = ['merit', 'priceAsc', 'priceDesc']
+/** Sort options; `merit` is the discovery default (Decision #78; merit→price→date). `date` =
+ *  announcement date, newest first (Decision #83). */
+export const SORT_VALUES: ListingSort[] = ['merit', 'priceAsc', 'priceDesc', 'date']
 
 /** Deal-aware price bands (EUR total for sale, €/month for rent). */
 export const PRICE_BANDS: Record<ListingType, Band[]> = {
