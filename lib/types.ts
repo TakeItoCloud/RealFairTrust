@@ -75,6 +75,13 @@ export interface ConsultantProfile {
   /** CAOP top-level ids the consultant covers (distrito 2-digit, or RA 'AC'/'MA'). Drives the
    *  area-specialist CTA + distrito inventory. Parallel to serviceRegionIds (old Region model). */
   coverageDistrictIds: string[]
+  /** OPTIONAL, additive (Decision #86): CAOP concelho (4-digit) ids the consultant is attributed to.
+   *  Inclusive hierarchical coverage — a concelho-level consultant covers every freguesia inside it.
+   *  Powers Vender's location-based matching; `coverageDistrictIds` is unchanged. */
+  coverageConcelhoIds?: string[]
+  /** OPTIONAL, additive (Decision #86): CAOP freguesia (6-digit) ids the consultant is attributed
+   *  to — the most specific coverage tier. */
+  coverageFreguesiaIds?: string[]
   contact: ContactInfo
   status: ConsultantStatus
   verified: boolean

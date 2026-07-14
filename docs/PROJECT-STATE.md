@@ -13,11 +13,14 @@
 - **Location hierarchy** — CAOP **Distrito → Concelho → Freguesia** picker (on-demand, inventory-driven) + **nearby fallback** (widen freguesia→concelho→distrito, grouped) + **area-specialist CTA** — **PR #9** (`9823ee8`).
 - **Property detail** — `/imovel/[id]` (EN `/property/[id]`): gallery · gold price · specs + energy badge · CAOP location · consultant mini-card · sticky lead form · similar listings — **PR #10** (`4cff804`).
 
+**Also on `develop`** (PR #12, pending Carlos review — NOT merged): **Vender** discovery `/vender` (EN `/selling`) — seller value-prop + the PR #9 location picker in **coverage mode** + **merit-ranked consultants who cover the chosen area** via `getConsultantsByArea` (inclusive hierarchical coverage + strict tiered widening Freguesia→Concelho→District, most-specific-wins; request-a-consultant fallback). Decision **#86**.
+
 **IN PROGRESS:** none (between tasks).
 
 **NEXT build, in order:**
-1. **Vender** — `/vender` (EN `/selling`).
-2. **Static pages** — Sobre, Como funciona, Termos, Privacidade, **Methodology** (rating model; also carries the DGT/CAOP attribution).
+1. **Static pages** — Sobre, Como funciona, Termos, Privacidade, **Methodology** (rating model; also carries the DGT/CAOP attribution).
+
+**LATER (not now):** apply the SAME location-based consultant-matching rule (#86: inclusive hierarchical coverage + strict tiered widening) to the **Consultores discovery** page, during final tweaks — so Vender and Consultores stay consistent.
 
 Then **Phase 4.4** app shells (dashboard/admin/auth — UI-only) → **4.5** polish (real imagery, `next/image`, a11y/perf/responsive QA, motion) → **Phase 5** Supabase + rating engine → **Phase 6** launch.
 
@@ -145,7 +148,8 @@ GitHub: `github.com/TakeItoCloud/RealFairTrust` (private). Branches: `main → d
   - ✅ **Buy/Rent discovery (`/comprar` + `/arrendar`)** — one shared `Discovery` RSC, two modes (sale/total · rent/€mês); reused `FilterBar` (evolved with a `dealType` mode) + `PropertyCard`/`Pagination`/`EmptyState` unmodified; merit-default sort + additive `kind`/area/sort filters (#77–#79); PT+EN parity. **Merged to `develop` (PR #8, `3b5012f`).**
   - ✅ **Location hierarchy (CAOP2025) on discovery** — Distrito→Concelho→Freguesia picker (replaces Localização+Zona), standalone CAOP dataset + typed loader + on-demand inventory-driven `/api/geo`; additive `Property.freguesiaId` + `ConsultantProfile.coverageDistrictIds`; nearby fallback + area-specialist CTA; sort merit→price→date (#80–#84). Built 2026-07-13 on `feat/location-hierarchy` (gates green; **PR/preview pending Carlos sign-off**). **Two location models now coexist** (CAOP + old Region); unify later.
   - ✅ **Property detail (`/imovel/[id]`)** — gallery · gold price · specs+energy badge · description · location Freguesia·Concelho·Distrito (CAOP) · consultant mini-card → profile · sticky lead panel · similar-listings (additive `getSimilarListings`, concelho→distrito; `getListing` untouched) (#85). Built 2026-07-13 on `feat/property-detail` (gates green; **PR/preview pending Carlos sign-off**).
-  - ⬜ **Remaining 4.3 pages (NEXT):** Vender (`/vender`), static pages.
+  - ✅ **Vender discovery (`/vender` · EN `/selling`)** — seller value-prop + "how it works" steps; reuses the exact PR #9 `LocationPicker` in **coverage mode** (additive `source` on inventory/`/api/geo`/picker; Buy/Rent unchanged); **merit-ranked consultants covering the chosen area** via new additive `getConsultantsByArea` (inclusive hierarchical coverage + strict tiered widening Freguesia→Concelho→District, most-specific-wins; district tier = everyone working anywhere in the district; request-a-consultant CTA only when no tier matches). Additive optional `coverageConcelhoIds?`/`coverageFreguesiaIds?` (coverageDistrictIds unchanged); `ConsultantCard` reused UNMODIFIED (page-level coverage-note wrapper); no shared-styling touched. #86. Built 2026-07-14 on `feat/vender` (gates green; **PR #12/preview pending Carlos sign-off**). **LATER:** apply the same #86 rule to Consultores discovery during final tweaks (not now).
+  - ⬜ **Remaining 4.3 pages (NEXT):** the five static pages (Sobre, Como funciona, Termos, Privacidade, Methodology).
 - **4.4 App shells** — ⬜ TODO. Dashboard, admin, auth — **UI-only** (#39).
 - **4.5 Polish** — ⬜ TODO. Real imagery (hero + property photos), PT/EN copy pass, accessibility, performance, responsive QA, motion polish.
 
@@ -238,8 +242,9 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 - **DONE:** **Buy/Rent discovery** (`/comprar` + `/arrendar`; #77–#79) — **merged to `develop`** (PR #8, `3b5012f`).
 - **DONE:** **Location hierarchy (CAOP2025) on discovery** (#80–#84) — **merged to `develop`** (PR #9, `4658457`). Distrito→Concelho→Freguesia picker + nearby fallback + area-specialist CTA. Two location models coexist (CAOP + old Region) — unify later.
 - **DONE:** **Property detail** (`/imovel/[id]`; #85) — **merged to `develop`** (PR #10, merge `48598e9`; commit `4cff804`). Gallery · gold price · specs+energy badge · CAOP location · consultant mini-card · sticky lead form · similar listings (additive `getSimilarListings`; `getListing` untouched).
+- **DONE:** **Vender** (`/vender`; #86) — **on `feat/vender`, PR #12 pending Carlos review** (NOT merged). Seller value-prop + coverage-mode location picker + merit-ranked area-matched consultants (inclusive hierarchical coverage + strict tiered widening Freguesia→Concelho→District; request-a-consultant fallback). Additive coverage fields + `getConsultantsByArea`; `ConsultantCard` unmodified. **Same matching rule to be applied to Consultores discovery later (final tweaks, not now).**
 - **IN PROGRESS:** — (none; between tasks).
-- **NEXT:** the remaining Phase 4.3 pages, in order — **(1) Vender** `/vender` (EN `/selling`), then **(2) static pages** (Sobre, Como funciona, Termos, Privacidade, **Methodology** — the Methodology page also carries the DGT/CAOP attribution).
+- **NEXT:** the remaining Phase 4.3 pages — the **static pages** (Sobre, Como funciona, Termos, Privacidade, **Methodology** — the Methodology page also carries the DGT/CAOP attribution).
 - **NOTE:** `develop` is **ahead of `main`** by the three discovery PRs (#8/#9/#10); `main` still serves only the design-revision Home/Consultores/profile. Promoting `develop → main` is a separate step (with Carlos, likely once 4.3 is complete).
 - **TODO (after 4.3):** 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).
 

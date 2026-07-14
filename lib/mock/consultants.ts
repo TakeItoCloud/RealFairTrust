@@ -18,6 +18,7 @@ export const consultants: ConsultantProfile[] = [
     specializations: ['luxury', 'apartments'],
     serviceRegionIds: ['reg-lisboa', 'reg-chiado', 'reg-belem'],
     coverageDistrictIds: ['11', '15'],
+    coverageFreguesiaIds: ['110661'], // Misericórdia (Chiado) — freguesia-level attribution
     contact: { email: 'ana.silva@realfairtrust.pt', phone: '+351 210 000 101' },
     status: 'approved',
     verified: true,
@@ -35,6 +36,7 @@ export const consultants: ConsultantProfile[] = [
     specializations: ['apartments', 'first-time-buyers'],
     serviceRegionIds: ['reg-lisboa', 'reg-alfama', 'reg-parque-nacoes'],
     coverageDistrictIds: ['11'],
+    coverageFreguesiaIds: ['110665'], // Santa Maria Maior (Alfama) — freguesia-level attribution
     contact: { email: 'maria.santos@realfairtrust.pt', phone: '+351 210 000 103' },
     status: 'approved',
     verified: true,
@@ -69,6 +71,7 @@ export const consultants: ConsultantProfile[] = [
     specializations: ['relocation', 'apartments'],
     serviceRegionIds: ['reg-lisboa', 'reg-chiado', 'reg-belem'],
     coverageDistrictIds: ['11', '08'],
+    coverageConcelhoIds: ['1106'], // Lisboa concelho — concelho-level attribution
     contact: { email: 'catarina.ferreira@realfairtrust.pt', phone: '+351 210 000 107' },
     status: 'approved',
     verified: true,
@@ -88,6 +91,7 @@ export const consultants: ConsultantProfile[] = [
     specializations: ['investment'],
     serviceRegionIds: ['reg-porto', 'reg-cedofeita', 'reg-ribeira'],
     coverageDistrictIds: ['13', '03'],
+    coverageConcelhoIds: ['1312'], // Porto concelho — concelho-level attribution
     contact: { email: 'joao.pereira@realfairtrust.pt', phone: '+351 220 000 102' },
     status: 'approved',
     verified: true,
@@ -105,6 +109,7 @@ export const consultants: ConsultantProfile[] = [
     specializations: ['luxury'],
     serviceRegionIds: ['reg-porto', 'reg-foz'],
     coverageDistrictIds: ['13', '01'],
+    coverageFreguesiaIds: ['131216'], // UF Aldoar, Foz do Douro e Nevogilde — freguesia-level attribution
     contact: { email: 'pedro.costa@realfairtrust.pt', phone: '+351 220 000 104' },
     status: 'approved',
     verified: true,

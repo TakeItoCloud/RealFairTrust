@@ -29,13 +29,17 @@ interface LocationPickerProps {
   distrito?: Selected
   concelho?: Selected
   freguesia?: Selected
+  /** Geo option source (Decision #86 / D-V1). 'houses' (default) = Buy/Rent inventory, unchanged;
+   *  'coverage' = houses ∪ consultant-attribution (Vender). */
+  source?: 'houses' | 'coverage'
   className?: string
 }
 
 const norm = (s: string) =>
   s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
 
-export function LocationPicker({ dealType, distrito, concelho, freguesia, className }: LocationPickerProps) {
+export function LocationPicker({ dealType, distrito, concelho, freguesia, source = 'houses', className }: LocationPickerProps) {
+  const q = `deal=${dealType}&source=${source}`
   const t = useTranslations('discovery')
   const router = useRouter()
   const pathname = usePathname()
@@ -58,7 +62,7 @@ export function LocationPicker({ dealType, distrito, concelho, freguesia, classN
         label={t('f.distrito')}
         placeholder={t('f.distritoAny')}
         selected={distrito}
-        loader={() => fetchGeo(`/api/geo/distritos?deal=${dealType}`)}
+        loader={() => fetchGeo(`/api/geo/distritos?${q}`)}
         searchPlaceholder={t('f.searchDistrito')}
         emptyText={t('f.noOptions')}
         onSelect={(o) => commit({ distrito: o.id, concelho: undefined, freguesia: undefined })}
@@ -71,7 +75,7 @@ export function LocationPicker({ dealType, distrito, concelho, freguesia, classN
         disabled={!distrito}
         // Re-fetch keyed on the current distrito.
         loaderKey={distrito?.id}
-        loader={() => (distrito ? fetchGeo(`/api/geo/concelhos?deal=${dealType}&distrito=${distrito.id}`) : Promise.resolve([]))}
+        loader={() => (distrito ? fetchGeo(`/api/geo/concelhos?${q}&distrito=${distrito.id}`) : Promise.resolve([]))}
         searchPlaceholder={t('f.searchConcelho')}
         emptyText={t('f.noOptions')}
         onSelect={(o) => commit({ concelho: o.id, freguesia: undefined })}
@@ -83,7 +87,7 @@ export function LocationPicker({ dealType, distrito, concelho, freguesia, classN
         selected={freguesia}
         disabled={!concelho}
         loaderKey={concelho?.id}
-        loader={() => (concelho ? fetchGeo(`/api/geo/freguesias?deal=${dealType}&concelho=${concelho.id}`) : Promise.resolve([]))}
+        loader={() => (concelho ? fetchGeo(`/api/geo/freguesias?${q}&concelho=${concelho.id}`) : Promise.resolve([]))}
         searchPlaceholder={t('f.searchFreguesia')}
         emptyText={t('f.noOptions')}
         onSelect={(o) => commit({ freguesia: o.id })}

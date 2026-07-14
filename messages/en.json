@@ -239,6 +239,52 @@
     "contactSubtitle": "Send {name} a message.",
     "contactCta": "Ask about this property"
   },
+  "vender": {
+    "eyebrow": "Sell or let",
+    "title": "Put your property in the hands of <gold>the top performers</gold> in your area.",
+    "lede": "Choose where your property is and meet the consultants who cover it, ranked by merit — real performance over the last 90 days, not seniority or ad spend.",
+    "value": {
+      "merit": {
+        "title": "Choose on merit",
+        "body": "See the consultants in your area ranked by their performance score — those who deliver results show up first."
+      },
+      "fair": {
+        "title": "Transparent comparison",
+        "body": "The same metrics for everyone: satisfaction, close rate, responsiveness and conversion. No bought placements."
+      },
+      "free": {
+        "title": "Free for you",
+        "body": "Talking to a consultant is free for sellers and landlords. Choose, contact and decide with no obligation."
+      }
+    },
+    "howEyebrow": "How it works",
+    "howTitle": "From your property to the right consultant, in three steps",
+    "steps": {
+      "s1": "Tell us where your property is — district, municipality or parish.",
+      "s2": "See the consultants who cover that area, ranked by performance.",
+      "s3": "Contact whoever you choose directly, from their profile."
+    },
+    "locationEyebrow": "Your area",
+    "locationTitle": "Where is your property?",
+    "locationLede": "Narrow down to the parish for the closest match; if there's no consultant at that level yet, we show who covers the surrounding area.",
+    "geoAttribution": "Administrative divisions: Direção-Geral do Território (DGT) · CAOP2025 · CC BY 4.0.",
+    "prompt": "Select your property's district, municipality or parish to see the consultants who cover that area.",
+    "results": {
+      "freguesia": "Consultants covering the parish of {area}",
+      "concelho": "Consultants covering the municipality of {area}",
+      "distrito": "Consultants covering the district of {area}"
+    },
+    "coverageNote": {
+      "freguesia": "Covers {area} · {distrito}",
+      "concelho": "Covers the municipality of {area} · {distrito}",
+      "distrito": "Covers the district of {area}"
+    },
+    "request": {
+      "title": "We don't have a consultant for {area} yet.",
+      "body": "We're growing across the country. Get in touch and we'll help find the right consultant for your area.",
+      "button": "Request a consultant for my area"
+    }
+  },
   "leadForm": {
     "title": "Get in touch",
     "name": "Name",

@@ -6,6 +6,93 @@
 
 ---
 
+## 2026-07-14 · Phase 4.3 — VENDER Part B: build `/vender` + location-based consultant matching (feat/vender)
+
+**Done** (branch `feat/vender` off `develop` `b8b8a2a` = merged docs-sync PR #11; all gates green:
+`tsc --noEmit` exit 0, `eslint .` exit 0, `pnpm build` exit 0). Built the Vender page and the additive
+coverage model exactly per the Carlos-approved `docs/VENDER-PLAN.md` + decisions D-V1/D-V2/D-V3.
+**PR opened, preview pending Carlos review — NOT merged.** Logged **DECISION #86**.
+
+- **Additive coverage model (§3, Hard Rule #1):** `ConsultantProfile` gained OPTIONAL
+  `coverageConcelhoIds?` (CAOP 4-digit) + `coverageFreguesiaIds?` (6-digit). `coverageDistrictIds`
+  **byte-for-byte unchanged** — its 4 callers (types decl, 12 seed rows, `inventory.ts`,
+  `Discovery.tsx` Buy/Rent specialist CTA) verified unaffected.
+- **Matching (§4):** new `getConsultantsByArea(sel)` in `lib/data/consultants.ts` (+ `AreaConsultantMatch`
+  /`CoverageTier` types; exported from `lib/data/index.ts`). Inclusive hierarchical coverage + STRICT
+  tiered widening from the deepest selected level: freguesia → concelho → **district = inclusive
+  catch-all (everyone working anywhere in the district)** → none. Most-specific-wins; merit-ranked
+  (composite desc). **Attribution-only — independent of the picker's option lists** (confirmed to
+  Carlos: a district-only consultant is returned at the district tier for any freguesia in that
+  district). `getConsultants` NOT touched.
+- **Seed (§5, additive):** enriched 5 rows — Ana `+['110661']`, Maria `+['110665']`, Pedro
+  `+['131216']` (freguesia); Catarina `+['1106']`, João `+['1312']` (concelho). No existing
+  `coverageDistrictIds` value changed.
+- **Coverage-mode picker (§6, D-V1):** additive `source: 'houses'|'coverage'` (default `houses`) on
+  `lib/data/geo/inventory.ts` (coverage = houses ∪ consultant-attribution, per level; full inclusive
+  expansion rejected to avoid picker bloat) + `&source=coverage` on the three `/api/geo/*` routes +
+  optional `source?` prop on `LocationPicker`. `FilterBar` passes no `source` → **Buy/Rent
+  byte-for-byte unchanged** (verified: houses-mode API identical). *(With the current seed, coverage
+  option lists coincide with houses mode — every concelho/freguesia attribution is on a house-bearing
+  area; the mechanism surfaces house-less consultant areas when such attribution exists.)*
+- **Page** `app/[locale]/vender/page.tsx` (RSC, replaces the stub): value-prop hero (merit/fair/free)
+  + 3-step "how it works" + coverage-mode `LocationPicker` (dealType=sale, source=coverage) + DGT
+  attribution line + results. **No location → "pick your area" prompt** (not the CTA); **match → tier
+  header** ("Consultores que cobrem o Distrito/Concelho/Freguesia X") + grid of **unmodified
+  `ConsultantCard`s** each in a page-level wrapper carrying the coverage note (D-V2 — card untouched);
+  **no tier match → request-a-consultant CTA** (only fully-empty case). No isDemo chip (D-V3). No
+  valuation/upload/lead form (Phase 5+). AA/reduced-motion-safe/responsive.
+- **i18n:** new `vender` namespace, PT+EN full parity; picker keeps `discovery.f.*`. No hardcoded
+  strings.
+- **Smoke test** (`pnpm start`): `/vender` no-loc = prompt; `?freguesia=110661` (Misericórdia) →
+  **freguesia tier = Ana**; `?freguesia=110658` (Belém, no freguesia consultant) → **concelho tier =
+  Catarina** ("…concelho de Lisboa"); `?distrito=11` → **district tier = all 6 Lisboa-district
+  consultants**; `?distrito=08` (Faro) → **district tier = Catarina**; `?concelho=1312` → **concelho
+  tier = João**. EN `/en/selling` parity ("Consultants covering the municipality of Lisboa"). Coverage
+  API surfaces Faro/Setúbal; houses-mode API unchanged. Home/Consultores/profile/`/comprar`/`/arrendar`/
+  `/imovel/p-001` all **200** (untouched).
+
+**Changed:** `lib/types.ts`, `lib/data/consultants.ts` (+`getConsultantsByArea`), `lib/data/index.ts`,
+`lib/data/geo/inventory.ts` (+`source`), `app/api/geo/{distritos,concelhos,freguesias}/route.ts`,
+`components/discovery/LocationPicker.tsx` (+`source` prop), `lib/mock/consultants.ts` (5 rows),
+NEW `app/[locale]/vender/page.tsx` (replaces stub), `messages/{pt,en}.json` (+`vender`). Docs:
+DECISIONS #86, PROJECT-STATE, VENDER-PLAN (Part A/B complete), this worklog. **No shared-component
+styling, Home, Consultores, or profile touched.**
+
+**Next:** Carlos reviews the PR #12 preview → tweaks → merge. Then the five static pages (Sobre, Como
+funciona, Termos, Privacidade, Methodology w/ DGT attribution) → 4.4 shells → 4.5 polish → Phase 5.
+
+---
+
+## 2026-07-14 · Phase 4.3 — VENDER Part A: investigation + additive-coverage plan (no app code)
+
+**Investigation + plan only** (no app code / types / mock touched). Wrote `docs/VENDER-PLAN.md` and
+paused for Carlos's go-ahead before any implementation (per the session's Part A/B split + §0).
+
+**Investigated (real paths, quoted in the plan):** CAOP loader `lib/data/geo/caop.ts` (exports +
+`concelhoDistrito`/`freguesiaDistrito`); `ConsultantProfile.coverageDistrictIds` (`lib/types.ts:77`,
+required) + its **4 callers** (types decl, 12 seed rows, `inventory.ts:31`, `Discovery.tsx:92`) — all
+confirmed **unaffected** by the proposed additive change; `serviceRegionIds`/`ConsultantFilter.regionId`
+(old Region model) callers — untouched (I add a new fn, don't edit `getConsultants`); the PR #9
+`LocationPicker` (`components/discovery/LocationPicker.tsx`, props + on-demand `/api/geo` + URL sync,
+sole consumer `FilterBar`) + house-inventory rules (`lib/data/geo/inventory.ts`: distrito = house OR
+consultant; concelho/freguesia = house) + the listing nearby-fallback in `Discovery.tsx`;
+`ConsultantCard` props + its 5 call-sites (Home ×2, Consultores ×2, dev ×1).
+
+**Proposed (additive, awaiting approval):** two OPTIONAL sibling fields `coverageConcelhoIds?`/
+`coverageFreguesiaIds?` on `ConsultantProfile` (keep `coverageDistrictIds` byte-for-byte); a new
+`getConsultantsByArea(sel)` (inclusive hierarchical coverage + strict tiered widening
+Freguesia→Concelho→Distrito, most-specific-wins, merit-ranked, returns the matched tier); enrich 5
+seed rows (Ana/Maria/Pedro freguesia, Catarina/João concelho — all on ids that have sale listings so
+they're pickable); reuse the EXACT `LocationPicker` with `dealType="sale"` (zero picker/API change);
+one optional `ConsultantCard` `coverageNote?` prop; new `vender` i18n namespace.
+
+**Open confirmations (D-V1 picker=sale · D-V2 card prop vs wrapper · D-V3 no isDemo chip + the type/
+matching design).** STOPPED per instructions — no branch, no code.
+
+**Next:** Carlos approves Part A → build on `feat/vender` off `develop`.
+
+---
+
 ## 2026-07-14 · Phase 4.3 — DOCS SYNC + milestone summary (chore/docs-sync, no app code)
 
 **Docs-only** (no app code touched). Synced the orientation docs to the true current state after the

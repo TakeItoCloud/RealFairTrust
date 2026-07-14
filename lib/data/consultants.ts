@@ -7,6 +7,13 @@ import type {
   ConsultantSummary,
   Review,
 } from '@/lib/types'
+import {
+  concelhoDistrito,
+  freguesiaDistrito,
+  getConcelho,
+  getDistrito,
+  getFreguesia,
+} from '@/lib/data/geo/caop'
 import { toListingWithAgent } from './listings'
 
 /** Overall 0–5 rating for one review (mean of its four dimensions). */
@@ -57,6 +64,112 @@ export async function getConsultants(filter: ConsultantFilter = {}): Promise<Con
   // Sort by composite desc; consultants without a score sink to the bottom.
   result.sort((a, b) => (b.score?.composite ?? -1) - (a.score?.composite ?? -1))
   return result
+}
+
+// ---------------------------------------------------------------------------
+// Location-based consultant matching (Decision #86) — inclusive hierarchical coverage
+// + STRICT tiered widening Freguesia→Concelho→Distrito, most-specific-wins.
+// Additive; does not touch getConsultants. Used by Vender (/vender).
+// ---------------------------------------------------------------------------
+export type CoverageTier = 'freguesia' | 'concelho' | 'distrito'
+
+export interface AreaConsultantMatch {
+  /** The tier that matched, or null (nothing selected, or no consultant at any tier). */
+  tier: CoverageTier | null
+  /** The matched area's CAOP id + resolved name (for the section header). */
+  areaId?: string
+  areaName?: string
+  distritoId?: string
+  distritoName?: string
+  /** Merit-ranked (composite desc; no-score last) — same convention as getConsultants. */
+  consultants: ConsultantSummary[]
+}
+
+/**
+ * Return consultants covering a chosen CAOP area, using inclusive hierarchical coverage and strict
+ * tiered widening (most-specific-wins). Widening starts at the deepest SELECTED level and returns
+ * the FIRST non-empty tier:
+ *   1. freguesia — consultants attributed to that exact freguesia (only if a freguesia is selected);
+ *   2. concelho  — consultants attributed to that concelho;
+ *   3. distrito  — the inclusive catch-all: every consultant working ANYWHERE in that district
+ *                  (district-, concelho-, or freguesia-level attribution inside it).
+ * Matching is purely attribution-based on the CAOP chain resolved from the selection — it is
+ * independent of the picker's inventory/option lists (Decision #86 / D-V1).
+ */
+export async function getConsultantsByArea(sel: {
+  distritoId?: string
+  concelhoId?: string
+  freguesiaId?: string
+}): Promise<AreaConsultantMatch> {
+  // Resolve the CAOP chain from whatever depth was selected.
+  const freguesiaId = sel.freguesiaId
+  const concelhoId = sel.concelhoId ?? (freguesiaId ? freguesiaId.slice(0, 4) : undefined)
+  const distritoId =
+    sel.distritoId ?? (concelhoId ? concelhoDistrito(concelhoId) : undefined)
+
+  const distritoNode = distritoId ? getDistrito(distritoId) : undefined
+  const empty: AreaConsultantMatch = {
+    tier: null,
+    consultants: [],
+    distritoId,
+    distritoName: distritoNode?.name,
+  }
+  if (!distritoId) return empty
+
+  // getConsultants() is already approved + composite-desc-sorted → each tier filter keeps merit order.
+  const all = await getConsultants()
+
+  // Tier 1 — exact freguesia attribution (only when a freguesia is selected).
+  if (freguesiaId) {
+    const tierF = all.filter((c) => c.coverageFreguesiaIds?.includes(freguesiaId))
+    if (tierF.length > 0) {
+      const node = getFreguesia(freguesiaId)
+      return {
+        tier: 'freguesia',
+        areaId: freguesiaId,
+        areaName: node?.name,
+        distritoId,
+        distritoName: distritoNode?.name,
+        consultants: tierF,
+      }
+    }
+  }
+
+  // Tier 2 — consultants attributed to the concelho.
+  if (concelhoId) {
+    const tierC = all.filter((c) => c.coverageConcelhoIds?.includes(concelhoId))
+    if (tierC.length > 0) {
+      const node = getConcelho(concelhoId)
+      return {
+        tier: 'concelho',
+        areaId: concelhoId,
+        areaName: node?.name,
+        distritoId,
+        distritoName: distritoNode?.name,
+        consultants: tierC,
+      }
+    }
+  }
+
+  // Tier 3 — inclusive catch-all: everyone working anywhere in the district.
+  const tierD = all.filter(
+    (c) =>
+      c.coverageDistrictIds.includes(distritoId) ||
+      (c.coverageConcelhoIds ?? []).some((id) => concelhoDistrito(id) === distritoId) ||
+      (c.coverageFreguesiaIds ?? []).some((id) => freguesiaDistrito(id) === distritoId),
+  )
+  if (tierD.length > 0) {
+    return {
+      tier: 'distrito',
+      areaId: distritoId,
+      areaName: distritoNode?.name,
+      distritoId,
+      distritoName: distritoNode?.name,
+      consultants: tierD,
+    }
+  }
+
+  return empty
 }
 
 export async function getConsultant(slug: string): Promise<ConsultantDetail | null> {
