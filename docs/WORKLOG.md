@@ -6,6 +6,46 @@
 
 ---
 
+## 2026-07-14 · Phase 4.3 — VENDER merged to develop (PR #12) + empty-case CTA verification + COPY-NOTES
+
+**Done** (on `develop`). Merged the Vender build and recorded the outstanding verification Carlos asked
+for. **`main` untouched** — promoting `develop → main` remains a separate later step.
+
+- **Merge:** `gh pr merge 12 --merge --delete-branch` → **PR #12 merged** into `develop`; `feat/vender`
+  deleted (local + remote). **`develop` HEAD = `e2aafc2`** (merge commit; feature commit `42a9bbb`).
+- **Gates on develop post-merge — all green:** `tsc --noEmit` exit 0 · `eslint .` exit 0 · `pnpm build`
+  exit 0 (`✓ Compiled successfully`; `/[locale]/vender` in the route table; 58/58 static pages).
+- **Empty tier-4 CTA verified (was only reasoned about during the build).** The "request a consultant"
+  case is unreachable via the coverage-mode picker (every selectable area resolves to ≥ a district-tier
+  consultant), but it **is** reachable by URL with a valid CAOP district that has zero consultant
+  coverage. Covered districts = `01/03/08/11/13/15/17`; **`?distrito=06` (Coimbra)** has none →
+  resolves through all tiers to empty → CTA. Verified with **no code change** (URL only):
+  - First-pass raw-HTML grep was misleading — next-intl ships the whole `vender` namespace into the
+    page `<script>` payload, so *template* strings appear regardless of rendering. **Re-checked against
+    the rendered DOM with `<script>` blocks stripped:**
+  - **PT** `/vender?distrito=06`: CTA title (interpolated "…para **Coimbra**.") **1**, CTA button **1**,
+    results-header **0**, prompt **0**. **EN** `/en/selling?distrito=06`: title ("consultant for
+    Coimbra") **1**, button **1**, results-header **0**. Body + `href="/consultores"` present in both.
+  - **Controls:** covered `?distrito=11` → CTA **0**, results-header **1**; no-selection `/vender` →
+    CTA **0**, prompt **1**. So the CTA renders correctly and **exclusively** in the fully-empty case,
+    PT + EN. Working tree clean afterwards (`git diff` empty; only pre-existing untracked noise).
+  - **Correction to the Part B report:** it said "all five tiers" — the model has **four match tiers**
+    (freguesia/concelho/distrito/none) **plus** the no-selection prompt; the build smoke test rendered
+    four states (prompt + freguesia + concelho + distrito) and had **not** rendered the empty CTA. Now
+    verified (above).
+- **Docs (this session, on develop):** `docs/PROJECT-STATE.md` — Vender recorded as **merged** (PR #12,
+  `e2aafc2`; mirrors #8/#9/#10), `develop` HEAD refs bumped, "ahead of `main`" note → four PRs, NEXT =
+  the five static pages, 4.5 copy-pass note added. **NEW `docs/COPY-NOTES.md`** — running collection of
+  wording/title/description changes to apply in one batch during the 4.5 PT/EN copy pass (factually-wrong
+  text is the exception → fixed immediately as a bug); seeded empty.
+
+**Changed:** `docs/PROJECT-STATE.md`, `docs/COPY-NOTES.md` (new), this worklog. **No app code.**
+
+**Next:** the five **static pages** (Sobre, Como funciona, Termos, Privacidade, **Methodology** — also
+carries the DGT/CAOP attribution) → 4.4 shells → 4.5 polish (incl. the COPY-NOTES batch) → Phase 5.
+
+---
+
 ## 2026-07-14 · Phase 4.3 — VENDER Part B: build `/vender` + location-based consultant matching (feat/vender)
 
 **Done** (branch `feat/vender` off `develop` `b8b8a2a` = merged docs-sync PR #11; all gates green:
