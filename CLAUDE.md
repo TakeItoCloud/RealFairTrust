@@ -118,11 +118,14 @@ per-agent, filtered per city). Full detail: `docs/notes/city-expansion.md`.
 
 ## Current status
 
-**Phase 4.3 — design-system application COMPLETE (run order 1→6); promoted to `main`.**
-The design hand-off (`design/handoff/`) is the authoritative visual spec (decisions #46–#56).
-The design-apply work was banked to `develop` (PR #7 merged, `3d91a99`) and **promoted to
-`main` = the Vercel production branch** (build hardened: Node 22.x / pnpm 11.4.0 pinned). The
-full roadmap, the 1→6 run order (all ✅), deployment note, and what's next live in
-**`docs/PROJECT-STATE.md`** (the orientation file — read it first each session). Authoritative
-detail: `docs/DECISIONS.md` (decision log) · `docs/WORKLOG.md` (per-session history).
-**NEXT:** the remaining 4.3 public pages (Buy/Rent, Property detail, Vender, static).
+**Phase 4.3 — public pages, IN PROGRESS.** Coverage is all of Portugal incl. **Madeira & Açores**
+(CAOP2025). **LIVE on `main` (prod):** Home (video hero), Consultores discovery, Consultant profile.
+**Merged to `develop`** (ahead of `main`, `48598e9`): **Buy/Rent** discovery `/comprar`+`/arrendar`
+(PR #8) · **Location hierarchy** — CAOP Distrito→Concelho→Freguesia picker + nearby fallback +
+area-specialist CTA (PR #9) · **Property detail** `/imovel/[id]` (PR #10). Decisions logged through
+**#85**. Read **`docs/PROJECT-STATE.md`** first each session — its ⚡ HANDOFF block is the 30-second
+orientation (done/next/parked + working conventions). Authoritative detail: `docs/DECISIONS.md`
+(log) · `docs/WORKLOG.md` (history).
+**NEXT:** **Vender** (`/vender` = EN `/selling`), then the **static pages** (Sobre, Como funciona,
+Termos, Privacidade, Methodology) → Phase 4.4 shells → 4.5 polish → Phase 5 (Supabase + rating
+engine) → Phase 6 (launch).
