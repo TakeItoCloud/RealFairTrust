@@ -239,6 +239,52 @@
     "contactSubtitle": "Envie uma mensagem a {name}.",
     "contactCta": "Falar sobre este imóvel"
   },
+  "vender": {
+    "eyebrow": "Vender ou arrendar",
+    "title": "Ponha o seu imóvel nas mãos de <gold>quem tem melhor desempenho</gold> na sua zona.",
+    "lede": "Escolha a localização do seu imóvel e conheça os consultores que a cobrem, ordenados por mérito — desempenho real dos últimos 90 dias, não antiguidade nem publicidade.",
+    "value": {
+      "merit": {
+        "title": "Escolha por mérito",
+        "body": "Vê os consultores da sua zona ordenados pela avaliação de desempenho — quem entrega resultados aparece primeiro."
+      },
+      "fair": {
+        "title": "Comparação transparente",
+        "body": "As mesmas métricas para todos: satisfação, taxa de fecho, resposta e conversão. Sem lugares comprados."
+      },
+      "free": {
+        "title": "Sem custos para si",
+        "body": "Falar com um consultor é gratuito para quem vende ou arrenda. Escolhe, contacta e decide sem compromisso."
+      }
+    },
+    "howEyebrow": "Como funciona",
+    "howTitle": "Do imóvel ao consultor certo, em três passos",
+    "steps": {
+      "s1": "Indique onde fica o seu imóvel — distrito, concelho ou freguesia.",
+      "s2": "Veja os consultores que cobrem essa zona, ordenados pelo desempenho.",
+      "s3": "Fale diretamente com quem escolher, a partir do perfil dele."
+    },
+    "locationEyebrow": "A sua zona",
+    "locationTitle": "Onde fica o seu imóvel?",
+    "locationLede": "Escolha até à freguesia para um resultado mais próximo; se ainda não houver consultor nesse nível, mostramos quem cobre a zona envolvente.",
+    "geoAttribution": "Divisões administrativas: Direção-Geral do Território (DGT) · CAOP2025 · CC BY 4.0.",
+    "prompt": "Selecione o distrito, o concelho ou a freguesia do seu imóvel para ver os consultores que cobrem essa zona.",
+    "results": {
+      "freguesia": "Consultores que cobrem a freguesia de {area}",
+      "concelho": "Consultores que cobrem o concelho de {area}",
+      "distrito": "Consultores que cobrem o distrito de {area}"
+    },
+    "coverageNote": {
+      "freguesia": "Cobre {area} · {distrito}",
+      "concelho": "Cobre o concelho de {area} · {distrito}",
+      "distrito": "Cobre o distrito de {area}"
+    },
+    "request": {
+      "title": "Ainda não temos consultor para {area}.",
+      "body": "Estamos a crescer por todo o país. Fale connosco e ajudamos a encontrar o consultor certo para a sua zona.",
+      "button": "Pedir um consultor para a minha zona"
+    }
+  },
   "leadForm": {
     "title": "Contactar",
     "name": "Nome",

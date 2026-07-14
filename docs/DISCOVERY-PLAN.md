@@ -3,7 +3,12 @@
 > **✅ STATUS (2026-07-14): BUILT & MERGED to `develop`.** Discovery (D1→D3, PR #8), the CAOP
 > location hierarchy (§G, PR #9), and Property detail (§H, PR #10) are all complete and merged.
 > The text below is the original reconciliation plan, kept for history; see §F/§G/§H for the
-> as-built status and the live parked/follow-up list. Next page: **Vender** `/vender`.
+> as-built status and the live parked/follow-up list. **Vender `/vender` is now built** (2026-07-14,
+> `feat/vender`, Decision #86): it reuses this page's exact `LocationPicker` in a new additive
+> **coverage mode** (`source` on inventory/`/api/geo`/picker; Buy/Rent unchanged) and adds
+> location-based consultant matching (`getConsultantsByArea`). **Follow-up:** the same #86 matching
+> rule will later be applied to the Consultores discovery page (final tweaks). See `docs/VENDER-PLAN.md`.
+> Next page: the **static pages** (Sobre, Como funciona, Termos, Privacidade, Methodology).
 >
 > **Plan only — NO app code/components/tokens changed this session.** Produces the **D2→D3**
 > staging for building the shared property **discovery / listing** page on a normal `feat/*` flow.
