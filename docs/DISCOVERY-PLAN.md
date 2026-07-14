@@ -1,5 +1,10 @@
 # Design Handoff — DISCOVERY / LISTING page (`/comprar` + `/arrendar`) · Reconciliation Plan
 
+> **✅ STATUS (2026-07-14): BUILT & MERGED to `develop`.** Discovery (D1→D3, PR #8), the CAOP
+> location hierarchy (§G, PR #9), and Property detail (§H, PR #10) are all complete and merged.
+> The text below is the original reconciliation plan, kept for history; see §F/§G/§H for the
+> as-built status and the live parked/follow-up list. Next page: **Vender** `/vender`.
+>
 > **Plan only — NO app code/components/tokens changed this session.** Produces the **D2→D3**
 > staging for building the shared property **discovery / listing** page on a normal `feat/*` flow.
 >
@@ -338,6 +343,11 @@ WORKLOG entry. Highlights: standalone typed geo dataset (`lib/data/geo/`) + on-d
   was intentionally not touched (would change Home).
 - **`server-only` guard** — the CAOP loader is server-only by convention (comment); adding the
   `server-only` npm package would make it a hard compile-time guard (deferred; no dep added now).
+- **Map view + radius filter** — a Leaflet + OpenStreetMap map with geocoding and a radius/distance
+  filter is **deferred to a later phase** (discovery + detail ship with no map by design).
+- **Green energy badge vs "green = verification-only"** — the energy badge renders green (#52);
+  revisit the semantic collision in 4.5. **`lib/mock/consultants.ts` comment typo:** distrito `17`
+  is Vila Real (comment says "Viana do Castelo") — data correct, comment-only.
 
 ## H · PROPERTY DETAIL (built 2026-07-13, `feat/property-detail`)
 

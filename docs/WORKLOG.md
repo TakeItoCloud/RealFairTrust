@@ -6,6 +6,38 @@
 
 ---
 
+## 2026-07-14 · Phase 4.3 — DOCS SYNC + milestone summary (chore/docs-sync, no app code)
+
+**Docs-only** (no app code touched). Synced the orientation docs to the true current state after the
+three discovery PRs landed on `develop`. Added the ⚡ HANDOFF block to `docs/PROJECT-STATE.md`,
+refreshed CLAUDE.md's status line, and verified DECISIONS is complete through #85.
+
+**On `develop` now (`48598e9`), all merged, all gates green when built:**
+- **Buy/Rent discovery** — `/comprar` + `/arrendar` (EN `/buying` · `/renting`); shared `Discovery`
+  RSC, two modes (sale/total · rent/€mês); reused FilterBar/PropertyCard/Pagination/EmptyState;
+  merit-default sort; PT/EN. **PR #8** (`b2f4289`). Decisions #77–#79.
+- **Location hierarchy (CAOP2025)** — replaced Localização+Zona with a **Distrito→Concelho→Freguesia**
+  picker; standalone CAOP dataset (`lib/data/geo/`, 20 top-level · 308 concelhos · 3 259 freguesias;
+  Madeira+Açores; CC BY 4.0/DGT) + typed loader + on-demand inventory-driven `/api/geo`; additive
+  `Property.freguesiaId` + `ConsultantProfile.coverageDistrictIds` (existing callers unchanged);
+  **nearby fallback** (widen freguesia→concelho→distrito, grouped) + **area-specialist CTA**; sort
+  merit→price→date. **PR #9** (`9823ee8`). Decisions #80–#84.
+- **Property detail** — `/imovel/[id]` (EN `/property/[id]`): gallery · gold price · specs+energy
+  badge · CAOP location · consultant mini-card → profile · sticky lead form · similar listings
+  (additive `getSimilarListings`, concelho→distrito; `getListing` untouched). **PR #10** (`4cff804`,
+  merge `48598e9`). Decision #85.
+
+**Guardrails held throughout:** Home / Consultores discovery / Consultant profile and all shared
+component styling **untouched**; additive data-layer changes with caller audits; two location models
+(CAOP + old Region) coexist (unify later). `main` still serves only the design-revision
+Home/Consultores/profile — `develop` is ahead by these three PRs (promotion to `main` is a later step).
+
+**Next:** **(1) Vender** `/vender` (EN `/selling`), then **(2) static pages** (Sobre, Como funciona,
+Termos, Privacidade, **Methodology** — also carries the DGT/CAOP attribution). Then 4.4 shells → 4.5
+polish → Phase 5 (Supabase + rating engine) → Phase 6 (launch).
+
+---
+
 ## 2026-07-13 · Phase 4.3 — PROPERTY DETAIL page (feat/property-detail)
 
 **Done** (branch `feat/property-detail` off `develop` `4658457` = merged location PR #9; gates green:

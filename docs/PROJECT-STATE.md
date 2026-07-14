@@ -1,8 +1,47 @@
 # RealFairTrust — PROJECT STATE (Master Snapshot)
 
+## ⚡ HANDOFF — read this first (30-second orientation)
+
+**Updated 2026-07-14 · Phase 4.3 (public pages), in progress.**
+
+**Coverage:** all of Portugal, including **Madeira & Açores** (CAOP2025 administrative data).
+
+**LIVE on `main` (Vercel production):** Home (full-bleed **video hero**) · Consultores discovery · Consultant profile — on seed/mock data, placeholder imagery.
+
+**Merged to `develop`** (ahead of `main`; awaiting a future promotion to prod). `develop` HEAD = `48598e9`:
+- **Buy/Rent discovery** — `/comprar` + `/arrendar` (EN `/buying` · `/renting`) — **PR #8** (`b2f4289`).
+- **Location hierarchy** — CAOP **Distrito → Concelho → Freguesia** picker (on-demand, inventory-driven) + **nearby fallback** (widen freguesia→concelho→distrito, grouped) + **area-specialist CTA** — **PR #9** (`9823ee8`).
+- **Property detail** — `/imovel/[id]` (EN `/property/[id]`): gallery · gold price · specs + energy badge · CAOP location · consultant mini-card · sticky lead form · similar listings — **PR #10** (`4cff804`).
+
+**IN PROGRESS:** none (between tasks).
+
+**NEXT build, in order:**
+1. **Vender** — `/vender` (EN `/selling`).
+2. **Static pages** — Sobre, Como funciona, Termos, Privacidade, **Methodology** (rating model; also carries the DGT/CAOP attribution).
+
+Then **Phase 4.4** app shells (dashboard/admin/auth — UI-only) → **4.5** polish (real imagery, `next/image`, a11y/perf/responsive QA, motion) → **Phase 5** Supabase + rating engine → **Phase 6** launch.
+
+**REMAINS in 4.3:** Vender + the five static pages above.
+
+**PARKED / LATER (not now):**
+- **Green energy badge vs "green = verification-only"** — the PropertyCard/detail energy badge renders green (#52); revisit the semantic collision in **4.5**.
+- **`server-only` hard guard** for the CAOP loader (`lib/data/geo/caop.ts`) — currently server-only *by convention* (comment); add the `server-only` package later.
+- **Comment typo:** in `lib/mock/consultants.ts`, distrito `17` is **Vila Real** (a comment mislabels it "Viana do Castelo"); **the data is correct** — comment-only.
+- **Unify the two location models** — CAOP (new, discovery) and the old `district→city→zone` Region model (Home/Consultores/profile) **coexist**; unify/retire the old one later (likely with Phase 5).
+- **Map view** (Leaflet + OSM + geocoding) + **radius filter** — deferred to a later phase.
+
+**WORKING CONVENTIONS (locked):**
+- **Planning chat** (claude.ai) authors **clean, paste-only prompts** for Claude Code — any remarks/notes go *outside* the prompt block. **Claude Code** (VS Code Remote-SSH → Linux `192.168.16.11`, `/projects/RealFairTrust`) does **all** builds/git.
+- **Flow:** `feat/*` branch → **PR** → **Vercel preview** → **user approval** → **merge** (`feat/* → develop → main`). **Never** export the repo to Windows.
+- **≥90%-sure-or-ask** (§0) · **phase-gate discipline** (stop & ask before each phase) · **RFT visual identity locked** · **additive data-layer changes with caller audits** · **don't touch built pages / shared components without approval**.
+
+_Full detail below; `docs/DECISIONS.md` (log, through #85) + `docs/WORKLOG.md` (per-session history) remain authoritative._
+
+---
+
 > **Purpose.** Single orientation document for the project. If you are starting a **new planning chat** (claude.ai) or a **new Claude Code session** (VS Code), read this file first. It holds roles/workflow, locked decisions, the visual system, the **complete phase roadmap**, what is done, what is next, and what is still open. `docs/DECISIONS.md` and `docs/WORKLOG.md` on the machine remain authoritative for the full decision log and per-session history; this file is the high-level snapshot — **keep it in sync every session.**
 >
-> **Last updated:** 2026-06-25 (**DESIGN REVISION PROMOTED TO `main`** — champagne (#57–#64) + Home video (#65–#76) consolidated → `develop` → `main` preserving history; the full-bleed cinematic **video-hero Home** is live on Vercel production; `main` and `develop` at parity, freeze lifted, the merged `chore/design-revision-*` chain cleaned up. §8/§11/§12 + "Last updated" flipped to PROMOTED.) Prior: 2026-06-25 (Home video revision RH1→RH5 complete + unmerged). 2026-06-24 (champagne R1→R5; #57–#64). 2026-06-23 (design-apply promoted to `main`; §11).
+> **Last updated:** 2026-07-14 (docs sync — Buy/Rent **PR #8**, Location hierarchy **PR #9**, Property detail **PR #10** all merged to `develop` (`48598e9`); HANDOFF block added at top; §8/§11 refreshed). Prior: 2026-06-25 (**DESIGN REVISION PROMOTED TO `main`** — champagne (#57–#64) + Home video (#65–#76) consolidated → `develop` → `main` preserving history; the full-bleed cinematic **video-hero Home** is live on Vercel production; `main` and `develop` at parity, freeze lifted, the merged `chore/design-revision-*` chain cleaned up. §8/§11/§12 + "Last updated" flipped to PROMOTED.) Prior: 2026-06-25 (Home video revision RH1→RH5 complete + unmerged). 2026-06-24 (champagne R1→R5; #57–#64). 2026-06-23 (design-apply promoted to `main`; §11).
 
 ---
 
@@ -197,9 +236,11 @@ GOAL OF THIS SESSION: produce a reconciliation plan only — NO changes to app c
 - **DONE (Home revision):** **HOME VIDEO REVISION RH1→RH5 COMPLETE (#65–#76)** — new Home handoff adopted; system deltas (`--gold-on-light`, slim-fade helpers) (RH2); roofline-mark Logo + darker AgentCard `#0c1d39` + on-light footer (RH3a); **HeroMedia + staged entrance + video 8.0→1.6 MB** (RH3b); **live Home recomposed to the full-bleed video hero** + Top-este-mês spotlight + champagne slim-fades + new copy/i18n (RH4) + the rank-coin/EXPLORE/equal-height fixes; AA consolidation + DECISIONS + state docs + Vercel build-pin verified (RH5). All green + AA-recorded.
 - **DONE (PROMOTED 2026-06-25):** **the full design revision — champagne (#57–#64) + Home video (#65–#76) — is PROMOTED to `main`.** The revision chain consolidated → `develop` → `main` (history preserved, no squash); `main` (Vercel production) now serves the full-bleed video-hero Home. The revision is no longer unmerged/frozen — `main` and `develop` both carry it (parity). The merged `chore/design-revision-*` branches were cleaned up.
 - **DONE:** **Buy/Rent discovery** (`/comprar` + `/arrendar`; #77–#79) — **merged to `develop`** (PR #8, `3b5012f`).
-- **DONE:** **Location hierarchy (CAOP2025) on discovery** (#80–#84) — **merged to `develop`** (PR #9, `4658457`). Two location models coexist (CAOP + old Region) — unify later.
-- **IN PROGRESS:** **Property detail** (`/imovel/[id]`; #85) built on `feat/property-detail` (all gates green) — awaiting Carlos's Vercel-preview review before PR merge.
-- **NEXT:** the remaining Phase 4.3 pages (Vender `/vender`, static pages — the Methodology page should also carry the DGT/CAOP attribution).
+- **DONE:** **Location hierarchy (CAOP2025) on discovery** (#80–#84) — **merged to `develop`** (PR #9, `4658457`). Distrito→Concelho→Freguesia picker + nearby fallback + area-specialist CTA. Two location models coexist (CAOP + old Region) — unify later.
+- **DONE:** **Property detail** (`/imovel/[id]`; #85) — **merged to `develop`** (PR #10, merge `48598e9`; commit `4cff804`). Gallery · gold price · specs+energy badge · CAOP location · consultant mini-card · sticky lead form · similar listings (additive `getSimilarListings`; `getListing` untouched).
+- **IN PROGRESS:** — (none; between tasks).
+- **NEXT:** the remaining Phase 4.3 pages, in order — **(1) Vender** `/vender` (EN `/selling`), then **(2) static pages** (Sobre, Como funciona, Termos, Privacidade, **Methodology** — the Methodology page also carries the DGT/CAOP attribution).
+- **NOTE:** `develop` is **ahead of `main`** by the three discovery PRs (#8/#9/#10); `main` still serves only the design-revision Home/Consultores/profile. Promoting `develop → main` is a separate step (with Carlos, likely once 4.3 is complete).
 - **TODO (after 4.3):** 4.4 shells → 4.5 polish → Phase 5 (Supabase) → Phase 6 (launch).
 
 ---
@@ -263,9 +304,8 @@ then 4.4 shells, 4.5 polish, Phase 5 (Supabase), Phase 6 (launch).
   Consultores discovery (`/[locale]/consultores`), and the Consultant profile
   (`/[locale]/consultores/[slug]`) — rendered on **SEED / mock data** (the `isDemo`-flagged set,
   #20) with **placeholder property imagery** (real photos land in 4.5 polish).
-- **NOT yet built:** Property detail (`/imovel/[id]`), Vender, and the static pages — these
-  routes scaffold-render but are not the finished 4.3 pages. *(Buy/Rent `/comprar` + `/arrendar`
-  are built on `feat/discovery`, 2026-07-12; on `main` only after the preview review + merge.)*
+- **On `develop`, ahead of `main` (not yet promoted):** **Buy/Rent discovery** (`/comprar` + `/arrendar`, PR #8) · **Location hierarchy** (CAOP Distrito→Concelho→Freguesia picker + nearby fallback + area-specialist CTA, PR #9) · **Property detail** (`/imovel/[id]`, PR #10). These get their own Vercel **preview** URLs; promoting `develop → main` is a later step.
+- **NOT yet built:** **Vender** (`/vender`) and the **static pages** (Sobre, Como funciona, Termos, Privacidade, Methodology) — these routes scaffold-render but are not the finished 4.3 pages.
 - **No backend yet:** Supabase + environment variables remain **Phase 5** — **none configured**.
   The site runs entirely on the mock data layer; no secrets/env are required to build or deploy.
 - **Connecting Vercel is a one-time browser step** (not done from Claude Code): import the repo,
