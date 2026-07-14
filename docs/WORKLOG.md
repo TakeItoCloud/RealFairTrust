@@ -6,6 +6,46 @@
 
 ---
 
+## 2026-07-13 · Phase 4.3 — PROPERTY DETAIL page (feat/property-detail)
+
+**Done** (branch `feat/property-detail` off `develop` `4658457` = merged location PR #9; gates green:
+`tsc --noEmit`, `eslint`, `pnpm build`). Built the Property detail page (`/imovel/[id]` · EN
+`/property/[id]`), replacing the stub. **PR opened, preview pending Carlos review — NOT merged.**
+
+- **Page** (RSC): `getListing(id)` → `notFound()` for unknown/inactive; two-column layout mirroring
+  the profile page. Left: gallery · deal + `isDemo` chips · title · **location "Freguesia · Concelho ·
+  Distrito"** (from the CAOP loader) · gold price (total / €mês) · spec row (beds/baths/area/type +
+  **green energy badge**) · description · **attributed-consultant mini-card** (Avatar + name +
+  VerifiedBadge + #18-gated merit, links to `/consultores/[slug]`). Right: sticky lead panel. Below:
+  **Similar listings** row.
+- **Similar listings — additive helper (Decision #85):** new `getSimilarListings(listing, limit=3)` —
+  same deal type, **same concelho first then widen to distrito** (CAOP), excluding the current
+  listing. **`getListing` left byte-for-byte unchanged** (per Carlos: distinct Supabase query in
+  Phase 5, single responsibility; the helper takes the already-loaded listing → no re-fetch).
+  Caller audit: `getListing` still has no external callers; the new helper is opt-in.
+- **New components (composition only — no shared component modified):** `PropertyGallery` (main +
+  thumbnail strip over the shared `MediaImage`; keyboard-operable, reduced-motion-safe) and
+  `PropertyContact` (sticky desktop panel + mobile sticky-bar→Modal, composing `LeadForm` + `Modal`,
+  no `onSubmit` = success-only, mirroring `ProfileContact` #28). Reused `PropertyCard`, `Avatar`,
+  `VerifiedBadge`, `Badge`, `Eyebrow`, `Reveal`, icons as-is.
+- **Reachability:** the discovery `PropertyCard` already links to `/imovel/[id]` (verified: the card
+  is a `<Link>`) — **no PropertyCard change needed**. `href="/imovel/p-013"` confirmed on `/comprar`.
+- **i18n:** new `property` namespace at PT+EN parity; specs reuse `listing.*` + `discovery.f.kinds`;
+  merit labels reuse `score.*`. `isDemo` chip; no hardcoded UI strings. No map (deferred).
+- **Smoke test** (`pnpm start`): `/imovel/p-001` = 200, "Misericórdia · Lisboa · Lisboa", Ana Silva
+  mini-card, similar = p-002/003/004 (same concelho, self-excluded, same deal type); `/imovel/p-024`
+  (rent) similar = p-021/022/023 (rent-only); unknown id → **404**; EN `/property/p-013` parity.
+  Home/Consultores/profile unchanged (200; Home still leads p-001).
+
+**Changed:** NEW `app/[locale]/imovel/[id]/page.tsx` (replaces stub), `components/property/{Property
+Gallery,PropertyContact}.tsx`; edited `lib/data/listings.ts` (+`getSimilarListings`), `lib/data/index.ts`,
+`messages/{pt,en}.json`. Logged DECISION #85.
+
+**Next:** Carlos reviews the preview → merge. Then Vender (`/vender`) + static pages (incl. Methodology
+with the DGT/CAOP attribution) → 4.4 shells → 4.5 polish (real imagery, next/image, gallery zoom).
+
+---
+
 ## 2026-07-13 · Phase 4.3 — LOCATION HIERARCHY (CAOP) on discovery (feat/location-hierarchy)
 
 **Done** (branch `feat/location-hierarchy` off `develop` `3b5012f` = the merged Buy/Rent PR #8;

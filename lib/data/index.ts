@@ -3,5 +3,5 @@
 // switch to Supabase, making the backend swap non-breaking (Phase 4 §3.1).
 export { getRegions, getRegion } from './regions'
 export { getConsultants, getConsultant } from './consultants'
-export { getListings, getListing } from './listings'
+export { getListings, getListing, getSimilarListings } from './listings'
 export { createLead, getLeads } from './leads'
