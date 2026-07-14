@@ -6,6 +6,64 @@
 
 ---
 
+## 2026-07-14 · Phase 4.3 — STATIC PAGES: Como funciona + NEW Metodologia (feat/static-como-metodologia)
+
+**Done** (branch `feat/static-como-metodologia` off `develop` `0aa9f1c`; all gates green: `tsc --noEmit`
+exit 0, `eslint .` exit 0, `pnpm build` exit 0). Built two of the five remaining Phase 4.3 static
+pages, using the **final approved copy verbatim** (both locales). **PR opened, preview pending Carlos
+review — NOT merged.** Logged **DECISIONS #87 + #88**.
+
+- **NEW route (#87, Hard Rule #2 logged):** added `'/metodologia': { pt, en: '/methodology' }` to
+  `i18n/routing.ts`. Metodologia is the **deep, linkable rating-model spec**, deliberately separate
+  from the client-facing `/como-funciona` (which links out to it). Wired a **Metodologia** link into
+  the Footer **"Empresa"** column (one added `FooterLink` + `footer.methodology` key; footer structure
+  untouched).
+- **Como funciona** (`app/[locale]/como-funciona/page.tsx`, replaces the stub) — server component:
+  navy hero (H1 + lead) · **champagne band** with the 3 numbered `rft-step-card` steps (staggered
+  `Reveal`, reduced-motion-safe) · navy "A pontuação em 60 segundos" = the five weights as gold
+  `StatBlock`s (35/25/15/15/10, from `RATING_WEIGHTS`) + rolling-window note + link → /metodologia ·
+  **verde=verificação** note (the ONLY verified-green use on the page, #34) · dual CTA band
+  (→ /consultores + → /vender).
+- **Metodologia** (`app/[locale]/metodologia/page.tsx`, new) — editorial long-form: navy hero · **§1–§6
+  alternating navy/champagne bands** · **§2 = a real `<table>`** (Sinal · Peso · O que mede · Porquê;
+  weight numerals in **Fraunces gold gradient**, on the navy band for AA; horizontally scrollable on
+  mobile) · **§4 echoes the real product Badges** (`score.buildingTrackRecord` neutral +
+  `score.risingTalent` rising — reused from the live `score` namespace) · **DGT/CAOP attribution
+  block** + final CTA (→ /consultores).
+- **DGT attribution wording (verified in-repo, `lib/data/geo/NOTICE.md`):** required formula =
+  **"Direção-Geral do Território (DGT)"**, licence **CC BY 4.0**. The approved copy already contains the
+  exact required attribution; I render it verbatim ("Dados administrativos (Distrito · Concelho ·
+  Freguesia) da Carta Administrativa Oficial de Portugal — CAOP 2025, Direção-Geral do Território
+  (DGT).") **plus** a **CC BY 4.0** link (`https://creativecommons.org/licenses/by/4.0/`) to complete
+  the CC BY licence notice — mirroring the discovery pages' `geoAttribution` + NOTICE.md. No attribution
+  text invented.
+- **#88 — qualitative confidence threshold:** the Methodology copy states the "enough opportunities for
+  a statistically fair score / A construir histórico" gating **in words**; **no numeric thresholds** are
+  published (those are Phase 5 engine work, released only once locked). Symmetric with #18.
+- **#61 extension (logged):** champagne `.rft-champagne` bands are now used on these static content pages
+  (previously Home "Como Funciona" + footer only), per Carlos's explicit visual spec for the static pages.
+- **i18n:** new `comoFunciona` (21 keys) + `metodologia` (47 keys) namespaces, **PT/EN parity verified**;
+  `footer.methodology` added. No hardcoded UI strings. Both pages carry `generateMetadata` (title = H1,
+  description = lead — reusing the verbatim copy).
+- **Guardrails:** no shared-component **styling** changed; Home / Consultores / profile / Vender /
+  Buy-Rent / Property detail untouched. Only additive footer link + route.
+- **Smoke test** (`pnpm start`, rendered DOM with `<script>` payloads stripped): `/como-funciona`,
+  `/en/how-it-works`, `/metodologia`, `/en/methodology` all **200**; CF H1/step1/weights(35·25·15·15·10)/
+  green-note/→metodologia-link present; ME §2 weights + badges (Building track record / Rising Talent) +
+  DGT attribution + CC BY 4.0 link present (PT + EN). **Footer Metodologia link** = `/metodologia`
+  ("Metodologia") PT, `/en/methodology` ("Methodology") EN. Regression: `/`, `/consultores`, `/vender`,
+  `/comprar` all **200**.
+
+**Changed:** `i18n/routing.ts`, NEW `app/[locale]/metodologia/page.tsx`,
+`app/[locale]/como-funciona/page.tsx` (replaces stub), `components/Footer.tsx` (+1 link),
+`messages/{pt,en}.json` (+`comoFunciona`/`metodologia`/`footer.methodology`). Docs: DECISIONS #87/#88,
+PROJECT-STATE, this worklog.
+
+**Next:** Carlos reviews the preview → merge. Then the three remaining static pages — **Sobre**, **Termos**,
+**Privacidade** → 4.4 shells → 4.5 polish → Phase 5.
+
+---
+
 ## 2026-07-14 · Phase 4.3 — VENDER merged to develop (PR #12) + empty-case CTA verification + COPY-NOTES
 
 **Done** (on `develop`). Merged the Vender build and recorded the outstanding verification Carlos asked

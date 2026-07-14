@@ -65,6 +65,7 @@ export function Footer() {
 
           <FooterCol heading={tf('company')}>
             <FooterLink href="/sobre">{tf('about')}</FooterLink>
+            <FooterLink href="/metodologia">{tf('methodology')}</FooterLink>
             <FooterLink href="/contacto">{tf('contact')}</FooterLink>
             <FooterLink href="/recursos">{tf('resources')}</FooterLink>
           </FooterCol>
