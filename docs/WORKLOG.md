@@ -6,6 +6,91 @@
 
 ---
 
+## 2026-07-15 · Review-change set Cycle 3/3 — CONSULTORES picker: Part B (build feat/consultores-picker)
+
+**Done** (branch `feat/consultores-picker` off `develop` `3e06b80`; all gates green: `tsc --noEmit` exit 0,
+`eslint .` exit 0, `pnpm build` exit 0). Built exactly the approved plan + Carlos's **option B** (metrics
+only in the location-selected state). **PR opened, preview pending Carlos review — NOT merged.** Logged
+**DECISION #92**. **This completes the review-feedback change set (Cycles 1–3).**
+
+- **Control swap:** replaced the old Region `Select` with the discovery `LocationPicker` (coverage mode,
+  `dealType="sale" source="coverage"`) in `ConsultantFilters` (now takes a `location` prop; `regions`
+  prop + `getRegions('city')` dropped from the page). Picker reused UNMODIFIED; writes
+  `?distrito/?concelho/?freguesia`. Old `?region=…` URLs degrade gracefully (ignored → default board).
+- **No-location DEFAULT = byte-for-byte today (option B):** same `getConsultants` calls, same ranked
+  board + Rising strip + per-region rank-1 auto-highlight, **no metrics, no header**. Cards pass
+  `featured={undefined} showMetrics={false}` → identical to today's `<ConsultantCard consultant index/>`.
+- **Location selected:** coverage scope FIRST (`getConsultantsByArea`, tiered widening #86 UNCHANGED) →
+  specialization → Ranked/All split (main vs Rising) → **option-(i)** ordering (verbatim
+  `!!score && !score.risingTalent && score.confidence !== 'low'`; building/unscored to the bottom) +
+  `featured={c.id===highlightId}` (#1 confident spotlight, exactly one) + `showMetrics`. Discovery header
+  `locationResults.{tier}` + `locationEmpty` no-coverage state (generic `empty` when spec excludes all).
+- **Scope:** page-layer + Consultores-only `ConsultantFilters`; **ZERO repository change** (caller audit
+  in the plan). No language filter added (never existed). 4 new `consultores` i18n keys, PT/EN parity.
+- **Smoke test** (`pnpm start`, rendered DOM, scripts stripped):
+  - **DEFAULT `/consultores`** → 200; order = Rising(Inês/Beatriz/Tiago/Diogo) + main(Ana/João/…);
+    **featured=2** (Ana Lisboa #1 + João Porto #1), **metrics=0**, no header, Rising board present; old
+    "Região" label gone, "Distrito" picker present. **EN `/en/consultants`** parity (featured 2, 0 metrics).
+  - `?distrito=11` → **Ana(highlight)>Catarina>Maria>Sofia** main + Rising **Inês/Beatriz**, 6 metric
+    blocks + 6 captions, header "cobrem o distrito de Lisboa"; `?freguesia=110661`→freguesia (Ana);
+    `?freguesia=110658`(Belém)→concelho (Catarina); `?distrito=08`(Faro)→district (Catarina).
+  - Compose: `?distrito=11&specialization=luxury`→Ana only; `?distrito=11&view=all`→one grid, rising
+    sunk to bottom, 1 highlight, 6 metrics. Default `?view=all`→9/page, no rising board, 0 metrics;
+    `?specialization=luxury`→Ana/Pedro, 0 metrics. No-coverage `?distrito=06`→empty ("a cobrir Coimbra").
+  - **Regression:** `/` (featured 1, 0 metrics), `/comprar` (0 metrics), `/consultores/ana-silva`
+    (0 metrics), all unchanged; **Vender `?distrito=11`** still ranks Ana>…>Beatriz, 1 highlight, 6 metrics.
+
+**Changed:** `app/[locale]/consultores/page.tsx`, `components/consultores/ConsultantFilters.tsx`,
+`messages/{pt,en}.json` (+`consultores.locationResults`/`locationEmpty`). Docs: DECISION #92,
+PROJECT-STATE, this worklog. **No shared component/repository, no other page, no ConsultantCard default
+appearance touched.**
+
+**Next:** Carlos reviews the `feat/consultores-picker` preview → merge. **All 3 review-feedback cycles
+then complete on `develop`** → joint review → eventual `develop → main` promotion (separate decision).
+
+---
+
+## 2026-07-15 · Review-change set Cycle 3/3 — CONSULTORES picker: Part A (investigation + plan, no app code)
+
+**Investigation + plan only** (no app code / types / mock / i18n touched). Wrote
+`docs/CONSULTORES-PICKER-PLAN.md` and **STOPPED** for Carlos's approval (Consultores is a built,
+promoted page → Part A/B split + §0). Cycle 3 = replace the old Region filter on Consultores with the
+CAOP Distrito→Concelho→Freguesia picker, add location-scoped ranking/highlight, turn on the Cycle-1 demo
+metrics — without breaking Ranked/All, the Rising-Talent board, specialization, or URL state.
+
+**Investigated (real paths, quoted):** `app/[locale]/consultores/page.tsx` (URL params `region`/
+`specialization`/`view`/`page`; `getConsultants` calls for main + rising; `showRisingBoard` split; cards
+render with **no `featured`** → per-region rank-1 auto-highlight); `components/consultores/
+ConsultantFilters.tsx` (Region + Specialization `Select`s + Ranked/All toggle, URL-synced via a
+params-preserving `commit()`); `getConsultants`/`getConsultantsByArea` internals; how **Vender** reuses
+`LocationPicker (source="coverage")` + `getConsultantsByArea` + page-layer option-(i)/highlight/metrics.
+
+**Key findings:** `getConsultantsByArea` is **Vender-only** (reuse as-is, no repo change);
+`LocationPicker.commit` and `ConsultantFilters.commit` both **preserve sibling URL params** (view/spec
+round-trip safely) and write non-colliding `?distrito/?concelho/?freguesia`; **Consultores has NO
+language filter today** (only Region + Specialization + Ranked/All) — so "language filters stay" has
+nothing to preserve; old `?region=…` URLs degrade gracefully to the default board (ignored, no error).
+
+**Plan (all page-layer + the Consultores-only filter component; ZERO repository change):** swap the
+Region `Select` for `<LocationPicker dealType="sale" source="coverage" />`; layer **location scope FIRST**
+(via `getConsultantsByArea`) → specialization → Ranked/All split (main vs Rising) → option-(i) ordering
+(verbatim `!!score && !score.risingTalent && score.confidence !== 'low'`) + `featured` highlight on the
+#1 confident (location state only; default keeps today's per-region highlight) + `showMetrics`. Default
+(no-location) path calls `getConsultants` exactly as today → board/order/Rising/highlight unchanged.
+4 new `consultores` i18n keys (location result headers + empty) at PT/EN parity. Full **caller audit** in
+the plan proves Home/Vender/profile/Buy-Rent + all shared functions are unaffected.
+
+**⚠ ONE open decision surfaced (blocks Part B render in the default state):** do the demo metrics show in
+the **default** (no-location) state too (recommended **A**), or **only** when a location is selected (**B**)?
+The brief says both "behaves EXACTLY as today" and "turn on the metrics on the Consultores cards" — needs
+Carlos's A/B call. STOPPED — no branch, no code.
+
+**Changed:** added `docs/CONSULTORES-PICKER-PLAN.md`, this worklog. **No app code.**
+
+**Next:** Carlos approves Part A (+ the §4 A/B call) → build on `feat/consultores-picker` off `develop`.
+
+---
+
 ## 2026-07-15 · Review-change set Cycle 2/3 — VENDER ranking merged to develop (PR #16)
 
 **Done** (on `develop`). Merged Cycle 2. **`main` untouched** — no promotion (Cycle 3 still to come;

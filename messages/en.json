@@ -101,7 +101,13 @@
     "risingTalentTitle": "Rising Talent",
     "risingTalentSubtitle": "Consultants active under 6 months — judged separately, for a fair race.",
     "suggestForMe": "Suggest one for me",
-    "empty": "No consultants match your filters."
+    "empty": "No consultants match your filters.",
+    "locationResults": {
+      "freguesia": "Consultants covering the freguesia of {area}",
+      "concelho": "Consultants covering the municipality of {area}",
+      "distrito": "Consultants covering the district of {area}"
+    },
+    "locationEmpty": "No consultants covering {area} yet."
   },
   "profile": {
     "contact": "Contact",

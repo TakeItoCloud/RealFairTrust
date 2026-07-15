@@ -1,16 +1,18 @@
 'use client'
 
-// ConsultantFilters — region + specialization selects and a Ranked/All toggle, all synced
-// to the URL query (like FilterBar). Sentinels ('all') mean "no filter" and are never
-// written to the URL; changing any filter resets pagination to page 1.
+// ConsultantFilters — CAOP location picker + specialization select and a Ranked/All toggle, all
+// synced to the URL query (like FilterBar). Sentinels ('all') mean "no filter" and are never
+// written to the URL; changing any filter resets pagination to page 1. The location picker
+// (Distrito→Concelho→Freguesia, coverage mode) replaces the old Region select (Cycle 3, Decision #92);
+// it reuses the exact discovery LocationPicker and writes ?distrito/?concelho/?freguesia.
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import type { Region, Specialization } from '@/lib/types'
+import type { Specialization } from '@/lib/types'
 import { cn } from '@/lib/cn'
 import { Select } from '@/components/ui'
 import { focusRing } from '@/components/ui/styles'
+import { LocationPicker } from '@/components/discovery/LocationPicker'
 
-const REGION_ALL = 'all'
 const SPEC_ALL = 'all'
 
 const SPECIALIZATIONS: Specialization[] = [
@@ -24,15 +26,22 @@ const SPECIALIZATIONS: Specialization[] = [
   'new-developments',
 ]
 
-export function ConsultantFilters({ regions }: { regions: Region[] }) {
+interface Selected {
+  id: string
+  name: string
+}
+
+export function ConsultantFilters({
+  location,
+}: {
+  location: { distrito?: Selected; concelho?: Selected; freguesia?: Selected }
+}) {
   const tc = useTranslations('consultores')
-  const tf = useTranslations('filter')
   const tspec = useTranslations('specializations')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const currentRegion = searchParams.get('region') ?? REGION_ALL
   const currentSpec = searchParams.get('specialization') ?? SPEC_ALL
   const currentView = searchParams.get('view') === 'all' ? 'all' : 'ranked'
 
@@ -48,10 +57,6 @@ export function ConsultantFilters({ regions }: { regions: Region[] }) {
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
   }
 
-  const regionOptions = [
-    { value: REGION_ALL, label: tf('allRegions') },
-    ...regions.map((r) => ({ value: r.id, label: r.name })),
-  ]
   const specOptions = [
     { value: SPEC_ALL, label: tc('allSpecializations') },
     ...SPECIALIZATIONS.map((s) => ({ value: s, label: tspec(s) })),
@@ -60,16 +65,14 @@ export function ConsultantFilters({ regions }: { regions: Region[] }) {
   return (
     <div className="flex flex-wrap items-end justify-between gap-4 rounded-lg border border-line bg-surface p-4">
       <div className="flex flex-wrap items-end gap-3">
-        <label className="flex flex-col gap-1 text-xs text-cream-muted">
-          {tf('region')}
-          <Select
-            options={regionOptions}
-            value={currentRegion}
-            onValueChange={(v) => commit({ region: v === REGION_ALL ? undefined : v })}
-            aria-label={tf('region')}
-            className="w-44"
-          />
-        </label>
+        {/* CAOP location picker (coverage mode) — reused from discovery; URL-synced itself. */}
+        <LocationPicker
+          dealType="sale"
+          source="coverage"
+          distrito={location.distrito}
+          concelho={location.concelho}
+          freguesia={location.freguesia}
+        />
         <label className="flex flex-col gap-1 text-xs text-cream-muted">
           {tc('specialization')}
           <Select
