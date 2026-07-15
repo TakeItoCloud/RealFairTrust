@@ -6,6 +6,28 @@
 
 ---
 
+## 2026-07-15 · Phase 4.3 — Como funciona + Metodologia merged to develop (PR #13)
+
+**Done** (on `develop`). Merged the two static pages. **`main` untouched** — promoting `develop → main`
+remains a separate later step.
+
+- **Merge:** `gh pr merge 13 --merge --delete-branch` → **PR #13 merged** into `develop`;
+  `feat/static-como-metodologia` deleted (local + remote; remote-tracking ref pruned — `git ls-remote`
+  count 0). **`develop` HEAD = `0dc6155`** (merge commit; feature commit `d2a8eb4`).
+- **Gates on develop post-merge — all green:** `tsc --noEmit` exit 0 · `eslint .` exit 0 · `pnpm build`
+  exit 0 (`✓ Compiled successfully`; `/[locale]/como-funciona` + `/[locale]/metodologia` in the route table).
+- **Docs (this session, on develop):** `docs/PROJECT-STATE.md` — Como funciona + Metodologia recorded as
+  **merged** (PR #13, `0dc6155`; mirrors #8/#9/#10/#12), `develop` HEAD refs bumped, "ahead of `main`"
+  note → PRs #8/#9/#10/#12/#13, "Last updated" → 2026-07-15, **NEXT = the three remaining static pages
+  (Sobre, Termos, Privacidade)**.
+
+**Changed:** `docs/PROJECT-STATE.md`, this worklog. **No app code.**
+
+**Next:** the three remaining Phase 4.3 static pages — **Sobre** (`/sobre`), **Termos** (`/termos`),
+**Privacidade** (`/privacidade`) → 4.4 shells → 4.5 polish (incl. the COPY-NOTES batch) → Phase 5.
+
+---
+
 ## 2026-07-14 · Phase 4.3 — STATIC PAGES: Como funciona + NEW Metodologia (feat/static-como-metodologia)
 
 **Done** (branch `feat/static-como-metodologia` off `develop` `0aa9f1c`; all gates green: `tsc --noEmit`
