@@ -239,6 +239,120 @@
     "contactSubtitle": "Send {name} a message.",
     "contactCta": "Ask about this property"
   },
+  "comoFunciona": {
+    "h1": "First the consultant. Then the home.",
+    "lead": "Three steps from first click to the right person.",
+    "steps": {
+      "s1": {
+        "title": "Step 1 — Compare on merit.",
+        "body": "Every consultant has a public score built on real work from the last 90 days: client satisfaction, close rate, response time, conversion and activity. There are no paid positions."
+      },
+      "s2": {
+        "title": "Step 2 — Choose with confidence.",
+        "body": "Open the profile: specialisation, coverage area, verified reviews and the detail behind each signal. If a consultant doesn't yet have enough track record, we say so — \"Building track record\" — instead of inventing a number."
+      },
+      "s3": {
+        "title": "Step 3 — Talk directly.",
+        "body": "Contact the consultant from their profile. No middlemen, no cost to you — clients never pay anything."
+      }
+    },
+    "score60": {
+      "title": "The score in 60 seconds",
+      "intro": "Five signals, weighted by importance:",
+      "window": "A rolling 90-day window, recomputed monthly — the top spot is re-earned every month.",
+      "linkText": "Want the full detail?",
+      "linkLabel": "Methodology"
+    },
+    "weights": {
+      "satisfaction": "Satisfaction",
+      "closeRate": "Close rate",
+      "response": "Response",
+      "conversion": "Conversion",
+      "activity": "Activity"
+    },
+    "greenNote": "Green seal = verification. When you see green on RealFairTrust, it means one thing: verified.",
+    "cta": {
+      "findConsultant": "Find a consultant",
+      "sell": "Sell my home"
+    }
+  },
+  "metodologia": {
+    "h1": "How we measure merit.",
+    "lead": "The score is the heart of RealFairTrust. This page explains exactly how it works — because a rating only deserves trust if it can be scrutinised.",
+    "s1": {
+      "num": "§1",
+      "title": "The time model.",
+      "body": "A rolling 90-day window, recomputed on the 1st of every month. We deliberately rejected a lifetime cumulative score: after a year, a good new consultant could never catch a veteran, and the leaderboard would fossilise. With a rolling window, whoever is on top has to keep earning it."
+    },
+    "s2": {
+      "num": "§2",
+      "title": "The five signals.",
+      "cols": {
+        "signal": "Signal",
+        "weight": "Weight",
+        "measures": "What it measures",
+        "why": "Why"
+      },
+      "rows": {
+        "satisfaction": {
+          "signal": "Satisfaction",
+          "weight": "35%",
+          "measures": "Client reviews across four dimensions: communication, knowledge, negotiation, availability",
+          "why": "The service is the product."
+        },
+        "closeRate": {
+          "signal": "Close rate",
+          "weight": "25%",
+          "measures": "Outcomes per opportunity handled",
+          "why": "Promising is easy; closing is merit."
+        },
+        "response": {
+          "signal": "Response",
+          "weight": "15%",
+          "measures": "Time to first response and follow-through",
+          "why": "The client's time is respected."
+        },
+        "conversion": {
+          "signal": "Conversion",
+          "weight": "15%",
+          "measures": "Contacts that become clients",
+          "why": "Interest turned into trust."
+        },
+        "activity": {
+          "signal": "Activity",
+          "weight": "10%",
+          "measures": "Enough data for a fair measurement",
+          "why": "A score needs a statistical base."
+        }
+      }
+    },
+    "s3": {
+      "num": "§3",
+      "title": "Per-opportunity normalisation.",
+      "body": "We measure quality per opportunity handled, not raw volume. Five excellent outcomes can outweigh twenty mediocre ones. An excellent part-time consultant is not penalised against a mediocre full-time one."
+    },
+    "s4": {
+      "num": "§4",
+      "title": "Fairness for newcomers.",
+      "body": "Consultants with less than 6 months of activity compete on their own Rising Talent board. And until a consultant has handled enough opportunities for a statistically fair score, the number is not shown — the profile reads \"Building track record\". We would rather show no number than a misleading one."
+    },
+    "s5": {
+      "num": "§5",
+      "title": "Integrity.",
+      "body": "Reviews are tied to real client interactions and are moderated. In later phases: verified-transaction gating — a review only counts after a confirmed closing — and automated anti-abuse controls. Fake signals destroy trust — and trust is the product."
+    },
+    "s6": {
+      "num": "§6",
+      "title": "What the score is NOT.",
+      "body": "It cannot be bought. It is not influenced by the Pro subscription. It is not editable by us case by case. The methodology is the same for everyone."
+    },
+    "attribution": {
+      "title": "Data source",
+      "body": "Administrative data (District · Municipality · Parish) from the Official Administrative Map of Portugal — CAOP 2025, Direção-Geral do Território (DGT).",
+      "licence": "CC BY 4.0"
+    },
+    "finalCta": "See the ranked consultants"
+  },
   "vender": {
     "eyebrow": "Sell or let",
     "title": "Put your property in the hands of <gold>the top performers</gold> in your area.",
@@ -329,6 +443,7 @@
     "company": "Company",
     "legal": "Legal",
     "about": "About",
+    "methodology": "Methodology",
     "contact": "Contact",
     "resources": "Resources",
     "privacy": "Privacy",

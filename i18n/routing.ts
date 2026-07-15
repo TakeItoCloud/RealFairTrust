@@ -16,6 +16,7 @@ export const routing = defineRouting({
     '/consultores/aderir': { pt: '/consultores/aderir', en: '/consultants/join' },
     '/consultores/[slug]': { pt: '/consultores/[slug]', en: '/consultants/[slug]' },
     '/como-funciona': { pt: '/como-funciona', en: '/how-it-works' },
+    '/metodologia': { pt: '/metodologia', en: '/methodology' },
     '/recursos': { pt: '/recursos', en: '/resources' },
     '/sobre': { pt: '/sobre', en: '/about' },
     '/contacto': { pt: '/contacto', en: '/contact' },

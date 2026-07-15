@@ -239,6 +239,120 @@
     "contactSubtitle": "Envie uma mensagem a {name}.",
     "contactCta": "Falar sobre este imóvel"
   },
+  "comoFunciona": {
+    "h1": "Primeiro o consultor. Depois a casa.",
+    "lead": "Em três passos, do primeiro clique à pessoa certa.",
+    "steps": {
+      "s1": {
+        "title": "Passo 1 — Compare por mérito.",
+        "body": "Cada consultor tem uma pontuação pública baseada no trabalho real dos últimos 90 dias: satisfação dos clientes, taxa de fecho, tempo de resposta, conversão e atividade. Não há posições pagas."
+      },
+      "s2": {
+        "title": "Passo 2 — Escolha com confiança.",
+        "body": "Veja o perfil: especialização, zona de atuação, avaliações verificadas e o detalhe de cada sinal. Se um consultor ainda não tem histórico suficiente, dizemos isso — \"A construir histórico\" — em vez de inventar um número."
+      },
+      "s3": {
+        "title": "Passo 3 — Fale diretamente.",
+        "body": "Contacte o consultor a partir do perfil. Sem intermediários, sem custos para si — os clientes não pagam nada, nunca."
+      }
+    },
+    "score60": {
+      "title": "A pontuação em 60 segundos",
+      "intro": "Cinco sinais, pesados por importância:",
+      "window": "Janela móvel de 90 dias, recalculada mensalmente — o topo renova-se todos os meses.",
+      "linkText": "Quer o detalhe completo?",
+      "linkLabel": "Metodologia"
+    },
+    "weights": {
+      "satisfaction": "Satisfação",
+      "closeRate": "Taxa de fecho",
+      "response": "Resposta",
+      "conversion": "Conversão",
+      "activity": "Atividade"
+    },
+    "greenNote": "Selo verde = verificação. Quando vê verde na RealFairTrust, significa uma coisa: verificado.",
+    "cta": {
+      "findConsultant": "Encontrar um consultor",
+      "sell": "Vender a minha casa"
+    }
+  },
+  "metodologia": {
+    "h1": "Como medimos o mérito.",
+    "lead": "A pontuação é o coração da RealFairTrust. Esta página explica exatamente como funciona — porque uma classificação só merece confiança se puder ser escrutinada.",
+    "s1": {
+      "num": "§1",
+      "title": "O modelo temporal.",
+      "body": "Janela móvel de 90 dias, recalculada no dia 1 de cada mês. Rejeitámos deliberadamente a pontuação acumulada vitalícia: ao fim de um ano, um bom consultor novo nunca apanharia um veterano, e a tabela fossilizava. Com a janela móvel, quem está no topo tem de continuar a merecê-lo."
+    },
+    "s2": {
+      "num": "§2",
+      "title": "Os cinco sinais.",
+      "cols": {
+        "signal": "Sinal",
+        "weight": "Peso",
+        "measures": "O que mede",
+        "why": "Porquê"
+      },
+      "rows": {
+        "satisfaction": {
+          "signal": "Satisfação",
+          "weight": "35%",
+          "measures": "Avaliações de clientes em quatro dimensões: comunicação, conhecimento, negociação, disponibilidade",
+          "why": "O serviço é o produto."
+        },
+        "closeRate": {
+          "signal": "Taxa de fecho",
+          "weight": "25%",
+          "measures": "Resultados por oportunidade tratada",
+          "why": "Prometer é fácil; fechar é mérito."
+        },
+        "response": {
+          "signal": "Resposta",
+          "weight": "15%",
+          "measures": "Tempo até à primeira resposta e acompanhamento",
+          "why": "O tempo do cliente respeita-se."
+        },
+        "conversion": {
+          "signal": "Conversão",
+          "weight": "15%",
+          "measures": "Contactos que se tornam clientes",
+          "why": "Interesse transformado em confiança."
+        },
+        "activity": {
+          "signal": "Atividade",
+          "weight": "10%",
+          "measures": "Dados suficientes para uma medição justa",
+          "why": "Uma pontuação precisa de base estatística."
+        }
+      }
+    },
+    "s3": {
+      "num": "§3",
+      "title": "Normalização por oportunidade.",
+      "body": "Medimos qualidade por oportunidade tratada, não volume bruto. Cinco excelentes resultados podem valer mais do que vinte medianos. Um consultor a tempo parcial excelente não é penalizado face a um consultor a tempo inteiro mediano."
+    },
+    "s4": {
+      "num": "§4",
+      "title": "Justiça para quem começa.",
+      "body": "Consultores com menos de 6 meses de atividade competem no quadro próprio Talento em Ascensão. E enquanto um consultor não tiver tratado oportunidades suficientes para uma pontuação estatisticamente justa, o número não é mostrado — o perfil indica \"A construir histórico\". Preferimos não mostrar um número a mostrar um número enganador."
+    },
+    "s5": {
+      "num": "§5",
+      "title": "Integridade.",
+      "body": "As avaliações estão ligadas a interações reais de clientes e são moderadas. Em fases seguintes: validação por transação confirmada — uma avaliação só conta após um fecho verificado — e controlos automáticos anti-abuso. Sinais falsos destroem a confiança — e a confiança é o produto."
+    },
+    "s6": {
+      "num": "§6",
+      "title": "O que a pontuação NÃO é.",
+      "body": "Não é comprável. Não é influenciada pela subscrição Pro. Não é editável por nós caso a caso. A metodologia é igual para todos."
+    },
+    "attribution": {
+      "title": "Fonte dos dados",
+      "body": "Dados administrativos (Distrito · Concelho · Freguesia) da Carta Administrativa Oficial de Portugal — CAOP 2025, Direção-Geral do Território (DGT).",
+      "licence": "CC BY 4.0"
+    },
+    "finalCta": "Ver os consultores classificados"
+  },
   "vender": {
     "eyebrow": "Vender ou arrendar",
     "title": "Ponha o seu imóvel nas mãos de <gold>quem tem melhor desempenho</gold> na sua zona.",
@@ -329,6 +443,7 @@
     "company": "Empresa",
     "legal": "Legal",
     "about": "Sobre",
+    "methodology": "Metodologia",
     "contact": "Contacto",
     "resources": "Recursos",
     "privacy": "Privacidade",
