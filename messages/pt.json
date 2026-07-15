@@ -101,7 +101,13 @@
     "risingTalentTitle": "Talentos em ascensão",
     "risingTalentSubtitle": "Consultores com menos de 6 meses — avaliados em separado, para uma competição justa.",
     "suggestForMe": "Sugerir um para mim",
-    "empty": "Nenhum consultor corresponde aos filtros."
+    "empty": "Nenhum consultor corresponde aos filtros.",
+    "locationResults": {
+      "freguesia": "Consultores que cobrem a freguesia de {area}",
+      "concelho": "Consultores que cobrem o concelho de {area}",
+      "distrito": "Consultores que cobrem o distrito de {area}"
+    },
+    "locationEmpty": "Ainda sem consultores a cobrir {area}."
   },
   "profile": {
     "contact": "Contactar",

@@ -29,7 +29,19 @@
   the **first real page to enable the Cycle-1 demo metrics** (`showMetrics` on the Vender cards). The
   tiered widening (#86), tier labels, and picker are **UNCHANGED**. Diff = `app/[locale]/vender/page.tsx`
   only (Decision #91). Gates green on `develop` post-merge.
-- **Cycle 3/3** (Consultores picker) — still to come.
+- **Cycle 3/3 DONE, pending Carlos's review** — **Consultores** discovery: the old Region filter is
+  replaced by the CAOP Distrito→Concelho→Freguesia picker (coverage mode, reused unmodified). **No
+  location = default view byte-for-byte identical to today** (option B: no metrics, existing per-region
+  highlight, Rising strip). **Location selected** → both boards scoped to covering consultants
+  (`getConsultantsByArea`, tiered widening #86 unchanged), ranked composite-desc with option-(i)
+  confidence handling, #1 confident `featured`-highlighted, Cycle-1 demo metrics ON; specialization +
+  Ranked/All still compose; URL round-trips. Page-layer + Consultores-only filter; **zero repository
+  change** (Decision #92). Built on `feat/consultores-picker` (off `develop`), gates green, **PR open —
+  NOT merged**.
+
+**→ All 3 review-feedback cycles are now BUILT** (Cycles 1 + 2 merged; Cycle 3 PR open). Once Cycle 3
+merges, the set is complete on `develop` → joint review → eventual `develop → main` promotion (separate
+decision; **`main` currently untouched at `b26554e`**).
 
 **Also merged to `develop`** (`develop` HEAD now = `0dc6155`): **Como funciona** `/como-funciona` (EN `/how-it-works`) — client-facing 3-step explainer (navy hero · champagne steps · weights strip 35/25/15/15/10 · green=verificação note · dual CTA) — and a **NEW Metodologia** page `/metodologia` (EN `/methodology`; new route #87) — long-form rating-model spec (§1–§6 navy/champagne bands · weights table · Rising-Talent/Building-track-record badge echo · **DGT/CAOP CC BY 4.0 attribution**). **PR #13** (merge `0dc6155`; commit `d2a8eb4`). Decisions **#87/#88**.
 
