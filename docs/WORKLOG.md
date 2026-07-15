@@ -6,6 +6,44 @@
 
 ---
 
+## 2026-07-15 · Review-change set Cycle 1/3 — CARD METRICS merged to develop (PR #15) + production-gate proof
+
+**Done** (on `develop`). Merged Cycle 1 and verified the dev-showcase flag gate holds on a true
+production build. **`main` untouched** — no promotion (Cycles 2 + 3 still to come; promotion is a later,
+separate decision).
+
+- **Merge:** `gh pr merge 15 --merge --delete-branch` → **PR #15 merged** into `develop`;
+  `feat/card-metrics` deleted (local + remote; `git ls-remote` count 0). **`develop` HEAD = `c133dc0`**
+  (merge commit; feature commit `4f5ef69`).
+- **Gates on develop post-merge — all green:** `tsc --noEmit` exit 0 · `eslint .` exit 0 · `pnpm build`
+  exit 0 (`✓ Compiled successfully`, 60/60 static pages; `/dev/components` in the route table).
+- **Dev-showcase production-gate CONFIRMED (the key check Carlos asked for).** The widened flag
+  `devShowcase: process.env.VERCEL_ENV !== 'production'` (`lib/flags.ts`, #90d) must still block `/dev/*`
+  on the real production/main build so a future promotion never exposes it. Verified TWO ways
+  (`pnpm start`, real HTTP codes — not SSO):
+  - **Runtime gate (this cycle's showcase):** with the dev-env build running under
+    `VERCEL_ENV=production`, `/dev/components` (a **dynamic** `ƒ` route) → **404** — a real Next
+    "This page could not be found", not a redirect/SSO. Real pages (`/`, `/consultores`, `/vender`) → 200.
+  - **True production build (build + runtime `VERCEL_ENV=production`, exactly as Vercel main):** all
+    three dev routes render as **static 404** (`/dev/components`, `/dev/primitives`, `/dev/hero` all
+    **404** — the gate is false at build time, so they prerender to notFound; in this build they show as
+    `○` static). Real pages (`/`, `/consultores`, `/vender`, `/consultores/ana-silva`) → **200**.
+  - **Note:** on a *dev-env* build (`VERCEL_ENV` unset, as CI/local review), `/dev/primitives` +
+    `/dev/hero` are baked static-200 and `/dev/components` is dynamic — so only `/dev/components` is
+    runtime-gated there. Production accuracy comes from the env being set at BUILD time, which the true
+    production test above replicates. **Conclusion: no `/dev/*` route is reachable on the production/main
+    deploy; previews (`VERCEL_ENV=preview`) + local keep the showcase visible.**
+- **Docs (this session, on develop):** `docs/PROJECT-STATE.md` — Cycle 1 recorded as **merged** (PR #15,
+  `c133dc0`; mirrors the prior 4.3 PRs), production-gate proof noted, Cycles 2+3 pending; this worklog.
+
+**Changed:** `docs/PROJECT-STATE.md`, this worklog. **No app code** (Cycle-1 app code arrived via the
+PR #15 merge).
+
+**Next:** Carlos reviews on a preview (`/dev/components`) if desired → then **Cycle 2** (Vender ranking)
++ **Cycle 3** (Consultores picker). **No `develop → main` promotion this session.**
+
+---
+
 ## 2026-07-15 · Review-change set Cycle 1/3 — CARD METRICS: Part B (build feat/card-metrics)
 
 **Done** (branch `feat/card-metrics` off `develop` `d28c597`; all gates green: `tsc --noEmit` exit 0,
