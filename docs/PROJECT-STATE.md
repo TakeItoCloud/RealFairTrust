@@ -29,19 +29,25 @@
   the **first real page to enable the Cycle-1 demo metrics** (`showMetrics` on the Vender cards). The
   tiered widening (#86), tier labels, and picker are **UNCHANGED**. Diff = `app/[locale]/vender/page.tsx`
   only (Decision #91). Gates green on `develop` post-merge.
-- **Cycle 3/3 DONE, pending Carlos's review** — **Consultores** discovery: the old Region filter is
+- **Cycle 3/3 MERGED to `develop`** (PR #17, merge `cbd7a44`; feature `40e8ce2`; mirrors the prior 4.3
+  PRs — banked to `develop`, **`main` untouched**). **Consultores** discovery: the old Region filter is
   replaced by the CAOP Distrito→Concelho→Freguesia picker (coverage mode, reused unmodified). **No
   location = default view byte-for-byte identical to today** (option B: no metrics, existing per-region
   highlight, Rising strip). **Location selected** → both boards scoped to covering consultants
   (`getConsultantsByArea`, tiered widening #86 unchanged), ranked composite-desc with option-(i)
   confidence handling, #1 confident `featured`-highlighted, Cycle-1 demo metrics ON; specialization +
   Ranked/All still compose; URL round-trips. Page-layer + Consultores-only filter; **zero repository
-  change** (Decision #92). Built on `feat/consultores-picker` (off `develop`), gates green, **PR open —
-  NOT merged**.
+  change** (Decision #92). Gates green on `develop` post-merge. **This discharges the "apply the same
+  #86 matching rule to Consultores" note (below) — DONE.**
 
-**→ All 3 review-feedback cycles are now BUILT** (Cycles 1 + 2 merged; Cycle 3 PR open). Once Cycle 3
-merges, the set is complete on `develop` → joint review → eventual `develop → main` promotion (separate
-decision; **`main` currently untouched at `b26554e`**).
+**→ All 3 review-feedback cycles are now MERGED to `develop`** (PRs #15/#16/#17; `develop` HEAD
+`cbd7a44`). The set is complete on `develop` → joint review → eventual `develop → main` promotion
+(separate decision; **`main` currently untouched at `b26554e`**).
+
+**NEXT — Cycle 4 (planned): Consultores-discovery REDESIGN.** A follow-up rework of the Consultores
+discovery UX, distinct from Cycles 1–3: **(a)** Ranked/All toggle rework; **(b)** a per-card **work-area
+line** on the consultant cards; **(c)** an **"Everywhere" (all-Portugal) default** for the location scope.
+To be planned + built next (Part A/B, own branch).
 
 **Also merged to `develop`** (`develop` HEAD now = `0dc6155`): **Como funciona** `/como-funciona` (EN `/how-it-works`) — client-facing 3-step explainer (navy hero · champagne steps · weights strip 35/25/15/15/10 · green=verificação note · dual CTA) — and a **NEW Metodologia** page `/metodologia` (EN `/methodology`; new route #87) — long-form rating-model spec (§1–§6 navy/champagne bands · weights table · Rising-Talent/Building-track-record badge echo · **DGT/CAOP CC BY 4.0 attribution**). **PR #13** (merge `0dc6155`; commit `d2a8eb4`). Decisions **#87/#88**.
 
@@ -53,7 +59,7 @@ decision; **`main` currently untouched at `b26554e`**).
 1. **Phase 4.3 public pages = COMPLETE** → decide the **`develop → main` promotion** (with Carlos).
 2. Then **Phase 4.4 app shells** (dashboard/admin/auth — UI-only) — **await Carlos** (phase-gate).
 
-**LATER (not now):** apply the SAME location-based consultant-matching rule (#86: inclusive hierarchical coverage + strict tiered widening) to the **Consultores discovery** page, during final tweaks — so Vender and Consultores stay consistent.
+**~~LATER~~ DONE (Cycle 3, #92, PR #17):** the SAME location-based consultant-matching rule (#86: inclusive hierarchical coverage + strict tiered widening) is now applied to the **Consultores discovery** page — Vender and Consultores are consistent.
 
 Then **Phase 4.4** app shells (dashboard/admin/auth — UI-only) → **4.5** polish (real imagery, `next/image`, a11y/perf/responsive QA, motion) → **Phase 5** Supabase + rating engine → **Phase 6** launch.
 

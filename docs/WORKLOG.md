@@ -6,6 +6,33 @@
 
 ---
 
+## 2026-07-15 · Review-change set Cycle 3/3 — CONSULTORES picker merged to develop (PR #17); set COMPLETE
+
+**Done** (on `develop`). Merged Cycle 3 — the final review-feedback cycle. **`main` untouched** — no
+promotion (joint review + eventual `develop → main` is a later, separate decision).
+
+- **Merge:** `gh pr merge 17 --merge --delete-branch` → **PR #17 merged** into `develop`;
+  `feat/consultores-picker` deleted (local + remote; `git ls-remote` count 0). **`develop` HEAD =
+  `cbd7a44`** (merge commit; feature commit `40e8ce2`).
+- **Gates on develop post-merge — all green:** `tsc --noEmit` exit 0 · `eslint .` exit 0 · `pnpm build`
+  exit 0 (`✓ Compiled successfully`, 60/60 static pages; `/[locale]/consultores` in the route table).
+- **Milestone:** **all 3 review-feedback cycles are now merged to `develop`** (PR #15 card metrics · PR
+  #16 Vender ranking · PR #17 Consultores picker). The **"apply the #86 matching rule to Consultores"**
+  note is **discharged (done)** — Vender + Consultores are consistent.
+- **Docs (this session, on develop):** `docs/PROJECT-STATE.md` — Cycle 3 recorded as **merged** (PR #17,
+  `cbd7a44`; mirrors the prior 4.3 PRs), the "LATER → Consultores" note flipped to DONE, and a **Cycle 4
+  (planned)** note added: **Consultores-discovery redesign** — (a) Ranked/All rework · (b) per-card
+  work-area line · (c) "Everywhere" (all-Portugal) default. This worklog.
+
+**Changed:** `docs/PROJECT-STATE.md`, this worklog. **No app code** (Cycle-3 app code arrived via the
+PR #17 merge).
+
+**Next:** **Cycle 4 — Consultores-discovery redesign** (Ranked/All rework + card work-area line +
+Everywhere default), to be planned + built next (own branch, Part A/B). **No `develop → main` promotion
+this session.**
+
+---
+
 ## 2026-07-15 · Review-change set Cycle 3/3 — CONSULTORES picker: Part B (build feat/consultores-picker)
 
 **Done** (branch `feat/consultores-picker` off `develop` `3e06b80`; all gates green: `tsc --noEmit` exit 0,
