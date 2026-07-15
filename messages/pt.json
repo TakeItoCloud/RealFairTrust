@@ -239,6 +239,109 @@
     "contactSubtitle": "Envie uma mensagem a {name}.",
     "contactCta": "Falar sobre este imóvel"
   },
+  "sobre": {
+    "h1": "Confiança que se ganha, não que se afirma.",
+    "lead": "A RealFairTrust nasceu de uma pergunta simples: porque é que escolher um consultor imobiliário ainda depende de quem gasta mais em publicidade — e não de quem trabalha melhor?",
+    "problemTitle": "O problema",
+    "problemBody": "Nos portais tradicionais, os imóveis vêm primeiro e o consultor é uma nota de rodapé. A visibilidade compra-se; o desempenho real — quem responde, quem fecha, quem deixa clientes satisfeitos — fica invisível.",
+    "responseTitle": "A nossa resposta",
+    "responseBody": "Invertemos a ordem. Na RealFairTrust escolhe primeiro o consultor, por mérito medido — e o mérito renova-se: uma janela de 90 dias, recalculada todos os meses. Ninguém vive de reputação antiga; quem está no topo teve de o merecer este mês.",
+    "principlesTitle": "Os nossos princípios",
+    "principles": {
+      "merit": {
+        "title": "Mérito visível",
+        "body": "Desempenho medido, comparável, público."
+      },
+      "fairness": {
+        "title": "Justiça",
+        "body": "Novos consultores competem em qualidade por oportunidade, não em volume; há um quadro próprio para talento em ascensão."
+      },
+      "honesty": {
+        "title": "Honestidade nos dados",
+        "body": "Nunca mostramos um número em que não confiamos; o que é demonstração está identificado como demonstração."
+      },
+      "portugal": {
+        "title": "Portugal inteiro",
+        "body": "Do continente à Madeira e aos Açores."
+      }
+    },
+    "cta": {
+      "consultants": "Conhecer os consultores",
+      "howItWorks": "Como funciona"
+    }
+  },
+  "termos": {
+    "title": "Termos e Condições",
+    "draftBanner": "Documento em rascunho — sujeito a revisão jurídica antes do lançamento.",
+    "sections": {
+      "s1": {
+        "title": "Objeto",
+        "body": "Estes Termos regulam a utilização da plataforma RealFairTrust, que liga clientes (compradores, vendedores e arrendatários) a consultores imobiliários com base em desempenho medido."
+      },
+      "s2": {
+        "title": "Papel da plataforma",
+        "body": "A RealFairTrust é uma plataforma de intermediação de contacto. Não é parte em qualquer negócio, contrato de mediação ou transação imobiliária celebrado entre clientes e consultores. Não prestamos serviços de mediação imobiliária."
+      },
+      "s3": {
+        "title": "Contas de consultor",
+        "body": "O acesso de consultor exige registo e aprovação. O consultor é responsável pela veracidade da informação do seu perfil e pelo cumprimento das obrigações legais aplicáveis à atividade de mediação imobiliária em Portugal."
+      },
+      "s4": {
+        "title": "Classificação de desempenho",
+        "body": "As pontuações e posições resultam de sinais medidos, segundo a metodologia publicada. A RealFairTrust não garante resultados comerciais a partir da posição na classificação."
+      },
+      "s5": {
+        "title": "Conduta",
+        "body": "É proibida a manipulação de sinais de desempenho, a submissão de avaliações falsas e qualquer utilização abusiva da plataforma."
+      },
+      "s6": {
+        "title": "Limitação de responsabilidade",
+        "body": "A RealFairTrust não se responsabiliza por atos, omissões ou incumprimentos dos consultores ou dos clientes, nem pelo desfecho de qualquer transação."
+      },
+      "s7": {
+        "title": "Lei aplicável",
+        "body": "Estes Termos regem-se pela lei portuguesa."
+      },
+      "s8": {
+        "title": "Contacto",
+        "body": "[Contacto a definir antes do lançamento.]"
+      }
+    }
+  },
+  "privacidade": {
+    "title": "Política de Privacidade",
+    "draftBanner": "Documento em rascunho — sujeito a revisão jurídica antes do lançamento.",
+    "sections": {
+      "s1": {
+        "title": "Responsável pelo tratamento",
+        "body": "RealFairTrust. [Identificação e contacto do responsável a definir antes do lançamento.]"
+      },
+      "s2": {
+        "title": "Dados que recolhemos",
+        "body": "Dados de contacto submetidos nos formulários (nome, email ou telefone, mensagem) e dados técnicos estritamente necessários (incluindo cookies de consentimento)."
+      },
+      "s3": {
+        "title": "Finalidade e base legal",
+        "body": "Os dados de contacto são tratados para encaminhar o seu pedido ao consultor selecionado, com base no seu consentimento e no interesse legítimo em prestar o serviço solicitado."
+      },
+      "s4": {
+        "title": "Cookies",
+        "body": "Utilizamos cookies necessários ao funcionamento e cookies sujeitos a consentimento, geridos através do banner de cookies."
+      },
+      "s5": {
+        "title": "Conservação",
+        "body": "Os dados são conservados apenas pelo período necessário às finalidades descritas. [Prazos concretos a definir antes do lançamento.]"
+      },
+      "s6": {
+        "title": "Os seus direitos (RGPD)",
+        "body": "Tem direito de acesso, retificação, apagamento, limitação, portabilidade e oposição, e o direito de apresentar reclamação junto da Comissão Nacional de Proteção de Dados (CNPD)."
+      },
+      "s7": {
+        "title": "Contacto",
+        "body": "[Contacto para exercício de direitos a definir antes do lançamento.]"
+      }
+    }
+  },
   "comoFunciona": {
     "h1": "Primeiro o consultor. Depois a casa.",
     "lead": "Em três passos, do primeiro clique à pessoa certa.",

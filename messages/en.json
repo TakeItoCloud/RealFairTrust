@@ -239,6 +239,109 @@
     "contactSubtitle": "Send {name} a message.",
     "contactCta": "Ask about this property"
   },
+  "sobre": {
+    "h1": "Trust you earn, not trust you claim.",
+    "lead": "RealFairTrust started with a simple question: why does choosing a real-estate consultant still depend on who spends most on advertising — and not on who works best?",
+    "problemTitle": "The problem",
+    "problemBody": "On traditional portals, the properties come first and the consultant is a footnote. Visibility is for sale; real performance — who responds, who closes, who leaves clients satisfied — stays invisible.",
+    "responseTitle": "Our response",
+    "responseBody": "We reversed the order. On RealFairTrust you choose the consultant first, on measured merit — and merit renews: a 90-day window, recomputed every month. Nobody lives on old reputation; whoever is on top had to earn it this month.",
+    "principlesTitle": "Our principles",
+    "principles": {
+      "merit": {
+        "title": "Visible merit",
+        "body": "Performance measured, comparable, public."
+      },
+      "fairness": {
+        "title": "Fairness",
+        "body": "New consultants compete on quality per opportunity, not volume; there is a dedicated board for rising talent."
+      },
+      "honesty": {
+        "title": "Honest data",
+        "body": "We never show a number we don't trust; what is a demonstration is labelled as a demonstration."
+      },
+      "portugal": {
+        "title": "All of Portugal",
+        "body": "From the mainland to Madeira and the Azores."
+      }
+    },
+    "cta": {
+      "consultants": "Meet the consultants",
+      "howItWorks": "How it works"
+    }
+  },
+  "termos": {
+    "title": "Terms and Conditions",
+    "draftBanner": "Draft document — subject to legal review before launch.",
+    "sections": {
+      "s1": {
+        "title": "Purpose",
+        "body": "These Terms govern use of the RealFairTrust platform, which connects clients (buyers, sellers and renters) to real-estate consultants based on measured performance."
+      },
+      "s2": {
+        "title": "Role of the platform",
+        "body": "RealFairTrust is a contact-intermediation platform. It is not a party to any deal, brokerage agreement or real-estate transaction between clients and consultants. We do not provide real-estate brokerage services."
+      },
+      "s3": {
+        "title": "Consultant accounts",
+        "body": "Consultant access requires registration and approval. The consultant is responsible for the accuracy of their profile information and for compliance with the legal obligations applicable to real-estate brokerage activity in Portugal."
+      },
+      "s4": {
+        "title": "Performance rating",
+        "body": "Scores and rankings result from measured signals, following the published methodology. RealFairTrust does not guarantee commercial results from ranking position."
+      },
+      "s5": {
+        "title": "Conduct",
+        "body": "Manipulating performance signals, submitting false reviews and any abusive use of the platform are prohibited."
+      },
+      "s6": {
+        "title": "Limitation of liability",
+        "body": "RealFairTrust is not responsible for the acts, omissions or breaches of consultants or clients, nor for the outcome of any transaction."
+      },
+      "s7": {
+        "title": "Governing law",
+        "body": "These Terms are governed by Portuguese law."
+      },
+      "s8": {
+        "title": "Contact",
+        "body": "[Contact to be defined before launch.]"
+      }
+    }
+  },
+  "privacidade": {
+    "title": "Privacy Policy",
+    "draftBanner": "Draft document — subject to legal review before launch.",
+    "sections": {
+      "s1": {
+        "title": "Data controller",
+        "body": "RealFairTrust. [Controller identity and contact to be defined before launch.]"
+      },
+      "s2": {
+        "title": "Data we collect",
+        "body": "Contact details submitted in forms (name, email or phone, message) and strictly necessary technical data (including consent cookies)."
+      },
+      "s3": {
+        "title": "Purpose and legal basis",
+        "body": "Contact details are processed to route your request to the selected consultant, based on your consent and the legitimate interest in providing the requested service."
+      },
+      "s4": {
+        "title": "Cookies",
+        "body": "We use cookies necessary for operation and consent-based cookies, managed through the cookie banner."
+      },
+      "s5": {
+        "title": "Retention",
+        "body": "Data is kept only for as long as necessary for the purposes described. [Concrete periods to be defined before launch.]"
+      },
+      "s6": {
+        "title": "Your rights (GDPR)",
+        "body": "You have the right of access, rectification, erasure, restriction, portability and objection, and the right to lodge a complaint with the Portuguese data protection authority (CNPD)."
+      },
+      "s7": {
+        "title": "Contact",
+        "body": "[Contact for exercising rights to be defined before launch.]"
+      }
+    }
+  },
   "comoFunciona": {
     "h1": "First the consultant. Then the home.",
     "lead": "Three steps from first click to the right person.",

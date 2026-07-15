@@ -6,6 +6,49 @@
 
 ---
 
+## 2026-07-15 · Phase 4.3 — STATIC PAGES: Sobre + Termos + Privacidade (feat/static-sobre-legal) — 4.3 COMPLETE
+
+**Done** (branch `feat/static-sobre-legal` off `develop` `16e9318`; all gates green: `tsc --noEmit`
+exit 0, `eslint .` exit 0, `pnpm build` exit 0). Built the **final three** Phase 4.3 static pages using
+the **final approved copy verbatim** (both locales), replacing the stubs. **This COMPLETES the Phase
+4.3 public pages.** **PR opened, preview pending Carlos review — NOT merged.** Logged **DECISION #89**.
+
+- **Sobre** (`app/[locale]/sobre/page.tsx`) — brand story: navy hero (H1 + lead) · **champagne band**
+  problem/response (two-column desktop / stacked mobile, slim fades) · navy **principles** section (4
+  tiles with lucide icons: IconTrophy/IconScale/IconCheck/IconGlobe, all gold — no green) · dual CTA
+  band (→ /consultores + → /como-funciona). No draft banner.
+- **Termos** (8 sections) + **Privacidade** (7 sections) — simple navy **document layout**: page title →
+  **calm neutral draft-notice banner** → numbered titled sections in a readable **max-w-2xl prose
+  column**. No TOC (would need a new component; skipped per spec).
+- **Draft banner (#89):** a muted inline `role="note"` box (border-line + `--surface-card-solid` +
+  `cream-muted` text + neutral IconClock) — **NOT green** (verification-only, #34). Text: "Documento em
+  rascunho — sujeito a revisão jurídica antes do lançamento." / "Draft document — subject to legal
+  review before launch." Shown on **Termos + Privacidade only**, **not** on Sobre (verified). Termos +
+  Privacidade are structurally-sound **GDPR-aware DRAFTS** (RGPD rights + CNPD; contact-intermediation
+  platform, not a mediator), **not lawyer-reviewed**; **contact/controller/retention** placeholders
+  intentionally bracketed. **Phase 6 LAUNCH BLOCKER:** legal review + real values before go-live.
+- **i18n:** new `sobre` (17 keys) / `termos` (18 keys) / `privacidade` (16 keys) namespaces, **PT/EN
+  parity verified**. All three pages carry `generateMetadata` (title from the page title/H1; Sobre also
+  description = lead). No hardcoded UI strings.
+- **Guardrails:** server components (pure content) + `Reveal` client entrances; AA; reduced-motion-safe;
+  responsive. No shared-component styling changed; Home / Consultores / profile / Vender / Buy-Rent /
+  Property detail / Como funciona / Metodologia untouched. Champagne band reused on Sobre (precedent #87).
+- **Smoke test** (`pnpm start`, rendered DOM): `/sobre`, `/en/about`, `/termos`, `/en/terms`,
+  `/privacidade`, `/en/privacy` all **200**. **Draft banner present exactly once** on termos +
+  privacidade (PT + EN) and **absent** on sobre/about (count 0). Sobre H1 + 4 tiles + EN H1 present;
+  Termos §8 + Privacy CNPD placeholders render. Regression: `/`, `/consultores`, `/vender`,
+  `/como-funciona`, `/metodologia` all **200**.
+
+**Changed:** `app/[locale]/{sobre,termos,privacidade}/page.tsx` (replace stubs),
+`messages/{pt,en}.json` (+`sobre`/`termos`/`privacidade`). Docs: DECISIONS #89, PROJECT-STATE (4.3
+public pages COMPLETE + Phase 6 launch-blocker note), this worklog. No route additions; no app-code
+outside these three pages.
+
+**Next:** Carlos reviews the preview → merge. **Phase 4.3 public pages are then COMPLETE** → decide the
+`develop → main` promotion (with Carlos) → Phase 4.4 app shells (UI-only) → 4.5 polish → Phase 5.
+
+---
+
 ## 2026-07-15 · DRAFT — rating-engine data-sourcing notes captured (EN + PT), not decisions
 
 Captured two **DRAFT / for-discussion** planning docs on how the Phase 5 rating engine would source
