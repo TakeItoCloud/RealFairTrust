@@ -6,6 +6,27 @@
 
 ---
 
+## 2026-07-15 · Review-change set Cycle 2/3 — VENDER ranking merged to develop (PR #16)
+
+**Done** (on `develop`). Merged Cycle 2. **`main` untouched** — no promotion (Cycle 3 still to come;
+promotion is a later, separate decision).
+
+- **Merge:** `gh pr merge 16 --merge --delete-branch` → **PR #16 merged** into `develop`;
+  `feat/vender-ranking` deleted (local + remote; `git ls-remote` count 0). **`develop` HEAD = `914da3a`**
+  (merge commit; feature commit `2cc9429`).
+- **Gates on develop post-merge — all green:** `tsc --noEmit` exit 0 · `eslint .` exit 0 · `pnpm build`
+  exit 0 (`✓ Compiled successfully`, 60/60 static pages; `/[locale]/vender` in the route table).
+- **Docs (this session, on develop):** `docs/PROJECT-STATE.md` — Cycle 2 recorded as **merged** (PR #16,
+  `914da3a`; mirrors the prior 4.3 PRs), Cycle 3 (Consultores picker) still pending; this worklog.
+
+**Changed:** `docs/PROJECT-STATE.md`, this worklog. **No app code** (Cycle-2 app code arrived via the
+PR #16 merge).
+
+**Next:** **Cycle 3/3** — apply the same location-based matching + ranking/highlight/metrics treatment to
+the **Consultores discovery** picker. **No `develop → main` promotion this session.**
+
+---
+
 ## 2026-07-15 · Review-change set Cycle 2/3 — VENDER ranking + highlight + demo metrics (feat/vender-ranking)
 
 **Done** (branch `feat/vender-ranking` off `develop` `7d4416a`; all gates green: `tsc --noEmit` exit 0,

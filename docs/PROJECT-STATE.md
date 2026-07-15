@@ -21,13 +21,14 @@
   `ConsultantSummary`, on `ConsultantCard` behind an **opt-in `showMetrics` prop (off by default)** with
   a muted "demo values" caption; real data deferred to Phase 5 (Decision #90). Dev-showcase gate narrowed
   to `VERCEL_ENV!=='production'` (visible on previews + local; **verified 404 on a true production build**).
-- **Cycle 2/3 DONE, pending Carlos's review** — **Vender** ranks the matched tier by composite desc with
-  **option-(i) confidence handling** (building/unscored sink to the bottom, never highlighted; verbatim
-  condition `!!score && !score.risingTalent && score.confidence !== 'low'`), **highlights the #1 confident**
-  consultant with the existing rank-1 spotlight (`featured` — no new style, no green), and is the **first
-  real page to enable the Cycle-1 demo metrics** (`showMetrics` on the Vender cards). The tiered widening
-  (#86), tier labels, and picker are **UNCHANGED**. Diff = `app/[locale]/vender/page.tsx` only (Decision
-  #91). Built on `feat/vender-ranking` (off `develop`), gates green, **PR open — NOT merged**.
+- **Cycle 2/3 MERGED to `develop`** (PR #16, merge `914da3a`; feature `2cc9429`; mirrors the prior 4.3
+  PRs — banked to `develop`, **`main` untouched**). **Vender** ranks the matched tier by composite desc
+  with **option-(i) confidence handling** (building/unscored sink to the bottom, never highlighted;
+  verbatim condition `!!score && !score.risingTalent && score.confidence !== 'low'`), **highlights the #1
+  confident** consultant with the existing rank-1 spotlight (`featured` — no new style, no green), and is
+  the **first real page to enable the Cycle-1 demo metrics** (`showMetrics` on the Vender cards). The
+  tiered widening (#86), tier labels, and picker are **UNCHANGED**. Diff = `app/[locale]/vender/page.tsx`
+  only (Decision #91). Gates green on `develop` post-merge.
 - **Cycle 3/3** (Consultores picker) — still to come.
 
 **Also merged to `develop`** (`develop` HEAD now = `0dc6155`): **Como funciona** `/como-funciona` (EN `/how-it-works`) — client-facing 3-step explainer (navy hero · champagne steps · weights strip 35/25/15/15/10 · green=verificação note · dual CTA) — and a **NEW Metodologia** page `/metodologia` (EN `/methodology`; new route #87) — long-form rating-model spec (§1–§6 navy/champagne bands · weights table · Rising-Talent/Building-track-record badge echo · **DGT/CAOP CC BY 4.0 attribution**). **PR #13** (merge `0dc6155`; commit `d2a8eb4`). Decisions **#87/#88**.
