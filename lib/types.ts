@@ -248,6 +248,15 @@ export interface ConsultantSummary extends ConsultantProfile {
   reviewCount: number
   /** Average overall rating (0–5) across reviews; null when there are none (empty state). */
   avgRating: number | null
+  /** DEMO (Decision #90, Cycle 1): units sold over a rolling 12-month window. Optional + additive —
+   *  when absent, ConsultantCard renders exactly as before. A 12-month outcome aggregate (distinct
+   *  from PerformanceScore's 90-day window), so it lives here on the summary view type beside
+   *  reviewCount/avgRating, not on PerformanceScore. Real close data arrives in Phase 5
+   *  (see docs/RATING-ENGINE-NOTES). */
+  unitsSold12mo?: number
+  /** DEMO (Decision #90, Cycle 1): average time-to-sell in days over the same rolling 12-month
+   *  window. Optional + additive; real data deferred to Phase 5. */
+  avgDaysToSell?: number
 }
 
 export interface ConsultantDetail extends ConsultantSummary {

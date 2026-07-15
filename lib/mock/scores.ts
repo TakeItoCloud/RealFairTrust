@@ -86,3 +86,33 @@ function buildScores(): PerformanceScore[] {
 }
 
 export const scores: PerformanceScore[] = buildScores()
+
+// ---------------------------------------------------------------------------
+// DEMO outcome metrics (Decision #90, Cycle 1) — units sold over a rolling 12-month
+// window + average time-to-sell in days, keyed by agentId.
+//
+// ⚠ DEMO — these are INVENTED illustrative values, NOT real. Phase 5 will source real
+// close data (units sold + days-to-sell) from the commission / transaction record — the
+// same open problem tracked in docs/RATING-ENGINE-NOTES. Surfaced in the UI with a muted
+// "demo values" caption until then.
+//
+// Deliberately NOT correlated with the composite rating (composites in comments) so that a
+// later cycle can show "the rating says one thing, volume/speed says another": e.g. Sofia
+// (79) has the highest volume + fastest time; Maria (83) outsells Ana (92); Pedro (87) is
+// the slowest. One aligned case (João: great + fast) keeps it realistic, not mechanically inverted.
+// ---------------------------------------------------------------------------
+export const demoOutcomeMetrics: Record<string, { unitsSold12mo: number; avgDaysToSell: number }> = {
+  'c-ana-silva': { unitsSold12mo: 9, avgDaysToSell: 63 }, // composite 92 · luxury: few high-value deals, slow
+  'c-joao-pereira': { unitsSold12mo: 21, avgDaysToSell: 34 }, // 92 · investment: high volume + fast (aligned)
+  'c-catarina-ferreira': { unitsSold12mo: 14, avgDaysToSell: 41 }, // 87 · mid-pack
+  'c-pedro-costa': { unitsSold12mo: 8, avgDaysToSell: 71 }, // 87 · luxury: lowest volume + slowest
+  'c-maria-santos': { unitsSold12mo: 23, avgDaysToSell: 38 }, // 83 · first-time buyers: high volume despite lower rating
+  'c-rui-oliveira': { unitsSold12mo: 11, avgDaysToSell: 58 }, // 82 · commercial: moderate
+  'c-sofia-martins': { unitsSold12mo: 27, avgDaysToSell: 22 }, // 79 · rental: HIGHEST volume + FASTEST despite lowest established rating
+  'c-miguel-rodrigues': { unitsSold12mo: 6, avgDaysToSell: 96 }, // 79 · new developments: long cycles, low volume
+  // Rising Talent (<6 months) — small 12-month windows, consistent with recent join dates.
+  'c-ines-carvalho': { unitsSold12mo: 5, avgDaysToSell: 44 }, // joined 2026-01
+  'c-tiago-sousa': { unitsSold12mo: 4, avgDaysToSell: 39 }, // joined 2026-02
+  'c-beatriz-almeida': { unitsSold12mo: 2, avgDaysToSell: 51 }, // joined 2026-03
+  'c-diogo-fernandes': { unitsSold12mo: 1, avgDaysToSell: 68 }, // joined 2026-04 (newest)
+}

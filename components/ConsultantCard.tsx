@@ -20,6 +20,7 @@ export function ConsultantCard({
   index = 0,
   featured: featuredProp,
   displayRank,
+  showMetrics = false,
 }: {
   consultant: ConsultantSummary
   index?: number
@@ -30,10 +31,21 @@ export function ConsultantCard({
    *  PER-REGION; the Home "Top este mês" is a GLOBAL cross-region leaderboard, so it passes the
    *  global position (1,2,3,4) here. Omitted elsewhere → the coin falls back to the region rank. */
   displayRank?: number
+  /** Opt in to the DEMO outcome-metrics block — units sold (rolling 12mo) + avg time-to-sell
+   *  (Decision #90, Cycle 1). OFF by default → existing call-sites are byte-for-byte unchanged; the
+   *  block also needs BOTH values present on the summary. Cycles 2/3 flip this on for Vender/Consultores. */
+  showMetrics?: boolean
 }) {
   const t = useTranslations()
   const reduce = useReducedMotion()
   const score = consultant.score
+
+  // Outcome-metrics block: opt-in via `showMetrics` AND both demo values present (the muted caption
+  // marks the metric PAIR, so a lone value renders nothing). Values are DEMO until Phase 5.
+  const metrics =
+    showMetrics && consultant.unitsSold12mo != null && consultant.avgDaysToSell != null
+      ? { unitsSold12mo: consultant.unitsSold12mo, avgDaysToSell: consultant.avgDaysToSell }
+      : null
 
   const confident = !!score && !score.risingTalent && score.confidence !== 'low'
   const building = !!score && !score.risingTalent && score.confidence === 'low'
@@ -136,6 +148,24 @@ export function ConsultantCard({
             <StatBlock size="sm" value={`${score.sub.closeRate}%`} label={t('score.closeRate')} />
             <StatBlock size="sm" value={score.sub.satisfaction} label={t('score.satisfaction')} />
             <StatBlock size="sm" value={score.sub.responsiveness} label={t('score.responsiveness')} />
+          </div>
+        ) : null}
+
+        {/* Outcome metrics (DEMO, #90) — opt-in via showMetrics; one muted caption on the PAIR.
+            Caption is muted (NOT verified-green, #34/#89) because these are demo, not verified, values. */}
+        {metrics ? (
+          <div className="border-t border-line pt-4">
+            <div className="flex gap-6">
+              <StatBlock size="sm" value={metrics.unitsSold12mo} label={t('score.sales12mo')} />
+              <StatBlock
+                size="sm"
+                value={t('score.daysValue', { n: metrics.avgDaysToSell })}
+                label={t('score.avgTimeToSell')}
+              />
+            </div>
+            <p className="mt-2 text-[10.5px] uppercase tracking-[0.12em] text-cream-muted">
+              {t('score.demoValues')}
+            </p>
           </div>
         ) : null}
 

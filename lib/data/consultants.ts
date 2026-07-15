@@ -1,6 +1,6 @@
 // Consultants repository. Composes ConsultantProfile + current PerformanceScore +
 // review aggregates into the view types pages consume. Mock now → Supabase in Phase 5.
-import { consultants, listings, reviews, scores } from '@/lib/mock'
+import { consultants, demoOutcomeMetrics, listings, reviews, scores } from '@/lib/mock'
 import type {
   ConsultantDetail,
   ConsultantFilter,
@@ -39,7 +39,19 @@ function summarize(consultantId: string): ConsultantSummary {
           (agentReviews.reduce((sum, r) => sum + reviewRating(r), 0) / agentReviews.length) * 10,
         ) / 10
 
-  return { ...consultant, score, reviewCount: agentReviews.length, avgRating }
+  // DEMO outcome metrics (Decision #90, Cycle 1) — optional; attached beside reviewCount/avgRating.
+  // Real close data arrives in Phase 5 (docs/RATING-ENGINE-NOTES). Display is opt-in per call-site
+  // via ConsultantCard's `showMetrics` prop, so attaching here does not change any existing page.
+  const outcome = demoOutcomeMetrics[consultantId]
+
+  return {
+    ...consultant,
+    score,
+    reviewCount: agentReviews.length,
+    avgRating,
+    unitsSold12mo: outcome?.unitsSold12mo,
+    avgDaysToSell: outcome?.avgDaysToSell,
+  }
 }
 
 export async function getConsultants(filter: ConsultantFilter = {}): Promise<ConsultantSummary[]> {

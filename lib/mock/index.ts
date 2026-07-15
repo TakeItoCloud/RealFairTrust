@@ -3,7 +3,7 @@
 export { regions } from './regions'
 export { users } from './users'
 export { consultants } from './consultants'
-export { scores } from './scores'
+export { scores, demoOutcomeMetrics } from './scores'
 export { reviews } from './reviews'
 export { listings } from './listings'
 export { leads } from './leads'

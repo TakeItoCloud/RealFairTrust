@@ -128,7 +128,11 @@
     "merit90d": "Mérito · 90d",
     "target": "Meta",
     "noReviews": "Ainda sem avaliações",
-    "reviews": "avaliações"
+    "reviews": "avaliações",
+    "sales12mo": "Vendas (12 meses)",
+    "avgTimeToSell": "Tempo médio de venda",
+    "daysValue": "{n} dias",
+    "demoValues": "valores de demonstração"
   },
   "specializations": {
     "apartments": "Apartamentos",

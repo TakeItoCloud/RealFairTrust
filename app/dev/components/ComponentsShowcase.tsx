@@ -90,6 +90,18 @@ export function ComponentsShowcase({ consultants, listings, detail }: Props) {
             </div>
           </Section>
 
+          <Section title="ConsultantCard — with outcome metrics (DEMO, Cycle 1 · showMetrics opt-in)">
+            <p className="text-cream-muted">
+              Units sold (rolling 12 mo) + avg time-to-sell, with a muted “demo values” caption on the
+              pair. Off by default everywhere else; seeded values are non-correlated with the rating.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {consultants.slice(0, 6).map((c, i) => (
+                <ConsultantCard key={c.id} consultant={c} index={i} showMetrics />
+              ))}
+            </div>
+          </Section>
+
           <Section title="PropertyCard — Editorial Overlay (entrance stagger + hover)">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {listings.slice(0, 6).map((l, i) => (
