@@ -6,6 +6,33 @@
 
 ---
 
+## 2026-07-15 · Phase 4.3 — Sobre + Termos + Privacidade merged to develop (PR #14) — 4.3 public pages COMPLETE
+
+**Done** (on `develop`). Merged the final three static pages. **`main` untouched** — promoting
+`develop → main` is the next decision, to be taken with Carlos.
+
+- **Merge:** `gh pr merge 14 --merge --delete-branch` → **PR #14 merged** into `develop`;
+  `feat/static-sobre-legal` deleted (local + remote; `git ls-remote` count 0). **`develop` HEAD =
+  `a44b0e9`** (merge commit; feature commit `e2f3c34`).
+- **Gates on develop post-merge — all green:** `tsc --noEmit` exit 0 · `eslint .` exit 0 · `pnpm build`
+  exit 0 (`✓ Compiled successfully`; `/[locale]/sobre` + `/[locale]/termos` + `/[locale]/privacidade`
+  all in the route table).
+- **Milestone:** **the Phase 4.3 public pages are now COMPLETE on `develop`** — Home, Consultores,
+  Consultant profile, Buy/Rent, Location hierarchy, Property detail, Vender, Como funciona, Metodologia,
+  Sobre, Termos, Privacidade. (Termos + Privacidade are marked DRAFTS — a Phase 6 legal-review blocker,
+  #89, not a promotion blocker.)
+- **Docs (this session, on develop):** `docs/PROJECT-STATE.md` — Sobre/Termos/Privacidade recorded as
+  **merged** (PR #14, `a44b0e9`; mirrors #8/#9/#10/#12/#13), `develop` HEAD refs bumped, "ahead of
+  `main`" note → PRs #8/#9/#10/#12/#13/#14 + **Phase 4.3 COMPLETE**, "Last updated" → PR #14, NEXT =
+  the `develop → main` promotion decision (with Carlos) then Phase 4.4 shells.
+
+**Changed:** `docs/PROJECT-STATE.md`, this worklog. **No app code.**
+
+**Next:** decide the **`develop → main` promotion** with Carlos (Phase 4.3 public site is complete on
+`develop`), then **Phase 4.4 app shells** (dashboard/admin/auth — UI-only) → 4.5 polish → Phase 5.
+
+---
+
 ## 2026-07-15 · Phase 4.3 — STATIC PAGES: Sobre + Termos + Privacidade (feat/static-sobre-legal) — 4.3 COMPLETE
 
 **Done** (branch `feat/static-sobre-legal` off `develop` `16e9318`; all gates green: `tsc --noEmit`
