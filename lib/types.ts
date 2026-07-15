@@ -257,6 +257,11 @@ export interface ConsultantSummary extends ConsultantProfile {
   /** DEMO (Decision #90, Cycle 1): average time-to-sell in days over the same rolling 12-month
    *  window. Optional + additive; real data deferred to Phase 5. */
   avgDaysToSell?: number
+  /** The consultant's MOST-SPECIFIC filled CAOP coverage level + resolved name (Decision #93, Cycle 4)
+   *  — freguesia if filled, else concelho, else distrito. Resolved server-side in summarize() (the card
+   *  is a client component and cannot import the server-only CAOP loader). Optional/additive: absent →
+   *  the work-area line is simply hidden. */
+  workArea?: { level: 'freguesia' | 'concelho' | 'distrito'; name: string }
 }
 
 export interface ConsultantDetail extends ConsultantSummary {

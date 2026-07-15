@@ -1,13 +1,13 @@
-// Consultores — discovery + leaderboard (Phase 4 §4.3.2; Phase 2 wireframe; Decisions
-// #26 card grid + subtle rank, #6 separate Rising Talent board for consultants < 6 months).
+// Consultores — discovery + leaderboard (Phase 4 §4.3.2; Decisions #26, #6).
 // Server component: reads filters from the URL, fetches via lib/data, passes objects down.
 //
-// Cycle 3 (Decision #92): the old Region filter is replaced by the CAOP Distrito→Concelho→Freguesia
-// picker. NO location selected → the page behaves exactly as today (full ranked board + Rising strip +
-// per-region rank-1 highlight; no metrics). Location selected → both boards are scoped to consultants
-// covering that area (getConsultantsByArea — inclusive coverage + strict tiered widening, #86), ranked
-// composite-desc with option-(i) confidence handling, the #1 confident consultant highlighted, and the
-// Cycle-1 demo metrics turned on. Specialization + Ranked/All still compose on top. Repository unchanged.
+// Cycle 3 (#92): the old Region filter → the CAOP Distrito→Concelho→Freguesia picker; NO location =
+// the full national board, location = coverage-scoped (getConsultantsByArea, tiered widening #86).
+// Cycle 4 (#93): (a) Ranked view = ranked board FIRST, Rising Talent strip BELOW; (b) All view = one
+// grid + a Merit/Houses/Time sort control (metrics visible); (c) an explicit "Everywhere" default
+// district option (== today's no-location board); (d) an always-on card work-area line. Metrics are
+// now VIEW-BASED: All view = on, Ranked view = off (supersedes #92's location-gating). Repository is
+// unchanged except the additive workArea field on ConsultantSummary.
 import { getTranslations } from 'next-intl/server'
 import type { ConsultantSummary, Specialization } from '@/lib/types'
 import { getConsultants, getConsultantsByArea } from '@/lib/data'
@@ -19,6 +19,8 @@ import { ConsultantFilters } from '@/components/consultores/ConsultantFilters'
 
 const PAGE_SIZE = 9
 
+type SortKey = 'merit' | 'houses' | 'time'
+
 function str(v: string | string[] | undefined): string | undefined {
   return typeof v === 'string' && v.length > 0 ? v : undefined
 }
@@ -26,6 +28,15 @@ function str(v: string | string[] | undefined): string | undefined {
 /** Confidence gate — verbatim from ConsultantCard/profile (#18): a confidently-shown composite. */
 function isConfident(c: ConsultantSummary): boolean {
   return !!c.score && !c.score.risingTalent && c.score.confidence !== 'low'
+}
+
+/** All-view sort. Merit = composite desc; Houses = units sold desc; Time = days-to-sell asc.
+ *  Missing values sink to the bottom in every key. */
+function sortBy(list: ConsultantSummary[], key: SortKey): ConsultantSummary[] {
+  const arr = [...list]
+  if (key === 'houses') return arr.sort((a, b) => (b.unitsSold12mo ?? -1) - (a.unitsSold12mo ?? -1))
+  if (key === 'time') return arr.sort((a, b) => (a.avgDaysToSell ?? Infinity) - (b.avgDaysToSell ?? Infinity))
+  return arr.sort((a, b) => (b.score?.composite ?? -1) - (a.score?.composite ?? -1))
 }
 
 export default async function ConsultoresPage({
@@ -42,6 +53,11 @@ export default async function ConsultoresPage({
   const specialization = str(sp.specialization) as Specialization | undefined
   const view = sp.view === 'all' ? 'all' : 'ranked'
   const page = Math.max(1, Number(str(sp.page)) || 1)
+  // Sort only applies in the All view (Ranked is the leaderboard). Merit is the default.
+  const sortRaw = str(sp.sort)
+  const sort: SortKey = view === 'all' && (sortRaw === 'houses' || sortRaw === 'time') ? sortRaw : 'merit'
+  // Cycle 4: metrics are view-based — All view shows them (drives the demo sorts); Ranked hides them.
+  const showMetrics = view === 'all'
 
   // --- CAOP selection chain from the URL (same params/idiom as the discovery + Vender pickers) ---
   const freguesiaId = str(sp.freguesia)
@@ -58,25 +74,23 @@ export default async function ConsultoresPage({
     freguesia: freguesiaNode ? { id: freguesiaNode.id, name: freguesiaNode.name } : undefined,
   }
 
-  // --- Build the two boards (default path == today; location path scopes + ranks) ---
-  let mainList: ConsultantSummary[]
-  let risingList: ConsultantSummary[]
-  let highlightId: string | null = null
+  // --- Build established / rising / everyone (default path == today; location path scopes) ---
+  let established: ConsultantSummary[]
+  let rising: ConsultantSummary[]
+  let everyone: ConsultantSummary[]
   let locationHeader: string | null = null
   let emptyTitle = t('empty')
 
   if (!hasLocation) {
-    // DEFAULT — identical to today (region was already undefined in the default state).
-    const [main, rising] = await Promise.all([
-      view === 'all'
-        ? getConsultants({ specialization })
-        : getConsultants({ view: 'ranked', specialization }),
+    const [est, ris, all] = await Promise.all([
+      getConsultants({ view: 'ranked', specialization }),
       getConsultants({ risingTalentOnly: true, specialization }),
+      getConsultants({ specialization }),
     ])
-    mainList = main
-    risingList = rising
+    established = est
+    rising = ris
+    everyone = all
   } else {
-    // LOCATION — coverage scope FIRST, then specialization, then the ranked/rising split.
     const match = await getConsultantsByArea({
       distritoId: str(sp.distrito),
       concelhoId: str(sp.concelho),
@@ -85,33 +99,79 @@ export default async function ConsultoresPage({
     const scoped = match.consultants.filter(
       (c) => !specialization || c.specializations.includes(specialization),
     )
-    risingList = scoped.filter((c) => c.score?.risingTalent)
-    const established = scoped.filter((c) => c.score && !c.score.risingTalent)
-    const mainScope = view === 'all' ? scoped : established
-
-    // Option (i): building/unscored sink to the bottom and can never be the highlight.
-    const confident = mainScope.filter(isConfident)
-    mainList = [...confident, ...mainScope.filter((c) => !isConfident(c))]
-    highlightId = confident[0]?.id ?? null
+    rising = scoped.filter((c) => c.score?.risingTalent)
+    established = scoped.filter((c) => c.score && !c.score.risingTalent)
+    everyone = scoped
 
     if (match.tier && scoped.length > 0) {
       locationHeader = t(`locationResults.${match.tier}`, { area: match.areaName ?? '' })
     } else if (!match.tier) {
-      // No consultant covers the area at any tier → location-specific empty message.
       const areaName =
         location.freguesia?.name ?? location.concelho?.name ?? location.distrito?.name ?? ''
       emptyTitle = t('locationEmpty', { area: areaName })
     }
-    // (coverage exists but specialization excluded everyone → generic t('empty') stays)
   }
 
-  // Rising Talent has its own board; in "All" view they appear inline in the main grid,
-  // so the separate board only shows in the (default) Ranked view to avoid duplication.
-  const showRisingBoard = view !== 'all' && risingList.length > 0
+  // --- Assemble the grid + highlight per view ---
+  // Ranked: established (composite desc; option-(i) confident-first when scoped). All: everyone, sorted.
+  const rankedEstablished = hasLocation
+    ? [...established.filter(isConfident), ...established.filter((c) => !isConfident(c))]
+    : established
+  const gridList = view === 'all' ? sortBy(everyone, sort) : rankedEstablished
 
-  const totalPages = Math.max(1, Math.ceil(mainList.length / PAGE_SIZE))
-  const pageItems = mainList.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
-  const scopedCount = mainList.length + risingList.length
+  // Highlight the #1 confident consultant — only in the location state, and in All view only under the
+  // Merit sort (a Houses/Time comparison grid has no merit spotlight).
+  const highlightBase = view === 'all' ? everyone : established
+  const highlightId =
+    hasLocation && (view !== 'all' || sort === 'merit')
+      ? (highlightBase.filter(isConfident)[0]?.id ?? null)
+      : null
+  // In All view under a non-merit sort, suppress the per-region auto-highlight entirely.
+  const suppressFeatured = view === 'all' && sort !== 'merit'
+
+  // Rising Talent has its own board only in Ranked view (in All they appear inline in the grid).
+  const showRisingBoard = view !== 'all' && rising.length > 0
+
+  const totalPages = Math.max(1, Math.ceil(gridList.length / PAGE_SIZE))
+  const pageItems = gridList.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+  const scopedCount = everyone.length
+
+  const gridSection = (
+    <section aria-label={view === 'all' ? t('viewAll') : t('viewRanked')} className="mt-10">
+      {pageItems.length === 0 ? (
+        <EmptyState title={emptyTitle} />
+      ) : (
+        <>
+          <div className="grid gap-5 lg:grid-cols-2">
+            {pageItems.map((c, i) => (
+              <ConsultantCard
+                key={c.id}
+                consultant={c}
+                index={i}
+                featured={suppressFeatured ? false : hasLocation ? c.id === highlightId : undefined}
+                showMetrics={showMetrics}
+              />
+            ))}
+          </div>
+          <UrlPagination totalPages={totalPages} className="mt-8 justify-center" />
+        </>
+      )}
+    </section>
+  )
+
+  const risingSection = showRisingBoard ? (
+    <section aria-labelledby="rising-talent" className="mt-12 border-t border-line pt-10">
+      <h2 id="rising-talent" className="text-subsection text-cream">
+        {t('risingTalentTitle')}
+      </h2>
+      <p className="mt-1 text-meta text-cream-muted">{t('risingTalentSubtitle')}</p>
+      <div className="mt-5 grid gap-5 lg:grid-cols-2">
+        {rising.map((c, i) => (
+          <ConsultantCard key={c.id} consultant={c} index={i} showMetrics={showMetrics} />
+        ))}
+      </div>
+    </section>
+  ) : null
 
   return (
     <>
@@ -140,42 +200,9 @@ export default async function ConsultoresPage({
           </h2>
         ) : null}
 
-        {/* Rising Talent board (separate from the ranking) */}
-        {showRisingBoard ? (
-          <section aria-labelledby="rising-talent" className="mt-10">
-            <h2 id="rising-talent" className="text-subsection text-cream">
-              {t('risingTalentTitle')}
-            </h2>
-            <p className="mt-1 text-meta text-cream-muted">{t('risingTalentSubtitle')}</p>
-            <div className="mt-5 grid gap-5 lg:grid-cols-2">
-              {risingList.map((c, i) => (
-                <ConsultantCard key={c.id} consultant={c} index={i} showMetrics={hasLocation} />
-              ))}
-            </div>
-          </section>
-        ) : null}
-
-        {/* Main ranked / all grid */}
-        <section aria-label={view === 'all' ? t('viewAll') : t('viewRanked')} className="mt-10">
-          {pageItems.length === 0 ? (
-            <EmptyState title={emptyTitle} />
-          ) : (
-            <>
-              <div className="grid gap-5 lg:grid-cols-2">
-                {pageItems.map((c, i) => (
-                  <ConsultantCard
-                    key={c.id}
-                    consultant={c}
-                    index={i}
-                    featured={hasLocation ? c.id === highlightId : undefined}
-                    showMetrics={hasLocation}
-                  />
-                ))}
-              </div>
-              <UrlPagination totalPages={totalPages} className="mt-8 justify-center" />
-            </>
-          )}
-        </section>
+        {/* Cycle 4 (a): ranked board FIRST, then the Rising Talent strip below. */}
+        {gridSection}
+        {risingSection}
       </SectionWrapper>
     </>
   )

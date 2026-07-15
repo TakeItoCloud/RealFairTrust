@@ -11,7 +11,7 @@ import type { ConsultantSummary } from '@/lib/types'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
 import { Avatar, Badge, RankBadge, StatBlock, Tag, VerifiedBadge } from '@/components/ui'
-import { IconTrophy } from '@/components/ui/icons'
+import { IconPin, IconTrophy } from '@/components/ui/icons'
 
 const EASE = [0.22, 0.61, 0.36, 1] as const
 
@@ -127,6 +127,15 @@ export function ConsultantCard({
             </div>
           ) : null}
         </div>
+
+        {/* Work-area line (Decision #93, Cycle 4) — the consultant's most-specific coverage level.
+            Always on wherever the card appears; hidden when coverage can't be resolved. */}
+        {consultant.workArea ? (
+          <p className="-mt-1 inline-flex items-center gap-1.5 text-[12px] font-medium text-cream-muted">
+            <IconPin className="text-sm text-gold" aria-hidden />
+            {t(`score.worksIn.${consultant.workArea.level}`, { area: consultant.workArea.name })}
+          </p>
+        ) : null}
 
         {/* Tags row — standing badge + specialities */}
         <div className="flex flex-wrap items-center gap-2">

@@ -107,7 +107,14 @@
       "concelho": "Consultores que cobrem o concelho de {area}",
       "distrito": "Consultores que cobrem o distrito de {area}"
     },
-    "locationEmpty": "Ainda sem consultores a cobrir {area}."
+    "locationEmpty": "Ainda sem consultores a cobrir {area}.",
+    "everywhere": "Todo o país",
+    "sortLabel": "Ordenar",
+    "sort": {
+      "merit": "Mérito",
+      "houses": "Casas fechadas (demo)",
+      "time": "Tempo de venda (demo)"
+    }
   },
   "profile": {
     "contact": "Contactar",
@@ -138,7 +145,12 @@
     "sales12mo": "Vendas (12 meses)",
     "avgTimeToSell": "Tempo médio de venda",
     "daysValue": "{n} dias",
-    "demoValues": "valores de demonstração"
+    "demoValues": "valores de demonstração",
+    "worksIn": {
+      "freguesia": "Trabalha na freguesia de {area}",
+      "concelho": "Trabalha no concelho de {area}",
+      "distrito": "Trabalha no distrito de {area}"
+    }
   },
   "specializations": {
     "apartments": "Apartamentos",
