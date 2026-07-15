@@ -107,7 +107,14 @@
       "concelho": "Consultants covering the municipality of {area}",
       "distrito": "Consultants covering the district of {area}"
     },
-    "locationEmpty": "No consultants covering {area} yet."
+    "locationEmpty": "No consultants covering {area} yet.",
+    "everywhere": "Everywhere",
+    "sortLabel": "Sort",
+    "sort": {
+      "merit": "Merit",
+      "houses": "Houses closed (demo)",
+      "time": "Time to sell (demo)"
+    }
   },
   "profile": {
     "contact": "Contact",
@@ -138,7 +145,12 @@
     "sales12mo": "Sales (12 mo)",
     "avgTimeToSell": "Avg. time to sell",
     "daysValue": "{n} days",
-    "demoValues": "demo values"
+    "demoValues": "demo values",
+    "worksIn": {
+      "freguesia": "Works in the freguesia of {area}",
+      "concelho": "Works in the municipality of {area}",
+      "distrito": "Works in the district of {area}"
+    }
   },
   "specializations": {
     "apartments": "Apartments",

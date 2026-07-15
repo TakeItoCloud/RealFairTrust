@@ -4,6 +4,7 @@ import { consultants, demoOutcomeMetrics, listings, reviews, scores } from '@/li
 import type {
   ConsultantDetail,
   ConsultantFilter,
+  ConsultantProfile,
   ConsultantSummary,
   Review,
 } from '@/lib/types'
@@ -26,6 +27,28 @@ function reviewsFor(agentId: string): Review[] {
   return reviews
     .filter((r) => r.agentId === agentId)
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+}
+
+/** Most-specific filled CAOP coverage level + resolved name (Decision #93, Cycle 4). freguesia →
+ *  concelho → distrito; undefined when none is filled (line hidden). Resolved here (server) so the
+ *  client ConsultantCard never imports the server-only CAOP loader. */
+function resolveWorkArea(c: ConsultantProfile): ConsultantSummary['workArea'] {
+  const fId = c.coverageFreguesiaIds?.[0]
+  if (fId) {
+    const n = getFreguesia(fId)
+    if (n) return { level: 'freguesia', name: n.name }
+  }
+  const cId = c.coverageConcelhoIds?.[0]
+  if (cId) {
+    const n = getConcelho(cId)
+    if (n) return { level: 'concelho', name: n.name }
+  }
+  const dId = c.coverageDistrictIds[0]
+  if (dId) {
+    const n = getDistrito(dId)
+    if (n) return { level: 'distrito', name: n.name }
+  }
+  return undefined
 }
 
 function summarize(consultantId: string): ConsultantSummary {
@@ -51,6 +74,7 @@ function summarize(consultantId: string): ConsultantSummary {
     avgRating,
     unitsSold12mo: outcome?.unitsSold12mo,
     avgDaysToSell: outcome?.avgDaysToSell,
+    workArea: resolveWorkArea(consultant),
   }
 }
 

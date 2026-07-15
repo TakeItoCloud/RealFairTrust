@@ -11,7 +11,7 @@ import type { ConsultantSummary } from '@/lib/types'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/cn'
 import { Avatar, Badge, RankBadge, StatBlock, Tag, VerifiedBadge } from '@/components/ui'
-import { IconTrophy } from '@/components/ui/icons'
+import { IconPin, IconTrophy } from '@/components/ui/icons'
 
 const EASE = [0.22, 0.61, 0.36, 1] as const
 
@@ -21,6 +21,7 @@ export function ConsultantCard({
   featured: featuredProp,
   displayRank,
   showMetrics = false,
+  showWorkArea = true,
 }: {
   consultant: ConsultantSummary
   index?: number
@@ -35,6 +36,10 @@ export function ConsultantCard({
    *  (Decision #90, Cycle 1). OFF by default → existing call-sites are byte-for-byte unchanged; the
    *  block also needs BOTH values present on the summary. Cycles 2/3 flip this on for Vender/Consultores. */
   showMetrics?: boolean
+  /** Show the always-on work-area line (Decision #93, Cycle 4). Defaults to true. Vender passes false:
+   *  its page-level wrapper already shows a search-relative matched-tier coverage line, so the card's
+   *  intrinsic most-specific line would duplicate (and can name a different district than the one picked). */
+  showWorkArea?: boolean
 }) {
   const t = useTranslations()
   const reduce = useReducedMotion()
@@ -127,6 +132,16 @@ export function ConsultantCard({
             </div>
           ) : null}
         </div>
+
+        {/* Work-area line (Decision #93, Cycle 4) — the consultant's most-specific coverage level.
+            Always on wherever the card appears (showWorkArea default true); hidden when coverage can't
+            be resolved, and opted out on Vender (its wrapper shows a search-relative coverage line). */}
+        {showWorkArea && consultant.workArea ? (
+          <p className="-mt-1 inline-flex items-center gap-1.5 text-[12px] font-medium text-cream-muted">
+            <IconPin className="text-sm text-gold" aria-hidden />
+            {t(`score.worksIn.${consultant.workArea.level}`, { area: consultant.workArea.name })}
+          </p>
+        ) : null}
 
         {/* Tags row — standing badge + specialities */}
         <div className="flex flex-wrap items-center gap-2">

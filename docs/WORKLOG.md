@@ -6,6 +6,124 @@
 
 ---
 
+## 2026-07-15 · Cycle 4 — Vender work-area DEDUP (same feat/consultores-redesign branch, PR #18)
+
+**Done** (same branch `feat/consultores-redesign`; gates green: `tsc --noEmit` exit 0, `eslint .` exit 0,
+`pnpm build` exit 0). Fixed the duplicate location line on Vender cards introduced by the Cycle-4
+always-on card work-area line: Vender's D-V2 wrapper already renders a coverage line, so each Vender card
+showed the location **twice**.
+
+- **The two lines** (PT/EN): **wrapper** `vender.coverageNote` = search-relative, tied to the picked
+  location's **matched tier** — "Cobre o distrito de {area}" / "Covers the district of {area}" (freguesia:
+  "Cobre {area} · {distrito}"; concelho: "Cobre o concelho de {area} · {distrito}"). **Card**
+  `score.worksIn` = the consultant's **own most-specific** area, search-independent — "Trabalha no distrito
+  de {area}" / "Works in the district of {area}".
+- **Decision — keep the WRAPPER line on Vender, suppress the CARD line** (the exception the brief allowed).
+  The wrapper answers "does this consultant cover the area **you picked**, and at what tier" — the point of
+  the seller flow — whereas the card's intrinsic area can name a **different district than the one searched**
+  in widened-tier matches (e.g. `/vender?distrito=08` Faro → Catarina matches at the district tier so the
+  wrapper says "Cobre o distrito de Faro", but her intrinsic most-specific is concelho **Lisboa**, so the
+  card would read "Trabalha no concelho de Lisboa" — misleading on Vender).
+- **Change:** additive **`showWorkArea?: boolean` (default `true`)** prop on `ConsultantCard`; Vender passes
+  `showWorkArea={false}`. Every other page keeps the default (line shown) → **unchanged**. Two files:
+  `components/ConsultantCard.tsx`, `app/[locale]/vender/page.tsx`.
+- **Smoke test** (`pnpm start`, rendered DOM): `/vender?distrito=11` → wrapper "Cobre o distrito de" **6**,
+  card "Trabalha" **0**, cards **6** → exactly one line per card; EN `/en/selling?distrito=11` → "Covers the
+  district of" **6**, "Works in" **0**; freguesia tier `?freguesia=110661` → wrapper 1 / card 0 / 1 card.
+  Vender ranking/highlight/metrics intact (Ana>…>Beatriz, 1 featured, 6 metrics). Other pages still show
+  their single card line: Home **4**, Consultores **12**, Buy/Rent **1**, profile **1** (all "Trabalha", 0
+  "Cobre").
+
+**Changed:** `components/ConsultantCard.tsx`, `app/[locale]/vender/page.tsx` (+ DECISIONS #93 addendum,
+this worklog). **No other page changed; the card's line on other pages is unchanged.**
+
+**Next:** Carlos reviews the updated PR #18 preview → merge. Do NOT merge yet.
+
+---
+
+## 2026-07-15 · Cycle 4 — CONSULTORES redesign + card work-area line: Part B (build feat/consultores-redesign)
+
+**Done** (branch `feat/consultores-redesign` off `develop` `fc8ca41`; gates green: `tsc --noEmit` exit 0,
+`eslint .` exit 0, `pnpm build` exit 0). Built the approved plan + Carlos's **view-based metrics**
+confirm. **PR opened, preview pending Carlos review — NOT merged.** Logged **DECISION #93**.
+
+- **(a) Ranked reorder:** ranked board renders FIRST, Rising Talent strip BELOW (with a divider) — pure
+  render-order swap.
+- **(b) All-view sort:** `?sort` param (`houses`/`time`; Merit default), a `Select` in `ConsultantFilters`
+  shown **only in All view**; page sorts via `sortBy()` (composite desc / `unitsSold12mo` desc /
+  `avgDaysToSell` asc). Demo keys "(demo)"-marked. Round-trips with location + spec + view.
+- **(c) "Everywhere":** additive opt-in `everywhereLabel?` on the shared `LocationPicker` (distrito
+  placeholder + a clear-row → no-location); a `clearOption?` was added to the internal `GeoLevel`. Only
+  Consultores passes it → Buy/Rent + Vender unchanged. "Everywhere" == today's national board.
+- **(d) Work-area line:** additive `ConsultantSummary.workArea?: {level,name}` resolved in `summarize()`
+  (server, via the CAOP loader); rendered as a muted pin line (`score.worksIn.{level}`) in
+  **`ConsultantCard` + the profile header + Buy/Rent `SpecialistCTA`** (profile + Buy/Rent don't use
+  `ConsultantCard`). Always-on, hidden when absent. Seed already covers all three levels.
+- **(e) Metrics view-based (supersedes #92):** All view = metrics ON always; Ranked view = OFF. Highlight
+  = #1-confident `featured` in the location state, in Ranked always and All only under Merit sort.
+- **Smoke test** (`pnpm start`, rendered DOM): DEFAULT Ranked `/consultores` = ranked board (8) FIRST →
+  "Talentos em ascensão" → Rising (4); **metrics 0**, featured 2, "Todo o país" label, **12 work-area
+  lines** (freguesia 3/concelho 2/distrito 7). All view = 9/page + metrics + "Ordenar"; **Merit** (Ana/
+  João/Catarina…), **Houses** (Sofia 27>Maria 23>João 21…), **Time** (Sofia 22>João 34>Maria 38…) reorder
+  correctly. `?distrito=11` narrows (header, metrics 0 in Ranked, 1 highlight, ranked-first);
+  `?distrito=11&view=all&sort=houses` composes (metrics 6, 0 highlight on non-merit). Work-area line on
+  Home(4)/Buy(1)/profile(1)/Vender(6). **EN parity** (`/en/consultants`: Everywhere, "Works in …" ×12,
+  Sort control). Regression: **Vender** ranks Ana>…>Beatriz, 1 highlight, 6 metrics; **Home** featured 1,
+  metrics 0 (unchanged aside from the work-area line). *(The Radix Sort trigger's selected "(demo)" label
+  hydrates client-side — not in SSR HTML; the sort order itself is server-verified.)*
+
+**Changed:** `app/[locale]/consultores/page.tsx`, `app/[locale]/consultores/[slug]/page.tsx`,
+`components/ConsultantCard.tsx`, `components/consultores/ConsultantFilters.tsx`,
+`components/discovery/{Discovery,LocationPicker}.tsx`, `lib/types.ts`, `lib/data/consultants.ts`,
+`messages/{pt,en}.json`. Docs: DECISION #93, PROJECT-STATE, this worklog. **No repository behaviour
+change; Buy/Rent + Vender picker byte-for-byte unchanged; the only cross-page change is the intended
+always-on work-area line.**
+
+**Next:** Carlos reviews the preview → merge. **The review-feedback change set (now 4 cycles) is then
+complete on `develop`** → joint review → eventual `develop → main` promotion.
+
+---
+
+## 2026-07-15 · Cycle 4 — CONSULTORES redesign + card work-area line: Part A (investigation + plan, no app code)
+
+**Investigation + plan only** (no app code touched). Wrote `docs/CONSULTORES-REDESIGN-PLAN.md` and
+**STOPPED** for Carlos's approval (touches the shared `ConsultantCard` + the promoted Consultores page →
+Part A/B split + §0). Cycle 4 = four items: (a) Ranked board FIRST + Rising below; (b) All-view sort
+(Merit/Houses/Time, metrics visible); (c) explicit "Everywhere / Todo o país" default district option;
+(d) always-on card work-area line (most-specific coverage level).
+
+**Investigated (real paths, quoted):** `consultores/page.tsx` (Rising strip currently renders ABOVE the
+main grid — the item-(a) problem; view/spec/location compose); `ConsultantFilters.tsx`; `LocationPicker`
+(shared — Buy/Rent + Vender + Consultores); `ConsultantCard` (client → **cannot** import the server-only
+CAOP loader, so id→name must be resolved server-side); Vender's D-V2 coverage-note wrapper (kept
+unchanged); the CAOP loader; `summarize()` + `ConsultantSummary`.
+
+**Key findings:** (1) **Profile + Buy/Rent do NOT use `ConsultantCard`** — profile has its own server
+header, Buy/Rent uses a bespoke `SpecialistCTA`; both are server components with a `score` translator →
+the work-area line must be added to **three** components, all reading one pre-resolved `workArea`. (2)
+The coverage seed **already has all three levels** (freguesia Ana/Maria/Pedro · concelho Catarina/João ·
+distrito Sofia/Rui/…) → **no seed enrichment needed**. (3) "Everywhere" needs an **additive opt-in prop**
+on the shared `LocationPicker` (only Consultores passes it → Buy/Rent + Vender unchanged).
+
+**Plan (additive data + page-layer + 3 card components + opt-in picker prop; no repository behaviour
+change):** (a) render-order swap; (b) `?sort` param + All-view-only sort `Select`, page sorts on
+composite/`unitsSold12mo`/`avgDaysToSell`; (c) `everywhereLabel?` on `LocationPicker` (placeholder +
+clear-row → no-location path); (d) `workArea?` on `ConsultantSummary` computed in `summarize()`, rendered
+as a pin+muted line via new `score.worksIn.{level}` keys in Card + profile + SpecialistCTA. 8 new i18n
+keys, PT/EN parity. Full caller audit proves Home/Vender/Buy-Rent/profile unaffected except the intended
+work-area line.
+
+**⚠ ONE behaviour change surfaced (needs Carlos's confirm):** metrics gating becomes **view-based** (All
+view = metrics ON always; Ranked = OFF), superseding #92's location-gating — keeps the default landing
+(Ranked/Everywhere) unchanged and makes the demo sorts legible. Recommended; awaiting confirm. STOPPED —
+no branch, no code.
+
+**Changed:** added `docs/CONSULTORES-REDESIGN-PLAN.md`, this worklog. **No app code.**
+
+**Next:** Carlos approves Part A (+ the §4 metrics-gating confirm) → build on `feat/consultores-redesign`.
+
+---
+
 ## 2026-07-15 · Review-change set Cycle 3/3 — CONSULTORES picker merged to develop (PR #17); set COMPLETE
 
 **Done** (on `develop`). Merged Cycle 3 — the final review-feedback cycle. **`main` untouched** — no

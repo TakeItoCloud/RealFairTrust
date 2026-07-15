@@ -32,13 +32,17 @@ interface LocationPickerProps {
   /** Geo option source (Decision #86 / D-V1). 'houses' (default) = Buy/Rent inventory, unchanged;
    *  'coverage' = houses ∪ consultant-attribution (Vender). */
   source?: 'houses' | 'coverage'
+  /** OPT-IN (Decision #93, Cycle 4): when set, the Distrito level uses this label as its unselected
+   *  placeholder ("Everywhere / Todo o país") and shows a first clear-row that returns to the
+   *  no-location (all-country) state. Only Consultores passes it → Buy/Rent + Vender are unchanged. */
+  everywhereLabel?: string
   className?: string
 }
 
 const norm = (s: string) =>
   s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
 
-export function LocationPicker({ dealType, distrito, concelho, freguesia, source = 'houses', className }: LocationPickerProps) {
+export function LocationPicker({ dealType, distrito, concelho, freguesia, source = 'houses', everywhereLabel, className }: LocationPickerProps) {
   const q = `deal=${dealType}&source=${source}`
   const t = useTranslations('discovery')
   const router = useRouter()
@@ -60,11 +64,12 @@ export function LocationPicker({ dealType, distrito, concelho, freguesia, source
     <div className={cn('flex flex-wrap items-end gap-3', className)}>
       <GeoLevel
         label={t('f.distrito')}
-        placeholder={t('f.distritoAny')}
+        placeholder={everywhereLabel ?? t('f.distritoAny')}
         selected={distrito}
         loader={() => fetchGeo(`/api/geo/distritos?${q}`)}
         searchPlaceholder={t('f.searchDistrito')}
         emptyText={t('f.noOptions')}
+        clearOption={everywhereLabel ? { label: everywhereLabel } : undefined}
         onSelect={(o) => commit({ distrito: o.id, concelho: undefined, freguesia: undefined })}
         onClear={() => commit({ distrito: undefined, concelho: undefined, freguesia: undefined })}
       />
@@ -116,12 +121,14 @@ interface GeoLevelProps {
   loaderKey?: string
   searchPlaceholder: string
   emptyText: string
+  /** Optional first row that clears the selection (Cycle 4 "Everywhere") — calls onClear. */
+  clearOption?: { label: string }
   onSelect: (o: GeoOption) => void
   onClear: () => void
 }
 
 function GeoLevel({
-  label, placeholder, selected, disabled, loader, loaderKey, searchPlaceholder, emptyText, onSelect, onClear,
+  label, placeholder, selected, disabled, loader, loaderKey, searchPlaceholder, emptyText, clearOption, onSelect, onClear,
 }: GeoLevelProps) {
   const [open, setOpen] = useState(false)
   const [options, setOptions] = useState<GeoOption[] | null>(null)
@@ -227,6 +234,20 @@ function GeoLevel({
             />
           </div>
           <ul id={listId} role="listbox" aria-label={label} className="mt-1 max-h-64 overflow-auto">
+            {clearOption && !loading ? (
+              <li role="option" aria-selected={!selected}>
+                <button
+                  type="button"
+                  onClick={() => { onClear(); setOpen(false); setQuery('') }}
+                  className={cn(
+                    'flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-cream hover:bg-gold/15',
+                    !selected && 'text-gold',
+                  )}
+                >
+                  {clearOption.label}
+                </button>
+              </li>
+            ) : null}
             {loading ? (
               <li className="px-3 py-2 text-sm text-cream-muted">…</li>
             ) : filtered.length === 0 ? (

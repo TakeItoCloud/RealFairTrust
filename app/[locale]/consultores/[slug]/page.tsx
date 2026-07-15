@@ -16,7 +16,7 @@ import {
   Tag,
   VerifiedBadge,
 } from '@/components/ui'
-import { IconTrophy } from '@/components/ui/icons'
+import { IconPin, IconTrophy } from '@/components/ui/icons'
 import { PropertyCard, Reveal, ReviewItem, ScoreBreakdown } from '@/components'
 import { ProfileContact } from '@/components/consultores/ProfileContact'
 
@@ -54,6 +54,14 @@ export default async function ConsultantProfilePage({
                       <VerifiedBadge variant="seal" sealSize={44} label={ts('verified')} />
                     ) : null}
                   </div>
+
+                  {/* Work-area line (Decision #93, Cycle 4) — most-specific coverage level; hidden if absent. */}
+                  {consultant.workArea ? (
+                    <p className="mt-2 inline-flex items-center gap-1.5 text-[13px] font-medium text-cream-muted">
+                      <IconPin className="text-sm text-gold" aria-hidden />
+                      {ts(`worksIn.${consultant.workArea.level}`, { area: consultant.workArea.name })}
+                    </p>
+                  ) : null}
 
                   {/* Standing badge — rank/top gated by #18 (confident only); Rising always */}
                   {score ? (

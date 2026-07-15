@@ -11,7 +11,7 @@ import { concelhoDistrito, getConcelho, getDistrito, getFreguesia } from '@/lib/
 import { AREA_BANDS, KIND_VALUES, PRICE_BANDS, SORT_VALUES, findBand } from '@/lib/listingFilters'
 import { Link } from '@/i18n/navigation'
 import { Button, EmptyState, Eyebrow, SectionWrapper } from '@/components/ui'
-import { IconArrowRight, IconSearch, IconVerified } from '@/components/ui/icons'
+import { IconArrowRight, IconPin, IconSearch, IconVerified } from '@/components/ui/icons'
 import { FilterBar, PropertyCard, Reveal, UrlPagination } from '@/components'
 import { ClearFiltersButton } from './ClearFiltersButton'
 
@@ -39,6 +39,7 @@ export async function Discovery({
   const { locale } = await params
   const sp = await searchParams
   const t = await getTranslations({ locale, namespace: 'discovery' })
+  const ts = await getTranslations({ locale, namespace: 'score' })
 
   // --- Filters from the URL ---
   const kindRaw = str(sp.kind)
@@ -135,6 +136,9 @@ export async function Discovery({
           eyebrow: t('specialist.eyebrow', { distrito: specialistName }),
           view: t('specialist.view'),
           more: t('specialist.more', { count: specialists.length - 1 }),
+          workArea: specialists[0].workArea
+            ? ts(`worksIn.${specialists[0].workArea.level}`, { area: specialists[0].workArea.name })
+            : undefined,
         }}
       />
     ) : null
@@ -262,7 +266,7 @@ function SpecialistCTA({
 }: {
   top: ConsultantSummary
   extra: number
-  labels: { eyebrow: string; view: string; more: string }
+  labels: { eyebrow: string; view: string; more: string; workArea?: string }
 }) {
   return (
     <div className="flex flex-wrap items-center gap-4 rounded-[var(--radius-lg)] border border-[var(--gold-border-soft)] bg-[var(--surface-card-solid)] px-5 py-4">
@@ -273,6 +277,13 @@ function SpecialistCTA({
           {top.verified ? <IconVerified className="text-base text-verified" aria-hidden /> : null}
           {extra > 0 ? <span className="text-meta text-cream-muted">· {labels.more}</span> : null}
         </p>
+        {/* Work-area line (Decision #93, Cycle 4) — most-specific coverage level; hidden if absent. */}
+        {labels.workArea ? (
+          <p className="mt-1 inline-flex items-center gap-1.5 text-[12px] font-medium text-cream-muted">
+            <IconPin className="text-sm text-gold" aria-hidden />
+            {labels.workArea}
+          </p>
+        ) : null}
       </div>
       <Link
         href={{ pathname: '/consultores/[slug]', params: { slug: top.slug } }}
