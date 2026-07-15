@@ -6,6 +6,35 @@
 
 ---
 
+## 2026-07-15 · Phase 4.3 — PROMOTED develop → main (review checkpoint; process only)
+
+**Done** (process only — no app code). Promoted the completed Phase 4.3 public site from `develop` to
+`main` (Vercel production/review branch), by Carlos's explicit go-ahead.
+
+- **Pre-flight divergence check (state-aware):** `git log origin/main ^origin/develop` = **EMPTY**
+  (main had no commits develop lacked); `origin/main` (`07d0efa`) confirmed a clean **ancestor** of
+  `origin/develop` (`b26554e`), 19 commits behind → clean fast-forward, no force, no divergence.
+- **Fast-forward:** `git checkout main` → `git merge --ff-only develop` → **fast-forward**
+  `07d0efa → b26554e` (no squash; full history preserved, exactly as the prior design-revision
+  promotion). **Gates on `main` post-merge — all green:** `tsc --noEmit` exit 0 · `eslint .` exit 0 ·
+  `pnpm build` exit 0 (60/60 static pages). Pushed `main` (`07d0efa..b26554e`).
+- **Result:** **`main` == `develop` == `b26554e` at parity.** `main` now serves **all Phase 4.3 public
+  pages** (was: only Home/Consultores/profile). Vercel redeploys the production/review branch
+  automatically (browser-side project untouched; no Claude Code action).
+- **⚠ REVIEW CHECKPOINT:** Phase 4.3 is now in **colleague review on the production/review subdomain —
+  NOT signed off.** Termos + Privacidade remain DRAFTS (Phase 6 legal-review blocker, #89).
+- **Docs (this session):** `docs/PROJECT-STATE.md` — HANDOFF/§8/§11 flipped to PROMOTED (main==develop
+  parity `b26554e`; review-checkpoint framing; NEXT = await Carlos's 4.3 review feedback, then decide
+  4.4), "Last updated" bumped; this worklog. Committed on `develop`, then `main` fast-forwarded again to
+  keep parity.
+
+**Changed:** `docs/PROJECT-STATE.md`, this worklog. **No app code.**
+
+**Next (await Carlos):** 4.3 review feedback → decide Phase 4.4 (app shells, UI-only). No new feature
+work started.
+
+---
+
 ## 2026-07-15 · Phase 4.3 — Sobre + Termos + Privacidade merged to develop (PR #14) — 4.3 public pages COMPLETE
 
 **Done** (on `develop`). Merged the final three static pages. **`main` untouched** — promoting
