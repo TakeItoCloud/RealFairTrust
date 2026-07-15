@@ -6,6 +6,16 @@
 
 ---
 
+## 2026-07-15 · DRAFT — rating-engine data-sourcing notes captured (EN + PT), not decisions
+
+Captured two **DRAFT / for-discussion** planning docs on how the Phase 5 rating engine would source
+each of the five scoring signals — `docs/RATING-ENGINE-NOTES.en.md` + `docs/RATING-ENGINE-NOTES.pt.md`
+(banner-marked DRAFT). **Not decisions, not part of the phase plan** — not added to `DECISIONS.md`, no
+change to the PROJECT-STATE roadmap. For later Phase 5 discussion with a colleague; open questions at
+the end must be answered first. Docs-only (`docs/rating-engine-notes`).
+
+---
+
 ## 2026-07-15 · Phase 4.3 — Como funciona + Metodologia merged to develop (PR #13)
 
 **Done** (on `develop`). Merged the two static pages. **`main` untouched** — promoting `develop → main`
