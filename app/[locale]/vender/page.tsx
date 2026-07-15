@@ -179,8 +179,10 @@ export default async function VenderPage({
                     </span>
                     <div className="min-h-0 flex-1">
                       {/* Cycle 2: rank-1 confident consultant gets the existing spotlight (#91);
-                          Cycle 1 demo metrics turned ON here — Vender is the first real page to opt in. */}
-                      <ConsultantCard consultant={c} index={i} featured={c.id === highlightId} showMetrics />
+                          Cycle 1 demo metrics turned ON here — Vender is the first real page to opt in.
+                          Cycle 4 dedup (#93): showWorkArea={false} — the wrapper above already shows the
+                          search-relative matched-tier coverage line, so the card's line would duplicate. */}
+                      <ConsultantCard consultant={c} index={i} featured={c.id === highlightId} showMetrics showWorkArea={false} />
                     </div>
                   </div>
                 ))}

@@ -6,6 +6,41 @@
 
 ---
 
+## 2026-07-15 · Cycle 4 — Vender work-area DEDUP (same feat/consultores-redesign branch, PR #18)
+
+**Done** (same branch `feat/consultores-redesign`; gates green: `tsc --noEmit` exit 0, `eslint .` exit 0,
+`pnpm build` exit 0). Fixed the duplicate location line on Vender cards introduced by the Cycle-4
+always-on card work-area line: Vender's D-V2 wrapper already renders a coverage line, so each Vender card
+showed the location **twice**.
+
+- **The two lines** (PT/EN): **wrapper** `vender.coverageNote` = search-relative, tied to the picked
+  location's **matched tier** — "Cobre o distrito de {area}" / "Covers the district of {area}" (freguesia:
+  "Cobre {area} · {distrito}"; concelho: "Cobre o concelho de {area} · {distrito}"). **Card**
+  `score.worksIn` = the consultant's **own most-specific** area, search-independent — "Trabalha no distrito
+  de {area}" / "Works in the district of {area}".
+- **Decision — keep the WRAPPER line on Vender, suppress the CARD line** (the exception the brief allowed).
+  The wrapper answers "does this consultant cover the area **you picked**, and at what tier" — the point of
+  the seller flow — whereas the card's intrinsic area can name a **different district than the one searched**
+  in widened-tier matches (e.g. `/vender?distrito=08` Faro → Catarina matches at the district tier so the
+  wrapper says "Cobre o distrito de Faro", but her intrinsic most-specific is concelho **Lisboa**, so the
+  card would read "Trabalha no concelho de Lisboa" — misleading on Vender).
+- **Change:** additive **`showWorkArea?: boolean` (default `true`)** prop on `ConsultantCard`; Vender passes
+  `showWorkArea={false}`. Every other page keeps the default (line shown) → **unchanged**. Two files:
+  `components/ConsultantCard.tsx`, `app/[locale]/vender/page.tsx`.
+- **Smoke test** (`pnpm start`, rendered DOM): `/vender?distrito=11` → wrapper "Cobre o distrito de" **6**,
+  card "Trabalha" **0**, cards **6** → exactly one line per card; EN `/en/selling?distrito=11` → "Covers the
+  district of" **6**, "Works in" **0**; freguesia tier `?freguesia=110661` → wrapper 1 / card 0 / 1 card.
+  Vender ranking/highlight/metrics intact (Ana>…>Beatriz, 1 featured, 6 metrics). Other pages still show
+  their single card line: Home **4**, Consultores **12**, Buy/Rent **1**, profile **1** (all "Trabalha", 0
+  "Cobre").
+
+**Changed:** `components/ConsultantCard.tsx`, `app/[locale]/vender/page.tsx` (+ DECISIONS #93 addendum,
+this worklog). **No other page changed; the card's line on other pages is unchanged.**
+
+**Next:** Carlos reviews the updated PR #18 preview → merge. Do NOT merge yet.
+
+---
+
 ## 2026-07-15 · Cycle 4 — CONSULTORES redesign + card work-area line: Part B (build feat/consultores-redesign)
 
 **Done** (branch `feat/consultores-redesign` off `develop` `fc8ca41`; gates green: `tsc --noEmit` exit 0,
