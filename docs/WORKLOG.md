@@ -6,6 +6,51 @@
 
 ---
 
+## 2026-07-15 · Review-change set Cycle 2/3 — VENDER ranking + highlight + demo metrics (feat/vender-ranking)
+
+**Done** (branch `feat/vender-ranking` off `develop` `7d4416a`; all gates green: `tsc --noEmit` exit 0,
+`eslint .` exit 0, `pnpm build` exit 0). Ranked the Vender matched tier, highlighted the #1 confident
+consultant with the existing rank-1 spotlight, and turned ON the Cycle-1 demo metrics on the Vender
+cards. **PR opened, preview pending Carlos review — NOT merged.** Logged **DECISION #91**.
+
+- **Investigation (reported):** `getConsultantsByArea` is **Vender-only** (sole caller
+  `app/[locale]/vender/page.tsx`), and **already sorts composite-desc** (it calls `getConsultants()`,
+  which sorts `(b.score?.composite ?? -1) - (a.score?.composite ?? -1)`, no-score last; tiers preserve
+  that). But it does **not** implement option (i) — a rising-talent consultant with a high raw composite
+  sorts among the confident ones (Inês composite 80 > Sofia 79). So this cycle adds **option-(i)
+  placement + highlight + metrics**, all in the **Vender page layer** — no shared function touched.
+- **Confidence condition reused VERBATIM:** `!!score && !score.risingTalent && score.confidence !== 'low'`
+  — identical in `ConsultantCard.tsx:50`, `consultores/[slug]/page.tsx:37`, `imovel/[id]/page.tsx:47`.
+  No new threshold invented.
+- **Change (diff = `vender/page.tsx` ONLY, 23+/2−):** partition the matched tier into confident
+  (composite-desc, kept) then building/unscored (to the bottom); `highlightId = confidentConsultants[0]?.id ?? null`;
+  render `rankedConsultants` with `featured={c.id === highlightId}` (exactly one highlight; overrides the
+  prior per-region rank-1 auto-feature) + `showMetrics`. **Tiered widening + tier labels + picker
+  unchanged.**
+- **Highlight vocabulary = existing `featured`** (Home #1 / leaderboard rank-1): gold border/glow, accent
+  bar, 56px merit, ringed avatar, "Top deste mês" badge. No new style, no green.
+- **Smoke test** (`pnpm start`, rendered DOM, scripts stripped):
+  - `/vender?distrito=11` → **6**, order **Ana > Catarina > Maria > Sofia > Inês > Beatriz** (option-i
+    proof: rising **Inês 80 sank below confident Sofia 79**), **Ana** featured (1 "Top deste mês"),
+    all 6 cards show `Vendas (12 meses)` + `valores de demonstração`. Tier label "cobrem o distrito de".
+  - `/vender?freguesia=110661` → freguesia tier (Ana, highlighted, metrics); `?freguesia=110658` (Belém)
+    → concelho tier (Catarina); `?distrito=08` (Faro) → district tier (Catarina). Each = exactly 1
+    featured + metrics.
+  - `/vender?distrito=06` (Coimbra) → **empty RequestConsultantCTA unchanged** (0 cards, 0 metrics,
+    "para Coimbra" title present).
+  - **Regression:** `/`, `/consultores`, `/consultores/ana-silva`, `/en`, `/en/consultants` → **0**
+    metric markup; featured counts pre-existing (Home 1, Consultores 2 per-region rank-1s, profile 1
+    header badge) — unchanged (diff is vender-only).
+- **PT/EN parity:** no new UI strings (highlight + metrics reuse existing `score` keys). AA/reduced-
+  motion/responsive inherited from the unchanged `ConsultantCard` featured treatment.
+
+**Changed:** `app/[locale]/vender/page.tsx` only. Docs: DECISION #91, PROJECT-STATE, this worklog.
+**No shared component, no other page, no ConsultantCard default appearance touched.**
+
+**Next:** Carlos reviews the `feat/vender-ranking` preview → merge. Then **Cycle 3** (Consultores picker).
+
+---
+
 ## 2026-07-15 · Review-change set Cycle 1/3 — CARD METRICS merged to develop (PR #15) + production-gate proof
 
 **Done** (on `develop`). Merged Cycle 1 and verified the dev-showcase flag gate holds on a true
