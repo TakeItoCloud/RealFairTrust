@@ -6,6 +6,29 @@
 
 ---
 
+## 2026-07-15 · Cycle 4 — CONSULTORES redesign merged to develop (PR #18); all 4 review-feedback cycles complete
+
+**Done** (on `develop`). Merged Cycle 4 (incl. the Vender work-area dedup). **`main` untouched** at this
+point — the `develop → main` promotion follows as the next step.
+
+- **Merge:** `gh pr merge 18 --merge --delete-branch` → **PR #18 merged** into `develop`;
+  `feat/consultores-redesign` deleted (local + remote; `git ls-remote` count 0). **`develop` HEAD =
+  `9fb0bd8`** (merge commit; feature commits `d0c4f1c` + dedup `e7405ac`).
+- **Gates on develop post-merge — all green:** `tsc --noEmit` exit 0 · `eslint .` exit 0 · `pnpm build`
+  exit 0 (`✓ Compiled successfully`, 60/60 static pages).
+- **Milestone:** **all four review-feedback cycles are now merged to `develop`** — PR #15 (card metrics,
+  #90) · PR #16 (Vender ranking, #91) · PR #17 (Consultores picker, #92) · PR #18 (Consultores redesign +
+  card work-area line + Vender dedup, #93).
+- **Docs (this session, on develop):** `docs/PROJECT-STATE.md` — Cycle 4 recorded as **merged** (PR #18,
+  `9fb0bd8`), all-4-cycles-complete note; this worklog.
+
+**Changed:** `docs/PROJECT-STATE.md`, this worklog. **No app code** (Cycle-4 app code arrived via the
+PR #18 merge).
+
+**Next:** promote `develop → main` (review checkpoint).
+
+---
+
 ## 2026-07-15 · Cycle 4 — Vender work-area DEDUP (same feat/consultores-redesign branch, PR #18)
 
 **Done** (same branch `feat/consultores-redesign`; gates green: `tsc --noEmit` exit 0, `eslint .` exit 0,

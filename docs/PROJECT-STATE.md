@@ -40,20 +40,20 @@
   change** (Decision #92). Gates green on `develop` post-merge. **This discharges the "apply the same
   #86 matching rule to Consultores" note (below) — DONE.**
 
-- **Cycle 4 DONE, pending Carlos's review** — **Consultores discovery redesign + a shared card work-area
-  line** (Decision #93). (a) Ranked view = ranked board FIRST, Rising Talent BELOW; (b) All view = one
-  grid + a **Merit/Houses/Time sort control** (`?sort`; metrics visible; demo keys marked); (c) an
-  explicit **"Everywhere / Todo o país"** default district option (== today's national board) via an
-  additive opt-in `everywhereLabel?` prop on the shared `LocationPicker` (Buy/Rent + Vender unchanged);
-  (d) an **always-on card work-area line** (most-specific coverage level) via additive
-  `ConsultantSummary.workArea`, rendered on `ConsultantCard` + the profile header + Buy/Rent
-  `SpecialistCTA`. **Metrics are now VIEW-BASED** (All=on, Ranked=off — supersedes #92). No repository
-  behaviour change. Built on `feat/consultores-redesign` (off `develop`), gates green, **PR open — NOT
-  merged**.
+- **Cycle 4/4 MERGED to `develop`** (PR #18, merge `9fb0bd8`; features `d0c4f1c` + the Vender dedup
+  `e7405ac`; **`main` untouched**). **Consultores discovery redesign + a shared card work-area line**
+  (Decision #93). (a) Ranked view = ranked board FIRST, Rising Talent BELOW; (b) All view = one grid + a
+  **Merit/Houses/Time sort control** (`?sort`; metrics visible; demo keys marked); (c) an explicit
+  **"Everywhere / Todo o país"** default district option (== today's national board) via an additive
+  opt-in `everywhereLabel?` prop on the shared `LocationPicker` (Buy/Rent + Vender unchanged); (d) an
+  **always-on card work-area line** (most-specific coverage level) via additive `ConsultantSummary.workArea`,
+  rendered on `ConsultantCard` + the profile header + Buy/Rent `SpecialistCTA`; **Vender dedup** — its
+  wrapper keeps the search-relative coverage line, the card line is suppressed there via
+  `showWorkArea={false}` (default true elsewhere). **Metrics are now VIEW-BASED** (All=on, Ranked=off —
+  supersedes #92). No repository behaviour change. Gates green on `develop` post-merge.
 
-**→ Cycles 1–3 are MERGED to `develop`** (PRs #15/#16/#17; HEAD `fc8ca41`); **Cycle 4 PR is open**. Once
-Cycle 4 merges, the (now 4-cycle) review-feedback set is complete on `develop` → joint review → eventual
-`develop → main` promotion (separate decision; **`main` currently untouched at `b26554e`**).
+**→ ALL FOUR review-feedback cycles are now MERGED to `develop`** (PRs #15/#16/#17/#18; `develop` HEAD
+`9fb0bd8`). The set is complete on `develop` → **`develop → main` promotion** next (**`main` at `b26554e`**).
 
 **Also merged to `develop`** (`develop` HEAD now = `0dc6155`): **Como funciona** `/como-funciona` (EN `/how-it-works`) — client-facing 3-step explainer (navy hero · champagne steps · weights strip 35/25/15/15/10 · green=verificação note · dual CTA) — and a **NEW Metodologia** page `/metodologia` (EN `/methodology`; new route #87) — long-form rating-model spec (§1–§6 navy/champagne bands · weights table · Rising-Talent/Building-track-record badge echo · **DGT/CAOP CC BY 4.0 attribution**). **PR #13** (merge `0dc6155`; commit `d2a8eb4`). Decisions **#87/#88**.
 
