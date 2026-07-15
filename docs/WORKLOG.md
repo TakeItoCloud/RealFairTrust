@@ -6,6 +6,95 @@
 
 ---
 
+## 2026-07-15 · Review-change set Cycle 1/3 — CARD METRICS: Part B (build feat/card-metrics)
+
+**Done** (branch `feat/card-metrics` off `develop` `d28c597`; all gates green: `tsc --noEmit` exit 0,
+`eslint .` exit 0, `pnpm build` exit 0 — 60/60 routes, `/dev/components` in the table). Built exactly
+the Carlos-approved `docs/CARD-METRICS-PLAN.md` + the two approved decisions (field host =
+`ConsultantSummary`; preview visibility = narrow the gate). **PR opened, preview pending Carlos review —
+NOT merged.** Logged **DECISION #90**.
+
+- **Additive model (Hard Rule #1):** two OPTIONAL fields `unitsSold12mo?` / `avgDaysToSell?` on
+  **`ConsultantSummary`** (`lib/types.ts`) — justified over `PerformanceScore` (90-day-window contract)
+  and `ConsultantProfile` (identity). Attached in the sole constructor `summarize()`
+  (`lib/data/consultants.ts`) from a new `demoOutcomeMetrics` map.
+- **Seed = DEMO (clearly commented):** `demoOutcomeMetrics` in `lib/mock/scores.ts`, all 12 consultants,
+  deliberately **non-correlated** with the composite rating (Sofia 79 → most units + fastest; Maria 83
+  outsells Ana 92; Pedro 87 slowest; one aligned case João). "DEMO — Phase 5 will source real close
+  data (docs/RATING-ENGINE-NOTES)" comment. Exported via `lib/mock/index.ts`.
+- **Display = opt-in, off by default:** new `ConsultantCard` prop `showMetrics` (default `false`); the
+  metric pair renders ONLY when `showMetrics` AND both values present — two `StatBlock size="sm"`
+  (units · "47 dias"/"47 days") + **one muted (NOT green, #34/#89) `score.demoValues` caption** on the
+  pair, inserted between the stats row and the `mt-auto` footer. No shared styling / motion / other block
+  touched.
+- **i18n:** 4 new keys in the existing **`score`** namespace (`sales12mo` / `avgTimeToSell` / `daysValue`
+  `{n}` / `demoValues`), **PT/EN parity verified** (key sets equal).
+- **Dev-showcase visibility (approved Option A):** narrowed `lib/flags.ts` `devShowcase`
+  `NODE_ENV!=='production'` → **`VERCEL_ENV!=='production'`** (ON for previews + local `pnpm dev` /
+  `pnpm build && pnpm start`; OFF only on the real production deploy). Added a "ConsultantCard — with
+  outcome metrics (DEMO)" section to `/dev/components` that passes `showMetrics` (the ONLY opt-in).
+- **Caller audit held (6 call-sites):** Home ×2, Consultores ×2, Vender ×1 pass no `showMetrics` →
+  byte-for-byte unchanged; dev showcase ×1 opts in.
+- **Runtime verification** (`pnpm build && pnpm start`, rendered DOM with `<script>` stripped): `/`,
+  `/consultores`, `/vender`, `/consultores/ana-silva`, `/en`, `/en/consultants` all **200** with **0**
+  metric markup (no `Vendas (12 meses)` / `valores de demonstração`) → cards identical to before.
+  `/dev/components` **200**, renders the 6 non-correlated demo cards (ana 9/"63 dias", joão 21/"34 dias",
+  catarina 14/"41 dias", pedro 8/"71 dias", maria 23/"38 dias", rui 11/"58 dias"); `daysValue` `{n}`
+  interpolates correctly.
+
+**Changed:** `lib/types.ts`, `lib/mock/scores.ts` (+`demoOutcomeMetrics`), `lib/mock/index.ts`,
+`lib/data/consultants.ts`, `components/ConsultantCard.tsx` (+`showMetrics` + metric block),
+`lib/flags.ts` (gate), `app/dev/components/ComponentsShowcase.tsx` (+opt-in section),
+`messages/{pt,en}.json` (+4 `score` keys). Docs: DECISION #90, CARD-METRICS-PLAN (already written),
+PROJECT-STATE, this worklog. **No page ranking/filtering/behaviour, no shared-component styling, and no
+real page appearance changed.**
+
+**Next:** Carlos reviews the `feat/card-metrics` preview (`/dev/components`) → merge. Then **Cycle 2**
+(Vender ranking) + **Cycle 3** (Consultores picker) of the review-change set.
+
+---
+
+## 2026-07-15 · Review-change set Cycle 1/3 — CARD METRICS: Part A (investigation + plan only, no app code)
+
+**Investigation + plan only** (no app code / types / mock / i18n touched). Wrote
+`docs/CARD-METRICS-PLAN.md` and **STOPPED** for Carlos's approval before any implementation (Part A/B
+split + §0). Scope of this cycle: **two additive optional DEMO metrics** per consultant — **units sold
+(rolling 12mo)** + **avg time-to-sell (days)** — displayed on `ConsultantCard` behind an opt-in, with a
+single muted "demo values" caption on the pair. **No** ranking/filtering/page-behaviour change (those
+are Cycles 2 Vender + 3 Consultores, later).
+
+**Investigated (real paths, quoted in the plan):** `lib/types.ts` (`ConsultantProfile` `:64` /
+`PerformanceScore` `:106` 90-day window / `ConsultantSummary` `:246` = the card's prop + the aggregate
+view type); `lib/data/consultants.ts` `summarize()` `:31` = the **sole** `ConsultantSummary` constructor;
+`lib/mock/{consultants,scores}.ts` + barrel; `components/ConsultantCard.tsx` (props + 5 rendered blocks)
++ `StatBlock`; **all 6 `ConsultantCard` call-sites** (Home ×2, Consultores ×2, Vender ×1, dev showcase
+×1 — one more than the ~5 expected).
+
+**Proposed (additive, awaiting approval):** two OPTIONAL fields **on `ConsultantSummary`**
+(`unitsSold12mo?`/`avgDaysToSell?` — justified over `PerformanceScore`, whose contract is a 90-day
+window, and over `ConsultantProfile`, which holds identity not outcomes); a new opt-in
+`ConsultantCard` prop `showMetrics?` (**off by default → all 5 real call-sites byte-for-byte
+unchanged**); render the pair only when `showMetrics` AND both values present, with the muted (not-green)
+`score.demoValues` caption; seed all 12 consultants in a new `demoOutcomeMetrics` map in
+`lib/mock/scores.ts` (clearly commented DEMO, deliberately **non-correlated** with the rating so Cycle 2
+is demonstrable); 4 new keys in the existing **`score`** i18n namespace at PT/EN parity. Name-collision
+grep = clean.
+
+**⚠ Open decision surfaced (blocks Part B step 11):** the dev showcase `/dev/components` is hard-OFF in
+production (`lib/flags.ts` `devShowcase: NODE_ENV!=='production'`) → it 404s on the Vercel preview and
+under `pnpm build && pnpm start`, so it **cannot show Carlos the new block on the preview** as gated
+today. Recommended (A): narrow the gate to render on **preview** only (`VERCEL_ENV!=='production'`),
+still off on production — one-line, reversible, no real page touched. Not done unilaterally (touches the
+flag gate). Awaiting Carlos's call.
+
+**Changed:** added `docs/CARD-METRICS-PLAN.md`, this worklog. **No app code / types / mock / i18n /
+components changed. No branch, no PR.**
+
+**Next:** Carlos approves Part A (+ picks the preview-visibility option) → build on `feat/card-metrics`
+off `develop`.
+
+---
+
 ## 2026-07-15 · Phase 4.3 — PROMOTED develop → main (review checkpoint; process only)
 
 **Done** (process only — no app code). Promoted the completed Phase 4.3 public site from `develop` to

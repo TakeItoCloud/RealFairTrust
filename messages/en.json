@@ -128,7 +128,11 @@
     "merit90d": "Merit · 90d",
     "target": "Target",
     "noReviews": "No reviews yet",
-    "reviews": "reviews"
+    "reviews": "reviews",
+    "sales12mo": "Sales (12 mo)",
+    "avgTimeToSell": "Avg. time to sell",
+    "daysValue": "{n} days",
+    "demoValues": "demo values"
   },
   "specializations": {
     "apartments": "Apartments",
