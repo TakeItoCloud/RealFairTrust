@@ -6,6 +6,39 @@
 
 ---
 
+## 2026-07-15 · PROMOTED develop → main — review-feedback change set (Cycles 1–4) live (review checkpoint; process only)
+
+**Done** (process only — no app code). Promoted the completed review-feedback change set (Cycles 1–4) from
+`develop` to `main` (Vercel production/review branch), by Carlos's explicit go-ahead.
+
+- **Pre-flight divergence check (state-aware):** `git log origin/main ^origin/develop` = **EMPTY** (main had
+  no commits develop lacked); `origin/main` (`d28c597`) confirmed a clean **ancestor** of `origin/develop`
+  (`39a2beb`), 13 commits behind → clean fast-forward, no force, no divergence.
+- **Fast-forward:** `git checkout main` → `git merge --ff-only develop` → **fast-forward** `d28c597 →
+  39a2beb` (no squash; full history preserved, exactly as the prior promotions). Pushed `main`
+  (`d28c597..39a2beb`).
+- **Gates on `main` post-merge — all green:** `tsc --noEmit` exit 0 · `eslint .` exit 0 · `pnpm build`
+  exit 0 (60/60 static pages).
+- **Dev-showcase production gate re-verified** (the gate widened in Cycle 1, #90d): a true production-env
+  build (`VERCEL_ENV=production` at build **and** runtime) → `/dev/components`, `/dev/primitives`,
+  `/dev/hero` all **404** (real Next 404, not SSO); real pages (`/`, `/consultores`, `/vender`, `/comprar`,
+  a profile, `/en/consultants`) all **200**. The promotion does **not** expose the dev showcase.
+- **Result:** **`main` == `develop` == `39a2beb` at parity.** `main` now serves all Phase 4.3 public pages
+  **plus** the four review-feedback cycles (#90/#91/#92/#93). Vercel redeploys the production/review branch
+  automatically (browser-side project untouched; no Claude Code action).
+- **⚠ REVIEW CHECKPOINT:** the full updated site is in **colleague review on the production/review
+  subdomain — Phase 4.3 NOT signed off.** Termos + Privacidade remain DRAFTS (Phase 6 legal-review blocker).
+- **Docs (this session):** `docs/PROJECT-STATE.md` — HANDOFF + cycle-set close flipped to PROMOTED
+  (main==develop parity `39a2beb`; corrected the stale `b26554e` reference — real prior main was `d28c597`);
+  this worklog. Committed on `develop`, then `main` fast-forwarded again to keep parity.
+
+**Changed:** `docs/PROJECT-STATE.md`, this worklog. **No app code.**
+
+**Next (await Carlos):** review feedback on the full updated site → decide Phase 4.4 (app shells, UI-only).
+No new feature work started.
+
+---
+
 ## 2026-07-15 · Cycle 4 — CONSULTORES redesign merged to develop (PR #18); all 4 review-feedback cycles complete
 
 **Done** (on `develop`). Merged Cycle 4 (incl. the Vender work-area dedup). **`main` untouched** at this

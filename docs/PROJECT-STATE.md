@@ -2,13 +2,13 @@
 
 ## ⚡ HANDOFF — read this first (30-second orientation)
 
-**Updated 2026-07-14 · Phase 4.3 (public pages), in progress.**
+**Updated 2026-07-15 · Phase 4.3 (public pages) + the review-feedback change set (Cycles 1–4), in review.**
 
 **Coverage:** all of Portugal, including **Madeira & Açores** (CAOP2025 administrative data).
 
-**PROMOTED to `main` (Vercel production/review) 2026-07-15 — `main` == `develop` == `b26554e` at parity.** `main` now serves **all Phase 4.3 public pages** (previously only Home/Consultores/profile): Home (full-bleed **video hero**) · Consultores discovery · Consultant profile · Buy/Rent · Location hierarchy · Property detail · Vender · Como funciona · Metodologia · Sobre · Termos · Privacidade — on seed/mock data, placeholder imagery. **⚠ REVIEW CHECKPOINT:** Phase 4.3 is in **colleague review on the production/review subdomain — NOT signed off**. (Termos + Privacidade are DRAFTS — a Phase 6 legal-review blocker.)
+**PROMOTED to `main` (Vercel production/review) 2026-07-15 — `main` == `develop` == `39a2beb` at parity.** This promotion adds **all four review-feedback cycles** on top of the Phase 4.3 public site: **Cycle 1** demo consultant metrics (units sold 12mo + avg time-to-sell, #90) · **Cycle 2** Vender ranking + highlight + metrics (#91) · **Cycle 3** Consultores CAOP location picker (#92) · **Cycle 4** Consultores discovery redesign (Ranked-first + All-view Merit/Houses/Time sort + "Everywhere" default) + an always-on card work-area line + the Vender dedup (#93). `main` serves all Phase 4.3 public pages + these four cycles — on seed/mock data, placeholder imagery. **⚠ REVIEW CHECKPOINT:** the full updated site is in **colleague review on the production/review subdomain — Phase 4.3 NOT signed off**. (Termos + Privacidade remain DRAFTS — a Phase 6 legal-review blocker.) The dev-showcase production gate was re-verified at promotion (`VERCEL_ENV=production` → `/dev/*` 404, real pages 200 — the showcase is not exposed).
 
-**`main` and `develop` at parity** (`b26554e`) — the promotion was a no-squash fast-forward preserving full history.
+**`main` and `develop` at parity** (`39a2beb`) — the promotion was a no-squash fast-forward preserving full history (prior promotion had left `main` at `d28c597`).
 - **Buy/Rent discovery** — `/comprar` + `/arrendar` (EN `/buying` · `/renting`) — **PR #8** (`b2f4289`).
 - **Location hierarchy** — CAOP **Distrito → Concelho → Freguesia** picker (on-demand, inventory-driven) + **nearby fallback** (widen freguesia→concelho→distrito, grouped) + **area-specialist CTA** — **PR #9** (`9823ee8`).
 - **Property detail** — `/imovel/[id]` (EN `/property/[id]`): gallery · gold price · specs + energy badge · CAOP location · consultant mini-card · sticky lead form · similar listings — **PR #10** (`4cff804`).
@@ -52,8 +52,11 @@
   `showWorkArea={false}` (default true elsewhere). **Metrics are now VIEW-BASED** (All=on, Ranked=off —
   supersedes #92). No repository behaviour change. Gates green on `develop` post-merge.
 
-**→ ALL FOUR review-feedback cycles are now MERGED to `develop`** (PRs #15/#16/#17/#18; `develop` HEAD
-`9fb0bd8`). The set is complete on `develop` → **`develop → main` promotion** next (**`main` at `b26554e`**).
+**→ ALL FOUR review-feedback cycles are now PROMOTED to `main`** (PRs #15/#16/#17/#18; `develop → main`
+no-squash fast-forward `d28c597 → 39a2beb`; **`main` == `develop` == `39a2beb` at parity**). The full
+updated site (Phase 4.3 + Cycles 1–4) is live on the Vercel production/review subdomain — a **REVIEW
+CHECKPOINT** (colleagues review; Phase 4.3 NOT signed off). Termos + Privacidade remain the Phase 6
+legal-review blocker. NEXT = await review feedback, then decide Phase 4.4 (app shells, UI-only).
 
 **Also merged to `develop`** (`develop` HEAD now = `0dc6155`): **Como funciona** `/como-funciona` (EN `/how-it-works`) — client-facing 3-step explainer (navy hero · champagne steps · weights strip 35/25/15/15/10 · green=verificação note · dual CTA) — and a **NEW Metodologia** page `/metodologia` (EN `/methodology`; new route #87) — long-form rating-model spec (§1–§6 navy/champagne bands · weights table · Rising-Talent/Building-track-record badge echo · **DGT/CAOP CC BY 4.0 attribution**). **PR #13** (merge `0dc6155`; commit `d2a8eb4`). Decisions **#87/#88**.
 
