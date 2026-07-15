@@ -7,6 +7,7 @@
 // ConsultantCard is reused UNMODIFIED (D-V2 = page-level wrapper for the coverage note).
 import { getTranslations } from 'next-intl/server'
 import type { CoverageTier } from '@/lib/data'
+import type { ConsultantSummary } from '@/lib/types'
 import { getConsultantsByArea } from '@/lib/data'
 import { concelhoDistrito, getConcelho, getDistrito, getFreguesia } from '@/lib/data/geo/caop'
 import { Link } from '@/i18n/navigation'
@@ -51,6 +52,24 @@ export default async function VenderPage({
     : { tier: null as CoverageTier | null, consultants: [], areaName: undefined, distritoName: undefined }
 
   const matched = match.consultants.length > 0
+
+  // Cycle 2 (Decision #91) — presentation-layer ranking of the returned tier. The tiered widening
+  // (Freguesia→Concelho→Distrito, most-specific-wins) and its labels are UNCHANGED (#86);
+  // getConsultantsByArea already returns composite-desc, no-score last. Here we additionally apply
+  // option (i): a consultant whose composite is NOT confidently shown — the SAME condition the cards
+  // and profile use to hide the number and show "building track record": has a score, not rising
+  // talent, confidence !== 'low' — sinks to the BOTTOM and can never be the highlight. The #1
+  // confident consultant (highest composite) gets the existing rank-1 spotlight (`featured`). If the
+  // tier has only unscored/building consultants, none is highlighted. Highlight is presentation only.
+  const isConfident = (c: ConsultantSummary): boolean =>
+    !!c.score && !c.score.risingTalent && c.score.confidence !== 'low'
+  const confidentConsultants = match.consultants.filter(isConfident)
+  const rankedConsultants: ConsultantSummary[] = [
+    ...confidentConsultants,
+    ...match.consultants.filter((c) => !isConfident(c)),
+  ]
+  const highlightId = confidentConsultants[0]?.id ?? null
+
   const resultsHeader =
     match.tier === 'freguesia'
       ? t('results.freguesia', { area: match.areaName ?? '' })
@@ -152,14 +171,16 @@ export default async function VenderPage({
                 <span className="ml-2 text-meta font-normal text-cream-muted">· {match.consultants.length}</span>
               </h3>
               <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {match.consultants.map((c, i) => (
+                {rankedConsultants.map((c, i) => (
                   <div key={c.id} className="flex flex-col gap-2">
                     <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-cream-muted">
                       <IconPin className="text-sm text-gold" aria-hidden />
                       {coverageNote}
                     </span>
                     <div className="min-h-0 flex-1">
-                      <ConsultantCard consultant={c} index={i} />
+                      {/* Cycle 2: rank-1 confident consultant gets the existing spotlight (#91);
+                          Cycle 1 demo metrics turned ON here — Vender is the first real page to opt in. */}
+                      <ConsultantCard consultant={c} index={i} featured={c.id === highlightId} showMetrics />
                     </div>
                   </div>
                 ))}

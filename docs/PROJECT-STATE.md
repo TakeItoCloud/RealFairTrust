@@ -15,16 +15,20 @@
 
 **Also merged to `develop`** (`develop` HEAD now = `e2aafc2`): **Vender** discovery `/vender` (EN `/selling`) — seller value-prop + the PR #9 location picker in **coverage mode** + **merit-ranked consultants who cover the chosen area** via `getConsultantsByArea` (inclusive hierarchical coverage + strict tiered widening Freguesia→Concelho→District, most-specific-wins; request-a-consultant fallback). **PR #12** (merge `e2aafc2`; commit `42a9bbb`). Decision **#86**.
 
-**IN PROGRESS — review-change set (3 cycles):** **Cycle 1/3 MERGED to `develop`** (PR #15, merge
-`c133dc0`; feature commit `4f5ef69`; mirrors the prior 4.3 PRs #8/#9/#10/#12/#13/#14 — banked to
-`develop`, **`main` untouched**). Two additive DEMO consultant outcome metrics (**units sold 12mo** +
-**avg time-to-sell**), OPTIONAL on `ConsultantSummary`, displayed on `ConsultantCard` behind an
-**opt-in `showMetrics` prop (off by default)** with a muted "demo values" caption; real data deferred to
-Phase 5 (Decision #90). **No page ranking/filtering/behaviour changed** — all 5 real-page call-sites
-unchanged; only the dev showcase opts in. Gates green on `develop` post-merge. Reviewable on any feat/
-develop **preview** at `/dev/components` (dev-showcase gate narrowed to `VERCEL_ENV!=='production'` so it
-renders on previews + local; **verified 404 on a true production build**, so a future `main` promotion
-never exposes it). **Cycle 2** (Vender ranking) + **Cycle 3** (Consultores picker) still to come.
+**IN PROGRESS — review-change set (3 cycles):**
+- **Cycle 1/3 MERGED to `develop`** (PR #15, merge `c133dc0`; feature `4f5ef69`; `main` untouched). Two
+  additive DEMO consultant outcome metrics (**units sold 12mo** + **avg time-to-sell**), OPTIONAL on
+  `ConsultantSummary`, on `ConsultantCard` behind an **opt-in `showMetrics` prop (off by default)** with
+  a muted "demo values" caption; real data deferred to Phase 5 (Decision #90). Dev-showcase gate narrowed
+  to `VERCEL_ENV!=='production'` (visible on previews + local; **verified 404 on a true production build**).
+- **Cycle 2/3 DONE, pending Carlos's review** — **Vender** ranks the matched tier by composite desc with
+  **option-(i) confidence handling** (building/unscored sink to the bottom, never highlighted; verbatim
+  condition `!!score && !score.risingTalent && score.confidence !== 'low'`), **highlights the #1 confident**
+  consultant with the existing rank-1 spotlight (`featured` — no new style, no green), and is the **first
+  real page to enable the Cycle-1 demo metrics** (`showMetrics` on the Vender cards). The tiered widening
+  (#86), tier labels, and picker are **UNCHANGED**. Diff = `app/[locale]/vender/page.tsx` only (Decision
+  #91). Built on `feat/vender-ranking` (off `develop`), gates green, **PR open — NOT merged**.
+- **Cycle 3/3** (Consultores picker) — still to come.
 
 **Also merged to `develop`** (`develop` HEAD now = `0dc6155`): **Como funciona** `/como-funciona` (EN `/how-it-works`) — client-facing 3-step explainer (navy hero · champagne steps · weights strip 35/25/15/15/10 · green=verificação note · dual CTA) — and a **NEW Metodologia** page `/metodologia` (EN `/methodology`; new route #87) — long-form rating-model spec (§1–§6 navy/champagne bands · weights table · Rising-Talent/Building-track-record badge echo · **DGT/CAOP CC BY 4.0 attribution**). **PR #13** (merge `0dc6155`; commit `d2a8eb4`). Decisions **#87/#88**.
 
